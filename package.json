@@ -1,0 +1,35 @@
+{
+  "name": "esteemed-site",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "@heroui/react": "^2.2.10",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.0.0",
+    "hamburger-react": "^2.5.2",
+    "lucide-react": "^0.446.0",
+    "motion": "^12.34.3",
+    "next": "^14.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.183.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "@types/three": "^0.183.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10",
+    "typescript": "5.9.3"
+  }
+}
