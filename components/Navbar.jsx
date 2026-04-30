@@ -68,14 +68,9 @@ const resourceFeatured = [
 ];
 
 const mobileSections = [
-  { label: "Products", items: productsGroup },
-  { label: "Services", items: servicesGroup },
-  { label: "Use Cases", items: solutionsUseCases },
-  { label: "Roles", items: solutionsRoles },
-  { label: "Segments", items: solutionsSegments },
-  { label: "Industries Served", items: solutionsIndustries },
-  { label: "Resources", items: resourceItems },
-  { label: "Community", items: communityItems },
+  { label: "Products & Services", items: [...productsGroup, ...servicesGroup] },
+  { label: "Solutions", items: [...solutionsUseCases, ...solutionsRoles, ...solutionsSegments, ...solutionsIndustries] },
+  { label: "Resources", items: [...resourceItems, ...communityItems] },
 ];
 
 /* Blue circle arrow — matches live site: w-5 h-5 bg-blue-200 rounded-full */
@@ -201,8 +196,8 @@ export default function Navbar() {
           </div>
 
           {/* Mobile hamburger */}
-          <div className="md:hidden">
-            <Hamburger toggled={mobileOpen} toggle={setMobileOpen} size={22} color="#282828" rounded />
+          <div className="md:hidden bg-white relative z-10">
+            <Hamburger toggled={mobileOpen} toggle={setMobileOpen} size={22} color="#231F20" rounded />
           </div>
         </nav>
 
@@ -312,24 +307,24 @@ export default function Navbar() {
             <div key={section.label} className="border-b border-zinc-200">
               <button
                 onClick={() => setExpandedSection(expandedSection === section.label ? null : section.label)}
-                className="flex items-center justify-between w-full text-left text-ink px-5 py-4"
+                className="flex items-center justify-between w-full text-left px-5 py-4"
               >
-                <span className="text-sm font-medium">{section.label}</span>
+                <span className="text-[.875rem] font-medium text-[#231F20]">{section.label}</span>
                 <ChevronDownIcon className={`w-4 h-4 text-zinc-400 transition-transform ${expandedSection === section.label ? "rotate-180" : ""}`} />
               </button>
               <div className={`overflow-hidden transition-all duration-300 ${expandedSection === section.label ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}>
                 <div className="px-5 pb-4">
                   {section.items.map((item) => (
                     <Link key={item.key} href={item.href} onClick={closeMobile} className="block py-1.5">
-                      <span className="text-sm text-ink/70 hover:text-ink">{item.name}</span>
-                      {item.desc && <span className="block text-xs text-zinc-400 mt-0.5">{item.desc}</span>}
+                      <span className="text-[.875rem] font-medium text-[#231F20]">{item.name}</span>
+                      {item.desc && <span className="block text-xs text-[#444] mt-0.5">{item.desc}</span>}
                     </Link>
                   ))}
                 </div>
               </div>
             </div>
           ))}
-          <Link href="/pricing" onClick={closeMobile} className="block px-5 py-4 text-sm font-medium text-ink border-b border-zinc-200">
+          <Link href="/pricing" onClick={closeMobile} className="block px-5 py-4 text-[.875rem] font-medium text-[#231F20] border-b border-zinc-200">
             Pricing
           </Link>
         </nav>
