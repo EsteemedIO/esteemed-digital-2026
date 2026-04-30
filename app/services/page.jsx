@@ -1,143 +1,130 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { services } from "@/lib/data";
-import { theme, fadeInUp, scaleIn } from "@/lib/theme";
-
-const Card = ({ children, className = "" }) => (
-  <div
-    className={`${theme.brand.card} ${theme.radius.card} ${theme.shadow.soft} ${theme.brand.ring} ${className}`}
-  >
-    {children}
-  </div>
-);
+import { useState } from "react";
+import Link from "next/link";
+import LoginFork from "@/components/LoginFork";
+import { hostingTiers, humanServices, agents, agentSuite } from "@/lib/data";
+import { Check } from "lucide-react";
 
 export default function ServicesPage() {
-  const router = useRouter();
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-12 lg:py-20">
+    <>
       {/* Hero */}
-      <motion.div {...fadeInUp} className="text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white">
-          Services
-        </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-400">
-          Esteemed Digital blends strategy, engineering, and AI expertise to
-          help organizations adopt, scale, and govern AI. From roadmaps to
-          secure deployments, we're your end-to-end partner.
-        </p>
-        <div className="mt-10 bg-zinc-200 dark:bg-zinc-800 h-64 rounded-2xl flex items-center justify-center text-zinc-500 dark:text-zinc-400">
-          [Hero image / illustration here]
+      <section className="py-28">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
+            Everything you need to run your website.
+          </h1>
+          <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            One team replaces your hosting provider, your agency, and your AI tools. Build, host, grow — all in one place.
+          </p>
         </div>
-      </motion.div>
+      </section>
 
-      {/* Service Sections */}
-      <div className="mt-16 space-y-20">
-        {/* Advisory */}
-        <motion.div {...fadeInUp} className="grid gap-10 md:grid-cols-2 md:items-center">
-          <div>
-            <h2 className="text-2xl font-semibold text-zinc-900 dark:text-white">
-              AI Advisory & Strategy
-            </h2>
-            <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-              We help executives and boards define pragmatic AI roadmaps. Our
-              advisory work blends business outcomes with technical feasibility,
-              so investments drive measurable ROI. We draw from playbooks built
-              during M&A roll-ups, SaaS launches, and enterprise enablement.
-            </p>
-            <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-              Engagements typically include workshops, an AI maturity
-              assessment, a risk & compliance review, and a roadmap customized
-              to your sector.
-            </p>
+      {/* AI Agents */}
+      <section className="py-20 border-t border-zinc-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">AI agents</h2>
+          <p className="text-zinc-600 mb-10">Add-on agents that handle real work. Our team helps you set each one up.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            {agents.map((agent) => (
+              <div key={agent.key} className="rounded-2xl border border-zinc-200 p-6 hover:shadow-lg transition-shadow">
+                <agent.icon className="w-6 h-6 text-ink mb-3" strokeWidth={1.5} />
+                <h3 className="font-bold text-ink mb-1">{agent.name}</h3>
+                <p className="text-lg font-bold text-ink mb-2">+${agent.price}/mo</p>
+                <p className="text-sm text-zinc-600">{agent.description}</p>
+              </div>
+            ))}
           </div>
-          <div className="bg-zinc-200 dark:bg-zinc-800 h-64 rounded-2xl flex items-center justify-center">
-            [Advisory image]
+          <div className="rounded-2xl border border-accent p-8">
+            <h3 className="text-xl font-bold text-ink mb-1">{agentSuite.name} — ${agentSuite.price}/mo</h3>
+            <p className="text-zinc-600">All four agents bundled. Save ${agentSuite.savings}/mo vs a la carte. <Link href="/pricing" className="underline underline-offset-4 hover:no-underline">See pricing</Link></p>
           </div>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Integration */}
-        <motion.div {...fadeInUp} className="grid gap-10 md:grid-cols-2 md:items-center">
-          <div className="order-2 md:order-1 bg-zinc-200 dark:bg-zinc-800 h-64 rounded-2xl flex items-center justify-center">
-            [Integration diagram]
+      {/* Hosting & Support */}
+      <section className="py-20 border-t border-zinc-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Hosting & support</h2>
+          <p className="text-zinc-600 mb-10">Every tier includes prompt-driven editing, SSL, backups, and monitoring.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {hostingTiers.map((tier) => (
+              <div key={tier.key} className={`rounded-2xl border p-8 relative ${tier.recommended ? "border-accent" : "border-zinc-200"}`}>
+                {tier.recommended && (
+                  <span className="absolute -top-3 left-6 bg-accent text-ink text-xs font-bold px-3 py-1 rounded-full">Most popular</span>
+                )}
+                <h3 className="text-xl font-bold text-ink mb-1">{tier.name}</h3>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-ink">${tier.price}</span>
+                  <span className="text-zinc-500">/mo</span>
+                </div>
+                <ul className="space-y-3">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-zinc-600">
+                      <Check className="w-4 h-4 text-ink flex-shrink-0 mt-0.5" strokeWidth={2} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-          <div className="order-1 md:order-2">
-            <h2 className="text-2xl font-semibold text-zinc-900 dark:text-white">
-              Systems Integration
-            </h2>
-            <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-              As a Drupal Certified Partner with deep ATS/CRM experience, we
-              know how to safely connect enterprise systems into AI pipelines.
-              Our teams integrate identity, data, and workflows while enforcing
-              security and governance.
-            </p>
-            <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-              Recent work: onboarding 50+ healthcare staffing clients into a
-              unified ATS with AI-powered matching and compliance automation.
-            </p>
+          <div className="mt-6">
+            <Link href="/pricing" className="text-sm font-medium text-ink underline underline-offset-4 hover:no-underline">
+              Full pricing details
+            </Link>
           </div>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Custom Dev */}
-        <motion.div {...fadeInUp} className="grid gap-10 md:grid-cols-2 md:items-center">
-          <div>
-            <h2 className="text-2xl font-semibold text-zinc-900 dark:text-white">
-              Custom AI Development
-            </h2>
-            <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-              From small language model (SLM) training to RAG pipelines and
-              multi-agent orchestration, we deliver AI tailored to your org.
-              Esteemed Agents already power engineering, finance, and ops teams
-              — we extend that tech to your use cases.
-            </p>
-            <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-              We specialize in hybrid stacks: React frontends, Node/TypeScript
-              backends, Drupal CMS/ATS, and AI infra across Digital Ocean, AWS,
-              or your private VPC.
-            </p>
+      {/* Human Services */}
+      <section className="py-20 border-t border-zinc-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Human services</h2>
+          <p className="text-zinc-600 mb-10">Real professionals from our 35,000-person network. AI builds it; humans help you grow it.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {humanServices.map((svc) => (
+              <div key={svc.key} className="rounded-2xl border border-zinc-200 p-8 hover:shadow-lg transition-shadow">
+                <svc.icon className="w-6 h-6 text-ink mb-4" strokeWidth={1.5} />
+                <h3 className="text-lg font-bold text-ink mb-2">{svc.name}</h3>
+                <p className="text-sm text-zinc-600 mb-3">{svc.blurb}</p>
+                <p className="text-sm font-semibold text-ink">{svc.priceNote}</p>
+              </div>
+            ))}
           </div>
-          <div className="bg-zinc-200 dark:bg-zinc-800 h-64 rounded-2xl flex items-center justify-center">
-            [Custom AI build mockup]
-          </div>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Governance */}
-        <motion.div {...fadeInUp} className="grid gap-10 md:grid-cols-2 md:items-center">
-          <div className="order-2 md:order-1 bg-zinc-200 dark:bg-zinc-800 h-64 rounded-2xl flex items-center justify-center">
-            [Governance diagram]
-          </div>
-          <div className="order-1 md:order-2">
-            <h2 className="text-2xl font-semibold text-zinc-900 dark:text-white">
-              Security & Governance
-            </h2>
-            <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-              AI adoption requires trust. We implement RBAC, audit logging,
-              encryption, and data residency controls. Our advisors bring
-              experience with SOC 2, GDPR, and HIPAA environments.
-            </p>
-            <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-              Expect deliverables like security runbooks, compliance mappings,
-              and readiness checklists to satisfy both IT and regulators.
-            </p>
-          </div>
-        </motion.div>
-      </div>
+      {/* Migration */}
+      <section className="py-20 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-ink mb-4">Migration</h2>
+          <p className="text-zinc-600 leading-relaxed mb-6">
+            Moving from WordPress, Drupal, or another CMS? Most standard migrations are free with a 12-month hosting agreement. We handle content, redirects, and SEO — you approve before anything goes live.
+          </p>
+          <Link href="/migrate" className="inline-flex items-center px-6 py-3 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-ink hover:text-paper transition-colors">
+            Learn about migration
+          </Link>
+        </div>
+      </section>
 
-      {/* CTA */}
-      <div className="mt-20 text-center">
-        <button
-          className="rounded-full px-6 py-3 text-white font-medium"
-          style={{
-            background:
-              "linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))",
-          }}
-          onClick={() => router.push("/contact")}
-        >
-          Talk to an Expert
-        </button>
-      </div>
-    </section>
+      {/* Final CTA */}
+      <section className="bg-ink py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Tell us what you need.</h2>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+          >
+            Get started
+          </button>
+        </div>
+      </section>
+
+      <LoginFork isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+    </>
   );
 }

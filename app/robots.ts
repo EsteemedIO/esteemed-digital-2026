@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/admin/'],
+      disallow: ['/api/'],
     },
-    sitemap: 'https://esteemed.digital/sitemap.xml',
+    sitemap: 'https://esteemedapp.com/sitemap.xml',
   };
 }

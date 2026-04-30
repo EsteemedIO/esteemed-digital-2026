@@ -1,111 +1,133 @@
-"use client";
+import Link from "next/link";
+import { Sparkles, Cloud, Bot, Brain, Users, Headphones } from "lucide-react";
 
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { products } from "@/lib/data";
-import { theme, fadeInUp, scaleIn } from "@/lib/theme";
+export const metadata = {
+  title: "Products & Services",
+  description:
+    "Everything Esteemed offers — Create, Cloud, Agents, Intelligence, Colleagues, and Support.",
+};
 
-const Card = ({ children, className = "" }) => (
-  <div className={`${theme.brand.card} ${theme.radius.card} ${theme.shadow.soft} ${theme.brand.ring} ${className}`}>
-    {children}
-  </div>
-);
-
-const CTA = ({ children, ...props }) => (
-  <button
-    {...props}
-    className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white"
-    style={{ background: "linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))" }}
-  >
-    {children}
-    <svg className="h-4 w-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none">
-      <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  </button>
-);
+const items = [
+  {
+    name: "Create",
+    tagline: "Build websites and apps by talking to AI.",
+    description:
+      "Describe what you want in plain English and get a working site in minutes. Edit by conversation, preview instantly, publish in one click.",
+    icon: Sparkles,
+    href: "/products/create",
+    type: "Product",
+  },
+  {
+    name: "Cloud",
+    tagline: "Hosting that scales with you.",
+    description:
+      "Managed hosting with SSL, daily backups, monitoring, and a global edge network. Your site stays fast, secure, and always on.",
+    icon: Cloud,
+    href: "/products/cloud",
+    type: "Product",
+  },
+  {
+    name: "Agents",
+    tagline: "AI that works like part of your team.",
+    description:
+      "Voice, Social, Blog, Marketing, and Echo agents that handle real work — trained on your business, backed by real people.",
+    icon: Bot,
+    href: "/products/agents",
+    type: "Product",
+  },
+  {
+    name: "Intelligence",
+    tagline: "Memory. Reasoning. Coherence.",
+    description:
+      "A shared intelligence layer that gives your website and agents persistent memory, cross-system reasoning, and continuous learning.",
+    icon: Brain,
+    href: "/products/intelligence",
+    type: "Product",
+  },
+  {
+    name: "Colleagues",
+    tagline: "Vetted talent, on demand.",
+    description:
+      "Search 35,000+ vetted professionals. Post engagements, manage projects, or find your next role. Hiring and jobseeking in one platform.",
+    icon: Users,
+    href: "/products/colleagues",
+    type: "Service",
+  },
+  {
+    name: "Support",
+    tagline: "Expert human help when you need it.",
+    description:
+      "Get hands-on assistance with your Esteemed apps or anything you built elsewhere. Hourly plans from our team of specialists.",
+    icon: Headphones,
+    href: "/services/support",
+    type: "Service",
+  },
+];
 
 export default function ProductsPage() {
-  const router = useRouter();
-
   return (
-    <div className="mx-auto max-w-7xl px-6 py-12 lg:py-16">
-      {/* Intro */}
-      <motion.div {...fadeInUp} className="max-w-3xl">
-        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-zinc-900 dark:text-white">Products</h1>
-        <p className={`mt-3 ${theme.brand.subtext}`}>
-          A cohesive stack for AI outcomes—neural memory (Esteemed Intelligence), enterprise RAG + chat (Esteemed AI),
-          and production-ready agents (Esteemed Agents), plus APIs to build on top.
-        </p>
-        <div className="mt-6 flex gap-3">
-          <CTA onClick={() => router.push("/developers")}>View Developer Docs</CTA>
-          <button
-            className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium ${theme.brand.text} ${theme.brand.border} hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50`}
-            onClick={() => router.push("/contact")}
+    <div className="min-h-screen">
+      <section className="py-28">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
+            Products &amp; Services
+          </h1>
+          <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+            Everything you need to build, run, and grow — from first idea to
+            full-scale business platform.
+          </p>
+        </div>
+      </section>
+
+      <section className="pb-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {items.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="group rounded-2xl border border-zinc-200 p-8 hover:shadow-lg hover:border-accent transition-all"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <item.icon
+                    className="w-8 h-8 text-ink"
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-xs font-medium uppercase tracking-wide text-zinc-400">
+                    {item.type}
+                  </span>
+                </div>
+                <h2 className="text-xl font-bold text-ink mb-1">
+                  {item.name}
+                </h2>
+                <p className="text-sm font-medium text-zinc-500 mb-3">
+                  {item.tagline}
+                </p>
+                <p className="text-sm text-zinc-600 leading-relaxed">
+                  {item.description}
+                </p>
+                <span className="inline-block mt-4 text-sm font-medium text-ink group-hover:underline">
+                  Learn more &rarr;
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-ink py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
+            Ready to build something Esteemed?
+          </h2>
+          <Link
+            href="/products/create"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
-            Request a Demo
-          </button>
+            Start building free
+          </Link>
         </div>
-      </motion.div>
-
-      {/* Product grid */}
-      <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {products.map((p) => (
-          <motion.div key={p.key} {...scaleIn}>
-            <Card className="p-6 h-full">
-              <div className="flex items-center gap-3">
-                <p.icon className="h-5 w-5" style={{ color: "var(--brand-start)" }} />
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">{p.name}</h3>
-              </div>
-              <p className={`mt-2 ${theme.brand.subtext}`}>{p.tagline}</p>
-              <ul className="mt-4 space-y-2">
-                {p.points.map((pt, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-zinc-700 dark:text-zinc-300">
-                    <span
-                      className="mt-1 h-1.5 w-1.5 flex-none rounded-full"
-                      style={{ background: "var(--brand-start)" }}
-                    />
-                    <span>{pt}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-5 flex gap-3">
-                <CTA>Learn more</CTA>
-                <button
-                  className="text-sm font-medium"
-                  style={{ color: "var(--brand-start)" }}
-                  onClick={() => router.push("/developers")}
-                >
-                  Docs
-                </button>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Secondary: "How they fit together" */}
-      <Card className="mt-10 p-6">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <div>
-            <div className="text-sm font-semibold text-zinc-900 dark:text-white">Neural Memory</div>
-            <p className={`mt-2 text-sm ${theme.brand.subtext}`}>
-              <strong>Esteemed Intelligence</strong> builds a durable knowledge graph across your org.
-            </p>
-          </div>
-          <div>
-            <div className="text-sm font-semibold text-zinc-900 dark:text-white">Enterprise RAG</div>
-            <p className={`mt-2 text-sm ${theme.brand.subtext}`}>
-              <strong>Esteemed AI</strong> indexes drives, docs, and systems with RBAC + audit.
-            </p>
-          </div>
-          <div>
-            <div className="text-sm font-semibold text-zinc-900 dark:text-white">AI Workforce</div>
-            <p className={`mt-2 text-sm ${theme.brand.subtext}`}>
-              <strong>Esteemed Agents</strong> orchestrate multi-step work across tools and teams.
-            </p>
-          </div>
-        </div>
-      </Card>
+      </section>
     </div>
   );
 }

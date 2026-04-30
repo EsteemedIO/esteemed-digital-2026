@@ -1,469 +1,347 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import {
-  Navbar as HNavbar, NavbarBrand, NavbarContent, NavbarItem,
-  useDisclosure
-} from "@heroui/react";
 import { Squeeze as Hamburger } from "hamburger-react";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { products } from "@/lib/data";
-import { theme } from "@/lib/theme";
-import PartnerModal from "./modals/PartnerModal";
-import DemoModal from "./modals/DemoModal";
+import { ChevronDownIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
-const mobileMenuItems = [
-  {
-    label: "Products",
-    items: [
-      { name: "Esteemed Intelligence", href: "/products" },
-      { name: "Esteemed AI", href: "/products" },
-      { name: "Esteemed Agents", href: "/products" },
-    ],
-  },
-  {
-    label: "Solutions",
-    items: [
-      { name: "Staffing & Recruiting", href: "/solutions" },
-      { name: "SaaS & Technology", href: "/solutions" },
-      { name: "Financial Services", href: "/solutions" },
-      { name: "Healthcare", href: "/solutions" },
-      { name: "Manufacturing", href: "/solutions" },
-    ],
-  },
-  {
-    label: "Resources",
-    items: [
-      { name: "Documentation", href: "/developers" },
-      { name: "Research Papers", href: "/research" },
-      { name: "Case Studies", href: "/research" },
-      { name: "Deployment Guide", href: "/deployment" },
-      { name: "API Reference", href: "/developers" },
-      { name: "Partner Program", href: "/partners" },
-    ],
-  },
-  {
-    label: "Company",
-    items: [
-      { name: "About", href: "/about" },
-      { name: "Newsroom", href: "/news" },
-      { name: "Careers", href: "/careers" },
-      { name: "Contact", href: "/contact" },
-    ],
-  },
+const productsGroup = [
+  { key: "create", name: "Create", href: "/products/create", desc: "Use AI-enabled Esteemed Create to make apps in minutes." },
+  { key: "cloud", name: "Cloud", href: "/products/cloud", desc: "Publish or import and maintain your apps on Esteemed Cloud." },
+  { key: "agents", name: "Agents", href: "/products/agents", desc: "AI agents trained on your business, starting with Echo." },
+  { key: "intelligence", name: "Intelligence", href: "/products/intelligence", desc: "The shared intelligence layer powering all Esteemed products." },
 ];
 
-const CTA = ({ children, ...props }) => (
-  <button {...props}
-    className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white"
-    style={{ background: "linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))" }}>
-    {children}
-    <svg className="h-4 w-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none">
-      <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  </button>
-);
+const servicesGroup = [
+  { key: "colleagues", name: "Colleagues", href: "/products/colleagues", desc: "Search 35,000+ vetted professionals. Hire or get hired." },
+  { key: "support", name: "Support", href: "/services/support", desc: "Expert human help for Esteemed apps or anything you built elsewhere." },
+];
+
+const solutionsUseCases = [
+  { key: "launch-marketing", name: "Launch a marketing site", href: "/solutions/launch-marketing-site" },
+  { key: "build-internal", name: "Build an internal tool", href: "/solutions/build-internal-tool" },
+  { key: "hire-talent", name: "Hire technical talent", href: "/solutions/hire-technical-talent" },
+  { key: "modernize-legacy", name: "Modernize a legacy site", href: "/solutions/modernize-legacy-site" },
+];
+
+const solutionsRoles = [
+  { key: "marketing-leaders", name: "Marketing leaders", href: "/solutions/marketing-leaders" },
+  { key: "founders", name: "Founders", href: "/solutions/founders" },
+  { key: "it-directors", name: "IT directors", href: "/solutions/it-directors" },
+  { key: "hr-teams", name: "HR teams", href: "/solutions/hr-teams" },
+];
+
+const solutionsSegments = [
+  { key: "startups", name: "Startups", href: "/solutions/startups" },
+  { key: "small-business", name: "Small Business", href: "/solutions/small-business" },
+  { key: "mid-market", name: "Mid-market", href: "/solutions/mid-market" },
+  { key: "enterprise", name: "Enterprise", href: "/solutions/enterprise" },
+  { key: "nonprofits", name: "Nonprofits", href: "/solutions/nonprofits" },
+  { key: "higher-ed", name: "Higher Ed", href: "/solutions/higher-ed" },
+];
+
+const solutionsIndustries = [
+  { key: "consumer-hospitality", name: "Consumer & Hospitality", href: "/solutions/industries/consumer-and-hospitality" },
+  { key: "construction", name: "Construction", href: "/solutions/industries/construction" },
+  { key: "financial-services", name: "Financial Services", href: "/solutions/industries/financial-services" },
+  { key: "gov-edu-nonprofit", name: "Government, Education & Non-profit", href: "/solutions/industries/government-education-and-non-profit" },
+  { key: "healthcare", name: "Healthcare & Life Sciences", href: "/solutions/industries/healthcare-and-life-sciences" },
+  { key: "professional-services", name: "Professional & Business Services", href: "/solutions/industries/professional-and-business-services" },
+  { key: "tech-media", name: "Technology & Media", href: "/solutions/industries/technology-and-media" },
+];
+
+const resourceItems = [
+  { key: "resource-center", name: "Business Resource Center", href: "/resources" },
+  { key: "career-catalyst", name: "Career Catalyst Blog", href: "/blog/career-catalyst" },
+  { key: "newsroom", name: "Newsroom", href: "/newsroom" },
+  { key: "documentation", name: "Documentation", href: "/help" },
+];
+
+const communityItems = [
+  { key: "events", name: "Events", href: "/resources/events" },
+  { key: "discord", name: "Discord", href: "https://discord.gg/esteemed" },
+];
+
+const resourceFeatured = [
+  { key: "agency-program", name: "Agency Program", href: "/program/agencies" },
+  { key: "partner", name: "Become a Partner", href: "/partners/partner-registration" },
+];
+
+const mobileSections = [
+  { label: "Products", items: productsGroup },
+  { label: "Services", items: servicesGroup },
+  { label: "Use Cases", items: solutionsUseCases },
+  { label: "Roles", items: solutionsRoles },
+  { label: "Segments", items: solutionsSegments },
+  { label: "Industries Served", items: solutionsIndustries },
+  { label: "Resources", items: resourceItems },
+  { label: "Community", items: communityItems },
+];
+
+/* Blue circle arrow — matches live site: w-5 h-5 bg-blue-200 rounded-full */
+function BlueArrow() {
+  return (
+    <span className="inline-flex items-center justify-center w-5 h-5 bg-blue-200 rounded-full flex-shrink-0">
+      <ArrowRightIcon className="w-3 h-3 text-blue-700" />
+    </span>
+  );
+}
+
+/* Section heading — matches live: !font-bold flex gap-2 mb-2 pb-2 border-b items-center text-sm md:text-lg */
+function SectionHeading({ children, href }) {
+  const Tag = href ? Link : "div";
+  return (
+    <Tag
+      {...(href ? { href } : {})}
+      className="font-bold flex gap-2 mb-2 pb-2 border-b border-zinc-200 items-center text-sm md:text-lg text-ink mt-0 hover:underline"
+    >
+      {children}
+      <BlueArrow />
+    </Tag>
+  );
+}
+
+/* Menu link */
+function MegaMenuLink({ href, children, desc, onClick }) {
+  return (
+    <Link href={href} onClick={onClick} className="block py-2">
+      <span className="text-[.875rem] font-medium text-[#231F20]">{children}</span>
+      {desc && <span className="block text-xs text-[#444] mt-0.5">{desc}</span>}
+    </Link>
+  );
+}
+
+/* Featured card — matches live: hotlink !bg-neutral-100 rounded-md !font-semibold tracking-tight */
+function FeaturedCard({ href, children, onClick }) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className="flex w-full items-center justify-between gap-x-2 rounded-md bg-neutral-100 hover:bg-neutral-200 px-3 py-3 font-semibold tracking-tight text-sm lg:text-lg text-ink transition-colors"
+    >
+      {children}
+      <BlueArrow />
+    </Link>
+  );
+}
 
 export default function Navbar() {
-  const partnerModal = useDisclosure();
-  const demoModal = useDisclosure();
-  const [submitting, setSubmitting] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [expandedSections, setExpandedSections] = useState({});
-  const router = useRouter();
-  const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [expandedSection, setExpandedSection] = useState(null);
+  const [openMenu, setOpenMenu] = useState(null);
+  const navRef = useRef(null);
 
-  const toggleSection = (label) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [label]: !prev[label],
-    }));
+  useEffect(() => {
+    const handler = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) setOpenMenu(null);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const closeMobile = () => {
+    setMobileOpen(false);
+    setExpandedSection(null);
   };
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-    setExpandedSections({});
-  };
-
-  const mockSubmit = async (payload) => {
-    try {
-      setSubmitting(true);
-      await new Promise(r => setTimeout(r, 900));
-      console.log("Form payload", payload);
-      setSubmitting(false);
-      demoModal.onClose();
-      alert("Thanks! We'll follow up shortly.");
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitting(false);
-    }
-  };
-
-  const isActive = (path) => pathname === path;
+  const closeMenu = () => setOpenMenu(null);
+  const toggleMenu = (name) => setOpenMenu(openMenu === name ? null : name);
 
   return (
     <>
-      <HNavbar maxWidth="xl"
-        className="sticky top-0 z-50 border-b border-zinc-200/60 bg-white/70 backdrop-blur
-                   dark:border-zinc-800/70 dark:bg-zinc-950/60"
-        style={{ height: '75.5px' }}>
-        <NavbarBrand className="cursor-pointer" onClick={() => router.push("/")}>
-          <img src="/Group (1).svg" alt="Esteemed Digital" className="mr-3 w-auto" style={{ height: '1.7rem' }} />
-          <span className="text-lg font-semibold">Esteemed Digital</span>
-        </NavbarBrand>
+      <header ref={navRef} className="sticky top-0 z-50 bg-white border-b border-zinc-200">
+        {/* Nav container — 1450px to match live site */}
+        <nav className="mx-auto px-6 flex items-center justify-between h-16" style={{ maxWidth: "1450px" }}>
+          {/* Logo */}
+          <Link href="/" className="flex items-center flex-shrink-0">
+            <img src="/esteemed-logo.svg" alt="Esteemed" className="w-40 h-auto" fetchPriority="high" />
+          </Link>
 
-        <NavbarContent className="hidden md:flex gap-1" justify="center">
-
-          {/* Custom Mega Menu */}
-          <NavbarItem>
-            <div className="relative group">
-              <button className="px-3 py-1.5 text-sm text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200">
-                Products
-              </button>
-              <div className="fixed top-[75.5px] left-0 right-0 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="max-w-7xl mx-auto px-6 py-8">
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    {/* Products Column */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">PRODUCTS</h3>
-                      <div className="space-y-4">
-                        {products.map((p) => (
-                          <Link key={p.key} href="/products" className="block group/item">
-                            <div className="flex items-center gap-3">
-                              <div className="w-2 h-2 rounded-full" style={{ background: "var(--brand-start)" }}></div>
-                              <div>
-                                <div className="text-sm font-medium text-zinc-900 dark:text-white group-hover/item:text-[var(--brand-start)]">{p.name}</div>
-                                <div className="text-xs text-zinc-500 dark:text-zinc-400">{p.tagline}</div>
-                              </div>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Solutions Column */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">SOLUTIONS</h3>
-                      <div className="space-y-3">
-                        {[
-                          { name: "Staffing Ops Automation", to: "/solutions" },
-                          { name: "SaaS GTM & Support", to: "/solutions" },
-                          { name: "Enterprise AI Enablement", to: "/solutions" },
-                          { name: "Human Capital AI", to: "/solutions" },
-                          { name: "AI App Builder", to: "/solutions" },
-                        ].map((s, i) => (
-                          <Link key={i} href={s.to} className="block text-sm text-zinc-700 dark:text-zinc-300 hover:text-[var(--brand-start)] dark:hover:text-[var(--brand-start)]">
-                            {s.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Resources Column */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">RESOURCES</h3>
-                      <div className="space-y-3">
-                        {[
-                          { name: "Documentation", to: "/developers" },
-                          { name: "Research Papers", to: "/research" },
-                          { name: "Case Studies", to: "/research" },
-                          { name: "Deployment Guide", to: "/deployment" },
-                          { name: "API Reference", to: "/developers" },
-                          { name: "Partner Program", to: "/partners" },
-                        ].map((r, i) => (
-                          <Link key={i} href={r.to} className="block text-sm text-zinc-700 dark:text-zinc-300 hover:text-[var(--brand-start)] dark:hover:text-[var(--brand-start)]">
-                            {r.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Featured Card */}
-                    <div>
-                      <div className="rounded-2xl p-6 h-full" style={{ background: "linear-gradient(135deg, var(--brand-start), var(--brand-mid), var(--brand-end))" }}>
-                        <div className="text-white">
-                          <h4 className="text-lg font-semibold mb-2">Esteemed Intelligence</h4>
-                          <p className="text-sm text-white/90 mb-4">Neural memory and organizational intelligence powered by our agent workforce.</p>
-                          <Link href="/products" className="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-white/80">
-                            Explore Intelligence
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </NavbarItem>
-
-          {/* Solutions Mega Menu */}
-          <NavbarItem>
-            <div className="relative group">
-              <button className="px-3 py-1.5 text-sm text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200">
-                Solutions
-              </button>
-              <div className="fixed top-[75.5px] left-0 right-0 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="max-w-7xl mx-auto px-6 py-8">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Industries Column */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">INDUSTRIES</h3>
-                      <div className="space-y-3">
-                        {[
-                          { name: "Staffing & Recruiting", desc: "Automated screening and matching" },
-                          { name: "SaaS & Technology", desc: "GTM and customer support" },
-                          { name: "Financial Services", desc: "Compliance and analytics" },
-                          { name: "Healthcare", desc: "Documentation and workflow" },
-                          { name: "Manufacturing", desc: "Process optimization" },
-                        ].map((s, i) => (
-                          <Link key={i} href="/solutions" className="block group/item">
-                            <div className="text-sm font-medium text-zinc-900 dark:text-white group-hover/item:text-[var(--brand-start)]">{s.name}</div>
-                            <div className="text-xs text-zinc-500 dark:text-zinc-400">{s.desc}</div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Use Cases Column */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">USE CASES</h3>
-                      <div className="space-y-3">
-                        {[
-                          "Document Intelligence",
-                          "Customer Support Automation",
-                          "Sales Enablement",
-                          "HR & Recruiting",
-                          "Business Intelligence",
-                          "Compliance & Audit",
-                        ].map((u, i) => (
-                          <Link key={i} href="/solutions" className="block text-sm text-zinc-700 dark:text-zinc-300 hover:text-[var(--brand-start)] dark:hover:text-[var(--brand-start)]">
-                            {u}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Featured Solution */}
-                    <div>
-                      <div className="rounded-2xl p-6 h-full bg-gradient-to-br from-purple-500 to-pink-500">
-                        <div className="text-white">
-                          <h4 className="text-lg font-semibold mb-2">Enterprise AI</h4>
-                          <p className="text-sm text-white/90 mb-4">RAG + agent workflows across departments with RBAC, audit, and residency.</p>
-                          <Link href="/solutions" className="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-white/80">
-                            Explore Solutions
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </NavbarItem>
-          <NavbarItem>
-            <Link href="/research" className={`px-3 py-1.5 text-sm ${isActive('/research') ? "text-zinc-900 dark:text-white" : "text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"}`}>
-              Research
-            </Link>
-          </NavbarItem>
-          {/* Company Mega Menu */}
-          <NavbarItem>
-            <div className="relative group">
-              <button className="px-3 py-1.5 text-sm text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200">
-                Company
-              </button>
-              <div className="fixed top-[75.5px] left-0 right-0 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="max-w-7xl mx-auto px-6 py-6">
-                  <div className="max-w-xs">
-                    <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">COMPANY</h3>
-                    <div className="space-y-3">
-                      <Link href="/about" className="block text-sm text-zinc-700 dark:text-zinc-300 hover:text-[var(--brand-start)] dark:hover:text-[var(--brand-start)]">
-                        About
-                      </Link>
-                      <Link href="/news" className="block text-sm text-zinc-700 dark:text-zinc-300 hover:text-[var(--brand-start)] dark:hover:text-[var(--brand-start)]">
-                        Newsroom
-                      </Link>
-                      <Link href="/careers" className="block text-sm text-zinc-700 dark:text-zinc-300 hover:text-[var(--brand-start)] dark:hover:text-[var(--brand-start)]">
-                        Careers
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </NavbarItem>
-          <NavbarItem>
-            <Link href="/contact" className={`px-3 py-1.5 text-sm ${isActive('/contact') ? "text-zinc-900 dark:text-white" : "text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"}`}>
-              Contact
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
-
-        <NavbarContent justify="end" className="gap-2">
-          <NavbarItem className="hidden md:flex">
-            <CTA onClick={() => {
-              console.log("Get Started clicked");
-              demoModal.onOpen();
-            }}>
-              Get Started
-            </CTA>
-          </NavbarItem>
-
-          {/* Mobile Hamburger */}
-          <NavbarItem className="md:hidden">
-            <Hamburger
-              toggled={mobileMenuOpen}
-              toggle={setMobileMenuOpen}
-              size={22}
-              color="currentColor"
-              rounded
-            />
-          </NavbarItem>
-        </NavbarContent>
-      </HNavbar>
-
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={closeMobileMenu}
-        />
-      )}
-
-      {/* Mobile Menu Panel */}
-      <div
-        className={`fixed top-[75.5px] right-0 bottom-0 w-full max-w-sm bg-white dark:bg-zinc-950 z-50 transform transition-transform duration-300 ease-out md:hidden overflow-y-auto ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-6">
-          {/* Featured Tile */}
-          <div
-            className="rounded-2xl p-6 mb-6"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--brand-start), var(--brand-mid), var(--brand-end))",
-            }}
-          >
-            <h4 className="text-lg font-semibold text-white mb-2">
-              Esteemed Intelligence
-            </h4>
-            <p className="text-sm text-white/90 mb-4">
-              Neural memory and organizational intelligence powered by AI agents.
-            </p>
-            <Link
-              href="/products"
-              onClick={closeMobileMenu}
-              className="inline-flex items-center gap-2 text-sm font-medium text-white"
-            >
-              Explore
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          {/* Desktop nav — centered */}
+          <div className="hidden md:flex items-center gap-1">
+            {[
+              { label: "Products & Services", key: "products" },
+              { label: "Solutions", key: "solutions" },
+              { label: "Resources", key: "resources" },
+            ].map((item) => (
+              <button
+                key={item.key}
+                onClick={() => toggleMenu(item.key)}
+                className={`flex items-center gap-1.5 px-5 py-2 text-[.875rem] font-medium rounded-full transition-all ${
+                  openMenu === item.key
+                    ? "border-2 border-[#231F20] text-[#231F20]"
+                    : "border-2 border-transparent text-[#231F20] hover:border-[#231F20]"
+                }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-          </div>
-
-          {/* Menu Sections */}
-          <nav className="space-y-2">
-            {mobileMenuItems.map((section) => (
-              <div key={section.label} className="border-b border-zinc-200 dark:border-zinc-800">
-                <button
-                  onClick={() => toggleSection(section.label)}
-                  className="flex items-center justify-between w-full py-4 text-left"
-                >
-                  <span className="text-base font-medium text-zinc-900 dark:text-white">
-                    {section.label}
-                  </span>
-                  <ChevronDownIcon
-                    className={`w-5 h-5 text-zinc-500 transition-transform duration-200 ${
-                      expandedSections[section.label] ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-
-                {/* Expandable Items */}
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    expandedSections[section.label]
-                      ? "max-h-96 opacity-100 pb-4"
-                      : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="space-y-3 pl-4">
-                    {section.items.map((item, idx) => (
-                      <Link
-                        key={idx}
-                        href={item.href}
-                        onClick={closeMobileMenu}
-                        className="block text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                {item.label}
+                <ChevronDownIcon className={`w-3.5 h-3.5 transition-transform ${openMenu === item.key ? "rotate-180" : ""}`} />
+              </button>
             ))}
 
-            {/* Direct Links */}
-            <Link
-              href="/research"
-              onClick={closeMobileMenu}
-              className="block py-4 text-base font-medium text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-zinc-800"
-            >
-              Research
+            <Link href="/pricing" className="px-5 py-2 text-[.875rem] font-medium text-[#231F20] hover:underline">
+              Pricing
             </Link>
-          </nav>
 
-          {/* CTA Button */}
-          <div className="mt-8">
-            <button
-              onClick={() => {
-                closeMobileMenu();
-                demoModal.onOpen();
-              }}
-              className="w-full py-3 px-6 rounded-full text-white font-medium"
-              style={{
-                background:
-                  "linear-gradient(90deg, var(--brand-start), var(--brand-mid), var(--brand-end))",
-              }}
-            >
-              Get Started
-            </button>
           </div>
+
+          {/* Desktop CTAs */}
+          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+            <Link
+              href="/login"
+              className="inline-flex items-center px-5 py-2 rounded-full border-2 border-ink bg-white text-ink text-sm font-semibold hover:bg-accent hover:border-accent transition-colors"
+            >
+              Create Account
+            </Link>
+            <Link
+              href="/login"
+              className="inline-flex items-center px-5 py-2 rounded-full bg-accent text-ink text-sm font-semibold hover:bg-accent-hover transition-colors"
+            >
+              Login
+            </Link>
+          </div>
+
+          {/* Mobile hamburger */}
+          <div className="md:hidden">
+            <Hamburger toggled={mobileOpen} toggle={setMobileOpen} size={22} color="#282828" rounded />
+          </div>
+        </nav>
+
+        {/* ---- Mega menu panels ---- */}
+
+        {openMenu === "products" && (
+          <div className="hidden md:block border-t border-zinc-200 bg-white">
+            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
+              <div className="grid grid-cols-4 gap-8">
+                <div>
+                  <SectionHeading href="/products">Products</SectionHeading>
+                  {productsGroup.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+                <div>
+                  <SectionHeading href="/services">Services</SectionHeading>
+                  {servicesGroup.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+                <div />
+                <div className="space-y-3">
+                  <FeaturedCard href="/products/create" onClick={closeMenu}>Try Esteemed Create</FeaturedCard>
+                  <FeaturedCard href="/products/colleagues" onClick={closeMenu}>Hire an Expert</FeaturedCard>
+                  <FeaturedCard href="/services/support" onClick={closeMenu}>Get Support</FeaturedCard>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {openMenu === "solutions" && (
+          <div className="hidden md:block border-t border-zinc-200 bg-white">
+            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
+              <div className="grid grid-cols-4 gap-8">
+                <div>
+                  <SectionHeading>Use Cases</SectionHeading>
+                  {solutionsUseCases.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+                <div>
+                  <SectionHeading>Roles</SectionHeading>
+                  {solutionsRoles.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+                <div>
+                  <SectionHeading>Segments</SectionHeading>
+                  {solutionsSegments.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+                <div>
+                  <SectionHeading>Industries Served</SectionHeading>
+                  {solutionsIndustries.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {openMenu === "resources" && (
+          <div className="hidden md:block border-t border-zinc-200 bg-white">
+            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
+              <div className="grid grid-cols-4 gap-8">
+                <div>
+                  <SectionHeading>Resources</SectionHeading>
+                  {resourceItems.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+                <div>
+                  <SectionHeading>Community</SectionHeading>
+                  {communityItems.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+                <div />
+                <div className="space-y-3">
+                  {resourceFeatured.map((item) => (
+                    <FeaturedCard key={item.key} href={item.href} onClick={closeMenu}>{item.name}</FeaturedCard>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={closeMobile} />
+      )}
+
+      {/* Mobile drawer */}
+      <div
+        className={`fixed top-16 right-0 bottom-0 w-full max-w-sm bg-white z-50 transform transition-transform duration-300 md:hidden overflow-y-auto ${
+          mobileOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <nav>
+          {mobileSections.map((section) => (
+            <div key={section.label} className="border-b border-zinc-200">
+              <button
+                onClick={() => setExpandedSection(expandedSection === section.label ? null : section.label)}
+                className="flex items-center justify-between w-full text-left text-ink px-5 py-4"
+              >
+                <span className="text-sm font-medium">{section.label}</span>
+                <ChevronDownIcon className={`w-4 h-4 text-zinc-400 transition-transform ${expandedSection === section.label ? "rotate-180" : ""}`} />
+              </button>
+              <div className={`overflow-hidden transition-all duration-300 ${expandedSection === section.label ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}>
+                <div className="px-5 pb-4">
+                  {section.items.map((item) => (
+                    <Link key={item.key} href={item.href} onClick={closeMobile} className="block py-1.5">
+                      <span className="text-sm text-ink/70 hover:text-ink">{item.name}</span>
+                      {item.desc && <span className="block text-xs text-zinc-400 mt-0.5">{item.desc}</span>}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+          <Link href="/pricing" onClick={closeMobile} className="block px-5 py-4 text-sm font-medium text-ink border-b border-zinc-200">
+            Pricing
+          </Link>
+        </nav>
+        <div className="p-5 space-y-3">
+          <Link href="/login" onClick={closeMobile} className="block w-full text-center py-3 rounded-full border-2 border-ink bg-white text-ink font-semibold hover:bg-accent hover:border-accent transition-colors text-sm">
+            Create Account
+          </Link>
+          <Link href="/login" onClick={closeMobile} className="block w-full text-center py-3 rounded-full bg-accent text-ink font-semibold hover:bg-accent-hover transition-colors text-sm">
+            Login
+          </Link>
         </div>
       </div>
-
-      <PartnerModal
-        isOpen={partnerModal.isOpen}
-        onOpenChange={partnerModal.onOpenChange}
-        submitting={submitting}
-        onSubmit={mockSubmit}
-      />
-
-      <DemoModal
-        isOpen={demoModal.isOpen}
-        onOpenChange={demoModal.onOpenChange}
-        submitting={submitting}
-        onSubmit={mockSubmit}
-      />
     </>
   );
 }

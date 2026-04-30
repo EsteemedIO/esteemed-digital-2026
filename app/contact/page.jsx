@@ -1,67 +1,110 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { theme } from "@/lib/theme";
 
 export default function ContactPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    try {
+      await fetch("/api/lead-capture", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          company,
+          message,
+          source: "contact-form",
+        }),
+      });
+    } catch {
+      // Failures logged server-side; don't block the user
+    }
+
+    router.push("/thanks");
+  };
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-12 lg:py-20">
-      {/* Hero */}
-      <div className="text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white">Talk to an Expert</h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-400">
-          Tell us about your goals. We'll recommend the best mix of products, solutions, and services for fast time-to-value.
-        </p>
-      </div>
+    <>
+      <section className="py-28">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">Get in touch.</h1>
+          <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+            Tell us about your project or ask us anything. A real person responds within one business day.
+          </p>
+        </div>
+      </section>
 
-      {/* Form + Sidebar */}
-      <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-3">
-        {/* Form */}
-        <form
-          className="md:col-span-2 grid grid-cols-1 gap-4"
-          onSubmit={(e) => { e.preventDefault(); alert("Thanks! We'll follow up shortly."); }}
-        >
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <input className="w-full rounded-xl border border-zinc-300/70 bg-white/80 p-3 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-start)] dark:border-zinc-700/70 dark:bg-zinc-900/80" placeholder="First name" required />
-            <input className="w-full rounded-xl border border-zinc-300/70 bg-white/80 p-3 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-start)] dark:border-zinc-700/70 dark:bg-zinc-900/80" placeholder="Last name" required />
-          </div>
-          <input className="w-full rounded-xl border border-zinc-300/70 bg-white/80 p-3 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-start)] dark:border-zinc-700/70 dark:bg-zinc-900/80" type="email" placeholder="Work email" required />
-          <input className="w-full rounded-xl border border-zinc-300/70 bg-white/80 p-3 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-start)] dark:border-zinc-700/70 dark:bg-zinc-900/80" placeholder="Company" />
-          <textarea className="w-full rounded-xl border border-zinc-300/70 bg-white/80 p-3 text-sm outline-none focus:ring-2 focus:ring-[var(--brand-start)] dark:border-zinc-700/70 dark:bg-zinc-900/80" placeholder="How can we help?" rows={6} />
-          <div>
-            <button className="rounded-full px-6 py-3 text-white font-medium" style={{ background: "linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))" }}>
-              Submit
+      <section className="pb-20">
+        <div className="max-w-2xl mx-auto px-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              required
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm outline-none focus:border-zinc-400 transition-colors"
+            />
+            <input
+              type="email"
+              required
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm outline-none focus:border-zinc-400 transition-colors"
+            />
+            <input
+              type="text"
+              placeholder="Company (optional)"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm outline-none focus:border-zinc-400 transition-colors"
+            />
+            <textarea
+              required
+              placeholder="Message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              rows={5}
+              className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm outline-none focus:border-zinc-400 transition-colors resize-none"
+            />
+            <input type="hidden" name="source" value="contact-form" />
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors disabled:opacity-60"
+            >
+              {submitting ? "Sending..." : "Send message"}
             </button>
-          </div>
-        </form>
+          </form>
+          <p className="text-xs text-zinc-400 mt-4 text-center">
+            We respond within one business day. We don't share your information.
+          </p>
 
-        {/* Sidebar */}
-        <aside className="space-y-6">
-          <div>
-            <div className="text-sm font-semibold text-zinc-900 dark:text-white">Sales & Partnerships</div>
-            <div className={`text-sm ${theme.brand.subtext}`}>sales@esteemed.ai • partners@esteemed.ai</div>
-          </div>
-          <div>
-            <div className="text-sm font-semibold text-zinc-900 dark:text-white">Support</div>
-            <div className={`text-sm ${theme.brand.subtext}`}>support@esteemed.ai • Status page</div>
-          </div>
-          <div>
-            <div className="text-sm font-semibold text-zinc-900 dark:text-white">Offices</div>
-            <div className="mt-3 grid grid-cols-2 gap-3">
-              {["San Francisco", "New York", "Remote"].map((c, i) => (
-                <div key={i} className="bg-zinc-200 dark:bg-zinc-800 h-24 rounded-xl flex items-center justify-center text-xs text-zinc-600 dark:text-zinc-400">[{c} map]</div>
-              ))}
+          {/* Calendar section */}
+          <div className="mt-16 text-center">
+            <h2 className="text-2xl font-bold text-ink mb-4">Prefer to talk live?</h2>
+            <p className="text-zinc-600 mb-6">
+              Book a 15-minute call. No pressure, no pitch — just an honest conversation about what you need.
+            </p>
+            {/* Cal.com embed placeholder */}
+            <div className="rounded-2xl border border-zinc-200 p-8 text-zinc-400 text-sm">
+              Calendar booking — coming soon
             </div>
           </div>
-          <div className="bg-zinc-100/60 dark:bg-zinc-900/60 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 p-4">
-            <div className="text-sm font-semibold text-zinc-900 dark:text-white">Become a partner</div>
-            <div className={`text-sm ${theme.brand.subtext}`}>Integrators, technology, and cloud partners welcome.</div>
-            <button className="mt-3 text-sm font-medium" style={{ color: "var(--brand-start)" }} onClick={() => router.push("/partners")}>Learn more</button>
-          </div>
-        </aside>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }

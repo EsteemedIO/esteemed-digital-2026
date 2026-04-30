@@ -1,28 +1,22 @@
 export default function sitemap() {
-  const baseUrl = 'https://esteemed.digital';
+  const baseUrl = 'https://esteemedapp.com';
 
   const routes = [
-    '',
-    '/products',
-    '/services',
-    '/solutions',
-    '/research',
-    '/team',
-    '/developers',
-    '/deployment',
-    '/partners',
-    '/contact',
-    '/news',
-    '/about',
-    '/careers',
-    '/privacy',
-    '/terms',
+    { path: '', priority: 1, freq: 'weekly' },
+    { path: '/services', priority: 0.9, freq: 'monthly' },
+    { path: '/agents', priority: 0.9, freq: 'monthly' },
+    { path: '/pricing', priority: 0.9, freq: 'monthly' },
+    { path: '/migrate', priority: 0.9, freq: 'monthly' },
+    { path: '/about', priority: 0.8, freq: 'monthly' },
+    { path: '/contact', priority: 0.8, freq: 'monthly' },
+    { path: '/privacy', priority: 0.3, freq: 'yearly' },
+    { path: '/terms', priority: 0.3, freq: 'yearly' },
   ];
 
-  return routes.map((route) => ({
-    url: `${baseUrl}${route}`,
+  return routes.map((r) => ({
+    url: `${baseUrl}${r.path}`,
     lastModified: new Date(),
-    changeFrequency: route === '' ? 'weekly' : 'monthly',
-    priority: route === '' ? 1 : 0.8,
+    changeFrequency: r.freq,
+    priority: r.priority,
   }));
 }

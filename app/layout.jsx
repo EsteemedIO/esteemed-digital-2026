@@ -1,40 +1,45 @@
 import "./globals.css";
+import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
 export const metadata = {
-  title: {
-    default: "Esteemed Digital",
-    template: "%s | Esteemed Digital",
+  icons: {
+    icon: "/favicon.svg",
   },
-  description: "AI Lab • Services • Products — built on Esteemed Intelligence, Esteemed AI, and Esteemed Agents.",
-  keywords: ["AI", "machine learning", "enterprise AI", "RAG", "agents", "neural memory"],
-  authors: [{ name: "Esteemed Digital" }],
+  title: {
+    default: "Esteemed — AI + Human gold standard",
+    template: "%s | Esteemed",
+  },
+  description: "Build everything you need with Esteemed. AI to start. Experts to grow.",
   openGraph: {
-    title: "Esteemed Digital",
-    description: "AI Lab • Services • Products — built on Esteemed Intelligence, Esteemed AI, and Esteemed Agents.",
-    url: "https://esteemed.digital",
-    siteName: "Esteemed Digital",
+    title: "Esteemed — AI + Human gold standard",
+    description: "Build everything you need with Esteemed. AI to start. Experts to grow.",
+    url: "https://esteemed.io",
+    siteName: "Esteemed",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Esteemed Digital",
-    description: "AI Lab • Services • Products",
+    title: "Esteemed — AI + Human gold standard",
+    description: "Build everything you need with Esteemed. AI to start. Experts to grow.",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
+    <html lang="en" className={inter.variable}>
+      <body className="bg-paper text-ink antialiased font-sans">
         <Providers>
-          <div className="min-h-screen bg-white text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-50">
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </div>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>
