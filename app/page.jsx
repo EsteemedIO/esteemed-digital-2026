@@ -102,44 +102,56 @@ function PricingPreview() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+          key={annual ? "annual" : "monthly"}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-[fadeIn_0.3s_ease-in-out]"
+        >
           {previewTiers.map((tier) => {
             const price = annual ? tier.annual : tier.monthly;
+            const isRec = tier.recommended;
             return (
               <div
                 key={tier.key}
-                className={`rounded-2xl border p-8 flex flex-col relative transition-shadow hover:shadow-lg ${
-                  tier.recommended ? "border-accent" : "border-zinc-200"
+                className={`rounded-2xl p-8 flex flex-col relative transition-shadow hover:shadow-lg ${
+                  isRec ? "bg-ink text-white" : "bg-accent text-ink"
                 }`}
               >
-                {tier.recommended && (
+                {isRec && (
                   <span className="absolute -top-3 left-6 bg-accent text-ink text-xs font-bold px-3 py-1 rounded-full">
                     Most popular
                   </span>
                 )}
-                <h3 className="text-sm font-medium text-zinc-500">{tier.name}</h3>
+                <h3 className={`text-sm font-medium ${isRec ? "text-zinc-400" : "text-ink/60"}`}>{tier.name}</h3>
                 <div className="mt-1 mb-1">
                   {price === 0 ? (
-                    <span className="text-4xl font-bold text-ink">Free</span>
+                    <span className="text-4xl font-bold">Free</span>
                   ) : (
                     <>
                       {annual && tier.monthly > 0 && (
-                        <span className="text-sm text-zinc-400 line-through mr-2">${tier.monthly}</span>
+                        <span className={`text-sm line-through mr-2 ${isRec ? "text-zinc-500" : "text-ink/40"}`}>${tier.monthly}</span>
                       )}
-                      <span className="text-4xl font-bold text-ink">${price}</span>
-                      <span className="text-zinc-500 text-sm">/mo</span>
+                      <span className="text-4xl font-bold">${price}</span>
+                      <span className={`text-sm ${isRec ? "text-zinc-400" : "text-ink/60"}`}>/mo</span>
                     </>
                   )}
                 </div>
-                <p className="text-sm text-zinc-500 mt-1">{tier.credits}</p>
-                <p className="text-sm text-zinc-600 mb-6 mt-2">{tier.description}</p>
+                <p className={`text-sm mt-1 ${isRec ? "text-zinc-400" : "text-ink/70"}`}>{tier.credits}</p>
+                <p className={`text-sm mb-4 mt-2 ${isRec ? "text-zinc-300" : "text-ink/80"}`}>{tier.description}</p>
+                <ul className="space-y-2 mb-6">
+                  {tier.features.map((f) => (
+                    <li key={f} className={`flex items-start gap-2 text-sm ${isRec ? "text-zinc-300" : "text-ink/80"}`}>
+                      <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${isRec ? "text-accent" : "text-ink"}`} strokeWidth={2} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
                 <div className="mt-auto">
                   <Link
                     href="/pricing"
                     className={`block text-center py-3 rounded-full text-sm font-bold transition-colors ${
-                      tier.recommended
+                      isRec
                         ? "bg-accent text-ink hover:bg-accent-hover"
-                        : "border-2 border-ink text-ink hover:bg-ink hover:text-paper"
+                        : "bg-ink text-white hover:bg-ink/90"
                     }`}
                   >
                     {tier.cta}
@@ -248,34 +260,40 @@ export default function Home() {
 
           <CascadingCards cards={[
             {
-              heading: "Build",
-              description: "Tell Create what you want. AI builds your first version in minutes — structure, content, and design included.",
-              cta: "Try Create",
+              label: "CREATE",
+              heading: "Describe.",
+              description: "Tell our AI what you need. It drafts a real, brand-aware site in seconds — copy, layout, photography and all.",
+              cta: "Try a prompt →",
               ctaHref: "/products/create",
               image: "/images/video-call.jpg.webp",
-              bgColor: "neutral",
+              bgColor: "butter",
             },
             {
-              heading: "Match",
-              description: "Need design polish, custom code, SEO, or strategy? We match you with vetted experts from our 35,000-strong Colleagues network.",
-              cta: "Meet Colleagues",
-              ctaHref: "/products/colleagues",
+              label: "CUSTOMIZE",
+              heading: "Refine.",
+              description: "Tailor your site by chatting with the agent — no templates to fight.",
+              cta: "See the editor →",
+              ctaHref: "/products/create",
               image: "/images/pexels-sora-shimazaki-5668856.jpg.webp",
-              bgColor: "brand",
+              bgColor: "sky",
             },
             {
-              heading: "Work",
-              description: "Your expert delivers. You stay in control with project management built in. No surprises, no scope creep.",
+              label: "MANAGE",
+              heading: "Ship.",
+              description: "You focus on the business, count on us for responsive design, hosting, daily backups, fast everywhere, all included.",
+              cta: "Watch it work →",
+              ctaHref: "/products/cloud",
               image: "/images/support-agent.jpg.webp",
-              bgColor: "neutral",
+              bgColor: "lilac",
             },
             {
-              heading: "Grow",
-              description: "Your site is live. Your expert is on call when you need more. AI agents handle the routine work so you can focus on your business.",
-              cta: "Post a Job",
+              label: "GROW",
+              heading: "Supported by humans.",
+              description: "You create it. Real experts from our 35,000-strong network help you grow it.",
+              cta: "Meet the network →",
               ctaHref: "/products/colleagues",
               image: "/images/career-coaching-2.jpg.webp",
-              bgColor: "ink",
+              bgColor: "mint",
             },
           ]} />
 
