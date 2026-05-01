@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import LoginFork from "@/components/LoginFork";
-import { hostingTiers, agents, agentSuite, customAgents, migrateFAQ, anchorReferences } from "@/lib/data";
+import { cloudTiers, agents, agentFleet, customAgents, migrateFAQ, anchorReferences } from "@/lib/data";
 
 export default function MigratePage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -56,7 +56,7 @@ export default function MigratePage() {
             <div>
               <h3 className="text-xl font-bold text-ink mb-3">Your site does work for you</h3>
               <p className="text-zinc-600 leading-relaxed">
-                Add Voice Agent and your site answers missed calls. Add Social Agent and it writes posts in your voice. Add Blog Agent and it drafts newsletters that sound like you wrote them. None of this comes with a WordPress agency.
+                Add Social Manager and it drafts posts in your voice. Add Blogger and it writes newsletters that sound like you. Add Marketer and it runs email campaigns on autopilot. None of this comes with a WordPress agency.
               </p>
             </div>
             <div>
@@ -96,25 +96,16 @@ export default function MigratePage() {
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">What it costs after you're moved</h2>
           <p className="text-zinc-600 mb-10">Most customers move from a more expensive WordPress agency to one of these and pay less for a better product.</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {hostingTiers.map((tier) => (
-              <div key={tier.key} className={`rounded-2xl border p-8 relative ${tier.recommended ? "border-accent" : "border-zinc-200"}`}>
-                {tier.recommended && (
-                  <span className="absolute -top-3 left-6 bg-accent text-ink text-xs font-bold px-3 py-1 rounded-full">Recommended</span>
-                )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cloudTiers.filter((t) => t.annual !== null).map((tier) => (
+              <div key={tier.key} className="rounded-2xl border border-zinc-200 p-6">
                 <h3 className="text-xl font-bold text-ink mb-1">{tier.name}</h3>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-ink">${tier.price}</span>
+                <div className="mb-4">
+                  {tier.fromPrice && <span className="text-sm text-zinc-500">From </span>}
+                  <span className="text-3xl font-bold text-ink">${tier.annual}</span>
                   <span className="text-zinc-500">/mo</span>
                 </div>
-                <ul className="space-y-3">
-                  {tier.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-zinc-600">
-                      <Check className="w-4 h-4 text-ink flex-shrink-0 mt-0.5" strokeWidth={2} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-sm text-zinc-600">{tier.description}</p>
               </div>
             ))}
           </div>
@@ -126,7 +117,7 @@ export default function MigratePage() {
       <section className="py-20 border-t border-zinc-100">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Add real intelligence when you're ready</h2>
-          <p className="text-zinc-600 mb-10">Most customers add Voice Agent first because the ROI is immediate — every missed call becomes a captured lead.</p>
+          <p className="text-zinc-600 mb-10">Most customers add Social Manager first because the ROI is immediate — consistent posts in your voice across every platform.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {agents.map((a) => (
               <div key={a.key} className="rounded-2xl border border-zinc-200 p-6">
@@ -135,8 +126,8 @@ export default function MigratePage() {
               </div>
             ))}
             <div className="rounded-2xl border border-accent p-6">
-              <h3 className="text-lg font-bold text-ink mb-1">{agentSuite.name} — ${agentSuite.price}/mo</h3>
-              <p className="text-sm text-zinc-600">All four bundled. Save ${agentSuite.savings}/mo vs a la carte.</p>
+              <h3 className="text-lg font-bold text-ink mb-1">{agentFleet.name} — ${agentFleet.price}/mo</h3>
+              <p className="text-sm text-zinc-600">All four bundled. Save ${agentFleet.savings}/mo vs a la carte.</p>
             </div>
             <div className="rounded-2xl border border-zinc-200 p-6">
               <h3 className="text-lg font-bold text-ink mb-1">{customAgents.name} — {customAgents.priceDisplay}</h3>

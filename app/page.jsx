@@ -1,40 +1,49 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { Sparkles, Cloud, Bot, Brain, Users, Headphones, Check } from "lucide-react";
 import ChatHero from "@/components/ChatHero";
+import CascadingCards from "@/components/CascadingCards";
+import { createTiers } from "@/lib/data";
 
 const products = [
+  {
+    name: "Esteemed Create",
+    description: "Build websites and apps by talking to AI. Edit by conversation, publish in one click.",
+    href: "/products/create",
+    icon: Sparkles,
+  },
   {
     name: "Esteemed Cloud",
     description: "Hosting that scales with you. Built for what you build.",
     href: "/products/cloud",
+    icon: Cloud,
   },
   {
     name: "Esteemed Agents",
     description: "AI agents that handle the work. Starting with Echo.",
     href: "/products/agents",
+    icon: Bot,
   },
   {
     name: "Esteemed Intelligence",
     description: "The intelligence layer that powers it all.",
     href: "/products/intelligence",
+    icon: Brain,
   },
   {
     name: "Esteemed Colleagues",
     description: "The marketplace for vetted experts. Hire or get hired.",
     href: "/products/colleagues",
+    icon: Users,
   },
   {
     name: "Esteemed Support",
     description: "Get expert human help with what you build or existing apps.",
-    href: "/products/support",
+    href: "/services/support",
+    icon: Headphones,
   },
-];
-
-const segments = [
-  { name: "Personal", href: "/solutions/segments" },
-  { name: "Small Business", href: "/solutions/segments" },
-  { name: "Enterprise", href: "/solutions/segments" },
 ];
 
 const steps = [
@@ -59,6 +68,100 @@ const steps = [
     text: "Your site is live. Your expert is on call when you need more.",
   },
 ];
+
+const previewTiers = createTiers.filter((t) => t.key !== "enterprise");
+
+function PricingPreview() {
+  const [annual, setAnnual] = useState(true);
+
+  return (
+    <section className="py-20 border-t border-zinc-100">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
+            Start free. Scale as you grow.
+          </h2>
+          <p className="text-lg text-zinc-600 max-w-2xl mx-auto mb-8">
+            Every plan includes AI-powered building, Studio IDE, and hosting at publish.
+          </p>
+
+          <div className="flex items-center justify-center gap-3">
+            <button
+              onClick={() => setAnnual(false)}
+              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors ${!annual ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setAnnual(true)}
+              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors flex items-center gap-2 ${annual ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
+            >
+              Yearly
+              <span className="text-xs bg-accent text-ink px-2 py-0.5 rounded-full font-bold">Save</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {previewTiers.map((tier) => {
+            const price = annual ? tier.annual : tier.monthly;
+            return (
+              <div
+                key={tier.key}
+                className={`rounded-2xl border p-8 flex flex-col relative transition-shadow hover:shadow-lg ${
+                  tier.recommended ? "border-accent" : "border-zinc-200"
+                }`}
+              >
+                {tier.recommended && (
+                  <span className="absolute -top-3 left-6 bg-accent text-ink text-xs font-bold px-3 py-1 rounded-full">
+                    Most popular
+                  </span>
+                )}
+                <h3 className="text-sm font-medium text-zinc-500">{tier.name}</h3>
+                <div className="mt-1 mb-1">
+                  {price === 0 ? (
+                    <span className="text-4xl font-bold text-ink">Free</span>
+                  ) : (
+                    <>
+                      {annual && tier.monthly > 0 && (
+                        <span className="text-sm text-zinc-400 line-through mr-2">${tier.monthly}</span>
+                      )}
+                      <span className="text-4xl font-bold text-ink">${price}</span>
+                      <span className="text-zinc-500 text-sm">/mo</span>
+                    </>
+                  )}
+                </div>
+                <p className="text-sm text-zinc-500 mt-1">{tier.credits}</p>
+                <p className="text-sm text-zinc-600 mb-6 mt-2">{tier.description}</p>
+                <div className="mt-auto">
+                  <Link
+                    href="/pricing"
+                    className={`block text-center py-3 rounded-full text-sm font-bold transition-colors ${
+                      tier.recommended
+                        ? "bg-accent text-ink hover:bg-accent-hover"
+                        : "border-2 border-ink text-ink hover:bg-ink hover:text-paper"
+                    }`}
+                  >
+                    {tier.cta}
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="text-center mt-10">
+          <Link
+            href="/pricing"
+            className="text-sm font-bold text-ink underline underline-offset-4 hover:no-underline"
+          >
+            See all pricing &rarr;
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const scrollToTop = () => {
@@ -143,17 +246,38 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((s) => (
-              <div key={s.num} className="relative">
-                <span className="text-5xl font-bold text-accent">{s.num}</span>
-                <h3 className="text-xl font-bold text-ink mt-2 mb-2">
-                  {s.title}
-                </h3>
-                <p className="text-zinc-600 leading-relaxed">{s.text}</p>
-              </div>
-            ))}
-          </div>
+          <CascadingCards cards={[
+            {
+              heading: "Build",
+              description: "Tell Create what you want. AI builds your first version in minutes — structure, content, and design included.",
+              cta: "Try Create",
+              ctaHref: "/products/create",
+              image: "/images/video-call.jpg.webp",
+              bgColor: "neutral",
+            },
+            {
+              heading: "Match",
+              description: "Need design polish, custom code, SEO, or strategy? We match you with vetted experts from our 35,000-strong Colleagues network.",
+              cta: "Meet Colleagues",
+              ctaHref: "/products/colleagues",
+              image: "/images/pexels-sora-shimazaki-5668856.jpg.webp",
+              bgColor: "brand",
+            },
+            {
+              heading: "Work",
+              description: "Your expert delivers. You stay in control with project management built in. No surprises, no scope creep.",
+              image: "/images/support-agent.jpg.webp",
+              bgColor: "neutral",
+            },
+            {
+              heading: "Grow",
+              description: "Your site is live. Your expert is on call when you need more. AI agents handle the routine work so you can focus on your business.",
+              cta: "Post a Job",
+              ctaHref: "/products/colleagues",
+              image: "/images/career-coaching-2.jpg.webp",
+              bgColor: "ink",
+            },
+          ]} />
 
           <div className="text-center mt-12">
             <p className="text-zinc-600">
@@ -170,7 +294,7 @@ export default function Home() {
       </section>
 
       {/* Section 4: Other products & services */}
-      <section className="py-20 border-t border-zinc-100">
+      <section className="py-20 bg-accent">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
@@ -183,45 +307,64 @@ export default function Home() {
               <Link
                 key={p.name}
                 href={p.href}
-                className="rounded-2xl border border-zinc-200 p-8 hover:shadow-lg transition-shadow block"
+                className="rounded-2xl border-2 border-[#282828] p-8 hover:shadow-lg transition-shadow block"
               >
-                <h3 className="text-lg font-bold text-ink mb-2">{p.name}</h3>
-                <p className="text-sm text-zinc-600">{p.description}</p>
+                <div className="flex items-start gap-4">
+                  <p.icon className="w-6 h-6 text-ink flex-shrink-0 mt-0.5" strokeWidth={1.5} />
+                  <div>
+                    <h3 className="text-lg font-bold text-ink mb-2">{p.name}</h3>
+                    <p className="text-sm text-zinc-600">{p.description}</p>
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Section 5: Audience segments */}
+      {/* Section 5: Pricing Preview */}
+      <PricingPreview />
+
+      {/* Section 6: Testimonials */}
       <section className="py-20 border-t border-zinc-100">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {segments.map((seg) => (
-              <Link
-                key={seg.name}
-                href={seg.href}
-                className="rounded-2xl border border-zinc-200 p-8 text-center hover:shadow-lg transition-shadow block"
-              >
-                <h3 className="text-xl font-bold text-ink">{seg.name}</h3>
-              </Link>
+          <div className="text-center mb-12">
+            <p className="text-sm font-medium text-zinc-500 uppercase tracking-wide mb-2">Trusted by builders</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-ink">Endorsed by innovators</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                quote: "Esteemed matched us with a senior React developer in 48 hours. The quality of talent in their network is exceptional.",
+                name: "Engineering Director",
+                company: "IEEE",
+              },
+              {
+                quote: "We migrated from Drupal to Esteemed Create and cut our content update time from days to minutes. The AI understands our brand voice.",
+                name: "Digital Marketing Lead",
+                company: "Alvernia University",
+              },
+              {
+                quote: "Having access to 35,000 vetted professionals means we never wait for talent. Esteemed is our first call for every technical hire.",
+                name: "CTO",
+                company: "Cambridge Redevelopment Authority",
+              },
+            ].map((t) => (
+              <div key={t.company} className="rounded-2xl border border-zinc-200 p-8">
+                <blockquote className="text-[.9375rem] text-ink leading-relaxed mb-6">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <div>
+                  <p className="text-sm font-semibold text-ink">{t.name}</p>
+                  <p className="text-sm text-zinc-500">{t.company}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Section 6: Heritage */}
-      <section className="py-20 border-t border-zinc-100">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-lg text-zinc-600 leading-relaxed">
-            Founded in 2011 as Drupalcontractors.com. Rebranded to Esteemed in
-            2019. 35,000+ professionals, real clients including IEEE, Alvernia
-            University, and the Cambridge Redevelopment Authority.
-          </p>
-        </div>
-      </section>
-
-      {/* Section 7: Final CTA */}
+      {/* Final CTA */}
       <section className="bg-ink py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">

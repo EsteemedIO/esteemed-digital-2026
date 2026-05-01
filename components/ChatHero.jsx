@@ -52,7 +52,9 @@ export default function ChatHero() {
   }, [placeholderIndex, inputValue]);
 
   const handleSubmit = () => {
-    router.push("/products/create");
+    const params = new URLSearchParams({ redirect: "create" });
+    if (inputValue) params.set("prompt", inputValue);
+    router.push(`/signup?${params.toString()}`);
   };
 
   return (

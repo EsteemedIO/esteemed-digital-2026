@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Cloud, Shield, HardDrive, Activity, Check, ArrowRight } from "lucide-react";
-import { hostingTiers } from "@/lib/data";
+import { cloudTiers } from "@/lib/data";
 
 export const metadata = {
   title: "Cloud",
@@ -95,49 +95,36 @@ export default function CloudPage() {
           <h2 className="text-3xl font-bold text-ink mb-10 text-center">
             Pick your plan
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {hostingTiers.map((tier) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cloudTiers.map((tier) => (
               <div
                 key={tier.key}
-                className={`rounded-2xl border p-8 ${
-                  tier.recommended
-                    ? "border-accent shadow-lg"
-                    : "border-zinc-200"
-                }`}
+                className="rounded-2xl border border-zinc-200 p-6"
               >
-                {tier.recommended && (
-                  <p className="text-xs font-bold uppercase tracking-wide text-ink mb-2">
-                    Most popular
-                  </p>
-                )}
                 <h3 className="text-2xl font-bold text-ink mb-1">
                   {tier.name}
                 </h3>
-                <p className="text-3xl font-bold text-ink mb-6">
-                  ${tier.price}
-                  <span className="text-sm text-zinc-500 font-normal">
-                    /mo
-                  </span>
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {tier.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-start gap-2 text-sm text-zinc-600"
-                    >
-                      <Check
-                        className="w-4 h-4 text-ink flex-shrink-0 mt-0.5"
-                        strokeWidth={2}
-                      />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mb-4">
+                  {tier.annual === null ? (
+                    <span className="text-2xl font-bold text-ink">Custom</span>
+                  ) : (
+                    <>
+                      {tier.fromPrice && <span className="text-sm text-zinc-500">From </span>}
+                      <span className="text-3xl font-bold text-ink">
+                        ${tier.annual}
+                      </span>
+                      <span className="text-sm text-zinc-500 font-normal">
+                        /mo
+                      </span>
+                    </>
+                  )}
+                </div>
+                <p className="text-sm text-zinc-600 mb-6">{tier.description}</p>
                 <Link
                   href="/pricing"
                   className="inline-flex items-center justify-center w-full px-6 py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
                 >
-                  {tier.cta}
+                  {tier.annual === null ? "Contact us" : "Get started"}
                 </Link>
               </div>
             ))}

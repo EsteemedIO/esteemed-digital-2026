@@ -54,12 +54,12 @@ const resourceItems = [
   { key: "resource-center", name: "Business Resource Center", href: "/resources" },
   { key: "career-catalyst", name: "Career Catalyst Blog", href: "/blog/career-catalyst" },
   { key: "newsroom", name: "Newsroom", href: "/newsroom" },
-  { key: "documentation", name: "Documentation", href: "/help" },
+  { key: "documentation", name: "Documentation", href: "https://help.esteemed.io", external: true },
 ];
 
 const communityItems = [
   { key: "events", name: "Events", href: "/resources/events" },
-  { key: "discord", name: "Discord", href: "https://discord.gg/esteemed" },
+  { key: "discord", name: "Discord", href: "https://discord.gg/esteemed", external: true },
 ];
 
 const resourceFeatured = [
@@ -97,12 +97,14 @@ function SectionHeading({ children, href }) {
 }
 
 /* Menu link */
-function MegaMenuLink({ href, children, desc, onClick }) {
+function MegaMenuLink({ href, children, desc, onClick, external }) {
+  const props = external ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
+  const Tag = external ? "a" : Link;
   return (
-    <Link href={href} onClick={onClick} className="block py-2">
+    <Tag {...props} onClick={onClick} className="block py-2">
       <span className="text-[.875rem] font-medium text-[#231F20]">{children}</span>
       {desc && <span className="block text-xs text-[#444] mt-0.5">{desc}</span>}
-    </Link>
+    </Tag>
   );
 }
 
@@ -182,7 +184,7 @@ export default function Navbar() {
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
             <Link
-              href="/login"
+              href="/signup"
               className="inline-flex items-center px-5 py-2 rounded-full border-2 border-ink bg-white text-ink text-sm font-semibold hover:bg-accent hover:border-accent transition-colors"
             >
               Create Account
@@ -270,13 +272,13 @@ export default function Navbar() {
                 <div>
                   <SectionHeading>Resources</SectionHeading>
                   {resourceItems.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div>
                   <SectionHeading>Community</SectionHeading>
                   {communityItems.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div />

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import LoginFork from "@/components/LoginFork";
-import { hostingTiers, humanServices, agents, agentSuite } from "@/lib/data";
+import { cloudTiers, humanServices, agents, agentFleet } from "@/lib/data";
 import { Check } from "lucide-react";
 
 export default function ServicesPage() {
@@ -39,8 +39,8 @@ export default function ServicesPage() {
             ))}
           </div>
           <div className="rounded-2xl border border-accent p-8">
-            <h3 className="text-xl font-bold text-ink mb-1">{agentSuite.name} — ${agentSuite.price}/mo</h3>
-            <p className="text-zinc-600">All four agents bundled. Save ${agentSuite.savings}/mo vs a la carte. <Link href="/pricing" className="underline underline-offset-4 hover:no-underline">See pricing</Link></p>
+            <h3 className="text-xl font-bold text-ink mb-1">{agentFleet.name} — ${agentFleet.price}/mo</h3>
+            <p className="text-zinc-600">All four agents bundled. Save ${agentFleet.savings}/mo vs a la carte. <Link href="/pricing" className="underline underline-offset-4 hover:no-underline">See pricing</Link></p>
           </div>
         </div>
       </section>
@@ -50,25 +50,16 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Hosting & support</h2>
           <p className="text-zinc-600 mb-10">Every tier includes prompt-driven editing, SSL, backups, and monitoring.</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {hostingTiers.map((tier) => (
-              <div key={tier.key} className={`rounded-2xl border p-8 relative ${tier.recommended ? "border-accent" : "border-zinc-200"}`}>
-                {tier.recommended && (
-                  <span className="absolute -top-3 left-6 bg-accent text-ink text-xs font-bold px-3 py-1 rounded-full">Most popular</span>
-                )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cloudTiers.filter((t) => t.annual !== null).map((tier) => (
+              <div key={tier.key} className="rounded-2xl border border-zinc-200 p-6">
                 <h3 className="text-xl font-bold text-ink mb-1">{tier.name}</h3>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-ink">${tier.price}</span>
+                <div className="mb-4">
+                  {tier.fromPrice && <span className="text-sm text-zinc-500">From </span>}
+                  <span className="text-3xl font-bold text-ink">${tier.annual}</span>
                   <span className="text-zinc-500">/mo</span>
                 </div>
-                <ul className="space-y-3">
-                  {tier.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-zinc-600">
-                      <Check className="w-4 h-4 text-ink flex-shrink-0 mt-0.5" strokeWidth={2} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-sm text-zinc-600">{tier.description}</p>
               </div>
             ))}
           </div>
