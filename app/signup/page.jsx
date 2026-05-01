@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Sparkles, Users } from "lucide-react";
@@ -10,7 +10,7 @@ const REDIRECT_URLS = {
   colleagues: "/colleagues/hire-signup",
 };
 
-export default function SignupPage() {
+function SignupForm() {
   const searchParams = useSearchParams();
   const redirectParam = searchParams.get("redirect");
   const promptParam = searchParams.get("prompt");
@@ -169,5 +169,13 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[calc(100vh-64px)] flex items-center justify-center"><p className="text-zinc-400">Loading...</p></div>}>
+      <SignupForm />
+    </Suspense>
   );
 }
