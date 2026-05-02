@@ -5,7 +5,7 @@ import { agents } from "@/lib/data";
 export const metadata = {
   title: "Agents",
   description:
-    "Meet Esteemed Agents — starting with Echo. AI agents trained on your business, backed by real people.",
+    "Meet Esteemed Agents — featuring Star. AI agents trained on your business, backed by real people.",
 };
 
 export default function AgentsPage() {
@@ -18,7 +18,7 @@ export default function AgentsPage() {
             Products / Agents
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Meet Esteemed Agents — starting with Echo
+            Meet Esteemed Agents — featuring Star
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             AI agents that handle real work — trained on your business, backed
@@ -27,7 +27,7 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      {/* Echo featured */}
+      {/* Star featured */}
       <section className="py-20 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6">
           <div className="rounded-2xl border border-accent p-8 md:p-10">
@@ -37,14 +37,14 @@ export default function AgentsPage() {
                 strokeWidth={1.5}
               />
               <div>
-                <h2 className="text-3xl font-bold text-ink mb-3">Echo</h2>
+                <h2 className="text-3xl font-bold text-ink mb-3">Star</h2>
                 <p className="text-lg text-zinc-600 leading-relaxed mb-4">
                   Your AI assistant that knows your business. Ask it anything
                   about your content, customers, and operations. Powered by
                   retrieval-augmented generation.
                 </p>
                 <p className="text-zinc-600 leading-relaxed mb-4">
-                  Echo indexes your website, documents, and knowledge base to
+                  Star indexes your website, documents, and knowledge base to
                   answer questions with verified, sourced responses. It learns
                   your tone, understands your products, and gets smarter with
                   every interaction. Deploy it as a chat widget, internal tool,

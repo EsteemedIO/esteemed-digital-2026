@@ -60,25 +60,25 @@ export default function ChatHero() {
   return (
     <section
       id="chat-hero"
-      className="flex flex-col items-center justify-center px-6"
-      style={{ minHeight: "85vh" }}
+      className="flex flex-col items-center justify-center px-6 bg-accent"
+      style={{ minHeight: "85vh", paddingTop: "5%", paddingBottom: "5%" }}
     >
-      <div className="w-full max-w-[720px] mx-auto text-center">
+      <div className="w-full max-w-[1080px] mx-auto text-center">
         <div className="mb-6">
-          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent text-ink text-sm font-semibold tracking-wide">
-            AI + Human gold standard
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-ink text-white text-sm font-semibold tracking-wide">
+            The AI + Human gold standard
           </span>
         </div>
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-ink mb-4">
-          Build everything you need with Esteemed.
+        <h1 className="heading-1 mb-4">
+          Build, Hire, and Ship smarter.
         </h1>
 
-        <p className="text-lg text-zinc-600 mb-10 max-w-xl mx-auto leading-relaxed">
-          AI to start. Experts to grow.
+        <p className="subtitle mb-10 max-w-2xl mx-auto">
+          AI to start. Hire experts to grow.
         </p>
 
-        <div className="relative w-full text-left">
+        <div className="relative w-full max-w-[720px] mx-auto text-left">
           <div className="relative rounded-2xl border-2 border-zinc-300 bg-paper transition-shadow focus-within:shadow-lg focus-within:border-zinc-400">
             <div className="relative min-h-[120px] p-6 pb-16">
               <textarea
@@ -110,7 +110,7 @@ export default function ChatHero() {
                 onClick={handleSubmit}
                 className={`inline-flex items-center gap-2 px-8 py-3 rounded-full text-sm font-bold transition-colors ${
                   inputValue
-                    ? "bg-accent text-ink hover:bg-accent-hover"
+                    ? "bg-ink text-white hover:bg-ink/90"
                     : "bg-zinc-200 text-zinc-400 cursor-default"
                 }`}
               >
@@ -127,8 +127,8 @@ export default function ChatHero() {
             <button
               key={type.label}
               onClick={() => setInputValue(type.label + " — ")}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-[#231F20] text-sm font-medium hover:bg-[#F5F5F5] transition-colors"
-              style={{ border: "1.5px solid #231F20" }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-ink text-sm font-medium hover:bg-accent-hover transition-colors"
+              style={{ border: "1.5px solid #282828" }}
             >
               <type.icon className="w-4 h-4" strokeWidth={1.5} />
               {type.label}

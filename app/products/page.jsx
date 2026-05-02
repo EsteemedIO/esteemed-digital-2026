@@ -30,7 +30,7 @@ const items = [
     name: "Agents",
     tagline: "AI that works like part of your team.",
     description:
-      "Voice, Social, Blog, Marketing, and Echo agents that handle real work — trained on your business, backed by real people.",
+      "Voice, Social, Blog, Marketing, and Star agents that handle real work — trained on your business, backed by real people.",
     icon: Bot,
     href: "/products/agents",
     type: "Product",

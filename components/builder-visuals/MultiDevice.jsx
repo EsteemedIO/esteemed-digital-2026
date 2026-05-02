@@ -185,7 +185,7 @@ export default function MultiDevice() {
       </div>
 
       {/* Desktop browser — right */}
-      <div className="absolute z-[2]" style={{ right: 24, top: 28, bottom: 28, width: "60%" }}>
+      <div className="absolute z-[2]" style={{ right: 24, top: 28, bottom: 100, width: "60%" }}>
         <PhotoBrowser
           url="fieldnotes.studio"
           toolbar={
@@ -252,7 +252,7 @@ export default function MultiDevice() {
       </div>
 
       {/* Human avatar overlay */}
-      <div className="absolute z-[4] flex flex-col items-center" style={{ right: 24, bottom: 38 }}>
+      <div className="absolute z-[10] flex flex-col items-center" style={{ right: 24, bottom: 38 }}>
         <div
           className="rounded-full relative"
           style={{
@@ -267,7 +267,7 @@ export default function MultiDevice() {
           <div className="absolute rounded-full" style={{ right: 4, bottom: 4, width: 18, height: 18, background: "#3CC97A", border: "3px solid #FFFFFF" }} />
         </div>
         {/* name pill */}
-        <div className="text-center rounded-[20px]" style={{ marginTop: -16, background: "#E0E9F2", padding: "8px 18px", boxShadow: "0 12px 26px -8px rgba(26,26,26,0.28), 0 0 0 1px rgba(26,26,26,0.05)", minWidth: 168 }}>
+        <div className="text-center rounded-[20px] relative z-[1]" style={{ marginTop: -16, background: "#E0E9F2", padding: "8px 18px", boxShadow: "0 12px 26px -8px rgba(26,26,26,0.28), 0 0 0 1px rgba(26,26,26,0.05)", minWidth: 168 }}>
           <div className="flex items-center justify-center gap-2">
             <div style={{ fontSize: 13, fontWeight: 700, color: "#1A1A1A", letterSpacing: -0.2, lineHeight: 1 }}>Maya Chen</div>
             <div className="flex gap-px">

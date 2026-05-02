@@ -11,7 +11,7 @@ module.exports = {
         ink: '#282828',
         paper: '#FFFFFF',
         accent: '#FEE546',
-        'accent-hover': '#FCD72B',
+        'accent-hover': '#fef08a',
       },
       borderRadius: {
         lg: '0.5rem',

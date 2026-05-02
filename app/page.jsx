@@ -5,6 +5,11 @@ import Link from "next/link";
 import { Sparkles, Cloud, Bot, Brain, Users, Headphones, Check } from "lucide-react";
 import ChatHero from "@/components/ChatHero";
 import CascadingCards from "@/components/CascadingCards";
+import ParallaxFrost from "@/components/ParallaxFrost";
+import PromptToSite from "@/components/builder-visuals/PromptToSite";
+import DragAndDrop from "@/components/builder-visuals/DragAndDrop";
+import CascadingAgent from "@/components/builder-visuals/CascadingAgent";
+import MultiDevice from "@/components/builder-visuals/MultiDevice";
 import { createTiers } from "@/lib/data";
 
 const products = [
@@ -22,7 +27,7 @@ const products = [
   },
   {
     name: "Esteemed Agents",
-    description: "AI agents that handle the work. Starting with Echo.",
+    description: "AI agents that handle the work. Featuring Star.",
     href: "/products/agents",
     icon: Bot,
   },
@@ -78,10 +83,10 @@ function PricingPreview() {
     <section className="py-20 border-t border-zinc-100">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
+          <h2 className="heading-2 mb-4">
             Start free. Scale as you grow.
           </h2>
-          <p className="text-lg text-zinc-600 max-w-2xl mx-auto mb-8">
+          <p className="subtitle max-w-2xl mx-auto mb-8">
             Every plan includes AI-powered building, Studio IDE, and hosting at publish.
           </p>
 
@@ -113,7 +118,7 @@ function PricingPreview() {
               <div
                 key={tier.key}
                 className={`rounded-2xl p-8 flex flex-col relative transition-shadow hover:shadow-lg ${
-                  isRec ? "bg-ink text-white" : "bg-accent text-ink"
+                  isRec ? "bg-ink text-white" : "bg-accent-hover text-ink"
                 }`}
               >
                 {isRec && (
@@ -189,10 +194,10 @@ export default function Home() {
       <section className="py-20 border-t border-zinc-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
+            <h2 className="heading-2 mb-4">
               Meet Esteemed Create
             </h2>
-            <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+            <p className="subtitle max-w-2xl mx-auto">
               Build websites and apps by talking to AI.
             </p>
           </div>
@@ -237,7 +242,7 @@ export default function Home() {
           <div className="text-center mt-12">
             <Link
               href="/products/create"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-accent text-ink text-[20px] font-bold hover:bg-accent-hover transition-colors"
             >
               Try Create &rarr;
             </Link>
@@ -245,16 +250,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 3: Powered by Esteemed Colleagues */}
+      {/* Section 3: Powered by Colleagues */}
       <section className="py-20 border-t border-zinc-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
-              Powered by Esteemed Colleagues
+            <h2 className="heading-2 mb-4">
+              Powered by Colleagues
             </h2>
-            <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+            <p className="subtitle max-w-2xl mx-auto">
               AI builds your first version. Real experts from our marketplace
-              help you grow it.
+              help you grow.
             </p>
           </div>
 
@@ -262,11 +267,11 @@ export default function Home() {
             {
               label: "CREATE",
               heading: "Describe.",
-              description: "Tell our AI what you need. It drafts a real, brand-aware site in seconds — copy, layout, photography and all.",
+              description: "Tell Create what you need. Using AI it drafts a real, brand-aware site in seconds — copy, layout, photography and all.",
               cta: "Try a prompt →",
               ctaHref: "/products/create",
-              image: "/images/video-call.jpg.webp",
-              bgColor: "butter",
+              visual: <PromptToSite />,
+              bgColor: "ink",
             },
             {
               label: "CUSTOMIZE",
@@ -274,8 +279,8 @@ export default function Home() {
               description: "Tailor your site by chatting with the agent — no templates to fight.",
               cta: "See the editor →",
               ctaHref: "/products/create",
-              image: "/images/pexels-sora-shimazaki-5668856.jpg.webp",
-              bgColor: "sky",
+              visual: <DragAndDrop />,
+              bgColor: "grey",
             },
             {
               label: "MANAGE",
@@ -283,17 +288,17 @@ export default function Home() {
               description: "You focus on the business, count on us for responsive design, hosting, daily backups, fast everywhere, all included.",
               cta: "Watch it work →",
               ctaHref: "/products/cloud",
-              image: "/images/support-agent.jpg.webp",
-              bgColor: "lilac",
+              visual: <CascadingAgent />,
+              bgColor: "grey",
             },
             {
               label: "GROW",
               heading: "Supported by humans.",
-              description: "You create it. Real experts from our 35,000-strong network help you grow it.",
+              description: "You create it. Real experts from our 35,000-strong network help you grow and support what you build.",
               cta: "Meet the network →",
               ctaHref: "/products/colleagues",
-              image: "/images/career-coaching-2.jpg.webp",
-              bgColor: "mint",
+              visual: <MultiDevice />,
+              bgColor: "grey",
             },
           ]} />
 
@@ -312,10 +317,10 @@ export default function Home() {
       </section>
 
       {/* Section 4: Other products & services */}
-      <section className="py-20 bg-accent">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
+            <h2 className="heading-2 mb-4">
               Products &amp; Services
             </h2>
           </div>
@@ -325,7 +330,8 @@ export default function Home() {
               <Link
                 key={p.name}
                 href={p.href}
-                className="rounded-2xl border-2 border-[#282828] p-8 hover:shadow-lg transition-shadow block"
+                className="p-8 hover:shadow-lg transition-shadow block"
+                style={{ backgroundColor: "#F5F5F5" }}
               >
                 <div className="flex items-start gap-4">
                   <p.icon className="w-6 h-6 text-ink flex-shrink-0 mt-0.5" strokeWidth={1.5} />
@@ -340,6 +346,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Parallax: Pairing you with the best */}
+      <section className="py-20">
+        <div className="mx-auto px-6 text-center" style={{ maxWidth: 1260 }}>
+          <h2 className="heading-2 mb-12">Quality and skill alignment are our priority.</h2>
+          <ParallaxFrost
+            src="/images/colleague1.jpg"
+            alt="Quality and skill alignment"
+            height={715}
+            maxFrost={0.3}
+          />
+        </div>
+      </section>
+
       {/* Section 5: Pricing Preview */}
       <PricingPreview />
 
@@ -348,7 +367,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <p className="text-sm font-medium text-zinc-500 uppercase tracking-wide mb-2">Trusted by builders</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-ink">Endorsed by innovators</h2>
+            <h2 className="heading-2">Endorsed by innovators</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
@@ -385,12 +404,12 @@ export default function Home() {
       {/* Final CTA */}
       <section className="bg-ink py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="heading-2 !text-white mb-6">
             Ready to build something Esteemed?
           </h2>
           <button
             onClick={scrollToTop}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-[20px] font-bold hover:bg-accent-hover transition-colors"
           >
             Start &rarr;
           </button>

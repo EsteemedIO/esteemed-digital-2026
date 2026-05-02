@@ -167,7 +167,7 @@ export default function CreatePage() {
                 Supercharge with Agents
               </h2>
               <p className="text-zinc-600 leading-relaxed mb-4">
-                Add AI agents to your Create project — Echo for customer Q&A,
+                Add AI agents to your Create project — Star for customer Q&A,
                 Voice for missed calls, Social for automated posting, Blog for
                 content, and Marketing for email campaigns. Each agent plugs
                 directly into what you build.

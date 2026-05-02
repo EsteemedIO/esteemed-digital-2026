@@ -8,7 +8,7 @@ import { ChevronDownIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 const productsGroup = [
   { key: "create", name: "Create", href: "/products/create", desc: "Use AI-enabled Esteemed Create to make apps in minutes." },
   { key: "cloud", name: "Cloud", href: "/products/cloud", desc: "Publish or import and maintain your apps on Esteemed Cloud." },
-  { key: "agents", name: "Agents", href: "/products/agents", desc: "AI agents trained on your business, starting with Echo." },
+  { key: "agents", name: "Agents", href: "/products/agents", desc: "AI agents trained on your business, featuring Star." },
   { key: "intelligence", name: "Intelligence", href: "/products/intelligence", desc: "The shared intelligence layer powering all Esteemed products." },
 ];
 
@@ -68,16 +68,36 @@ const resourceFeatured = [
 ];
 
 const mobileSections = [
-  { label: "Products & Services", items: [...productsGroup, ...servicesGroup] },
-  { label: "Solutions", items: [...solutionsUseCases, ...solutionsRoles, ...solutionsSegments, ...solutionsIndustries] },
-  { label: "Resources", items: [...resourceItems, ...communityItems] },
+  {
+    label: "Products & Services",
+    subgroups: [
+      { heading: "Products", items: productsGroup },
+      { heading: "Services", items: servicesGroup },
+    ],
+  },
+  {
+    label: "Solutions",
+    subgroups: [
+      { heading: "Use Cases", items: solutionsUseCases },
+      { heading: "Roles", items: solutionsRoles },
+      { heading: "Segments", items: solutionsSegments },
+      { heading: "Industries Served", items: solutionsIndustries },
+    ],
+  },
+  {
+    label: "Resources",
+    subgroups: [
+      { heading: "Resources", items: resourceItems },
+      { heading: "Community", items: communityItems },
+    ],
+  },
 ];
 
 /* Blue circle arrow — matches live site: w-5 h-5 bg-blue-200 rounded-full */
 function BlueArrow() {
   return (
     <span className="inline-flex items-center justify-center w-5 h-5 bg-blue-200 rounded-full flex-shrink-0">
-      <ArrowRightIcon className="w-3 h-3 text-blue-700" />
+      <ArrowRightIcon className="w-3 h-3 text-[#282828] stroke-[3]" />
     </span>
   );
 }
@@ -101,9 +121,12 @@ function MegaMenuLink({ href, children, desc, onClick, external }) {
   const props = external ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
   const Tag = external ? "a" : Link;
   return (
-    <Tag {...props} onClick={onClick} className="block py-2">
-      <span className="text-[.875rem] font-medium text-[#231F20]">{children}</span>
-      {desc && <span className="block text-xs text-[#444] mt-0.5">{desc}</span>}
+    <Tag {...props} onClick={onClick} className="group flex items-center justify-between py-2 px-3 -mx-3 rounded-lg border border-transparent hover:border-[#282828] transition-all">
+      <div>
+        <span className="text-[1rem] font-medium text-[#282828] group-hover:font-bold">{children}</span>
+        {desc && <span className="block text-xs text-[#444] mt-0.5">{desc}</span>}
+      </div>
+      <ArrowRightIcon className="w-4 h-4 text-[#282828] stroke-[2.5] opacity-0 group-hover:opacity-100 transition-opacity ml-4 flex-shrink-0" />
     </Tag>
   );
 }
@@ -128,13 +151,7 @@ export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
   const navRef = useRef(null);
 
-  useEffect(() => {
-    const handler = (e) => {
-      if (navRef.current && !navRef.current.contains(e.target)) setOpenMenu(null);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  // Menu closes on mouse leave (hover-driven)
 
   const closeMobile = () => {
     setMobileOpen(false);
@@ -146,7 +163,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header ref={navRef} className="sticky top-0 z-50 bg-white border-b border-zinc-200">
+      <header ref={navRef} className="sticky top-0 z-50 bg-white border-b border-zinc-200" onMouseLeave={() => setOpenMenu(null)}>
         {/* Nav container — 1450px to match live site */}
         <nav className="mx-auto px-6 flex items-center justify-between h-16" style={{ maxWidth: "1450px" }}>
           {/* Logo */}
@@ -161,33 +178,36 @@ export default function Navbar() {
               { label: "Solutions", key: "solutions" },
               { label: "Resources", key: "resources" },
             ].map((item) => (
-              <button
+              <div
                 key={item.key}
-                onClick={() => toggleMenu(item.key)}
-                className={`flex items-center gap-1.5 px-5 py-2 text-[.875rem] font-medium rounded-full transition-all ${
-                  openMenu === item.key
-                    ? "border-2 border-[#231F20] text-[#231F20]"
-                    : "border-2 border-transparent text-[#231F20] hover:border-[#231F20]"
-                }`}
+                onMouseEnter={() => setOpenMenu(item.key)}
               >
-                {item.label}
-                <ChevronDownIcon className={`w-3.5 h-3.5 transition-transform ${openMenu === item.key ? "rotate-180" : ""}`} />
-              </button>
+                <button
+                  className={`flex items-center gap-1.5 px-5 py-2 text-[.875rem] rounded-full transition-all ${
+                    openMenu === item.key
+                      ? "bg-accent-hover text-[#282828] font-extrabold"
+                      : "text-[#282828] font-medium hover:bg-accent-hover"
+                  }`}
+                >
+                  {item.label}
+                  <ChevronDownIcon className={`w-3.5 h-3.5 text-[#282828] stroke-[2.5] transition-transform ${openMenu === item.key ? "rotate-180" : ""}`} />
+                </button>
+              </div>
             ))}
 
-            <Link href="/pricing" className="px-5 py-2 text-[.875rem] font-medium text-[#231F20] hover:underline">
+            <Link href="/pricing" className="px-5 py-2 text-[.875rem] font-medium text-[#282828] rounded-full border border-transparent hover:border-[#282828] hover:font-bold transition-all">
               Pricing
             </Link>
 
           </div>
 
-          {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+          {/* CTAs + Mobile hamburger */}
+          <div className="flex items-center gap-3 flex-shrink-0">
             <Link
               href="/signup"
               className="inline-flex items-center px-5 py-2 rounded-full border-2 border-ink bg-white text-ink text-sm font-semibold hover:bg-accent hover:border-accent transition-colors"
             >
-              Create Account
+              Sign Up
             </Link>
             <Link
               href="/login"
@@ -195,11 +215,9 @@ export default function Navbar() {
             >
               Login
             </Link>
-          </div>
-
-          {/* Mobile hamburger */}
-          <div className="md:hidden bg-white relative z-10">
-            <Hamburger toggled={mobileOpen} toggle={setMobileOpen} size={22} color="#231F20" rounded />
+            <div className="md:hidden bg-white relative z-10">
+              <Hamburger toggled={mobileOpen} toggle={setMobileOpen} size={22} color="#282828" rounded />
+            </div>
           </div>
         </nav>
 
@@ -311,32 +329,37 @@ export default function Navbar() {
                 onClick={() => setExpandedSection(expandedSection === section.label ? null : section.label)}
                 className="flex items-center justify-between w-full text-left px-5 py-4"
               >
-                <span className="text-[.875rem] font-medium text-[#231F20]">{section.label}</span>
-                <ChevronDownIcon className={`w-4 h-4 text-zinc-400 transition-transform ${expandedSection === section.label ? "rotate-180" : ""}`} />
+                <span className="text-[16px] font-bold text-[#282828]">{section.label}</span>
+                <ChevronDownIcon className={`w-5 h-5 text-[#282828] stroke-[2.5] transition-transform ${expandedSection === section.label ? "rotate-180" : ""}`} />
               </button>
-              <div className={`overflow-hidden transition-all duration-300 ${expandedSection === section.label ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}>
+              <div className={`overflow-hidden transition-all duration-300 ${expandedSection === section.label ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"}`}>
                 <div className="px-5 pb-4">
-                  {section.items.map((item) => (
-                    <Link key={item.key} href={item.href} onClick={closeMobile} className="block py-1.5">
-                      <span className="text-[.875rem] font-medium text-[#231F20]">{item.name}</span>
-                      {item.desc && <span className="block text-xs text-[#444] mt-0.5">{item.desc}</span>}
-                    </Link>
+                  {section.subgroups.map((group) => (
+                    <div key={group.heading} className="mb-4 last:mb-0">
+                      <p className="text-[13px] font-bold uppercase tracking-[1.5px] text-[#282828] opacity-50 mb-2 mt-2">{group.heading}</p>
+                      {group.items.map((item) => (
+                        <Link key={item.key} href={item.href} onClick={closeMobile} className="group flex items-center justify-between py-2 px-3 -mx-3 rounded-lg hover:bg-accent-hover transition-colors">
+                          <div>
+                            <span className="text-[14px] font-medium text-[#282828]">{item.name}</span>
+                            {item.desc && <span className="block text-xs text-[#444] mt-0.5">{item.desc}</span>}
+                          </div>
+                          <ArrowRightIcon className="w-5 h-5 text-[#282828] stroke-[2.5] opacity-0 group-hover:opacity-100 transition-opacity ml-4 flex-shrink-0" />
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
           ))}
-          <Link href="/pricing" onClick={closeMobile} className="block px-5 py-4 text-[.875rem] font-medium text-[#231F20] border-b border-zinc-200">
+          <Link href="/pricing" onClick={closeMobile} className="block px-5 py-4 text-[16px] font-bold text-[#282828] border-b border-zinc-200">
             Pricing
           </Link>
         </nav>
         <div className="p-5 space-y-3">
-          <Link href="/login" onClick={closeMobile} className="block w-full text-center py-3 rounded-full border-2 border-ink bg-white text-ink font-semibold hover:bg-accent hover:border-accent transition-colors text-sm">
-            Create Account
-          </Link>
-          <Link href="/login" onClick={closeMobile} className="block w-full text-center py-3 rounded-full bg-accent text-ink font-semibold hover:bg-accent-hover transition-colors text-sm">
-            Login
-          </Link>
+          <FeaturedCard href="/products/create" onClick={closeMobile}>Try Esteemed Create</FeaturedCard>
+          <FeaturedCard href="/products/colleagues" onClick={closeMobile}>Hire an Expert</FeaturedCard>
+          <FeaturedCard href="/services/support" onClick={closeMobile}>Get Support</FeaturedCard>
         </div>
       </div>
     </>
