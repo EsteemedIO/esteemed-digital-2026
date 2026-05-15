@@ -1,27 +1,58 @@
 "use client";
 
 import { useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
+import Link from "next/link";
+import SocialLoginButtons from "@/components/SocialLoginButtons";
 
 export default function LoginPage() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
     if (status === "loading") return;
-
     if (session) {
-      // Already logged in — go home
       window.location.href = "/";
-      return;
     }
-
-    // Not logged in — redirect to Keycloak
-    signIn("keycloak", { callbackUrl: "/" });
   }, [session, status]);
 
+  if (status === "loading" || session) {
+    return (
+      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
+        <p className="text-zinc-400">Loading...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
-      <p className="text-zinc-400">Redirecting to login...</p>
+    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center px-6">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-ink mb-2">Log in</h1>
+          <p className="text-sm text-zinc-600">One account for everything Esteemed.</p>
+        </div>
+
+        <button
+          onClick={() => signIn("keycloak", { callbackUrl: "/" })}
+          className="w-full py-3 rounded-full bg-ink text-white text-sm font-bold hover:bg-ink/90 transition-colors mb-4"
+        >
+          Log in with email
+        </button>
+
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex-1 h-px bg-zinc-200" />
+          <span className="text-xs text-zinc-400">or</span>
+          <div className="flex-1 h-px bg-zinc-200" />
+        </div>
+
+        <SocialLoginButtons callbackUrl="/" />
+
+        <p className="text-center mt-6 text-sm text-zinc-500">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="text-ink font-medium underline underline-offset-4 hover:no-underline">
+            Sign up
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

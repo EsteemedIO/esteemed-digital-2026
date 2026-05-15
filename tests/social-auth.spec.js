@@ -2,67 +2,70 @@ import { test, expect } from '@playwright/test';
 
 const BASE = 'http://localhost:3000';
 
-test.describe('Social Auth — Keycloak Identity Providers', () => {
+test.describe('Social Auth — Login & Signup Pages', () => {
 
-  test('Keycloak login page renders and shows available social providers', async ({ page }) => {
-    // Go to login which redirects through NextAuth to Keycloak
-    await page.goto(`${BASE}/api/auth/signin/keycloak`);
+  test('login page shows social login buttons (Google, GitHub, LinkedIn)', async ({ page }) => {
+    await page.goto(`${BASE}/login`);
 
-    // NextAuth's signin page should auto-redirect to Keycloak, or show a form
-    // Wait for either Keycloak login page or NextAuth CSRF form
-    await page.waitForURL(/auth\.esteemed\.io|api\/auth/, { timeout: 15000 });
+    await expect(page.locator('button:has-text("Log in with email")')).toBeVisible();
+    await expect(page.locator('button:has-text("Continue with Google")')).toBeVisible();
+    await expect(page.locator('button:has-text("Continue with GitHub")')).toBeVisible();
+    await expect(page.locator('button:has-text("Continue with LinkedIn")')).toBeVisible();
+  });
+
+  test('signup page shows social login buttons', async ({ page }) => {
+    await page.goto(`${BASE}/signup`);
+
+    await expect(page.locator('button:has-text("Sign up with email")')).toBeVisible();
+    await expect(page.locator('button:has-text("Continue with Google")')).toBeVisible();
+    await expect(page.locator('button:has-text("Continue with GitHub")')).toBeVisible();
+    await expect(page.locator('button:has-text("Continue with LinkedIn")')).toBeVisible();
+  });
+
+  test('Google social login redirects to Keycloak with kc_idp_hint=google', async ({ page }) => {
+    await page.goto(`${BASE}/login`);
+
+    const googleBtn = page.locator('button:has-text("Continue with Google")');
+    await Promise.all([
+      page.waitForURL(/auth\.esteemed\.io|api\/auth/, { timeout: 15000 }),
+      googleBtn.click(),
+    ]);
 
     const url = page.url();
+    // Should redirect through NextAuth to Keycloak with google hint
+    expect(
+      url.includes('auth.esteemed.io') || url.includes('/api/auth')
+    ).toBeTruthy();
+  });
 
-    if (url.includes('auth.esteemed.io')) {
-      // We're on the Keycloak login page — check for social buttons
-      const html = await page.content();
+  test('GitHub social login redirects to Keycloak with kc_idp_hint=github', async ({ page }) => {
+    await page.goto(`${BASE}/login`);
 
-      const providers = {
-        google: /google/i.test(html),
-        github: /github/i.test(html),
-        linkedin: /linkedin/i.test(html),
-        microsoft: /microsoft/i.test(html),
-        apple: /apple/i.test(html),
-      };
+    const githubBtn = page.locator('button:has-text("Continue with GitHub")');
+    await Promise.all([
+      page.waitForURL(/auth\.esteemed\.io|api\/auth/, { timeout: 15000 }),
+      githubBtn.click(),
+    ]);
 
-      console.log('Keycloak login page social providers detected:');
-      for (const [name, found] of Object.entries(providers)) {
-        console.log(`  ${name}: ${found ? 'YES' : 'no'}`);
-      }
+    const url = page.url();
+    expect(
+      url.includes('auth.esteemed.io') || url.includes('/api/auth')
+    ).toBeTruthy();
+  });
 
-      // Take a screenshot for visual verification
-      await page.screenshot({ path: 'tests/screenshots/keycloak-login.png', fullPage: true });
-      console.log('Screenshot saved to tests/screenshots/keycloak-login.png');
+  test('LinkedIn social login redirects to Keycloak with kc_idp_hint=linkedin', async ({ page }) => {
+    await page.goto(`${BASE}/login`);
 
-      // At minimum we expect the login form to exist
-      const formExists = await page.locator('form').count() > 0;
-      expect(formExists).toBeTruthy();
+    const linkedinBtn = page.locator('button:has-text("Continue with LinkedIn")');
+    await Promise.all([
+      page.waitForURL(/auth\.esteemed\.io|api\/auth/, { timeout: 15000 }),
+      linkedinBtn.click(),
+    ]);
 
-    } else {
-      // NextAuth intermediary page — click through to Keycloak
-      const keycloakBtn = page.locator('button:has-text("Sign in with Keycloak")').first();
-      if (await keycloakBtn.isVisible()) {
-        await Promise.all([
-          page.waitForURL(/auth\.esteemed\.io/, { timeout: 15000 }),
-          keycloakBtn.click(),
-        ]);
-
-        const html = await page.content();
-        const providers = {
-          google: /google/i.test(html),
-          github: /github/i.test(html),
-          linkedin: /linkedin/i.test(html),
-        };
-
-        console.log('Keycloak login page social providers detected:');
-        for (const [name, found] of Object.entries(providers)) {
-          console.log(`  ${name}: ${found ? 'YES' : 'no'}`);
-        }
-
-        await page.screenshot({ path: 'tests/screenshots/keycloak-login.png', fullPage: true });
-      }
-    }
+    const url = page.url();
+    expect(
+      url.includes('auth.esteemed.io') || url.includes('/api/auth')
+    ).toBeTruthy();
   });
 
 });

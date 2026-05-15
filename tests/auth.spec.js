@@ -38,11 +38,18 @@ test.describe('Auth Integration — Keycloak OIDC', () => {
     ).toBeTruthy();
   });
 
-  test('/login page redirects to Keycloak', async ({ page }) => {
-    await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded' });
+  test('/login page shows auth options and email login redirects to Keycloak', async ({ page }) => {
+    await page.goto(`${BASE}/login`);
 
-    // Wait for redirect — either to Keycloak directly or through NextAuth
-    await page.waitForURL(/auth\.esteemed\.io|api\/auth\/signin/, { timeout: 15000 });
+    // Page should show login options (not auto-redirect)
+    await expect(page.locator('h1:has-text("Log in")')).toBeVisible();
+    await expect(page.locator('button:has-text("Log in with email")')).toBeVisible();
+
+    // Clicking email login should redirect to Keycloak
+    await Promise.all([
+      page.waitForURL(/auth\.esteemed\.io|api\/auth/, { timeout: 15000 }),
+      page.locator('button:has-text("Log in with email")').click(),
+    ]);
 
     const url = page.url();
     expect(
@@ -50,10 +57,16 @@ test.describe('Auth Integration — Keycloak OIDC', () => {
     ).toBeTruthy();
   });
 
-  test('/signup page redirects to Keycloak', async ({ page }) => {
-    await page.goto(`${BASE}/signup`, { waitUntil: 'domcontentloaded' });
+  test('/signup page shows auth options and email signup redirects to Keycloak', async ({ page }) => {
+    await page.goto(`${BASE}/signup`);
 
-    await page.waitForURL(/auth\.esteemed\.io|api\/auth\/signin/, { timeout: 15000 });
+    await expect(page.locator('h1:has-text("Create your account")')).toBeVisible();
+    await expect(page.locator('button:has-text("Sign up with email")')).toBeVisible();
+
+    await Promise.all([
+      page.waitForURL(/auth\.esteemed\.io|api\/auth/, { timeout: 15000 }),
+      page.locator('button:has-text("Sign up with email")').click(),
+    ]);
 
     const url = page.url();
     expect(
