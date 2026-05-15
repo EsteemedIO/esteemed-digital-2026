@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSession, signIn } from "next-auth/react";
 import { PlusIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Smartphone, Globe, AppWindow, BarChart3, Presentation } from "lucide-react";
 
@@ -20,8 +21,11 @@ const examplePrompts = [
   "A site for my law practice...",
 ];
 
+const CREATE_URL = "https://create.esteemed.io";
+
 export default function ChatHero() {
   const router = useRouter();
+  const { data: session } = useSession();
   const [inputValue, setInputValue] = useState("");
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [displayedPlaceholder, setDisplayedPlaceholder] = useState("");
@@ -52,9 +56,23 @@ export default function ChatHero() {
   }, [placeholderIndex, inputValue]);
 
   const handleSubmit = () => {
-    const params = new URLSearchParams({ redirect: "create" });
-    if (inputValue) params.set("prompt", inputValue);
-    router.push(`/signup?${params.toString()}`);
+    if (session) {
+      // Authenticated — go straight to Create
+      const url = inputValue
+        ? `${CREATE_URL}?prompt=${encodeURIComponent(inputValue)}`
+        : CREATE_URL;
+      window.location.href = url;
+    } else {
+      // Not authenticated — store prompt, trigger Keycloak login
+      if (inputValue) {
+        sessionStorage.setItem("esteemed_prompt", inputValue);
+      }
+      signIn("keycloak", {
+        callbackUrl: inputValue
+          ? `${CREATE_URL}?prompt=${encodeURIComponent(inputValue)}`
+          : CREATE_URL,
+      });
+    }
   };
 
   return (
@@ -122,12 +140,12 @@ export default function ChatHero() {
         </div>
 
         {/* App type selector */}
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-6 flex md:flex-wrap md:justify-center gap-2 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:overflow-visible scrollbar-hide">
           {appTypes.map((type) => (
             <button
               key={type.label}
               onClick={() => setInputValue(type.label + " — ")}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-ink text-sm font-medium hover:bg-accent-hover transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-ink text-sm font-medium hover:bg-accent-hover transition-colors whitespace-nowrap flex-shrink-0"
               style={{ border: "1.5px solid #282828" }}
             >
               <type.icon className="w-4 h-4" strokeWidth={1.5} />

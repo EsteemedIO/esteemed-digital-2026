@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { Squeeze as Hamburger } from "hamburger-react";
 import { ChevronDownIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
@@ -146,6 +147,7 @@ function FeaturedCard({ href, children, onClick }) {
 }
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [expandedSection, setExpandedSection] = useState(null);
   const [openMenu, setOpenMenu] = useState(null);
@@ -168,7 +170,7 @@ export default function Navbar() {
         <nav className="mx-auto px-6 flex items-center justify-between h-16" style={{ maxWidth: "1450px" }}>
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
-            <img src="/esteemed-logo.svg" alt="Esteemed" className="w-28 md:w-40 h-auto" fetchPriority="high" />
+            <img src="/esteemed-logo.svg" alt="Esteemed" className="w-32 md:w-40 h-auto" fetchPriority="high" />
           </Link>
 
           {/* Desktop nav — centered */}
@@ -203,24 +205,48 @@ export default function Navbar() {
 
           {/* CTAs + Mobile hamburger */}
           <div className="flex items-center gap-3 flex-shrink-0">
-            <Link
-              href="/login"
-              className="hidden md:inline-flex items-center px-5 py-2 rounded-full border-2 border-ink bg-white text-ink text-sm font-semibold hover:bg-accent hover:border-accent transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              href="/login"
-              className="md:hidden text-sm font-semibold text-ink hover:underline"
-            >
-              Log In
-            </Link>
-            <Link
-              href="/signup"
-              className="inline-flex items-center px-5 py-2 rounded-full border-2 border-accent bg-accent text-ink text-sm font-semibold hover:bg-accent-hover hover:border-accent-hover transition-colors"
-            >
-              Sign Up
-            </Link>
+            {session ? (
+              <>
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="hidden md:inline-flex items-center px-4 py-1.5 rounded-full border-2 border-ink bg-white text-ink text-sm font-semibold hover:bg-accent hover:border-accent transition-colors"
+                >
+                  Log out
+                </button>
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center gap-2 px-3 md:px-4 rounded-full border-2 border-accent bg-accent text-ink text-sm font-semibold hover:bg-accent-hover hover:border-accent-hover transition-colors leading-none"
+                  style={{ paddingTop: 6, paddingBottom: 6 }}
+                >
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-ink text-white text-xs font-bold flex-shrink-0">
+                    {session.user?.name?.charAt(0)?.toUpperCase() || session.user?.email?.charAt(0)?.toUpperCase() || "?"}
+                  </span>
+                  <span className="hidden md:inline">{session.user?.name?.split(" ")[0] || "Account"}</span>
+                </Link>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => signIn("keycloak")}
+                  className="hidden md:inline-flex items-center px-4 py-1.5 rounded-full border-2 border-ink bg-white text-ink text-sm font-semibold hover:bg-accent hover:border-accent transition-colors"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => signIn("keycloak")}
+                  className="md:hidden text-sm font-semibold text-ink hover:underline"
+                >
+                  Log In
+                </button>
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center px-3 md:px-4 rounded-full border-2 border-accent bg-accent text-ink text-sm font-semibold hover:bg-accent-hover hover:border-accent-hover transition-colors leading-none"
+                  style={{ paddingTop: 6, paddingBottom: 6 }}
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
             <div className="md:hidden bg-white relative z-10">
               <Hamburger toggled={mobileOpen} toggle={setMobileOpen} size={22} color="#282828" rounded />
             </div>
