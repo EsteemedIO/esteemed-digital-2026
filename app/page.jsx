@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Sparkles, Cloud, Bot, Brain, Users, Headphones, Check } from "lucide-react";
+import { Sparkles, Cloud, Bot, Brain, Users, Headphones, ClipboardCheck, Target, MessageSquare, Check } from "lucide-react";
 import ChatHero from "@/components/ChatHero";
 import CascadingCards from "@/components/CascadingCards";
 import ParallaxFrost from "@/components/ParallaxFrost";
@@ -39,7 +39,7 @@ const products = [
   },
   {
     name: "Esteemed Colleagues",
-    description: "The marketplace for vetted experts. Hire or get hired.",
+    description: "Talent and opportunity marketplace. Post opportunities and hire contract or direct employees.",
     href: "/products/colleagues",
     icon: Users,
   },
@@ -48,6 +48,25 @@ const products = [
     description: "Get expert human help with what you build or existing apps.",
     href: "/services/support",
     icon: Headphones,
+  },
+  {
+    name: "Esteemed Hire",
+    description: "Applicant tracking that integrates with Colleagues and Intelligence.",
+    href: "/products/hire",
+    icon: ClipboardCheck,
+  },
+  {
+    name: "Esteemed Acquire",
+    description: "CRM for client and talent acquisition, powered by Intelligence.",
+    href: "/products/acquire",
+    icon: Target,
+  },
+  {
+    name: "HCMGPT",
+    description: "The preeminent domain-specific AI for human capital management.",
+    href: "https://hcmgpt.com",
+    icon: MessageSquare,
+    external: true,
   },
 ];
 
@@ -80,7 +99,7 @@ function PricingPreview() {
   const [annual, setAnnual] = useState(true);
 
   return (
-    <section className="py-20 border-t border-zinc-100">
+    <section className="py-10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="heading-2 mb-4">
@@ -92,17 +111,17 @@ function PricingPreview() {
 
           <div className="flex items-center justify-center gap-3">
             <button
-              onClick={() => setAnnual(false)}
-              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors ${!annual ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
-            >
-              Monthly
-            </button>
-            <button
               onClick={() => setAnnual(true)}
               className={`text-sm font-medium px-4 py-2 rounded-full transition-colors flex items-center gap-2 ${annual ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
             >
               Yearly
               <span className="text-xs bg-accent text-ink px-2 py-0.5 rounded-full font-bold">Save</span>
+            </button>
+            <button
+              onClick={() => setAnnual(false)}
+              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors ${!annual ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
+            >
+              Monthly
             </button>
           </div>
         </div>
@@ -225,7 +244,7 @@ export default function Home() {
             ].map((item) => (
               <div key={item.step} className="text-center">
                 <div className="flex justify-center mb-4">
-                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-ink text-sm font-bold">
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-200 text-ink text-sm font-bold">
                     {item.step}
                   </span>
                 </div>
@@ -289,7 +308,7 @@ export default function Home() {
               cta: "Watch it work →",
               ctaHref: "/products/cloud",
               visual: <CascadingAgent />,
-              bgColor: "grey",
+              bgColor: "ink",
             },
             {
               label: "GROW",
@@ -326,22 +345,30 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((p) => (
-              <Link
-                key={p.name}
-                href={p.href}
-                className="p-8 hover:shadow-lg transition-shadow block"
-                style={{ backgroundColor: "#F5F5F5" }}
-              >
-                <div className="flex items-start gap-4">
-                  <p.icon className="w-6 h-6 text-ink flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                  <div>
-                    <h3 className="text-lg font-bold text-ink mb-2">{p.name}</h3>
-                    <p className="text-sm text-zinc-600">{p.description}</p>
+            {products.map((p) => {
+              const Tag = p.external ? "a" : Link;
+              const extraProps = p.external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+              return (
+                <Tag
+                  key={p.name}
+                  href={p.href}
+                  {...extraProps}
+                  className="p-8 hover:shadow-lg transition-shadow block"
+                  style={{ backgroundColor: "#F5F5F5" }}
+                >
+                  <div className="flex items-start gap-4">
+                    <p.icon className="w-6 h-6 text-ink flex-shrink-0 mt-0.5" strokeWidth={1.5} />
+                    <div>
+                      <h3 className="text-lg font-bold text-ink mb-2">
+                        {p.name}
+                        {p.external && <span className="ml-1 text-ink/40 text-sm">↗</span>}
+                      </h3>
+                      <p className="text-sm text-zinc-600">{p.description}</p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Tag>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -349,7 +376,7 @@ export default function Home() {
       {/* Parallax: Pairing you with the best */}
       <section className="py-20">
         <div className="mx-auto px-6 text-center" style={{ maxWidth: 1260 }}>
-          <h2 className="heading-2 mb-12">Quality and skill alignment are our priority.</h2>
+          <h3 className="heading-3 mb-12 text-center">Quality and skill alignment are our priority.</h3>
           <ParallaxFrost
             src="/images/colleague1.jpg"
             alt="Quality and skill alignment"
@@ -367,7 +394,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <p className="text-sm font-medium text-zinc-500 uppercase tracking-wide mb-2">Trusted by builders</p>
-            <h2 className="heading-2">Endorsed by innovators</h2>
+            <h3 className="heading-3 text-center">Endorsed by innovators</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[

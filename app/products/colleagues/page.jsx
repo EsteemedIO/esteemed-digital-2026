@@ -13,7 +13,7 @@ import {
 export const metadata = {
   title: "Colleagues",
   description:
-    "Meet Esteemed Colleagues. Search 35,000+ vetted talent or find your next role.",
+    "Meet Esteemed Colleagues. Talent and opportunity marketplace. Post opportunities and hire contract or direct employees.",
 };
 
 export default function ColleaguesPage() {
@@ -29,8 +29,10 @@ export default function ColleaguesPage() {
             Meet Esteemed Colleagues
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
-            Vetted talent, on demand. Whether you are hiring or looking for
-            work, Colleagues connects the right people to the right projects.
+            The talent and opportunity marketplace. Post opportunities and hire
+            contract or direct employees. Whether you&apos;re building a team or
+            looking for your next role, Colleagues connects the right people
+            to the right projects.
           </p>
         </div>
       </section>

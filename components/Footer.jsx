@@ -6,14 +6,18 @@ const columns = [
     links: [
       { name: "Create", href: "/products/create" },
       { name: "Cloud", href: "/products/cloud" },
+      { name: "Curate", href: "/products/curate" },
       { name: "Agents", href: "/products/agents" },
       { name: "Intelligence", href: "/products/intelligence" },
+      { name: "Hire", href: "/products/hire" },
+      { name: "Acquire", href: "/products/acquire" },
+      { name: "HCMGPT", href: "https://hcmgpt.com", external: true },
     ],
   },
   {
     title: "Services",
     links: [
-      { name: "Colleagues", href: "/services/colleagues" },
+      { name: "Colleagues", href: "/products/colleagues" },
       { name: "Support", href: "/services/support" },
     ],
   },
@@ -55,9 +59,15 @@ export default function Footer() {
               <ul className="space-y-3">
                 {col.links.map((link) => (
                   <li key={link.name}>
-                    <Link href={link.href} className="text-sm hover:text-accent transition-colors">
-                      {link.name}
-                    </Link>
+                    {link.external ? (
+                      <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-accent transition-colors">
+                        {link.name} <span className="text-zinc-500">↗</span>
+                      </a>
+                    ) : (
+                      <Link href={link.href} className="text-sm hover:text-accent transition-colors">
+                        {link.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

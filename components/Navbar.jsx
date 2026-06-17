@@ -6,16 +6,25 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { Squeeze as Hamburger } from "hamburger-react";
 import { ChevronDownIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
-const productsGroup = [
+const productsCol1 = [
   { key: "create", name: "Create", href: "/products/create", desc: "Use AI-enabled Esteemed Create to make apps in minutes." },
   { key: "cloud", name: "Cloud", href: "/products/cloud", desc: "Publish or import and maintain your apps on Esteemed Cloud." },
-  { key: "agents", name: "Agents", href: "/products/agents", desc: "AI agents trained on your business, featuring Star." },
-  { key: "intelligence", name: "Intelligence", href: "/products/intelligence", desc: "The shared intelligence layer powering all Esteemed products." },
+  { key: "curate", name: "Curate", href: "/products/curate", desc: "Provision an AI-native CMS and media manager on Esteemed Cloud." },
+  { key: "agents", name: "Agents", href: "/products/agents", desc: "AI agents trained on your business with Esteemed Agents, featuring Star — AI for work." },
+  { key: "intelligence", name: "Intelligence", href: "/products/intelligence", desc: "Esteemed Intelligence — the shared intelligence layer powering all Esteemed products." },
 ];
 
+const productsCol2 = [
+  { key: "hire", name: "Hire", href: "/products/hire", desc: "Esteemed Hire — applicant tracking that integrates with Colleagues and Intelligence." },
+  { key: "acquire", name: "Acquire", href: "/products/acquire", desc: "Esteemed Acquire — CRM for client and talent acquisition, powered by Intelligence." },
+  { key: "hcmgpt", name: "HCMGPT", href: "https://hcmgpt.com", desc: "HCMGPT, by Esteemed — the preeminent domain-specific AI for human capital management.", external: true },
+];
+
+const productsGroup = [...productsCol1, ...productsCol2];
+
 const servicesGroup = [
-  { key: "colleagues", name: "Colleagues", href: "/products/colleagues", desc: "Search 35,000+ vetted professionals. Hire or get hired." },
-  { key: "support", name: "Support", href: "/services/support", desc: "Expert human help for Esteemed apps or anything you built elsewhere." },
+  { key: "colleagues", name: "Colleagues", href: "/products/colleagues", desc: "Colleagues, by Esteemed — talent and opportunity marketplace. Post opportunities and hire contract or direct employees." },
+  { key: "support", name: "Support", href: "/services/support", desc: "Esteemed Support — expert human help for Esteemed apps or anything you built elsewhere." },
 ];
 
 const solutionsUseCases = [
@@ -124,7 +133,10 @@ function MegaMenuLink({ href, children, desc, onClick, external }) {
   return (
     <Tag {...props} onClick={onClick} className="group flex items-center justify-between py-2 px-3 -mx-3 rounded-lg border border-transparent hover:border-[#282828] transition-all">
       <div>
-        <span className="text-[1rem] font-medium text-[#282828] group-hover:font-bold">{children}</span>
+        <span className="text-[1rem] font-medium text-[#282828] group-hover:font-bold">
+          {children}
+          {external && <span className="inline-block ml-1 text-[#282828]">↗</span>}
+        </span>
         {desc && <span className="block text-xs text-[#444] mt-0.5">{desc}</span>}
       </div>
       <ArrowRightIcon className="w-4 h-4 text-[#282828] stroke-[2.5] opacity-0 group-hover:opacity-100 transition-opacity ml-4 flex-shrink-0" />
@@ -256,23 +268,31 @@ export default function Navbar() {
         {/* ---- Mega menu panels ---- */}
 
         {openMenu === "products" && (
-          <div className="hidden md:block border-t border-zinc-200 bg-white">
+          <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
             <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
-              <div className="grid grid-cols-4 gap-8">
-                <div>
+              <div className="grid grid-cols-4 gap-x-8">
+                <div className="col-span-2">
                   <SectionHeading href="/products">Products</SectionHeading>
-                  {productsGroup.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc}>{item.name}</MegaMenuLink>
-                  ))}
+                  <div className="grid grid-cols-2 gap-x-8">
+                    <div>
+                      {productsCol1.map((item) => (
+                        <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external}>{item.name}</MegaMenuLink>
+                      ))}
+                    </div>
+                    <div>
+                      {productsCol2.map((item) => (
+                        <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external}>{item.name}</MegaMenuLink>
+                      ))}
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <SectionHeading href="/services">Services</SectionHeading>
                   {servicesGroup.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
-                <div />
-                <div className="space-y-3">
+                <div className="space-y-3 mt-8">
                   <FeaturedCard href="/products/create" onClick={closeMenu}>Try Esteemed Create</FeaturedCard>
                   <FeaturedCard href="/products/colleagues" onClick={closeMenu}>Hire an Expert</FeaturedCard>
                   <FeaturedCard href="/services/support" onClick={closeMenu}>Get Support</FeaturedCard>
@@ -283,7 +303,7 @@ export default function Navbar() {
         )}
 
         {openMenu === "solutions" && (
-          <div className="hidden md:block border-t border-zinc-200 bg-white">
+          <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
             <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
               <div className="grid grid-cols-4 gap-8">
                 <div>
@@ -316,7 +336,7 @@ export default function Navbar() {
         )}
 
         {openMenu === "resources" && (
-          <div className="hidden md:block border-t border-zinc-200 bg-white">
+          <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
             <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
               <div className="grid grid-cols-4 gap-8">
                 <div>

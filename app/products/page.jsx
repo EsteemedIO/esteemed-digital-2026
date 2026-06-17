@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles, Cloud, Bot, Brain, Users, Headphones } from "lucide-react";
+import { Sparkles, Cloud, Bot, Brain, Users, Headphones, Library } from "lucide-react";
 
 export const metadata = {
   title: "Products & Services",
@@ -24,6 +24,15 @@ const items = [
       "Managed hosting with SSL, daily backups, monitoring, and a global edge network. Your site stays fast, secure, and always on.",
     icon: Cloud,
     href: "/products/cloud",
+    type: "Product",
+  },
+  {
+    name: "Curate",
+    tagline: "Content and media management on Esteemed Cloud.",
+    description:
+      "Provision a dedicated Curate tenant for structured content, digital assets, and agent-assisted publishing. First admin and cloud resources are created from signup.",
+    icon: Library,
+    href: "/products/curate",
     type: "Product",
   },
   {

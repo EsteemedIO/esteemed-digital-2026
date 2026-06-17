@@ -146,7 +146,7 @@ export default function CascadingCards({ cards }) {
                     {card.heading}
                   </h3>
                 </div>
-                <div className="card-content flex flex-col" style={{ marginTop: "auto", paddingBottom: 20, gap: 24 }}>
+                <div className="card-content flex flex-col mt-6 md:mt-auto pb-2 md:pb-5" style={{ gap: 24 }}>
                   {card.description && (
                     <p className="leading-relaxed max-w-[420px]" style={{ fontSize: "1.5625rem", color: tone.text }}>
                       {card.description}
