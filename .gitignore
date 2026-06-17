@@ -5,6 +5,8 @@ node_modules/
 
 # Testing
 coverage/
+test-results/
+tests/screenshots/
 
 # Next.js
 .next/
