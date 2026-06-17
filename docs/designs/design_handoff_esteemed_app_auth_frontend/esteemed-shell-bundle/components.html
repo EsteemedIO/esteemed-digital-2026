@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esteemed Shell — Component Library &amp; States</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="shell.css">
+<style>
+  body { background: var(--es-bg); }
+  .doc { max-width: 1080px; margin: 0 auto; padding: 56px 32px 120px; }
+  .doc-head { margin-bottom: 48px; }
+  .doc-head h1 { font-family: var(--es-font-display); font-weight: 800; font-size: 40px; letter-spacing: -.02em; margin: 14px 0 8px; color: var(--es-ink-900); }
+  .doc-head p { font-size: 17px; color: var(--es-fg-2); max-width: 64ch; line-height: 1.5; margin: 0; }
+  .cmp { border-top: 1px solid var(--es-border); padding-top: 32px; margin-top: 48px; }
+  .cmp-name { font-family: var(--es-font-display); font-weight: 800; font-size: 24px; color: var(--es-ink-900); letter-spacing: -.01em; margin: 0 0 4px; }
+  .cmp-note { font-size: 14px; color: var(--es-fg-2); margin: 0 0 24px; max-width: 68ch; line-height: 1.5; }
+  .states { display: flex; flex-wrap: wrap; gap: 28px 40px; align-items: flex-start; }
+  .state { display: flex; flex-direction: column; gap: 12px; }
+  .state-lbl { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--es-fg-3); }
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px,1fr)); gap: 12px; }
+  .sw { border: 1px solid var(--es-border); border-radius: 12px; overflow: hidden; }
+  .sw .chip { height: 56px; }
+  .sw .meta { padding: 8px 10px; font-size: 12px; }
+  .sw .meta b { display: block; font-weight: 600; color: var(--es-ink-900); }
+  .sw .meta code { font-family: var(--es-font-mono); font-size: 11px; color: var(--es-fg-3); }
+  .panel-demo { position: relative; background: var(--es-surface-alt); border: 1px solid var(--es-border); border-radius: 16px; padding: 18px; }
+  .row-demo { background: var(--es-surface); border: 1px solid var(--es-border); border-radius: 16px; padding: 4px 0; max-width: 560px; }
+  .type-row { display: flex; align-items: baseline; gap: 18px; padding: 10px 0; border-bottom: 1px dashed var(--es-border); }
+  .type-row .tag { width: 130px; flex: none; font-family: var(--es-font-mono); font-size: 12px; color: var(--es-fg-3); }
+  /* forced pseudo-state previews (so reviewers see hover statically) */
+  .force-yhover { background: var(--es-yellow-hover) !important; }
+  .force-ctahover { background: var(--es-yellow-hover) !important; border-color: var(--es-yellow-hover) !important; }
+  .force-tilehover { box-shadow: var(--es-shadow-tile-hover) !important; border-color: var(--es-yellow-hover) !important; }
+</style>
+</head>
+<body>
+<script src="icons.js"></script>
+<div class="doc">
+  <div class="doc-head">
+    <div class="eyebrow"><svg class="star"><use href="#star"/></svg> Esteemed Platform Shell</div>
+    <h1>Component library &amp; states</h1>
+    <p>Every shell component with its full state inventory — default, hover, focus, active, disabled, loading — plus the four states designed from scratch: loading skeleton, empty, error, and Settings first-run. Hover and focus the live examples to see real transitions. All values resolve from <code class="es-mono">tokens.css</code>.</p>
+  </div>
+
+  <!-- COLOR: LABEL RAMPS -->
+  <section class="cmp" style="border-top:none;padding-top:0;margin-top:0">
+    <h2 class="cmp-name">Label color ramps</h2>
+    <p class="cmp-note">Pills carry color; cards stay white. red / amber / blue are locked from spec + mockups. slate / teal / coral / purple / pink are derived to the same lightness/saturation logic (fg ≈ L45%, bg ≈ L95%). Each ramp = <code class="es-mono">-fg</code> (text/border) + <code class="es-mono">-bg</code> (pastel fill).</p>
+    <div class="swatch-grid">
+      <div class="sw"><div class="chip" style="background:var(--es-red-bg)"></div><div class="meta"><b style="color:var(--es-red-fg)">Red · Urgent</b><code>#C8341F / #FBE5E1</code></div></div>
+      <div class="sw"><div class="chip" style="background:var(--es-amber-bg)"></div><div class="meta"><b style="color:var(--es-amber-fg)">Amber · Hire</b><code>#92610F / #FBF1DD</code></div></div>
+      <div class="sw"><div class="chip" style="background:var(--es-blue-bg)"></div><div class="meta"><b style="color:var(--es-blue-fg)">Blue · Acquire</b><code>#2A6FDB / #E2ECFA</code></div></div>
+      <div class="sw"><div class="chip" style="background:var(--es-slate-bg)"></div><div class="meta"><b style="color:var(--es-slate-fg)">Slate · Personal</b><code>#475569 / #EDF0F4</code></div></div>
+      <div class="sw"><div class="chip" style="background:var(--es-teal-bg)"></div><div class="meta"><b style="color:var(--es-teal-fg)">Teal · Create</b><code>#0E7490 / #DBEFF3</code></div></div>
+      <div class="sw"><div class="chip" style="background:var(--es-coral-bg)"></div><div class="meta"><b style="color:var(--es-coral-fg)">Coral · Agents</b><code>#C2410C / #FCE9E0</code></div></div>
+      <div class="sw"><div class="chip" style="background:var(--es-purple-bg)"></div><div class="meta"><b style="color:var(--es-purple-fg)">Purple · Intelligence</b><code>#6D28D9 / #EDE7FC</code></div></div>
+      <div class="sw"><div class="chip" style="background:var(--es-pink-bg)"></div><div class="meta"><b style="color:var(--es-pink-fg)">Pink · Curate</b><code>#BE2065 / #FBE2EE</code></div></div>
+      <div class="sw"><div class="chip" style="background:var(--es-yellow-500)"></div><div class="meta"><b>Yellow · primary</b><code>#FEE546 actions only</code></div></div>
+    </div>
+  </section>
+
+  <!-- TYPE -->
+  <section class="cmp">
+    <h2 class="cmp-name">Typography</h2>
+    <p class="cmp-note">Manrope ExtraBold for greeting &amp; page titles; Inter for everything else. Tight tracking on display, balanced wrapping on headlines.</p>
+    <div style="max-width:680px">
+      <div class="type-row"><span class="tag">greeting / 40</span><span style="font-family:var(--es-font-display);font-weight:800;font-size:32px;letter-spacing:-.02em">Good morning, Chris.</span></div>
+      <div class="type-row"><span class="tag">page title / 30</span><span style="font-family:var(--es-font-display);font-weight:800;font-size:26px;letter-spacing:-.02em">Integrations</span></div>
+      <div class="type-row"><span class="tag">card title / 18</span><span style="font-weight:700;font-size:18px">Sarah Chen interview prep</span></div>
+      <div class="type-row"><span class="tag">body / 16</span><span style="font-size:16px;color:var(--es-fg-2)">Draft response ready for review.</span></div>
+      <div class="type-row"><span class="tag">eyebrow / 12</span><span class="eyebrow"><svg class="star"><use href="#star"/></svg> Priorities · Ordered for you</span></div>
+      <div class="type-row"><span class="tag">meta / 13</span><span style="font-size:13px;color:var(--es-fg-3)">11:00 AM · React Engineer · BCT Partners</span></div>
+    </div>
+  </section>
+
+  <!-- PILLS -->
+  <section class="cmp">
+    <h2 class="cmp-name">Pill — priority &amp; source</h2>
+    <p class="cmp-note">Single shape (radius 8, uppercase, 700). Priority variants map urgency → color; source variants map app → color. No interactive states — pills are non-interactive labels.</p>
+    <div class="states">
+      <div class="state"><span class="state-lbl">Priority</span><div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="pill pill--red">Urgent</span><span class="pill pill--amber">In 90 min</span><span class="pill pill--blue">By Friday</span><span class="pill pill--slate">Later</span></div></div>
+      <div class="state"><span class="state-lbl">Source (app)</span><div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="pill pill--amber">Hire</span><span class="pill pill--blue">Acquire</span><span class="pill pill--teal">Create</span><span class="pill pill--purple">Intelligence</span><span class="pill pill--coral">Agents</span><span class="pill pill--slate">Connect</span><span class="pill pill--pink">Curate</span></div></div>
+      <div class="state"><span class="state-lbl">Today badge</span><span class="pill pill--today">Today</span></div>
+    </div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section class="cmp">
+    <h2 class="cmp-name">Buttons — primary actions</h2>
+    <p class="cmp-note">Solid yellow = primary actions only (locked). Pill radius on Create. Hover lightens to #FCD72B; active nudges 1px down; never scales. Live — hover the examples.</p>
+    <div class="states">
+      <div class="state"><span class="state-lbl">Create · default</span><button class="btn-create" style="width:180px"><span>Create</span><svg><use href="#plus"/></svg></button></div>
+      <div class="state"><span class="state-lbl">Create · hover</span><button class="btn-create force-yhover" style="width:180px"><span>Create</span><svg><use href="#plus"/></svg></button></div>
+      <div class="state"><span class="state-lbl">Create · disabled</span><button class="btn-create" disabled style="width:180px"><span>Create</span><svg><use href="#plus"/></svg></button></div>
+      <div class="state"><span class="state-lbl">Send · default</span><button class="send-btn" aria-label="Send"><svg><use href="#arrow-up"/></svg></button></div>
+      <div class="state"><span class="state-lbl">Send · hover</span><button class="send-btn force-yhover" aria-label="Send"><svg><use href="#arrow-up"/></svg></button></div>
+    </div>
+  </section>
+
+  <!-- ARROW CTA CIRCLE -->
+  <section class="cmp">
+    <h2 class="cmp-name">ArrowCTACircle — secondary navigation</h2>
+    <p class="cmp-note">Grey 1.5px outline circle (#B8B8B8) for secondary nav (View all, card drill-in). Hover fills muted yellow #FCD72B (locked). The "primary" variant — solid yellow — marks the single active/recommended card.</p>
+    <div class="states">
+      <div class="state"><span class="state-lbl">Default</span><button class="cta-circle"><svg><use href="#arrow-right"/></svg></button></div>
+      <div class="state"><span class="state-lbl">Hover (muted yellow)</span><button class="cta-circle force-ctahover"><svg><use href="#arrow-right"/></svg></button></div>
+      <div class="state"><span class="state-lbl">Primary (active card)</span><button class="cta-circle is-primary"><svg><use href="#arrow-right"/></svg></button></div>
+      <div class="state"><span class="state-lbl">Focus</span><button class="cta-circle" style="outline:3px solid var(--es-focus-ring);outline-offset:2px"><svg><use href="#arrow-right"/></svg></button></div>
+      <div class="state"><span class="state-lbl">Disabled</span><button class="cta-circle" disabled><svg><use href="#arrow-right"/></svg></button></div>
+    </div>
+    <div style="margin-top:24px"><span class="state-lbl">ViewAllCTA (composed)</span>
+      <div style="margin-top:10px"><a class="viewall"><span class="count">3 of 12 ·</span><span class="label">View all</span><span class="cta-circle"><svg><use href="#arrow-right"/></svg></span></a></div>
+    </div>
+  </section>
+
+  <!-- TOGGLE -->
+  <section class="cmp">
+    <h2 class="cmp-name">Toggle / Switch</h2>
+    <p class="cmp-note">On = solid yellow track (primary action semantics). Off = sunken neutral. Knob slides 18px over 200ms ease-out.</p>
+    <div class="states">
+      <div class="state"><span class="state-lbl">Off</span><button class="toggle" role="switch" aria-checked="false"><span class="knob"></span></button></div>
+      <div class="state"><span class="state-lbl">On</span><button class="toggle is-on" role="switch" aria-checked="true"><span class="knob"></span></button></div>
+      <div class="state"><span class="state-lbl">Focus</span><button class="toggle is-on" role="switch" aria-checked="true" style="outline:3px solid var(--es-focus-ring);outline-offset:2px"><span class="knob"></span></button></div>
+      <div class="state"><span class="state-lbl">Disabled off</span><button class="toggle" disabled><span class="knob"></span></button></div>
+      <div class="state"><span class="state-lbl">Disabled on</span><button class="toggle is-on" disabled><span class="knob"></span></button></div>
+    </div>
+  </section>
+
+  <!-- APP TILE -->
+  <section class="cmp">
+    <h2 class="cmp-name">App Switcher tile</h2>
+    <p class="cmp-note">White tile, 1.5px border, monochrome line glyph. Hover = muted-yellow glow ring (locked). Current app = solid yellow border. Live — hover the default tile.</p>
+    <div class="states">
+      <div class="state"><span class="state-lbl">Default</span><button class="app-tile" style="width:140px"><span class="glyph"><svg><use href="#users"/></svg></span><span class="name">Acquire</span><span class="sub">CRM</span></button></div>
+      <div class="state"><span class="state-lbl">Hover (glow)</span><button class="app-tile force-tilehover" style="width:140px"><span class="glyph"><svg><use href="#create"/></svg></span><span class="name">Create</span><span class="sub">Sites · apps</span></button></div>
+      <div class="state"><span class="state-lbl">Current</span><button class="app-tile is-current" style="width:140px"><span class="glyph"><svg><use href="#briefcase"/></svg></span><span class="name">Hire</span><span class="sub">ATS</span></button></div>
+      <div class="state"><span class="state-lbl">Curate (new)</span><button class="app-tile" style="width:140px"><span class="glyph"><svg><use href="#curate"/></svg></span><span class="name">Curate</span><span class="sub">CMS · DAM</span></button></div>
+    </div>
+  </section>
+
+  <!-- PRIORITY CARD + MISSING STATES -->
+  <section class="cmp">
+    <h2 class="cmp-name">PriorityCard — incl. loading / empty / error</h2>
+    <p class="cmp-note">White card, 1px #E4E4E4 border, no shadow (locked). Hover deepens the border only. Loading, empty, and error are designed from scratch and keep the same footprint so the carousel doesn't reflow.</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:760px">
+      <div><span class="state-lbl">Default</span>
+        <article class="pcard" style="margin-top:10px">
+          <div class="pcard-pills"><span class="pill pill--amber">In 90 min</span><span class="pill pill--amber">Hire</span></div>
+          <div class="pcard-meta">11:00 AM · React Engineer · BCT Partners</div>
+          <h3 class="pcard-title">Sarah Chen interview prep</h3>
+          <p class="pcard-body">Star prepped questions. 3 years more experience than the JD asks.</p>
+          <div class="pcard-foot"><button class="cta-circle is-primary"><svg><use href="#arrow-right"/></svg></button></div>
+        </article>
+      </div>
+      <div><span class="state-lbl">Loading skeleton</span>
+        <article class="pcard" style="margin-top:10px" aria-busy="true">
+          <div class="pcard-pills"><span class="skeleton sk-pill"></span><span class="skeleton sk-pill" style="width:48px"></span></div>
+          <div class="skeleton sk-line" style="width:60%;margin-bottom:14px"></div>
+          <div class="skeleton sk-title" style="margin-bottom:12px"></div>
+          <div class="skeleton sk-line" style="width:95%;margin-bottom:7px"></div>
+          <div class="skeleton sk-line" style="width:80%"></div>
+          <div class="pcard-foot"><span class="skeleton" style="width:34px;height:34px;border-radius:50%"></span></div>
+        </article>
+      </div>
+      <div><span class="state-lbl">Empty</span>
+        <div class="card-empty" style="margin-top:10px">
+          <span class="ico"><svg><use href="#check"/></svg></span>
+          <div class="state-title">You're all clear</div>
+          <div class="state-sub">No priorities need your call right now. Star will surface new ones as they come in.</div>
+        </div>
+      </div>
+      <div><span class="state-lbl">Error</span>
+        <div class="card-error" style="margin-top:10px">
+          <span class="ico"><svg><use href="#alert"/></svg></span>
+          <div class="state-title">Couldn't load priorities</div>
+          <div class="state-sub">Something went wrong fetching this list.</div>
+          <button class="retry-btn">Try again</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:26px"><span class="state-lbl">PaginationDots</span>
+      <div class="dots" style="justify-content:flex-start;margin-top:12px"><span class="dot is-active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    </div>
+  </section>
+
+  <!-- INTEGRATION ROW -->
+  <section class="cmp">
+    <h2 class="cmp-name">IntegrationRow</h2>
+    <p class="cmp-note">Logo tile · name + description · status · toggle. Connected and available variants. Hover warms the row background.</p>
+    <div class="row-demo" style="margin-top:4px">
+      <div class="int-row">
+        <span class="int-logo" style="color:var(--es-blue-fg)"><svg><use href="#calendar"/></svg></span>
+        <div class="int-info"><div class="int-name">Google Calendar</div><div class="int-desc">Sync events into your Agenda.</div></div>
+        <span class="int-status on"><span class="dot"></span>Connected</span>
+        <button class="toggle is-on" role="switch" aria-checked="true"><span class="knob"></span></button>
+      </div>
+      <div class="int-row" style="border-bottom:none">
+        <span class="int-logo" style="color:var(--es-amber-fg)"><svg><use href="#briefcase"/></svg></span>
+        <div class="int-info"><div class="int-name">Greenhouse</div><div class="int-desc">Import candidates into Hire.</div></div>
+        <span class="int-status off"><span class="dot"></span>Not connected</span>
+        <button class="toggle" role="switch" aria-checked="false"><span class="knob"></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAV ITEM + TOPBAR -->
+  <section class="cmp">
+    <h2 class="cmp-name">LeftNav item &amp; TopBar elements</h2>
+    <p class="cmp-note">Nav selected = white card with subtle border + shadow (no yellow). Search &amp; Create share the pill shape. Live — hover the items.</p>
+    <div class="states">
+      <div class="state" style="width:220px"><span class="state-lbl">Nav · default / hover / selected</span>
+        <div style="display:flex;flex-direction:column;gap:2px;background:var(--es-surface);border:1px solid var(--es-border);border-radius:12px;padding:8px">
+          <a class="nav-item"><svg><use href="#message"/></svg><span class="nav-label">Conversations</span></a>
+          <a class="nav-item is-selected"><svg><use href="#home"/></svg><span class="nav-label">Home</span></a>
+          <a class="nav-item"><svg><use href="#folder"/></svg><span class="nav-label">Projects</span><svg class="chevron"><use href="#chevron-right"/></svg></a>
+        </div>
+      </div>
+      <div class="state"><span class="state-lbl">Search (pill)</span>
+        <label class="search" style="width:300px"><svg><use href="#search"/></svg><input placeholder="Search across your workspace"></label>
+      </div>
+      <div class="state"><span class="state-lbl">Avatar</span><div class="avatar">CM</div></div>
+    </div>
+  </section>
+
+  <!-- FIRST-RUN -->
+  <section class="cmp">
+    <h2 class="cmp-name">Settings · Integrations — first-run (spec 6.4.1)</h2>
+    <p class="cmp-note">Designed from scratch (no spec text was available — see OPEN_QUESTIONS.md Q5). Shown when no integration is connected: a welcome that frames the value and offers one clear primary action.</p>
+    <div class="firstrun" style="margin:10px auto 0">
+      <span class="badge"><svg class="star"><use href="#star-white"/></svg></span>
+      <h2>Connect your first tool.</h2>
+      <p>Star gets sharper the more it can see. Connect a calendar, inbox, or ATS and your priorities, agenda, and retrieval fill in automatically.</p>
+      <div class="row">
+        <button class="btn-primary-pill">Connect a tool</button>
+        <button class="btn-ghost-pill">See what's possible</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

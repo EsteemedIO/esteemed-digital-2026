@@ -1,8 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import MarketingChrome from "@/components/MarketingChrome";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,9 +36,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={inter.variable}>
       <body className="bg-paper text-ink antialiased font-sans">
         <Providers>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+          <MarketingChrome>{children}</MarketingChrome>
         </Providers>
       </body>
     </html>

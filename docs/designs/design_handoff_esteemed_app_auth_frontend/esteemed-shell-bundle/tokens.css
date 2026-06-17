@@ -1,0 +1,169 @@
+/* ============================================================================
+   ESTEEMED PLATFORM SHELL — DESIGN TOKENS
+   ----------------------------------------------------------------------------
+   Source of truth for the shell's colors, type, spacing, radii, shadows, motion.
+   Codex: import this file once at the app root. Reference var(--es-*) only.
+
+   Naming: --es-*  (shell tokens, a superset tuned for the platform shell).
+   Where a value is locked by the design brief it is annotated  [LOCKED].
+   Where a value was derived by design judgement it is annotated [DERIVED].
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  /* ==========================================================================
+     1. BRAND YELLOW  — the entire personality. Used sparingly, never as text.
+     ======================================================================== */
+  --es-yellow-500:        #FEE546;  /* [LOCKED] solid brand yellow — PRIMARY ACTIONS ONLY
+                                        (Create button, chat/send, Star icon, section markers) */
+  --es-yellow-hover:      #FCD72B;  /* [LOCKED] muted yellow — hover on secondary nav,
+                                        + tile hover glow in App Switcher */
+  --es-yellow-press:      #EFC600;  /* [DERIVED] pressed state for yellow primary actions */
+  --es-yellow-50:         #FFFCE6;  /* faint wash — TODAY badge fill, star-input focus halo */
+  --es-yellow-100:        #FFF7B8;
+
+  /* ==========================================================================
+     2. INK + TEXT
+     ======================================================================== */
+  --es-ink-1000:          #0A0A0A;
+  --es-ink-900:           #111111;  /* primary text, near-black headings */
+  --es-ink-700:           #2A2A2A;
+  --es-fg-1:              rgba(0,0,0,0.85);  /* primary / body text — #000000D9 */
+  --es-fg-2:              #565449;  /* secondary text / meta lines */
+  --es-fg-3:              #8C887A;  /* tertiary / placeholder / muted */
+  --es-fg-on-yellow:      #0A0A0A;  /* text on a yellow surface */
+  --es-fg-on-ink:         #FFFFFF;  /* text on an ink surface */
+
+  /* ==========================================================================
+     3. SURFACES + BORDERS
+     ======================================================================== */
+  --es-bg:                #FAFAF7;  /* page / shell canvas (warm off-white) */
+  --es-surface:           #FFFFFF;  /* cards, panels, nav rail */
+  --es-surface-alt:       #F4F3EE;  /* secondary surface — search field, chips, skeleton base */
+  --es-surface-ink:       #111111;  /* inverted surface */
+  --es-surface-sunken:    #F0EFEA;  /* [DERIVED] track behind toggles, sunken wells */
+
+  --es-border:            #D7D7D7;  /* borders + divider lines (per direction; overrides brief's #E4E4E4) */
+  --es-border-soft:       #D7D7D7;  /* internal dividers */
+  --es-border-strong:     #D7D7D7;  /* input borders, stronger separation */
+  --es-circle-outline:    #B8B8B8;  /* [LOCKED] 1.5px grey outline — SECONDARY NAVIGATION
+                                        (View all link, card drill-in arrow CTA) */
+  --es-pill-outline:      #282828;  /* outline for white-bg pill buttons + chips (per direction) */
+
+  /* ==========================================================================
+     4. SEMANTIC LABEL RAMPS  (pastel labels — never pastel card backgrounds)
+     ----------------------------------------------------------------------
+     Each ramp = -fg (saturated text/border) + -bg (very light pastel fill).
+     red / amber / blue are [LOCKED] from spec + mockups.
+     slate / teal / coral / purple / pink are [DERIVED] — matched to the same
+     lightness (fg ≈ L45%) / saturation logic. See OPEN_QUESTIONS.md Q3.
+     ======================================================================== */
+  --es-red-fg:    #C8341F;  --es-red-bg:    #FBE5E1;   /* [LOCKED] URGENT */
+  --es-amber-fg:  #92610F;  --es-amber-bg:  #FBF1DD;   /* [LOCKED] IN 90 MIN · Hire */
+  --es-blue-fg:   #2A6FDB;  --es-blue-bg:   #E2ECFA;   /* [LOCKED] BY FRIDAY · Acquire */
+  --es-slate-fg:  #475569;  --es-slate-bg:  #EDF0F4;   /* [DERIVED] Personal / neutral / LATER */
+  --es-teal-fg:   #0E7490;  --es-teal-bg:   #DBEFF3;   /* [DERIVED] Create */
+  --es-coral-fg:  #C2410C;  --es-coral-bg:  #FCE9E0;   /* [DERIVED] Agents */
+  --es-purple-fg: #6D28D9;  --es-purple-bg: #EDE7FC;   /* [DERIVED] Intelligence */
+  --es-pink-fg:   #BE2065;  --es-pink-bg:   #FBE2EE;   /* [DERIVED] Curate */
+
+  /* Status (toggles, connection state) — aligned to the app's Toastify semantic palette */
+  --es-success:   #07BC0C;  --es-success-bg: #E4F7E4;   /* toastify success */
+  --es-warning:   #F1C40F;  --es-warning-bg: #FCF4D6;   /* toastify warning */
+  --es-danger:    hsl(6, 78%, 57%);  --es-danger-bg:  #FBE6E2;   /* toastify error */
+  --es-info:      #3498DB;  --es-info-bg:    #E3F0FB;   /* toastify info */
+
+  /* ==========================================================================
+     5. FOCUS + OVERLAY
+     ======================================================================== */
+  --es-focus-ring:        rgba(254, 229, 70, 0.55);   /* yellow focus halo */
+  --es-focus-ring-blue:   rgba(42, 111, 219, 0.40);   /* [DERIVED] neutral focus for text inputs */
+  --es-overlay:           rgba(14, 13, 8, 0.42);       /* scrim behind App Switcher / sheets */
+
+  /* ==========================================================================
+     6. TYPE
+     ======================================================================== */
+  --es-font-sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --es-font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;   /* standard family is Inter throughout */
+  --es-font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --es-text-xs:    12px;   /* eyebrows, pills, meta */
+  --es-text-sm:    13px;   /* dense meta, nav sub-items */
+  --es-text-base:  14px;   /* UI default — nav, controls */
+  --es-text-md:    15px;
+  --es-text-lg:    16px;   /* card body, list titles */
+  --es-text-xl:    18px;   /* card titles */
+  --es-text-2xl:   22px;   /* page titles (Agenda, Integrations) */
+  --es-text-3xl:   30px;
+  --es-text-4xl:   40px;   /* hero greeting (desktop) */
+
+  --es-w-regular:  400;
+  --es-w-medium:   500;
+  --es-w-semibold: 600;
+  --es-w-bold:     700;
+  --es-w-extra:    800;
+
+  --es-lh-tight:   1.08;
+  --es-lh-snug:    1.25;
+  --es-lh-normal:  1.45;
+
+  --es-track-tight: -0.02em;   /* display / greeting */
+  --es-track-snug:  -0.01em;   /* titles */
+  --es-track-caps:  0.10em;    /* ALL-CAPS eyebrows + pills */
+
+  /* ==========================================================================
+     7. SPACING — 4px base.  [LOCKED] page padding = 24px (--es-space-6).
+     ======================================================================== */
+  --es-space-1:  4px;
+  --es-space-2:  8px;
+  --es-space-3:  12px;
+  --es-space-4:  16px;
+  --es-space-5:  20px;
+  --es-space-6:  24px;   /* [LOCKED] page padding between LeftNav edge / content / shell */
+  --es-space-8:  32px;
+  --es-space-10: 40px;
+  --es-space-12: 48px;
+  --es-space-16: 64px;
+
+  --es-nav-w:        248px;  /* left nav rail width */
+  --es-rail-w:       300px;  /* right rail (Star context) width */
+  --es-content-max:  1180px; /* max content column on wide screens */
+
+  /* ==========================================================================
+     8. RADII — [LOCKED] pill shapes for Create button + search input.
+     ======================================================================== */
+  --es-radius-sm:   8px;    /* pills (priority/source labels), small chips */
+  --es-radius-md:   12px;   /* tools chip, toggles */
+  --es-radius-lg:   16px;   /* cards, star-input, nav selected, app tiles */
+  --es-radius-xl:   20px;   /* panels */
+  --es-radius-2xl:  24px;
+  --es-radius-pill: 999px;  /* [LOCKED] Create button + search input */
+
+  /* ==========================================================================
+     9. SHADOWS — warm, never blue. Cards carry NO shadow [LOCKED].
+        The Star input shadow is the one deliberate elevation on Home [LOCKED].
+     ======================================================================== */
+  --es-shadow-none:        none;                                       /* [LOCKED] priority cards */
+  --es-shadow-star-input:  0 10px 30px rgba(30, 28, 18, 0.10),
+                           0 2px 8px  rgba(30, 28, 18, 0.06);          /* [LOCKED] Star input elevation */
+  --es-shadow-panel:       0 24px 60px rgba(20, 18, 10, 0.18),
+                           0 4px 12px  rgba(20, 18, 10, 0.08);         /* App Switcher / popovers */
+  --es-shadow-sm:          0 1px 2px rgba(30, 28, 18, 0.06);
+  --es-shadow-md:          0 8px 24px rgba(30, 28, 18, 0.10);
+  --es-shadow-tile-hover:  0 0 0 2px var(--es-yellow-hover),
+                           0 8px 20px rgba(252, 215, 43, 0.30);        /* [LOCKED] App Switcher tile hover glow */
+
+  /* ==========================================================================
+     10. MOTION — subtle. Fade + small Y-translate. No bounce, no spring.
+     ======================================================================== */
+  --es-ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --es-ease-in-out: cubic-bezier(0.6, 0.0, 0.2, 1);
+  --es-dur-fast:    120ms;   /* hover/press feedback */
+  --es-dur-base:    200ms;   /* most transitions */
+  --es-dur-slow:    320ms;   /* panel open, page section reveal */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

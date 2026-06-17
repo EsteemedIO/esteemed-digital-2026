@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esteemed Platform Shell — Prototype</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="shell.css">
+</head>
+<body>
+<script src="icons.js"></script>
+<script src="logos.js"></script>
+
+<div class="shell">
+  <!-- ===== LEFT NAV ===== -->
+  <nav class="nav">
+    <div class="nav-brand"><img src="assets/esteemed-lockup.svg" alt="esteemed" style="height:26px;width:auto"></div>
+
+    <!-- Create — Calendly-style dropdown -->
+    <div class="create-wrap">
+      <button class="btn-create" id="createBtn" aria-haspopup="menu" aria-expanded="false"><span>New</span><svg><use href="#plus"/></svg></button>
+      <div class="create-menu" id="createMenu" role="menu" aria-label="Create">
+        <button class="menu-item" role="menuitem"><svg><use href="#user-plus"/></svg>Candidate</button>
+        <div class="menu-group-label">Event</div>
+        <button class="menu-item indent" role="menuitem"><svg><use href="#calendar"/></svg>Meeting</button>
+        <button class="menu-item indent" role="menuitem"><svg><use href="#briefcase"/></svg>Interview</button>
+        <div class="menu-divider"></div>
+        <button class="menu-item" role="menuitem"><svg><use href="#user"/></svg>Contact</button>
+        <button class="menu-item" role="menuitem"><svg><use href="#building"/></svg>Company</button>
+        <button class="menu-item" role="menuitem"><svg><use href="#folder"/></svg>Project</button>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <a class="nav-item is-selected" data-view="home"><svg><use href="#home"/></svg><span class="nav-label">Home</span></a>
+      <a class="nav-item" data-view="conversations"><svg><use href="#message"/></svg><span class="nav-label">Conversations</span></a>
+      <a class="nav-item" data-view="calendar"><svg><use href="#calendar"/></svg><span class="nav-label">Calendar</span></a>
+      <a class="nav-item" data-view="projects"><svg><use href="#folder"/></svg><span class="nav-label">Projects</span></a>
+      <a class="nav-item" data-view="agents"><svg><use href="#command"/></svg><span class="nav-label">Agents</span></a>
+      <a class="nav-item" data-view="workflows"><svg><use href="#workflow"/></svg><span class="nav-label">Workflows</span></a>
+      <a class="nav-item" data-view="integrations"><svg><use href="#plug"/></svg><span class="nav-label">Integrations</span></a>
+      <a class="nav-item" data-view="insights"><svg><use href="#insights"/></svg><span class="nav-label">Insights</span></a>
+    </div>
+
+    <div class="nav-spacer"></div>
+    <div class="nav-footer">
+      <a class="nav-item"><svg><use href="#heart"/></svg><span class="nav-label">Plans &amp; features</span></a>
+      <a class="nav-item" id="settingsNav"><svg><use href="#settings"/></svg><span class="nav-label">Settings</span></a>
+      <a class="nav-item"><svg><use href="#help"/></svg><span class="nav-label">Support</span></a>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN ===== -->
+  <div class="shell-main">
+    <header class="topbar">
+      <div class="mobile-only" style="align-items:center;gap:8px">
+        <svg class="star" style="width:22px;height:22px"><use href="#star"/></svg>
+        <span style="font-family:var(--es-font-display);font-weight:800;font-size:19px">esteemed</span>
+      </div>
+      <div class="spacer"></div>
+      <button class="icon-btn" aria-label="Search"><svg><use href="#search"/></svg></button>
+      <button class="icon-btn" id="appsBtn" aria-label="Apps" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5" cy="5" r="1.6"/><circle cx="12" cy="5" r="1.6"/><circle cx="19" cy="5" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="19" r="1.6"/><circle cx="12" cy="19" r="1.6"/><circle cx="19" cy="19" r="1.6"/></svg></button>
+      <div class="user-wrap">
+        <button class="icon-btn" id="notifBtn" aria-label="Notifications" aria-haspopup="menu" aria-expanded="false"><svg><use href="#bell"/></svg></button>
+        <div class="user-menu" id="notifMenu" role="menu" aria-label="Notifications" style="width:344px">
+          <div class="user-menu-head" style="justify-content:space-between"><span class="nm">Notifications</span><span style="font-size:13px;color:var(--es-fg-3)">3 new</span></div>
+          <div class="notif-item"><span class="notif-ic" style="background:var(--es-yellow-50)"><svg class="star"><use href="#star"/></svg></span><div class="notif-tx"><b>Star</b> matched 3 candidates to the React Engineer JD.<div class="notif-time">2m ago</div></div><span class="notif-dot"></span></div>
+          <div class="notif-item"><span class="notif-ic" style="background:var(--es-amber-bg);color:var(--es-amber-fg)"><svg><use href="#briefcase"/></svg></span><div class="notif-tx"><b>Sarah Chen</b> accepted the interview invite.<div class="notif-time">1h ago</div></div><span class="notif-dot"></span></div>
+          <div class="notif-item"><span class="notif-ic" style="background:var(--es-blue-bg);color:var(--es-blue-fg)"><svg><use href="#square"/></svg></span><div class="notif-tx"><b>IEEE</b> deal moved to Proposal in Acquire.<div class="notif-time">3h ago</div></div><span class="notif-dot"></span></div>
+          <div class="menu-divider"></div>
+          <button class="menu-item" style="justify-content:center;color:var(--es-fg-2)">View all notifications</button>
+        </div>
+      </div>
+      <div class="user-wrap">
+        <button class="avatar" id="userBtn" aria-haspopup="menu" aria-expanded="false">CM</button>
+        <div class="user-menu" id="userMenu" role="menu" aria-label="Account">
+          <div class="user-menu-head"><span class="avatar">CM</span><div><div class="nm">Chris Marsh</div><div class="em">chris@esteemed.io</div></div></div>
+          <button class="menu-item" role="menuitem"><svg><use href="#user"/></svg>Profile</button>
+          <button class="menu-item" id="userSettings" role="menuitem"><svg><use href="#settings"/></svg>Settings</button>
+          <button class="menu-item" role="menuitem"><svg><use href="#building"/></svg>Switch workspace</button>
+          <button class="menu-item" role="menuitem"><svg><use href="#help"/></svg>Help &amp; support</button>
+          <div class="menu-divider"></div>
+          <button class="menu-item" role="menuitem"><svg><use href="#external"/></svg>Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="shell-body">
+      <!-- HOME -->
+      <section data-view-panel="home" class="is-active home-content" data-screen-label="Home">
+        <div class="home-col">
+          <div class="hero">
+            <h1 class="hero-greet">Good morning, Chris.</h1>
+            <div class="star-input">
+              <div class="star-input-top"><svg class="star"><use href="#star"/></svg><input placeholder="What are you working on?"></div>
+              <div class="star-input-bottom">
+                <button class="tools-chip"><svg><use href="#plus"/></svg>Tools</button>
+                <button class="mini" aria-label="Attach"><svg><use href="#paperclip"/></svg></button>
+                <div style="flex:1"></div>
+                <button class="mini" aria-label="Dictate"><svg><use href="#mic"/></svg></button>
+                <button class="send-btn" aria-label="Send"><svg><use href="#arrow-up"/></svg></button>
+              </div>
+            </div>
+            <div class="prompt-starters">
+              <button class="starter"><svg><use href="#pencil"/></svg>Write</button>
+              <button class="starter"><svg><use href="#search"/></svg>Research</button>
+              <button class="starter"><svg><use href="#sparkles"/></svg>Brainstorm</button>
+              <button class="starter"><svg><use href="#insights"/></svg>Analyze</button>
+            </div>
+          </div>
+          <section>
+            <div class="section-head">
+              <div class="eyebrow"><svg class="star"><use href="#star"/></svg> Priorities · Ordered for you</div>
+              <a class="viewall"><span class="count">3 of 12 ·</span><span class="label">View all</span><span class="cta-circle"><svg><use href="#arrow-right"/></svg></span></a>
+            </div>
+            <p class="section-sub">Three things need your call today. Sarah Chen at 11. Maryland response due tomorrow.</p>
+            <div class="carousel">
+              <div class="carousel-track">
+                <article class="pcard">
+                  <div class="pcard-pills"><span class="pill pill--red">Urgent</span><span class="pill pill--amber">Hire</span></div>
+                  <div class="pcard-meta">Due tomorrow · Thursday May 21</div>
+                  <h3 class="pcard-title">Maryland wage claim</h3>
+                  <p class="pcard-body">Draft response ready for review. Backed by Albert's Time Reports.</p>
+                  <div class="pcard-foot"><button class="cta-circle" aria-label="Open"><svg><use href="#arrow-right"/></svg></button></div>
+                </article>
+                <article class="pcard">
+                  <div class="pcard-pills"><span class="pill pill--amber">In 90 min</span><span class="pill pill--amber">Hire</span></div>
+                  <div class="pcard-meta">11:00 AM · React Engineer · BCT Partners</div>
+                  <h3 class="pcard-title">Sarah Chen interview prep</h3>
+                  <p class="pcard-body">Star prepped questions. 3 years more experience than the JD asks.</p>
+                  <div class="pcard-foot"><button class="cta-circle is-primary" aria-label="Open"><svg><use href="#arrow-right"/></svg></button></div>
+                </article>
+                <article class="pcard">
+                  <div class="pcard-pills"><span class="pill pill--blue">By Friday</span><span class="pill pill--blue">Acquire</span></div>
+                  <div class="pcard-meta">Send Friday · IEEE Marketplace pilot</div>
+                  <h3 class="pcard-title">IEEE pitch deck final review</h3>
+                  <p class="pcard-body">Marketplace slide needs updated numbers from Cetacean pipeline.</p>
+                  <div class="pcard-foot"><button class="cta-circle" aria-label="Open"><svg><use href="#arrow-right"/></svg></button></div>
+                </article>
+              </div>
+              <div class="dots"><span class="dot is-active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- CONVERSATIONS — unified inbox -->
+      <section data-view-panel="conversations" data-screen-label="Conversations">
+        <div class="inbox" id="inbox">
+          <aside class="inbox-list">
+            <div class="inbox-head">
+              <div class="inbox-title">Conversations</div>
+              <div class="inbox-filters" id="inboxFilters">
+                <button class="fchip is-active" data-filter="all">All</button>
+                <button class="fchip" data-filter="star"><svg class="star"><use href="#star"/></svg>Star</button>
+                <button class="fchip" data-filter="email"><svg><use href="#logo-gmail"/></svg>Email</button>
+                <button class="fchip" data-filter="linkedin"><svg><use href="#logo-linkedin"/></svg>LinkedIn</button>
+                <button class="fchip" data-filter="x"><svg><use href="#logo-x"/></svg>X</button>
+                <button class="fchip" data-filter="slack"><svg><use href="#logo-slack"/></svg>Slack</button>
+              </div>
+            </div>
+            <div class="thread-list" id="threadList">
+              <button class="thread-row is-active is-unread" data-channel="star" data-clabel="Star" data-name="Star" data-initials="★" data-time="9:42 AM" data-context="Context: Calendar · Today" data-from="Star" data-msg="Morning, Chris. You've got 4 things on the books today. The 11am with Sarah Chen is the one to prep — I can pull her background and draft questions.">
+                <span class="thread-av"><span class="pic" style="background:var(--es-yellow-50)"><svg class="star" style="width:20px;height:20px"><use href="#star"/></svg></span><span class="ch-badge star"><svg><use href="#star"/></svg></span></span>
+                <span class="thread-body"><span class="thread-top"><span class="thread-name">Star</span><span class="thread-time">9:42 AM</span></span><span class="thread-snip">Morning, Chris. You've got 4 things on the books today. The 11am with Sarah Chen is the one to prep.</span></span>
+                <span class="unread"></span>
+              </button>
+              <button class="thread-row is-unread" data-channel="email" data-clabel="Email" data-name="Sarah Chen" data-initials="SC" data-time="8:30 AM" data-context="React Engineer · BCT Partners" data-from="Sarah Chen" data-msg="Thanks for the quick turnaround on the offer details — reviewing with my team and I'll revert by end of day.">
+                <span class="thread-av"><span class="pic">SC</span><span class="ch-badge"><svg><use href="#logo-gmail"/></svg></span></span>
+                <span class="thread-body"><span class="thread-top"><span class="thread-name">Sarah Chen</span><span class="thread-time">8:30 AM</span></span><span class="thread-snip">Thanks for the quick turnaround on the offer details — reviewing with my team and I'll revert by EOD.</span></span>
+                <span class="unread"></span>
+              </button>
+              <button class="thread-row" data-channel="linkedin" data-clabel="LinkedIn" data-name="Marcus Webb" data-initials="MW" data-time="Yesterday" data-context="Sr. Drupal Dev · IEEE" data-from="Marcus Webb" data-msg="Appreciate you reaching out. I'd be open to a chat about the Sr. Drupal role this week — Thursday afternoon works well on my end.">
+                <span class="thread-av"><span class="pic">MW</span><span class="ch-badge"><svg><use href="#logo-linkedin"/></svg></span></span>
+                <span class="thread-body"><span class="thread-top"><span class="thread-name">Marcus Webb</span><span class="thread-time">Yesterday</span></span><span class="thread-snip">Appreciate you reaching out. I'd be open to a chat about the Sr. Drupal role this week.</span></span>
+                <span class="unread"></span>
+              </button>
+              <button class="thread-row" data-channel="email" data-clabel="Email" data-name="Anthony Dryer" data-initials="AD" data-time="Yesterday" data-context="Elevated Third · active deal" data-from="Anthony Dryer" data-msg="Re: Elevated Third — can we push lunch to 12:30 tomorrow? Something came up in the morning. Still keen to talk through the Q3 scope.">
+                <span class="thread-av"><span class="pic">AD</span><span class="ch-badge"><svg><use href="#logo-gmail"/></svg></span></span>
+                <span class="thread-body"><span class="thread-top"><span class="thread-name">Anthony Dryer</span><span class="thread-time">Yesterday</span></span><span class="thread-snip">Re: Elevated Third — can we push lunch to 12:30 tomorrow? Something came up.</span></span>
+                <span class="unread"></span>
+              </button>
+              <button class="thread-row" data-channel="x" data-clabel="X" data-name="IEEE Talent" data-initials="IT" data-time="Mon" data-context="@ieeetalent · DM" data-from="IEEE Talent" data-msg="Loved the marketplace pilot deck. Quick question on the Q3 numbers when you have a sec — want to make sure we're aligned before the quarterly.">
+                <span class="thread-av"><span class="pic">IT</span><span class="ch-badge"><svg><use href="#logo-x"/></svg></span></span>
+                <span class="thread-body"><span class="thread-top"><span class="thread-name">IEEE Talent</span><span class="thread-time">Mon</span></span><span class="thread-snip">Loved the marketplace pilot deck. Quick question on the Q3 numbers when you have a sec.</span></span>
+                <span class="unread"></span>
+              </button>
+              <button class="thread-row" data-channel="linkedin" data-clabel="LinkedIn" data-name="Priya Raman" data-initials="PR" data-time="Mon" data-context="PM candidate · IRG" data-from="Priya Raman" data-msg="Confirming 2pm Thursday for the PM interview. Looking forward to it — I'll send over a couple of case studies beforehand.">
+                <span class="thread-av"><span class="pic">PR</span><span class="ch-badge"><svg><use href="#logo-linkedin"/></svg></span></span>
+                <span class="thread-body"><span class="thread-top"><span class="thread-name">Priya Raman</span><span class="thread-time">Mon</span></span><span class="thread-snip">Confirming 2pm Thursday for the PM interview. Looking forward to it.</span></span>
+                <span class="unread"></span>
+              </button>
+              <button class="thread-row" data-channel="slack" data-clabel="Slack" data-name="#react-hiring" data-initials="#" data-time="Mon" data-context="Slack · 12 members" data-from="Slackbot" data-msg="New candidate just dropped into the React pipeline — flagged high-confidence by Hire. Want me to schedule a screen?">
+                <span class="thread-av"><span class="pic">#</span><span class="ch-badge"><svg><use href="#logo-slack"/></svg></span></span>
+                <span class="thread-body"><span class="thread-top"><span class="thread-name">#react-hiring</span><span class="thread-time">Mon</span></span><span class="thread-snip">New candidate just dropped into the React pipeline — flagged high-confidence by Hire.</span></span>
+                <span class="unread"></span>
+              </button>
+            </div>
+          </aside>
+
+          <main class="inbox-reading" id="inboxReading">
+            <div class="reading-head">
+              <button class="icon-btn mobile-only" id="inboxBack" aria-label="Back" style="margin-right:-4px"><svg style="transform:rotate(180deg)"><use href="#chevron-right"/></svg></button>
+              <span class="pic" id="rPic" style="background:var(--es-yellow-50)"><svg class="star" style="width:20px;height:20px"><use href="#star"/></svg></span>
+              <div><div class="who" id="rWho">Star</div><div class="sub" id="rSub">Context: Calendar · Today</div></div>
+              <span class="ch-pill star" id="rPill" style="margin-left:auto"><svg><use href="#star"/></svg>Star</span>
+            </div>
+            <div class="reading-scroll" id="rScroll">
+              <div class="msg">
+                <div class="msg-head"><svg class="star"><use href="#star"/></svg><span class="who">Star</span><span class="time">9:42 AM</span></div>
+                <div class="msg-bubble">Morning, Chris. You've got 4 things on the books today. The 11am with Sarah Chen is the one to prep — I can pull her background and draft questions.</div>
+              </div>
+            </div>
+            <div class="reading-composer">
+              <div class="conv-input"><svg class="star" id="rComposerStar"><use href="#star"/></svg><input id="askStar" placeholder="Ask Star anything…"><button class="conv-send" id="askStarSend" aria-label="Send"><svg><use href="#arrow-up"/></svg></button></div>
+            </div>
+          </main>
+        </div>
+      </section>
+
+      <!-- CALENDAR -->
+      <section data-view-panel="calendar" data-screen-label="Calendar">
+        <div class="with-rail">
+          <main class="cal-content cal-wrap">
+            <div class="cal-topbar">
+              <div>
+                <div class="page-eyebrow">Calendar</div>
+                <h1 class="page-title" id="calTitle" style="margin:0">May 2026</h1>
+              </div>
+              <div class="cal-nav">
+                <button class="cal-arrow" aria-label="Previous"><svg style="transform:rotate(180deg)"><use href="#chevron-right"/></svg></button>
+                <button class="cal-today">Today</button>
+                <button class="cal-arrow" aria-label="Next"><svg><use href="#chevron-right"/></svg></button>
+              </div>
+              <div class="cal-views" id="calViews">
+                <button class="cal-view" data-cal="day">Day</button>
+                <button class="cal-view" data-cal="week">Week</button>
+                <button class="cal-view is-active" data-cal="month">Month</button>
+                <button class="cal-view" data-cal="agenda">Agenda</button>
+              </div>
+            </div>
+            <div class="chips">
+              <button class="chip is-active">All</button>
+              <button class="chip"><svg><use href="#briefcase"/></svg>Hire</button>
+              <button class="chip"><svg><use href="#square"/></svg>Acquire</button>
+              <button class="chip"><svg><use href="#user"/></svg>Personal</button>
+            </div>
+
+            <!-- MONTH (default) -->
+            <div data-cal-view="month" class="cal-month is-active">
+              <div class="cal-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+              <div class="cal-grid">
+                <div class="cal-cell out"><span class="dn">26</span></div><div class="cal-cell out"><span class="dn">27</span></div><div class="cal-cell out"><span class="dn">28</span></div><div class="cal-cell out"><span class="dn">29</span></div><div class="cal-cell out"><span class="dn">30</span></div><div class="cal-cell"><span class="dn">1</span></div><div class="cal-cell"><span class="dn">2</span></div>
+                <div class="cal-cell"><span class="dn">3</span></div><div class="cal-cell"><span class="dn">4</span></div><div class="cal-cell"><span class="dn">5</span></div><div class="cal-cell"><span class="dn">6</span><span class="cal-evt blue"><span class="d"></span>BCT kickoff</span></div><div class="cal-cell"><span class="dn">7</span></div><div class="cal-cell"><span class="dn">8</span></div><div class="cal-cell"><span class="dn">9</span></div>
+                <div class="cal-cell"><span class="dn">10</span></div><div class="cal-cell"><span class="dn">11</span></div><div class="cal-cell"><span class="dn">12</span></div><div class="cal-cell"><span class="dn">13</span><span class="cal-evt slate"><span class="d"></span>Team standup</span></div><div class="cal-cell"><span class="dn">14</span></div><div class="cal-cell"><span class="dn">15</span></div><div class="cal-cell"><span class="dn">16</span></div>
+                <div class="cal-cell"><span class="dn">17</span></div><div class="cal-cell"><span class="dn">18</span></div><div class="cal-cell"><span class="dn">19</span></div><div class="cal-cell today"><span class="dn">20</span><span class="cal-evt slate"><span class="d"></span>Standup</span><span class="cal-evt amber"><span class="d"></span>Sarah Chen</span><span class="cal-more">+2 more</span></div><div class="cal-cell"><span class="dn">21</span><span class="cal-evt blue"><span class="d"></span>Glenn Hilton</span><span class="cal-evt amber"><span class="d"></span>Priya Raman</span><span class="cal-more">+2 more</span></div><div class="cal-cell"><span class="dn">22</span></div><div class="cal-cell"><span class="dn">23</span></div>
+                <div class="cal-cell"><span class="dn">24</span></div><div class="cal-cell"><span class="dn">25</span></div><div class="cal-cell"><span class="dn">26</span></div><div class="cal-cell"><span class="dn">27</span><span class="cal-evt blue"><span class="d"></span>IEEE review</span></div><div class="cal-cell"><span class="dn">28</span></div><div class="cal-cell"><span class="dn">29</span></div><div class="cal-cell"><span class="dn">30</span></div>
+                <div class="cal-cell"><span class="dn">31</span></div><div class="cal-cell out"><span class="dn">1</span></div><div class="cal-cell out"><span class="dn">2</span></div><div class="cal-cell out"><span class="dn">3</span></div><div class="cal-cell out"><span class="dn">4</span></div><div class="cal-cell out"><span class="dn">5</span></div><div class="cal-cell out"><span class="dn">6</span></div>
+              </div>
+            </div>
+
+            <!-- WEEK / DAY (built by app.js) -->
+            <div data-cal-view="week"><div class="cal-timegrid" id="weekGrid"></div></div>
+            <div data-cal-view="day"><div class="cal-timegrid" id="dayGrid"></div></div>
+
+            <!-- AGENDA -->
+            <div data-cal-view="agenda" class="cal-agenda">
+            <div class="cal-day-head"><span class="cal-day-title">Today, Wednesday May 20</span><span class="pill pill--today">Today</span><span class="cal-day-count">4 events</span></div>
+            <div class="event acc-slate"><div class="event-time"><div class="t">9:00 AM</div><div class="d">30m</div></div><div class="event-main"><div class="event-title">Standup with team</div><div class="event-meta"><span class="pill pill--slate">Personal</span> Internal · daily sync</div></div></div>
+            <div class="event acc-amber"><div class="event-time"><div class="t">11:00 AM</div><div class="d">1h</div></div><div class="event-main"><div class="event-title">Sarah Chen interview</div><div class="event-meta"><span class="pill pill--amber">Hire</span> React Engineer · BCT Partners</div></div></div>
+            <div class="event acc-blue"><div class="event-time"><div class="t">1:30 PM</div><div class="d">45m</div></div><div class="event-main"><div class="event-title">BCT Partners proposal review</div><div class="event-meta"><span class="pill pill--blue">Acquire</span> Q3 staffing · $48k</div></div></div>
+            <div class="event acc-amber"><div class="event-time"><div class="t">4:00 PM</div><div class="d">30m</div></div><div class="event-main"><div class="event-title">Marcus Webb screening</div><div class="event-meta"><span class="pill pill--amber">Hire</span> Sr. Drupal Dev · IEEE</div></div></div>
+            <div class="cal-day-head"><span class="cal-day-title">Tomorrow, Thursday May 21</span><span class="cal-day-count">4 events</span></div>
+            <div class="event acc-blue"><div class="event-time"><div class="t">9:30 AM</div><div class="d">30m</div></div><div class="event-main"><div class="event-title">Glenn Hilton follow-up</div><div class="event-meta"><span class="pill pill--blue">Acquire</span> ImageX · $48k opportunity</div></div></div>
+            <div class="event acc-blue"><div class="event-time"><div class="t">12:00 PM</div><div class="d">1h</div></div><div class="event-main"><div class="event-title">Lunch with Anthony Dryer</div><div class="event-meta"><span class="pill pill--blue">Acquire</span> Elevated Third · active deal</div></div></div>
+            <div class="event acc-amber"><div class="event-time"><div class="t">2:00 PM</div><div class="d">30m</div></div><div class="event-main"><div class="event-title">Priya Raman interview</div><div class="event-meta"><span class="pill pill--amber">Hire</span> PM candidate · IRG</div></div></div>
+            <div class="event acc-blue"><div class="event-time"><div class="t">4:30 PM</div><div class="d">1h</div></div><div class="event-main"><div class="event-title">IEEE quarterly review</div><div class="event-meta"><span class="pill pill--blue">Acquire</span> Talent Marketplace pilot</div></div></div>
+            </div>
+          </main>
+          <aside class="rail" style="display:flex;flex-direction:column">
+            <div class="rail-head"><svg class="star"><use href="#star"/></svg><span class="t">Star</span></div>
+            <div class="rail-card">I can find time on your calendar, prep you for upcoming meetings, and pull related conversations or records.</div>
+            <div class="rail-context"><svg><use href="#bolt"/></svg><span>Context: Hire · Acquire · Projects · Inbox · Calendar</span></div>
+            <div class="ask-star"><svg class="star"><use href="#star"/></svg><input placeholder="Ask Star…"></div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PROJECTS / INSIGHTS — lightweight empty placeholders -->
+      <section data-view-panel="projects" data-screen-label="Projects"><div class="page-view">
+        <div class="page-head">
+          <div><div class="page-eyebrow">Workspaces</div><h1 class="page-title">Projects</h1></div>
+          <button class="btn-primary-sm"><svg><use href="#plus"/></svg>New project</button>
+        </div>
+        <p class="page-lead">Workforce, Business, and Digital workspaces — each a home for related conversations, records, and tasks.</p>
+
+        <div class="chips" id="projFilters" style="margin-bottom:24px">
+          <button class="chip is-active" data-pfilter="all">All</button>
+          <button class="chip" data-pfilter="workforce"><svg><use href="#users"/></svg>Workforce</button>
+          <button class="chip" data-pfilter="business"><svg><use href="#file-text"/></svg>Business</button>
+          <button class="chip" data-pfilter="digital"><svg><use href="#globe"/></svg>Digital</button>
+        </div>
+
+        <div class="proj-section" data-section="workforce">
+        <div class="sec-label"><svg style="width:14px;height:14px;color:var(--es-fg-3)"><use href="#users"/></svg> Workforce <span class="ct">· 3</span></div>
+        <div class="proj-grid">
+          <div class="proj-card"><div class="top"><span class="proj-title">Q3 Engineering hires</span><span class="pill pill--amber">Hire</span></div><div class="proj-meta">5 open roles · 12 candidates in pipeline</div><div class="proj-foot"><span class="avatars"><span>CM</span><span>SC</span><span>+3</span></span><span class="cstatus ok"><span class="d"></span>On track</span></div></div>
+          <div class="proj-card"><div class="top"><span class="proj-title">Drupal team buildout</span><span class="pill pill--amber">Hire</span></div><div class="proj-meta">2 open roles · 4 candidates · Marcus Webb screening</div><div class="proj-foot"><span class="avatars"><span>CM</span><span>AD</span></span><span class="cstatus idx"><span class="d"></span>At risk</span></div></div>
+          <div class="proj-card"><div class="top"><span class="proj-title">IEEE marketplace staffing</span><span class="pill pill--amber">Hire</span></div><div class="proj-meta">3 open roles · pilot kickoff May 21</div><div class="proj-foot"><span class="avatars"><span>CM</span><span>PR</span><span>+2</span></span><span class="cstatus ok"><span class="d"></span>On track</span></div></div>
+        </div>
+        </div>
+
+        <div class="proj-section" data-section="business">
+        <div class="sec-label"><svg style="width:14px;height:14px;color:var(--es-fg-3)"><use href="#file-text"/></svg> Business <span class="ct">· 3</span></div>
+        <div class="proj-grid">
+          <div class="proj-card"><div class="top"><span class="proj-title">BCT Partners proposal</span><span class="pill pill--blue">Acquire</span></div><div class="proj-meta">Q3 staffing · $48k · review 1:30 PM today</div><div class="proj-foot"><span class="avatars"><span>CM</span><span>SC</span></span><span class="cstatus idx"><span class="d"></span>Due today</span></div></div>
+          <div class="proj-card"><div class="top"><span class="proj-title">Elevated Third deal</span><span class="pill pill--blue">Acquire</span></div><div class="proj-meta">Active deal · lunch w/ Anthony Dryer tomorrow</div><div class="proj-foot"><span class="avatars"><span>CM</span><span>AD</span></span><span class="cstatus ok"><span class="d"></span>On track</span></div></div>
+          <div class="proj-card"><div class="top"><span class="proj-title">Cetacean pipeline</span><span class="pill pill--blue">Acquire</span></div><div class="proj-meta">Updated numbers needed for IEEE deck</div><div class="proj-foot"><span class="avatars"><span>CM</span></span><span class="cstatus ok"><span class="d"></span>On track</span></div></div>
+        </div>
+        </div>
+
+        <div class="proj-section" data-section="digital">
+        <div class="sec-label"><svg style="width:14px;height:14px;color:var(--es-fg-3)"><use href="#globe"/></svg> Digital <span class="ct">· 3</span></div>
+        <div class="proj-grid">
+          <div class="proj-card"><div class="top"><span class="proj-title">esteemed.io revamp</span><span class="pill pill--teal">Create</span></div><div class="proj-meta">Homepage + products · staging review</div><div class="proj-foot"><span class="avatars"><span>CM</span><span>+2</span></span><span class="cstatus ok"><span class="d"></span>On track</span></div></div>
+          <div class="proj-card"><div class="top"><span class="proj-title">Careers site</span><span class="pill pill--teal">Create</span></div><div class="proj-meta">Job board integration with Hire</div><div class="proj-foot"><span class="avatars"><span>CM</span><span>SC</span></span><span class="cstatus idx"><span class="d"></span>In progress</span></div></div>
+          <div class="proj-card"><div class="top"><span class="proj-title">Colleagues app v2</span><span class="pill pill--pink">Curate</span></div><div class="proj-meta">Profiles · feed · messaging refresh</div><div class="proj-foot"><span class="avatars"><span>CM</span><span>PR</span><span>+4</span></span><span class="cstatus ok"><span class="d"></span>On track</span></div></div>
+        </div>
+        </div>
+      </div></section>
+      <section data-view-panel="insights" data-screen-label="Insights"><div class="page-view">
+        <div class="page-head">
+          <div><div class="page-eyebrow">Insights</div><h1 class="page-title">Reports</h1></div>
+          <button class="btn-primary-sm"><svg><use href="#plus"/></svg>New report</button>
+        </div>
+
+        <!-- HQ-style filter bar -->
+        <div class="rep-filterbar">
+          <button class="rep-filter"><svg><use href="#calendar"/></svg><span class="lbl">Period</span><span class="val">Last 30 days</span><svg><use href="#chevron-down"/></svg></button>
+          <button class="rep-filter"><span class="lbl">Department</span><span class="val">All</span><svg><use href="#chevron-down"/></svg></button>
+          <button class="rep-filter"><span class="lbl">Region</span><span class="val">Global</span><svg><use href="#chevron-down"/></svg></button>
+          <button class="rep-filter add"><svg><use href="#plus"/></svg>Add filter</button>
+          <span class="grow"></span>
+          <div class="rep-segment"><button class="rep-seg is-active">Chart</button><button class="rep-seg">Table</button></div>
+        </div>
+
+        <!-- Report sets — depend on connected apps -->
+        <div class="rep-sets" id="repSets">
+          <button class="rep-set is-active" data-rep="overview"><svg><use href="#dashboard"/></svg>Overview</button>
+          <button class="rep-set" data-rep="finance"><svg><use href="#banknote"/></svg>Finance</button>
+          <button class="rep-set" data-rep="workforce"><svg><use href="#users"/></svg>Workforce</button>
+          <button class="rep-set" data-rep="projects"><svg><use href="#kanban"/></svg>Project management</button>
+          <button class="rep-set" data-rep="sales"><svg><use href="#trending-up"/></svg>Sales</button>
+          <button class="rep-set locked" data-rep="support" title="Connect Zendesk to enable"><svg><use href="#lock"/></svg>Support<span class="src">· Connect Zendesk</span></button>
+        </div>
+
+        <div class="rep-srcnote" id="repSrcNote"><svg><use href="#bolt"/></svg><span>Sourced from <b>Acquire</b>, <b>Hire</b>, and connected integrations. Connect more sources to unlock additional reports.</span></div>
+
+        <div class="kpi-row" id="repKpis"></div>
+        <div class="chart-grid" id="repCharts"></div>
+      </div></section>
+      <section data-view-panel="agents" data-screen-label="Agents"><div class="page-view">
+        <div class="page-head">
+          <div><div class="page-eyebrow">AI workforce</div><h1 class="page-title">Agents</h1></div>
+        </div>
+        <p class="page-lead">Five specialist agents work alongside your team — each with a defined role and skill set. Assign them tasks from any app, or let them run inside Workflows.</p>
+        <div class="agent-grid">
+          <div class="agent-card">
+            <div class="agent-top"><span class="agent-badge"><svg><use href="#target"/></svg><span class="agent-dot"></span></span><div><div class="agent-name">Marketer</div><div class="agent-role">Campaigns &amp; demand gen</div></div></div>
+            <p class="agent-desc">Plans and runs multi-channel campaigns end to end — audience research, messaging, landing pages, and performance reporting against pipeline goals.</p>
+            <div class="agent-skills-label">Skills</div>
+            <div class="agent-skills"><span class="skill">Campaign strategy</span><span class="skill">Email &amp; nurture</span><span class="skill">Ad copy</span><span class="skill">A/B testing</span><span class="skill">Analytics</span></div>
+            <div class="agent-foot"><button class="agent-cta"><svg><use href="#message"/></svg>Assign a task</button></div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-top"><span class="agent-badge"><svg><use href="#pencil"/></svg><span class="agent-dot"></span></span><div><div class="agent-name">Writer</div><div class="agent-role">Long-form &amp; editorial</div></div></div>
+            <p class="agent-desc">Drafts and edits in your brand voice — blog posts, case studies, whitepapers, and product copy — with research, structure, and citations built in.</p>
+            <div class="agent-skills-label">Skills</div>
+            <div class="agent-skills"><span class="skill">Blog &amp; articles</span><span class="skill">Case studies</span><span class="skill">Editing</span><span class="skill">SEO</span><span class="skill">Brand voice</span></div>
+            <div class="agent-foot"><button class="agent-cta"><svg><use href="#message"/></svg>Assign a task</button></div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-top"><span class="agent-badge"><svg><use href="#user-plus"/></svg><span class="agent-dot"></span></span><div><div class="agent-name">Recruiter</div><div class="agent-role">Sourcing &amp; screening</div></div></div>
+            <p class="agent-desc">Sources from the Colleagues network, screens against the job description, drafts outreach, and schedules interviews — keeping Hire in sync the whole way.</p>
+            <div class="agent-skills-label">Skills</div>
+            <div class="agent-skills"><span class="skill">Sourcing</span><span class="skill">Resume screening</span><span class="skill">Outreach</span><span class="skill">Scheduling</span><span class="skill">Pipeline mgmt</span></div>
+            <div class="agent-foot"><button class="agent-cta"><svg><use href="#message"/></svg>Assign a task</button></div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-top"><span class="agent-badge"><svg><use href="#message"/></svg><span class="agent-dot"></span></span><div><div class="agent-name">Social Media Manager</div><div class="agent-role">Channels &amp; community</div></div></div>
+            <p class="agent-desc">Plans the content calendar, drafts and schedules posts across LinkedIn, X, and more, then monitors engagement and surfaces replies worth your attention.</p>
+            <div class="agent-skills-label">Skills</div>
+            <div class="agent-skills"><span class="skill">Content calendar</span><span class="skill">Post drafting</span><span class="skill">Scheduling</span><span class="skill">Community mgmt</span><span class="skill">Listening</span></div>
+            <div class="agent-foot"><button class="agent-cta"><svg><use href="#message"/></svg>Assign a task</button></div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-top"><span class="agent-badge"><svg><use href="#megaphone"/></svg><span class="agent-dot offline"></span></span><div><div class="agent-name">Publicist</div><div class="agent-role">PR &amp; communications</div></div></div>
+            <p class="agent-desc">Handles press and reputation — drafts releases, builds media lists, pitches journalists, and prepares talking points and briefing docs for announcements.</p>
+            <div class="agent-skills-label">Skills</div>
+            <div class="agent-skills"><span class="skill">Press releases</span><span class="skill">Media lists</span><span class="skill">Pitching</span><span class="skill">Messaging</span><span class="skill">Crisis comms</span></div>
+            <div class="agent-foot"><button class="agent-cta agent-cta--primary"><svg><use href="#plug"/></svg>Connect</button></div>
+          </div>
+        </div>
+      </div></section>
+
+      <section data-view-panel="workflows" data-screen-label="Workflows"><div class="page-view">
+        <div class="page-head">
+          <div><div class="page-eyebrow">Automation</div><h1 class="page-title">Workflows</h1></div>
+          <button class="btn-primary-sm"><svg><use href="#plus"/></svg>New workflow</button>
+        </div>
+        <p class="page-lead">Multi-step automations that run across your apps — triggers, conditions, and agent actions.</p>
+        <div class="sec-label">Active <span class="ct">· 4</span></div>
+        <div class="wf-list">
+          <div class="wf-row"><span class="wf-ic"><svg><use href="#user-plus"/></svg></span><div class="wf-info"><div class="wf-name">Candidate outreach sequence</div><div class="wf-trigger">When a candidate is added in Hire → draft &amp; send a 3-touch sequence</div></div><div class="wf-runs"><b>142</b> runs · 2h ago</div><span class="cstatus ok wf-st"><span class="d"></span>Active</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="wf1"><span class="knob"></span></button></div>
+          <div class="wf-row"><span class="wf-ic"><svg><use href="#message"/></svg></span><div class="wf-info"><div class="wf-name">Interview follow-up</div><div class="wf-trigger">When an interview is completed → send thank-you + next steps</div></div><div class="wf-runs"><b>88</b> runs · 5h ago</div><span class="cstatus ok wf-st"><span class="d"></span>Active</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="wf2"><span class="knob"></span></button></div>
+          <div class="wf-row"><span class="wf-ic"><svg><use href="#calendar"/></svg></span><div class="wf-info"><div class="wf-name">Weekly pipeline digest</div><div class="wf-trigger">Every Monday at 8:00 AM → summarize the hiring pipeline to Slack</div></div><div class="wf-runs"><b>26</b> runs · 3d ago</div><span class="cstatus ok wf-st"><span class="d"></span>Active</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="wf3"><span class="knob"></span></button></div>
+          <div class="wf-row"><span class="wf-ic"><svg><use href="#check"/></svg></span><div class="wf-info"><div class="wf-name">New hire onboarding</div><div class="wf-trigger">When an offer is accepted → create Acquire record + onboarding tasks</div></div><div class="wf-runs"><b>19</b> runs · 1d ago</div><span class="cstatus ok wf-st"><span class="d"></span>Active</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="wf4"><span class="knob"></span></button></div>
+        </div>
+        <div class="sec-label">Paused</div>
+        <div class="wf-list">
+          <div class="wf-row"><span class="wf-ic"><svg><use href="#bolt"/></svg></span><div class="wf-info"><div class="wf-name">Stale deal nudge</div><div class="wf-trigger">When a deal is idle for 7 days in Acquire → notify the owner</div></div><div class="wf-runs"><b>57</b> runs · 2w ago</div><span class="cstatus off wf-st"><span class="d"></span>Paused</span><button class="toggle" role="switch" aria-checked="false" aria-label="wf5"><span class="knob"></span></button></div>
+          <div class="wf-row"><span class="wf-ic"><svg><use href="#briefcase"/></svg></span><div class="wf-info"><div class="wf-name">Auto-screen applicants</div><div class="wf-trigger">When an application is received → score against the JD &amp; tag</div></div><div class="wf-runs"><b>0</b> runs · never</div><span class="cstatus off wf-st"><span class="d"></span>Paused</span><button class="toggle" role="switch" aria-checked="false" aria-label="wf6"><span class="knob"></span></button></div>
+        </div>
+      </div></section>
+      <section data-view-panel="integrations" data-screen-label="Integrations"><div class="page-view">
+        <div class="page-head">
+          <div><div class="page-eyebrow">Data sources</div><h1 class="page-title">Integrations</h1></div>
+          <button class="btn-primary-sm"><svg><use href="#plus"/></svg>Add connector</button>
+        </div>
+        <p class="page-lead">Access local documents and connect external systems for conversation, and agent assistance.</p>
+        <div class="sec-label">Connected <span class="ct">· 6</span></div>
+        <div class="conn-grid">
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-gdrive"/></svg></span><div><div class="conn-name">Google Drive</div><div class="conn-meta">12,480 docs · synced 2h ago</div></div></div><div class="conn-foot"><span class="cstatus idx"><span class="d"></span>Indexing 78%</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="Google Drive"><span class="knob"></span></button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-gmail"/></svg></span><div><div class="conn-name">Gmail</div><div class="conn-meta">8,210 threads · synced 14m ago</div></div></div><div class="conn-foot"><span class="cstatus ok"><span class="d"></span>Connected</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="Gmail-c"><span class="knob"></span></button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-slack"/></svg></span><div><div class="conn-name">Slack</div><div class="conn-meta">42 channels · synced 5m ago</div></div></div><div class="conn-foot"><span class="cstatus ok"><span class="d"></span>Connected</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="Slack-c"><span class="knob"></span></button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-confluence"/></svg></span><div><div class="conn-name">Confluence</div><div class="conn-meta">3,905 pages · synced 1h ago</div></div></div><div class="conn-foot"><span class="cstatus ok"><span class="d"></span>Connected</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="Confluence"><span class="knob"></span></button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-notion"/></svg></span><div><div class="conn-name">Notion</div><div class="conn-meta">1,240 pages · synced 3h ago</div></div></div><div class="conn-foot"><span class="cstatus ok"><span class="d"></span>Connected</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="Notion"><span class="knob"></span></button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-web"/></svg></span><div><div class="conn-name">Web crawler</div><div class="conn-meta">esteemed.io · paused</div></div></div><div class="conn-foot"><span class="cstatus off"><span class="d"></span>Disabled</span><button class="toggle" role="switch" aria-checked="false" aria-label="Web"><span class="knob"></span></button></div></div>
+        </div>
+        <div class="sec-label">Available</div>
+        <div class="conn-grid">
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-github"/></svg></span><div><div class="conn-name">GitHub</div><div class="conn-meta">Repos · issues · PRs</div></div></div><div class="conn-foot"><span class="cstatus off"><span class="d"></span>Not connected</span><button class="conn-btn">Connect</button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-jira"/></svg></span><div><div class="conn-name">Jira</div><div class="conn-meta">Projects · tickets</div></div></div><div class="conn-foot"><span class="cstatus off"><span class="d"></span>Not connected</span><button class="conn-btn">Connect</button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-salesforce"/></svg></span><div><div class="conn-name">Salesforce</div><div class="conn-meta">Accounts · opportunities</div></div></div><div class="conn-foot"><span class="cstatus off"><span class="d"></span>Not connected</span><button class="conn-btn">Connect</button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-sharepoint"/></svg></span><div><div class="conn-name">SharePoint</div><div class="conn-meta">Sites · documents</div></div></div><div class="conn-foot"><span class="cstatus off"><span class="d"></span>Not connected</span><button class="conn-btn">Connect</button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-dropbox"/></svg></span><div><div class="conn-name">Dropbox</div><div class="conn-meta">Files · folders</div></div></div><div class="conn-foot"><span class="cstatus off"><span class="d"></span>Not connected</span><button class="conn-btn">Connect</button></div></div>
+          <div class="conn-card"><div class="conn-top"><span class="conn-logo"><svg><use href="#logo-zendesk"/></svg></span><div><div class="conn-name">Zendesk</div><div class="conn-meta">Tickets · help center</div></div></div><div class="conn-foot"><span class="cstatus off"><span class="d"></span>Not connected</span><button class="conn-btn">Connect</button></div></div>
+        </div>
+      </div></section>
+    </div>
+
+    <!-- APP SWITCHER -->
+    <div class="app-scrim" id="appScrim"></div>
+    <aside class="app-panel" id="appPanel" role="dialog" aria-label="Your apps">
+      <div class="app-panel-label">Your apps</div>
+      <div class="app-grid">
+        <button class="app-tile"><span class="glyph"><svg fill="none" viewBox="0 0 51 51"><rect width="51" height="51" rx="4" fill="#FEE546"/><path d="M41 6H11.25C8.90279 6 7 7.90279 7 10.25V40C7 42.3472 8.90279 44.25 11.25 44.25H41C43.3472 44.25 45.25 42.3472 45.25 40V10.25C45.25 7.90279 43.3472 6 41 6Z" fill="white" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 20H21M17 24H21M17 28H21M17 32H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M33 16H21C19.8954 16 19 16.8954 19 18V34C19 35.1046 19.8954 36 21 36H33C34.1046 36 35 35.1046 35 34V18C35 16.8954 34.1046 16 33 16Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 16V36M30 21H35M30 26H35M30 31H35" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Acquire</span><span class="sub">CRM</span></button>
+        <button class="app-tile is-current"><span class="glyph"><svg fill="none" viewBox="0 0 51 51"><rect width="51" height="51" rx="4" fill="#FEE546"/><path d="M41 6H11.25C8.90279 6 7 7.90279 7 10.25V40C7 42.3472 8.90279 44.25 11.25 44.25H41C43.3472 44.25 45.25 42.3472 45.25 40V10.25C45.25 7.90279 43.3472 6 41 6Z" fill="white" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 37.5C17.837 37.5 17.2011 37.2366 16.7322 36.7678C16.2634 36.2989 16 35.663 16 35V15C16 14.337 16.2634 13.7011 16.7322 13.2322C17.2011 12.7634 17.837 12.5 18.5 12.5H28.5C28.8957 12.4994 29.2876 12.577 29.6532 12.7285C30.0187 12.8799 30.3507 13.1022 30.63 13.3825L35.115 17.8675C35.3961 18.1469 35.619 18.4792 35.7709 18.8452C35.9228 19.2112 36.0006 19.6037 36 20V35C36 35.663 35.7366 36.2989 35.2678 36.7678C34.7989 37.2366 34.163 37.5 33.5 37.5H18.5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28.5 12.5V18.75C28.5 19.0815 28.6317 19.3995 28.8661 19.6339C29.1005 19.8683 29.4185 20 29.75 20H36" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 37.5C31 36.1739 30.4732 34.9021 29.5355 33.9645C28.5979 33.0268 27.3261 32.5 26 32.5C24.6739 32.5 23.4021 33.0268 22.4645 33.9645C21.5268 34.9021 21 36.1739 21 37.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="28.75" r="3.75" stroke="black" stroke-width="2"/></svg></span><span class="name">Hire</span><span class="sub">ATS</span></button>
+        <button class="app-tile"><span class="glyph"><svg fill="none" viewBox="0 0 51 51"><rect width="51" height="51" rx="4" fill="#FEE546"/><rect x="8" y="7" width="36" height="36" rx="7" fill="white" stroke="black" stroke-width="2"/><path d="M24.75 20H17.25C15.8693 20 14.75 21.1193 14.75 22.5V35C14.75 36.3807 15.8693 37.5 17.25 37.5H24.75C26.1307 37.5 27.25 36.3807 27.25 35V22.5C27.25 21.1193 26.1307 20 24.75 20Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.25 15C17.25 14.337 17.5134 13.7011 17.9822 13.2322C18.4511 12.7634 19.087 12.5 19.75 12.5H34.75C35.413 12.5 36.0489 12.7634 36.5178 13.2322C36.9866 13.7011 37.25 14.337 37.25 15V35C37.25 35.663 36.9866 36.2989 36.5178 36.7678C36.0489 37.2366 35.413 37.5 31.75 37.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 32.5H21.0125" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Create</span><span class="sub">Sites · apps</span></button>
+        <button class="app-tile"><span class="glyph"><svg fill="none" viewBox="0 0 51 51"><rect width="51" height="51" rx="4" fill="#FEE546"/><rect x="8" y="7" width="36" height="36" rx="7" fill="white" stroke="black" stroke-width="2"/><g transform="translate(13.5 13.5)" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2.5 12.7 7.6 17.8 9.3 12.7 11 11 16.1 9.3 11 4.2 9.3 9.3 7.6Z"/><path d="M18.5 15v4"/><path d="M20.5 17h-4"/></g></svg></span><span class="name">Intelligence</span><span class="sub">Memory · reasoning</span></button>
+        <button class="app-tile"><span class="glyph"><svg fill="none" viewBox="0 0 51 51"><rect width="51" height="51" rx="4" fill="#FEE546"/><rect x="8" y="7" width="36" height="36" rx="7" fill="white" stroke="black" stroke-width="2"/><g transform="translate(13.5 13.5)" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="3.4" r="1.2" fill="black" stroke="none"/><path d="M12 8V4.6"/><rect x="4" y="8" width="16" height="11.5" rx="3"/><path d="M2 13.5h2M20 13.5h2"/><path d="M9 12.6v1.8M15 12.6v1.8"/></g></svg></span><span class="name">Agents</span><span class="sub">Marketing agents</span></button>
+        <button class="app-tile"><span class="glyph"><svg fill="none" viewBox="0 0 51 51"><rect width="51" height="51" rx="4" fill="#FEE546"/><rect x="8" y="7" width="36" height="36" rx="7" fill="white" stroke="black" stroke-width="2"/><g transform="translate(13.5 13.5)" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.6" r="2.4"/><circle cx="5" cy="17.4" r="2.4"/><circle cx="19" cy="17.4" r="2.4"/><path d="M12 7v3.2M10.4 11.4 6.4 15.6M13.6 11.4l4 4.2"/><circle cx="12" cy="11" r="1" fill="black" stroke="none"/></g></svg></span><span class="name">Connect</span><span class="sub">Retrieval</span></button>
+        <button class="app-tile"><span class="glyph"><svg fill="none" viewBox="0 0 33 33"><rect width="33" height="33" fill="#FEE546"/><path d="M26.125 4.125H6.875C5.35622 4.125 4.125 5.35622 4.125 6.875V26.125C4.125 27.6438 5.35622 28.875 6.875 28.875H26.125C27.6438 28.875 28.875 27.6438 28.875 26.125V6.875C28.875 5.35622 27.6438 4.125 26.125 4.125Z" fill="white" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.625 9.625V23.375M15.125 9.625V23.375M20.625 9.625L23.375 23.375" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Curate</span><span class="sub">CMS · DAM</span></button>
+      </div>
+      <div class="app-links">
+        <a class="app-link"><svg class="lead"><use href="#settings"/></svg>Manage plan</a>
+        <a class="app-link"><svg class="lead"><use href="#message"/></svg>Open HCMGPT<svg class="ext"><use href="#external"/></svg></a>
+        <a class="app-link"><svg class="lead"><use href="#users"/></svg>Open Colleagues<svg class="ext"><use href="#external"/></svg></a>
+      </div>
+      <div class="try-callout"><svg class="star"><use href="#star"/></svg><div><div class="t">Try Agents</div><div class="b">Build agents that execute tasks autonomously across your apps — outreach sequences, candidate screens, follow-ups, and multi-step workflows.</div></div></div>
+    </aside>
+  </div>
+
+  <!-- MOBILE -->
+  <nav class="mtabs mobile-only">
+    <a class="mtab is-active" data-view="home"><svg><use href="#home"/></svg>Home</a>
+    <a class="mtab" data-view="conversations"><svg><use href="#message"/></svg>Conversations</a>
+    <a class="mtab" data-view="calendar"><svg><use href="#calendar"/></svg>Calendar</a>
+    <a class="mtab" id="settingsTab"><svg><use href="#settings"/></svg>Settings</a>
+  </nav>
+  <button class="mfab mobile-only" id="fabCreate" aria-label="Create"><svg><use href="#plus"/></svg></button>
+</div>
+
+<!-- ===== SETTINGS TAKEOVER MODAL ===== -->
+<div class="settings-overlay" id="settingsOverlay" aria-hidden="true">
+  <div class="backdrop" data-close-settings></div>
+  <div class="settings-modal" role="dialog" aria-modal="true" aria-label="Settings" data-screen-label="Settings · Integrations">
+    <div class="settings-modal-head">
+      <svg class="star"><use href="#star"/></svg>
+      <span class="mtitle">Settings</span>
+      <button class="modal-x" id="closeSettings" aria-label="Close settings"><svg><use href="#x"/></svg></button>
+    </div>
+    <div class="settings-modal-body">
+      <div class="settings">
+        <nav class="subnav" aria-label="Settings sections">
+          <div class="subnav-label">Settings</div>
+          <a class="subnav-item"><svg><use href="#user"/></svg>Account</a>
+          <a class="subnav-item"><svg><use href="#building"/></svg>Workspace</a>
+          <a class="subnav-item"><svg><use href="#bell"/></svg>Notifications</a>
+          <a class="subnav-item is-selected"><svg><use href="#link"/></svg>Integrations</a>
+          <a class="subnav-item"><svg><use href="#users"/></svg>Team</a>
+          <a class="subnav-item"><svg><use href="#card"/></svg>Billing</a>
+          <a class="subnav-item"><svg><use href="#shield"/></svg>Security</a>
+        </nav>
+        <div class="settings-main">
+          <div class="settings-grid">
+            <div>
+              <h1 class="settings-h">Integrations</h1>
+              <p class="settings-desc">Connect the tools your work already lives in. Star uses connected sources for context, retrieval, and the priorities it surfaces on Home.</p>
+              <div class="settings-section-title">Connected</div>
+              <div class="int-list">
+                <div class="int-row"><span class="int-logo"><svg><use href="#logo-gcal"/></svg></span><div class="int-info"><div class="int-name">Google Calendar</div><div class="int-desc">Sync events into your Agenda and let Star find time.</div></div><span class="int-status on"><span class="dot"></span>Connected</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="Google Calendar"><span class="knob"></span></button></div>
+                <div class="int-row"><span class="int-logo"><svg><use href="#logo-gmail"/></svg></span><div class="int-info"><div class="int-name">Gmail</div><div class="int-desc">Pull threads into Conversations and draft replies.</div></div><span class="int-status on"><span class="dot"></span>Connected</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="Gmail"><span class="knob"></span></button></div>
+                <div class="int-row"><span class="int-logo"><svg><use href="#logo-slack"/></svg></span><div class="int-info"><div class="int-name">Slack</div><div class="int-desc">Post priority alerts and Star summaries to channels.</div></div><span class="int-status on"><span class="dot"></span>Connected</span><button class="toggle is-on" role="switch" aria-checked="true" aria-label="Slack"><span class="knob"></span></button></div>
+              </div>
+              <div class="settings-section-title">Available</div>
+              <div class="int-list">
+                <div class="int-row"><span class="int-logo"><svg><use href="#logo-greenhouse"/></svg></span><div class="int-info"><div class="int-name">Greenhouse</div><div class="int-desc">Import candidates and pipelines into Hire.</div></div><span class="int-status off"><span class="dot"></span>Not connected</span><button class="toggle" role="switch" aria-checked="false" aria-label="Greenhouse"><span class="knob"></span></button></div>
+                <div class="int-row"><span class="int-logo"><svg><use href="#logo-workday"/></svg></span><div class="int-info"><div class="int-name">Workday</div><div class="int-desc">Sync worker records and orgs into Acquire.</div></div><span class="int-status off"><span class="dot"></span>Not connected</span><button class="toggle" role="switch" aria-checked="false" aria-label="Workday"><span class="knob"></span></button></div>
+                <div class="int-row"><span class="int-logo"><svg><use href="#logo-salesforce"/></svg></span><div class="int-info"><div class="int-name">Salesforce</div><div class="int-desc">Two-way CRM sync of deals and contacts with Acquire.</div></div><span class="int-status off"><span class="dot"></span>Not connected</span><button class="toggle" role="switch" aria-checked="false" aria-label="Salesforce"><span class="knob"></span></button></div>
+              </div>
+            </div>
+            <aside class="calc">
+              <div class="calc-title"><svg class="star"><use href="#star"/></svg>Estimated cost</div>
+              <div class="calc-sub">Based on connected sources &amp; seats</div>
+              <div class="calc-line"><span>Platform · 8 seats</span><span class="amt">$240</span></div>
+              <div class="calc-line"><span>Connected sources · <span id="srcCount">3</span></span><span class="amt" id="srcCost">$45</span></div>
+              <div class="calc-line"><span>Retrieval volume</span><span class="amt">$18</span></div>
+              <div class="calc-total"><span class="lbl">Per month</span><span class="val" id="calcTotal">$303</span></div>
+              <p class="calc-note">Illustrative estimate. Final pricing logic is TBD — see OPEN_QUESTIONS.md Q6.</p>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
