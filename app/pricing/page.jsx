@@ -150,6 +150,7 @@ function FAQ({ items }) {
 
 export default function PricingPage() {
   const [annual, setAnnual] = useState(true);
+  const [activeCategory, setActiveCategory] = useState("modern");
 
   const modernHosting = useMemo(
     () =>
@@ -186,12 +187,14 @@ export default function PricingPage() {
         <div className="mx-auto max-w-7xl">
           <Tabs
             aria-label="Pricing categories"
+            selectedKey={activeCategory}
+            onSelectionChange={(key) => setActiveCategory(String(key))}
             classNames={{
               base: "w-full justify-center",
               tabList: "mx-auto mb-10 w-full max-w-5xl gap-0 rounded-full border border-zinc-200 bg-white p-1 shadow-sm",
-              cursor: "rounded-full bg-ink",
-              tab: "h-auto min-h-16 flex-1 rounded-full px-4 py-3",
-              tabContent: "group-data-[selected=true]:text-white",
+              cursor: "hidden",
+              tab: "h-auto min-h-16 flex-1 rounded-full px-4 py-3 data-[selected=true]:bg-ink",
+              tabContent: "text-zinc-800 group-data-[selected=true]:text-white",
               panel: "outline-none",
             }}
             color="default"
