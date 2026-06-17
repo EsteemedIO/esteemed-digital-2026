@@ -1,19 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Check, ChevronDown, Briefcase, Brain, Cloud, Database, Rocket, Sparkles, Bot, ArrowRight } from "lucide-react";
+import { Tab, Tabs } from "@heroui/react";
 import {
-  perSeatProducts,
-  suiteProduct,
-  intelligenceProduct,
-  curateTiers,
-  cloudTiers,
-  managedHostingTiers,
-  migrationPackages,
+  ArrowRight,
+  Bot,
+  Brain,
+  Briefcase,
+  Check,
+  ChevronDown,
+  Cloud,
+  Code2,
+  Database,
+  Headphones,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import {
   agents,
   agentFleet,
+  cloudTiers,
+  curateTiers,
+  intelligenceProduct,
+  managedHostingTiers,
+  migrationPackages,
+  perSeatProducts,
   pricingFAQ,
+  suiteProduct,
 } from "@/lib/data";
 
 function formatMoney(value) {
@@ -32,47 +47,87 @@ function priceLabel(tier, annual) {
   return `${formatMoney(amount)}${suffix}`;
 }
 
-function Card({ children, highlighted = false }) {
+function hostingFeatures(tier) {
+  const base = ["Custom domain + SSL", "Daily backups", "Security monitoring", "Esteemed support"];
+
+  if (tier.key === "basic") return ["1 JavaScript site", "Node + React hosting", ...base.slice(0, 2)];
+  if (tier.key === "plus") return ["1 JavaScript site", "Node + React hosting", "Staging environment", "Global CDN", ...base.slice(0, 2)];
+  if (tier.key === "pro") return ["1 JavaScript site", "Node + React hosting", "Priority support", "Staging + CDN", ...base];
+  return ["Up to 5 JavaScript sites", "Node + React hosting", "Staging + CDN", "Priority support", ...base];
+}
+
+function managedFeatures(tier) {
+  if (tier.key === "enterprise") {
+    return ["WordPress and Drupal estates", "Dedicated infrastructure", "Custom SLA", "Security hardening", "Migration planning"];
+  }
+
+  return [
+    "WordPress or Drupal site",
+    `${tier.supportHours} support hrs/mo`,
+    "Plugin and module updates",
+    "Backups and uptime monitoring",
+    "Security maintenance",
+  ];
+}
+
+function PricingCard({ tier, annual, ctaHref = "/signup", ctaLabel = "Buy Now", features, eyebrow, recommended = false }) {
+  const highlighted = recommended || tier.recommended;
+  const contact = tier.monthly === null;
+
   return (
-    <div className={`flex h-full flex-col rounded-2xl p-6 ${highlighted ? "bg-ink text-white ring-2 ring-accent" : "border border-zinc-200 bg-white"}`}>
-      {children}
-    </div>
+    <article className={`relative flex h-full flex-col rounded-2xl border bg-white p-7 shadow-sm ${highlighted ? "border-accent ring-4 ring-accent/25" : "border-zinc-200"}`}>
+      {highlighted && (
+        <div className="absolute inset-x-0 top-0 rounded-t-2xl bg-accent px-7 py-3 text-xs font-black uppercase tracking-wide text-ink">
+          Recommended
+        </div>
+      )}
+      <div className={highlighted ? "pt-8" : ""}>
+        {eyebrow && <p className="mb-3 text-xs font-bold uppercase tracking-wide text-zinc-500">{eyebrow}</p>}
+        <h3 className="text-2xl font-black text-ink">{tier.name}</h3>
+        <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{tier.description || tier.basis}</p>
+        <div className="mt-5 flex items-end gap-1">
+          <span className="text-4xl font-black text-ink">{priceLabel(tier, annual).replace(/\/(mo|yr)/, "")}</span>
+          {tier.monthly !== null && <span className="pb-1 text-sm font-bold text-zinc-700">{annual && tier.annual ? "/yr" : "/mo"}</span>}
+        </div>
+        {annual && tier.annual && <p className="mt-2 w-fit rounded-md bg-amber-100 px-2 py-1 text-xs font-black text-ink">2 months free</p>}
+        {tier.founding && <p className="mt-2 text-sm font-semibold text-zinc-700">Founding: {formatMoney(tier.founding)}/mo for 12 months</p>}
+      </div>
+
+      <Link
+        href={contact ? "/contact" : ctaHref}
+        className="mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
+      >
+        {contact ? "Contact Sales" : ctaLabel}
+      </Link>
+
+      <ul className="mt-6 space-y-3">
+        {(features || tier.features || []).map((feature) => (
+          <li key={feature} className="flex gap-3 text-sm leading-5 text-zinc-700">
+            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border border-zinc-200">
+              <Check className="h-4 w-4 text-ink" />
+            </span>
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
   );
 }
 
-function TierCard({ tier, annual, ctaHref = "/signup" }) {
-  const highlighted = tier.recommended;
+function CategoryIntro({ icon: Icon, title, description, children }) {
   return (
-    <Card highlighted={highlighted}>
-      {highlighted && <span className="mb-4 w-fit rounded-full bg-accent px-3 py-1 text-xs font-bold text-ink">Recommended</span>}
-      <h3 className={`text-lg font-bold ${highlighted ? "text-white" : "text-ink"}`}>{tier.name}</h3>
-      <p className={`mt-1 text-sm ${highlighted ? "text-zinc-300" : "text-zinc-500"}`}>{tier.basis}</p>
-      <div className="mt-4">
-        <span className="text-3xl font-bold">{priceLabel(tier, annual)}</span>
+    <div className="mb-8 grid gap-5 rounded-2xl bg-zinc-50 p-6 md:grid-cols-[1fr_auto] md:items-center">
+      <div className="flex gap-4">
+        <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white text-ink shadow-sm">
+          <Icon className="h-6 w-6" />
+        </span>
+        <div>
+          <h2 className="text-2xl font-black text-ink md:text-3xl">{title}</h2>
+          <p className="mt-2 max-w-3xl leading-7 text-zinc-600">{description}</p>
+        </div>
       </div>
-      {tier.founding && (
-        <p className={`mt-2 text-sm ${highlighted ? "text-accent" : "text-ink"}`}>
-          Founding: {formatMoney(tier.founding)}/mo for 12 months
-        </p>
-      )}
-      {tier.savings && <p className={`mt-2 text-sm ${highlighted ? "text-accent" : "text-zinc-600"}`}>{tier.savings}</p>}
-      {tier.features && (
-        <ul className="mt-5 space-y-2">
-          {tier.features.map((feature) => (
-            <li key={feature} className={`flex gap-2 text-sm ${highlighted ? "text-zinc-300" : "text-zinc-600"}`}>
-              <Check className={`mt-0.5 h-4 w-4 flex-shrink-0 ${highlighted ? "text-accent" : "text-ink"}`} />
-              {feature}
-            </li>
-          ))}
-        </ul>
-      )}
-      <Link
-        href={tier.monthly === null ? "/contact" : ctaHref}
-        className={`mt-auto inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-bold transition-colors ${highlighted ? "bg-accent text-ink hover:bg-accent-hover" : "border-2 border-ink text-ink hover:bg-ink hover:text-white"}`}
-      >
-        {tier.monthly === null ? "Contact sales" : "Get started"}
-      </Link>
-    </Card>
+      {children}
+    </div>
   );
 }
 
@@ -96,19 +151,32 @@ function FAQ({ items }) {
 export default function PricingPage() {
   const [annual, setAnnual] = useState(true);
 
+  const modernHosting = useMemo(
+    () =>
+      cloudTiers.map((tier) => ({
+        ...tier,
+        name: tier.name.replace("Cloud", "Modern"),
+        description:
+          tier.key === "basic"
+            ? "Standard Modern hosting for one Node + React site."
+            : tier.description.replace("site", "Node + React site"),
+      })),
+    []
+  );
+
   return (
-    <main className="min-h-screen">
-      <section className="px-6 pb-12 pt-24 text-center">
-        <div className="mx-auto max-w-4xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-zinc-500">Pricing catalog v2</p>
-          <h1 className="mb-4 text-5xl font-bold text-ink md:text-6xl">Transparent pricing for the Esteemed platform.</h1>
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-zinc-600">
-            Acquire, Hire, Curate, Cloud, Migration, Intelligence, and Agents are independent offerings. Buy what you need and compose from there.
+    <main className="min-h-screen bg-white">
+      <section className="px-6 pb-14 pt-24 text-center">
+        <div className="mx-auto max-w-5xl">
+          <p className="mb-4 text-sm font-black uppercase tracking-wide text-zinc-500">Esteemed pricing</p>
+          <h1 className="mx-auto max-w-4xl text-5xl font-black leading-tight text-ink md:text-6xl">Choose your best hosting solution</h1>
+          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-zinc-600">
+            Start with Standard Modern hosting for JavaScript sites, keep existing WordPress and Drupal properties managed, or migrate into Curate when you are ready.
           </p>
-          <div className="inline-flex items-center rounded-full border-2 border-zinc-200 p-1">
-            <button onClick={() => setAnnual(false)} className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${!annual ? "bg-ink text-white" : "text-zinc-500"}`}>Monthly</button>
-            <button onClick={() => setAnnual(true)} className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-colors ${annual ? "bg-ink text-white" : "text-zinc-500"}`}>
-              Yearly <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-ink">2 months free</span>
+          <div className="mt-9 inline-flex items-center rounded-full border-2 border-zinc-200 bg-white p-1">
+            <button onClick={() => setAnnual(false)} className={`rounded-full px-5 py-2 text-sm font-bold transition-colors ${!annual ? "bg-ink text-white" : "text-zinc-500"}`}>Monthly</button>
+            <button onClick={() => setAnnual(true)} className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-bold transition-colors ${annual ? "bg-ink text-white" : "text-zinc-500"}`}>
+              Yearly <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-black text-ink">2 months free</span>
             </button>
           </div>
         </div>
@@ -116,152 +184,249 @@ export default function PricingPage() {
 
       <section className="px-6 pb-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex items-center gap-3">
-            <Briefcase className="h-6 w-6 text-ink" />
-            <div>
-              <h2 className="text-3xl font-bold text-ink">Acquire, Hire, and Suite</h2>
-              <p className="text-zinc-600">Per actual user, not company headcount. Pro includes Star Assist AI with human approval.</p>
-            </div>
-          </div>
-          <div className="grid gap-6 lg:grid-cols-3">
-            {perSeatProducts.map((product) => (
-              <Card key={product.key}>
-                <h3 className="text-xl font-bold text-ink">{product.name}</h3>
-                <p className="mt-2 text-sm text-zinc-600">{product.description}</p>
-                <div className="mt-6 grid gap-3">
-                  {product.tiers.map((tier) => (
-                    <div key={tier.key} className={`rounded-xl border p-4 ${tier.recommended ? "border-accent bg-accent/20" : "border-zinc-200"}`}>
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="font-bold text-ink">{tier.name}</p>
-                          <p className="text-xs text-zinc-500">{tier.basis}</p>
-                        </div>
-                        <p className="text-right font-bold text-ink">{priceLabel(tier, annual)}</p>
-                      </div>
-                      {tier.founding && <p className="mt-2 text-xs font-medium text-zinc-600">Founding {formatMoney(tier.founding)}/seat/mo for 12 months</p>}
-                    </div>
+          <Tabs
+            aria-label="Pricing categories"
+            classNames={{
+              base: "w-full justify-center",
+              tabList: "mx-auto mb-10 w-full max-w-5xl gap-0 rounded-full border border-zinc-200 bg-white p-1 shadow-sm",
+              cursor: "rounded-full bg-ink",
+              tab: "h-auto min-h-16 flex-1 rounded-full px-4 py-3",
+              tabContent: "group-data-[selected=true]:text-white",
+              panel: "outline-none",
+            }}
+            color="default"
+          >
+            <Tab
+              key="modern"
+              title={
+                <div className="text-center">
+                  <p className="text-base font-black">Modern JavaScript Hosting</p>
+                  <p className="hidden text-sm opacity-80 md:block">Node + React, faster and more flexible</p>
+                </div>
+              }
+            >
+              <CategoryIntro
+                icon={Code2}
+                title="Standard Modern hosting"
+                description="Our default hosting path is JavaScript first: Node + React sites with faster delivery, cleaner deployments, and more flexibility than traditional PHP-only hosting."
+              >
+                <Link href="/contact" className="inline-flex items-center justify-center rounded-lg border-2 border-ink px-5 py-3 text-sm font-black text-ink hover:bg-ink hover:text-white">
+                  Talk to hosting
+                </Link>
+              </CategoryIntro>
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                {modernHosting.map((tier) => (
+                  <PricingCard
+                    key={tier.key}
+                    tier={tier}
+                    annual={annual}
+                    ctaHref="/signup?product=cloud"
+                    features={hostingFeatures(tier)}
+                    recommended={tier.key === "plus"}
+                  />
+                ))}
+              </div>
+            </Tab>
+
+            <Tab
+              key="cms"
+              title={
+                <div className="text-center">
+                  <p className="text-base font-black">WordPress & Drupal</p>
+                  <p className="hidden text-sm opacity-80 md:block">Managed hosting for CMS sites</p>
+                </div>
+              }
+            >
+              <CategoryIntro
+                icon={ShieldCheck}
+                title="Hosting for WordPress & Drupal"
+                description="Keep existing WordPress and Drupal sites stable while Esteemed handles updates, backups, monitoring, security, and support. Modern JavaScript hosting remains our standard path for new builds."
+              >
+                <Link href="/contact" className="inline-flex items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white hover:bg-zinc-800">
+                  Contact Sales
+                </Link>
+              </CategoryIntro>
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                {managedHostingTiers.map((tier) => (
+                  <PricingCard
+                    key={tier.key}
+                    tier={tier}
+                    annual={annual}
+                    ctaHref="/contact"
+                    ctaLabel="Contact Sales"
+                    features={managedFeatures(tier)}
+                    recommended={tier.key === "growth"}
+                  />
+                ))}
+              </div>
+            </Tab>
+
+            <Tab
+              key="curate"
+              title={
+                <div className="text-center">
+                  <p className="text-base font-black">Curate CMS</p>
+                  <p className="hidden text-sm opacity-80 md:block">Content hub and migration tiers</p>
+                </div>
+              }
+            >
+              <CategoryIntro
+                icon={Database}
+                title="Curate subscriptions"
+                description="Curate is the managed CMS and content hub. It includes managed Curate hosting, publishing workflows, and AI content operations on Pro."
+              >
+                <Link href="/migrate" className="inline-flex items-center gap-2 rounded-lg border-2 border-ink px-5 py-3 text-sm font-black text-ink hover:bg-ink hover:text-white">
+                  Migration options <ArrowRight className="h-4 w-4" />
+                </Link>
+              </CategoryIntro>
+              <div className="grid gap-6 md:grid-cols-3">
+                {curateTiers.map((tier) => (
+                  <PricingCard key={tier.key} tier={tier} annual={annual} ctaHref="/signup?product=curate" />
+                ))}
+              </div>
+
+              <div className="mt-12">
+                <CategoryIntro
+                  icon={Rocket}
+                  title="Migration to Curate"
+                  description="Paid migrations move WordPress, Drupal, legacy CMS, and custom sites into Curate. Enterprise work starts with discovery."
+                />
+                <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+                  {migrationPackages.map((pkg) => (
+                    <article key={pkg.key} className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+                      <p className="text-xs font-black uppercase tracking-wide text-zinc-500">{pkg.type}</p>
+                      <h3 className="mt-2 text-lg font-black text-ink">{pkg.name}</h3>
+                      <p className="mt-3 text-3xl font-black text-ink">{pkg.priceDisplay}</p>
+                      <p className="mt-4 text-sm leading-6 text-zinc-600">{pkg.scope}</p>
+                      <Link href="/contact" className="mt-5 inline-flex items-center text-sm font-black text-ink underline underline-offset-4">
+                        {pkg.key === "care" ? "Start care" : "Contact Sales"}
+                      </Link>
+                    </article>
                   ))}
                 </div>
-                <Link href={`/products/${product.key}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-ink underline underline-offset-4">
-                  View {product.name} <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Card>
-            ))}
-            <Card highlighted>
-              <h3 className="text-xl font-bold text-white">{suiteProduct.name}</h3>
-              <p className="mt-2 text-sm text-zinc-300">{suiteProduct.description}</p>
-              <div className="mt-6 rounded-xl border border-accent/40 bg-white/5 p-4">
-                <p className="text-sm text-zinc-300">{suiteProduct.tiers[0].basis}</p>
-                <p className="mt-1 text-3xl font-bold">{priceLabel(suiteProduct.tiers[0], annual)}</p>
-                <p className="mt-2 text-sm text-accent">{suiteProduct.tiers[0].savings}</p>
-                <p className="mt-1 text-sm text-zinc-300">Founding {formatMoney(suiteProduct.tiers[0].founding)}/seat/mo for 12 months</p>
               </div>
-              <Link href="/signup" className="mt-auto inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-bold text-ink hover:bg-accent-hover">Start Suite</Link>
-            </Card>
-          </div>
-        </div>
-      </section>
+            </Tab>
 
-      <section className="bg-zinc-50 px-6 py-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex items-center gap-3">
-            <Database className="h-6 w-6 text-ink" />
-            <div>
-              <h2 className="text-3xl font-bold text-ink">Curate</h2>
-              <p className="text-zinc-600">Per-workspace CMS and content hub. Curate includes hosting for Curate sites.</p>
-            </div>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {curateTiers.map((tier) => <TierCard key={tier.key} tier={tier} annual={annual} ctaHref="/signup?product=curate" />)}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex items-center gap-3">
-            <Cloud className="h-6 w-6 text-ink" />
-            <div>
-              <h2 className="text-3xl font-bold text-ink">Esteemed Cloud Hosting</h2>
-              <p className="text-zinc-600">Standalone Hosting is for non-Curate sites: bring-your-own, Create-built, React, Node, or Next.</p>
-            </div>
-          </div>
-          <h3 className="mb-4 text-xl font-bold text-ink">Self-serve Cloud</h3>
-          <div className="mb-10 grid gap-5 md:grid-cols-4">
-            {cloudTiers.map((tier) => <TierCard key={tier.key} tier={tier} annual={annual} />)}
-          </div>
-          <h3 className="mb-4 text-xl font-bold text-ink">Managed Hosting</h3>
-          <div className="grid gap-5 md:grid-cols-4">
-            {managedHostingTiers.map((tier) => (
-              <TierCard
-                key={tier.key}
-                tier={{ ...tier, basis: tier.supportHours ? `1 site, ${tier.supportHours} support hrs/mo` : "custom" }}
-                annual={annual}
-              />
-            ))}
-          </div>
-          <p className="mt-6 text-sm text-zinc-600">
-            Managed Hosting can include a $0 Create rebuild with a 12-month term. That rebuild is a plain React/Node/Next site, not a Curate migration.
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-zinc-50 px-6 py-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex items-center gap-3">
-            <Rocket className="h-6 w-6 text-ink" />
-            <div>
-              <h2 className="text-3xl font-bold text-ink">Migration to Curate</h2>
-              <p className="text-zinc-600">One-time migration services. Paid migrations land on a Curate subscription.</p>
-            </div>
-          </div>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {migrationPackages.map((pkg) => (
-              <Card key={pkg.key}>
-                <h3 className="text-lg font-bold text-ink">{pkg.name}</h3>
-                <p className="mt-3 text-3xl font-bold text-ink">{pkg.priceDisplay}</p>
-                <p className="mt-1 text-xs uppercase tracking-wide text-zinc-500">{pkg.type}</p>
-                <p className="mt-4 text-sm leading-6 text-zinc-600">{pkg.scope}</p>
-              </Card>
-            ))}
-          </div>
-          <Link href="/migrate" className="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-bold text-ink hover:bg-accent-hover">
-            Learn about migration <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </section>
-
-      <section className="px-6 py-20">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.8fr_1.2fr]">
-          <Card highlighted>
-            <Brain className="mb-4 h-8 w-8 text-accent" />
-            <h2 className="text-3xl font-bold text-white">{intelligenceProduct.name}</h2>
-            <p className="mt-3 text-zinc-300">{intelligenceProduct.description}</p>
-            <p className="mt-6 text-4xl font-bold">{priceLabel(intelligenceProduct.tiers[0], annual)}</p>
-            <p className="mt-2 text-sm text-accent">Flat per tenant add-on</p>
-          </Card>
-          <Card>
-            <div className="mb-5 flex items-center gap-3">
-              <Bot className="h-6 w-6 text-ink" />
-              <div>
-                <h2 className="text-3xl font-bold text-ink">Agents</h2>
-                <p className="text-zinc-600">Standalone SKUs are launch-gated. Curate Pro includes content agents through entitlements.</p>
-              </div>
-            </div>
-            <div className="grid gap-3 md:grid-cols-3">
-              {agents.map((agent) => (
-                <div key={agent.key} className="rounded-xl border border-zinc-200 p-4">
-                  <agent.icon className="mb-3 h-5 w-5 text-ink" />
-                  <p className="font-bold text-ink">{agent.name}</p>
-                  <p className="text-sm font-semibold text-ink">{formatMoney(agent.price)}/mo</p>
-                  <p className="mt-2 text-xs text-zinc-600">{agent.tagline}</p>
+            <Tab
+              key="apps"
+              title={
+                <div className="text-center">
+                  <p className="text-base font-black">Apps & AI</p>
+                  <p className="hidden text-sm opacity-80 md:block">Acquire, Hire, Intelligence, Agents</p>
                 </div>
-              ))}
+              }
+            >
+              <CategoryIntro
+                icon={Briefcase}
+                title="Apps and AI products"
+                description="Acquire, Hire, Suite, Intelligence, and Agents remain independent products. Add them to hosting or run them on their own."
+              />
+              <div className="grid gap-6 lg:grid-cols-3">
+                {perSeatProducts.map((product) => (
+                  <article key={product.key} className="rounded-2xl border border-zinc-200 bg-white p-7 shadow-sm">
+                    <h3 className="text-2xl font-black text-ink">{product.name}</h3>
+                    <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{product.description}</p>
+                    <div className="mt-6 grid gap-3">
+                      {product.tiers.map((tier) => (
+                        <div key={tier.key} className={`rounded-xl border p-4 ${tier.recommended ? "border-accent bg-accent/20" : "border-zinc-200"}`}>
+                          <div className="flex items-start justify-between gap-3">
+                            <div>
+                              <p className="font-black text-ink">{tier.name}</p>
+                              <p className="text-xs text-zinc-500">{tier.basis}</p>
+                            </div>
+                            <p className="text-right font-black text-ink">{priceLabel(tier, annual)}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <Link href={`/products/${product.key}`} className="mt-6 inline-flex items-center gap-2 text-sm font-black text-ink underline underline-offset-4">
+                      View {product.name} <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </article>
+                ))}
+                <PricingCard
+                  tier={suiteProduct.tiers[0]}
+                  annual={annual}
+                  ctaHref="/signup?product=suite"
+                  ctaLabel="Start Suite"
+                  eyebrow={suiteProduct.name}
+                  features={["Acquire Pro", "Hire Pro", "Shared workspace", suiteProduct.tiers[0].savings]}
+                  recommended
+                />
+              </div>
+
+              <div className="mt-10 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+                <article className="rounded-2xl bg-ink p-7 text-white">
+                  <Brain className="mb-4 h-8 w-8 text-accent" />
+                  <h3 className="text-3xl font-black">{intelligenceProduct.name}</h3>
+                  <p className="mt-3 text-zinc-300">{intelligenceProduct.description}</p>
+                  <p className="mt-6 text-4xl font-black">{priceLabel(intelligenceProduct.tiers[0], annual)}</p>
+                  <p className="mt-2 text-sm font-semibold text-accent">Flat per tenant add-on</p>
+                </article>
+                <article className="rounded-2xl border border-zinc-200 bg-white p-7 shadow-sm">
+                  <div className="mb-5 flex items-center gap-3">
+                    <Bot className="h-6 w-6 text-ink" />
+                    <div>
+                      <h3 className="text-3xl font-black text-ink">Agents</h3>
+                      <p className="text-zinc-600">Standalone SKUs are launch-gated. Curate Pro includes content agents through entitlements.</p>
+                    </div>
+                  </div>
+                  <div className="grid gap-3 md:grid-cols-3">
+                    {agents.map((agent) => {
+                      const AgentIcon = agent.icon;
+                      return (
+                        <div key={agent.key} className="rounded-xl border border-zinc-200 p-4">
+                          <AgentIcon className="mb-3 h-5 w-5 text-ink" />
+                          <p className="font-black text-ink">{agent.name}</p>
+                          <p className="text-sm font-semibold text-ink">{formatMoney(agent.price)}/mo</p>
+                          <p className="mt-2 text-xs text-zinc-600">{agent.tagline}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-5 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">
+                    {agentFleet.name}: from {formatMoney(agentFleet.price)}/mo for non-Curate deployments.
+                  </p>
+                </article>
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
+      </section>
+
+      <section className="bg-zinc-50 px-6 py-20">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <div className="mb-4 flex items-center gap-3">
+              <Cloud className="h-6 w-6 text-ink" />
+              <h2 className="text-3xl font-black text-ink">Which hosting path fits?</h2>
             </div>
-            <p className="mt-5 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">
-              {agentFleet.name}: from {formatMoney(agentFleet.price)}/mo for non-Curate deployments.
+            <p className="leading-7 text-zinc-600">
+              Choose Standard Modern hosting for new JavaScript sites, WordPress & Drupal managed hosting for existing CMS properties, and Curate when the content model needs workflow, agents, or migration support.
             </p>
-          </Card>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/contact" className="inline-flex items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white hover:bg-zinc-800">
+                Contact Sales
+              </Link>
+              <Link href="/products/cloud" className="inline-flex items-center gap-2 rounded-lg border-2 border-ink px-5 py-3 text-sm font-black text-ink hover:bg-ink hover:text-white">
+                Hosting details <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              ["Modern", "Node + React", "Fast, flexible, and clean for new builds.", Code2],
+              ["CMS", "WordPress & Drupal", "Managed updates, backups, security, and support.", ShieldCheck],
+              ["Curate", "CMS + AI workflow", "Best for structured content and migration projects.", Headphones],
+            ].map(([label, title, copy, Icon]) => (
+              <div key={label} className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
+                <Icon className="mb-4 h-6 w-6 text-ink" />
+                <p className="text-xs font-black uppercase tracking-wide text-zinc-500">{label}</p>
+                <h3 className="mt-1 font-black text-ink">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-zinc-600">{copy}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -269,17 +434,17 @@ export default function PricingPage() {
         <div className="mx-auto max-w-4xl">
           <div className="mb-8 flex items-center justify-center gap-3 text-center">
             <Sparkles className="h-6 w-6 text-ink" />
-            <h2 className="text-3xl font-bold text-ink">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-black text-ink">Frequently Asked Questions</h2>
           </div>
           <FAQ items={pricingFAQ} />
         </div>
       </section>
 
       <section className="bg-ink px-6 py-20 text-center">
-        <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">Ready to build something Esteemed?</h2>
-        <p className="mb-8 text-zinc-400">Start with the app, CMS, hosting, or migration path that fits.</p>
-        <Link href="/signup" className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-4 text-sm font-bold text-ink hover:bg-accent-hover">
-          Get started <ArrowRight className="h-4 w-4" />
+        <h2 className="mb-4 text-3xl font-black text-white md:text-4xl">Ready to build something Esteemed?</h2>
+        <p className="mb-8 text-zinc-400">Start with hosting, Curate, migration, or the app suite that fits.</p>
+        <Link href="/contact" className="inline-flex items-center gap-2 rounded-lg bg-accent px-8 py-4 text-sm font-black text-ink hover:bg-accent-hover">
+          Contact Sales <ArrowRight className="h-4 w-4" />
         </Link>
       </section>
     </main>
