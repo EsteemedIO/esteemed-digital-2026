@@ -34,7 +34,29 @@
     line-height: 1.5;
     color: #282828;
   }
+
+  /* Design system: icon badge — black icon in yellow circle */
+  .icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: var(--accent, #FEE546);
+    flex-shrink: 0;
+  }
+  .icon-badge svg {
+    color: #282828;
+  }
+  .icon-badge-sm { width: 1.25rem; height: 1.25rem; }
+  .icon-badge-sm svg { width: 0.75rem; height: 0.75rem; }
+  .icon-badge-md { width: 1.5rem; height: 1.5rem; }
+  .icon-badge-md svg { width: 0.875rem; height: 0.875rem; }
+  .icon-badge-lg { width: 2.5rem; height: 2.5rem; }
+  .icon-badge-lg svg { width: 1.25rem; height: 1.25rem; }
 }
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
 .parallax-frost {
   background: rgba(255, 255, 255, 0);
