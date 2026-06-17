@@ -2,35 +2,91 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Check, ChevronDown, Sparkles, Bot, Users, Headphones, Brain, Zap } from "lucide-react";
+import { Check, ChevronDown, Briefcase, Brain, Cloud, Database, Rocket, Sparkles, Bot, ArrowRight } from "lucide-react";
 import {
-  createTiers,
-  creditPacks,
+  perSeatProducts,
+  suiteProduct,
+  intelligenceProduct,
+  curateTiers,
+  cloudTiers,
+  managedHostingTiers,
+  migrationPackages,
   agents,
   agentFleet,
-  agentsPlus,
-  customAgents,
-  supportTiers,
-  cloudTiers,
   pricingFAQ,
 } from "@/lib/data";
+
+function formatMoney(value) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: value % 1 === 0 ? 0 : 2,
+  }).format(value);
+}
+
+function priceLabel(tier, annual) {
+  if (tier.monthly === null) return "Custom";
+  if (tier.monthly === 0) return "Free";
+  const amount = annual && tier.annual ? tier.annual : tier.monthly;
+  const suffix = annual && tier.annual ? "/yr" : "/mo";
+  return `${formatMoney(amount)}${suffix}`;
+}
+
+function Card({ children, highlighted = false }) {
+  return (
+    <div className={`flex h-full flex-col rounded-2xl p-6 ${highlighted ? "bg-ink text-white ring-2 ring-accent" : "border border-zinc-200 bg-white"}`}>
+      {children}
+    </div>
+  );
+}
+
+function TierCard({ tier, annual, ctaHref = "/signup" }) {
+  const highlighted = tier.recommended;
+  return (
+    <Card highlighted={highlighted}>
+      {highlighted && <span className="mb-4 w-fit rounded-full bg-accent px-3 py-1 text-xs font-bold text-ink">Recommended</span>}
+      <h3 className={`text-lg font-bold ${highlighted ? "text-white" : "text-ink"}`}>{tier.name}</h3>
+      <p className={`mt-1 text-sm ${highlighted ? "text-zinc-300" : "text-zinc-500"}`}>{tier.basis}</p>
+      <div className="mt-4">
+        <span className="text-3xl font-bold">{priceLabel(tier, annual)}</span>
+      </div>
+      {tier.founding && (
+        <p className={`mt-2 text-sm ${highlighted ? "text-accent" : "text-ink"}`}>
+          Founding: {formatMoney(tier.founding)}/mo for 12 months
+        </p>
+      )}
+      {tier.savings && <p className={`mt-2 text-sm ${highlighted ? "text-accent" : "text-zinc-600"}`}>{tier.savings}</p>}
+      {tier.features && (
+        <ul className="mt-5 space-y-2">
+          {tier.features.map((feature) => (
+            <li key={feature} className={`flex gap-2 text-sm ${highlighted ? "text-zinc-300" : "text-zinc-600"}`}>
+              <Check className={`mt-0.5 h-4 w-4 flex-shrink-0 ${highlighted ? "text-accent" : "text-ink"}`} />
+              {feature}
+            </li>
+          ))}
+        </ul>
+      )}
+      <Link
+        href={tier.monthly === null ? "/contact" : ctaHref}
+        className={`mt-auto inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-bold transition-colors ${highlighted ? "bg-accent text-ink hover:bg-accent-hover" : "border-2 border-ink text-ink hover:bg-ink hover:text-white"}`}
+      >
+        {tier.monthly === null ? "Contact sales" : "Get started"}
+      </Link>
+    </Card>
+  );
+}
 
 function FAQ({ items }) {
   const [openIndex, setOpenIndex] = useState(null);
   return (
     <div className="divide-y divide-zinc-200">
       {items.map((item, i) => (
-        <div key={i}>
-          <button
-            onClick={() => setOpenIndex(openIndex === i ? null : i)}
-            className="flex items-center justify-between w-full py-6 text-left"
-          >
-            <span className="text-lg font-semibold text-ink pr-8">{item.q}</span>
-            <ChevronDown className={`w-5 h-5 text-zinc-400 flex-shrink-0 transition-transform ${openIndex === i ? "rotate-180" : ""}`} strokeWidth={2} />
+        <div key={item.q}>
+          <button onClick={() => setOpenIndex(openIndex === i ? null : i)} className="flex w-full items-center justify-between py-6 text-left">
+            <span className="pr-8 text-lg font-semibold text-ink">{item.q}</span>
+            <ChevronDown className={`h-5 w-5 flex-shrink-0 text-zinc-400 transition-transform ${openIndex === i ? "rotate-180" : ""}`} />
           </button>
-          {openIndex === i && (
-            <p className="pb-6 text-zinc-600 leading-relaxed">{item.a}</p>
-          )}
+          {openIndex === i && <p className="pb-6 leading-relaxed text-zinc-600">{item.a}</p>}
         </div>
       ))}
     </div>
@@ -41,339 +97,191 @@ export default function PricingPage() {
   const [annual, setAnnual] = useState(true);
 
   return (
-    <div className="min-h-screen">
-
-      {/* Hero */}
-      <section className="pt-24 pb-12">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-4">Pricing</h1>
-          <p className="text-xl text-zinc-600 mb-10">Start free. Scale as you grow.</p>
-
-          <div className="inline-flex items-center rounded-full border-2 border-zinc-200 p-1">
-            <button
-              onClick={() => setAnnual(false)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${!annual ? "bg-ink text-white" : "text-zinc-500"}`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setAnnual(true)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${annual ? "bg-ink text-white" : "text-zinc-500"}`}
-            >
-              Yearly
-              <span className="text-xs bg-accent text-ink px-2 py-0.5 rounded-full font-bold">Save</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════
-          1. ESTEEMED CREATE — Primary funnel
-         ═══════════════════════════════════════════════════ */}
-      <section className="pb-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center gap-3 mb-2">
-            <Sparkles className="w-6 h-6 text-ink" strokeWidth={1.5} />
-            <h2 className="text-3xl font-bold text-ink">Esteemed Create</h2>
-          </div>
-          <p className="text-zinc-600 mb-10 max-w-2xl">
-            AI-powered building with Studio IDE. Credits power every prompt, refinement, and rebuild. A typical landing page takes 30–50 credits.
+    <main className="min-h-screen">
+      <section className="px-6 pb-12 pt-24 text-center">
+        <div className="mx-auto max-w-4xl">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-zinc-500">Pricing catalog v2</p>
+          <h1 className="mb-4 text-5xl font-bold text-ink md:text-6xl">Transparent pricing for the Esteemed platform.</h1>
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-zinc-600">
+            Acquire, Hire, Curate, Cloud, Migration, Intelligence, and Agents are independent offerings. Buy what you need and compose from there.
           </p>
-
-          <div
-            key={annual ? "a" : "m"}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 animate-[fadeIn_0.3s_ease-in-out]"
-          >
-            {createTiers.map((tier) => {
-              const price = annual ? tier.annual : tier.monthly;
-              const isRec = tier.recommended;
-              return (
-                <div
-                  key={tier.key}
-                  className={`rounded-2xl p-7 flex flex-col relative ${
-                    isRec
-                      ? "bg-ink text-white ring-2 ring-accent"
-                      : "bg-white border-2 border-zinc-200"
-                  }`}
-                >
-                  {isRec && (
-                    <span className="absolute -top-3 left-6 bg-accent text-ink text-xs font-bold px-3 py-1 rounded-full">
-                      Most popular
-                    </span>
-                  )}
-                  <h3 className={`text-sm font-semibold uppercase tracking-wide ${isRec ? "text-zinc-400" : "text-zinc-500"}`}>{tier.name}</h3>
-                  <div className="mt-2 mb-1">
-                    {price === null ? (
-                      <span className="text-3xl font-bold">Custom</span>
-                    ) : price === 0 ? (
-                      <span className="text-4xl font-bold">Free</span>
-                    ) : (
-                      <>
-                        {annual && tier.monthly > 0 && (
-                          <span className={`text-sm line-through mr-2 ${isRec ? "text-zinc-500" : "text-zinc-400"}`}>${tier.monthly}</span>
-                        )}
-                        <span className="text-4xl font-bold">${price}</span>
-                        <span className={`text-sm ${isRec ? "text-zinc-400" : "text-zinc-500"}`}>/mo</span>
-                      </>
-                    )}
-                  </div>
-                  <p className={`text-sm mt-1 mb-1 font-medium ${isRec ? "text-accent" : "text-ink"}`}>{tier.credits}</p>
-                  <p className={`text-sm mb-5 ${isRec ? "text-zinc-400" : "text-zinc-600"}`}>{tier.description}</p>
-                  <ul className="space-y-2.5 mb-6 flex-1">
-                    {tier.features.map((f) => (
-                      <li key={f} className={`flex items-start gap-2 text-sm ${isRec ? "text-zinc-300" : "text-zinc-600"}`}>
-                        <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${isRec ? "text-accent" : "text-ink"}`} strokeWidth={2} />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={tier.key === "enterprise" ? "/contact" : "/signup"}
-                    className={`block text-center py-3 rounded-full text-sm font-bold transition-colors ${
-                      isRec
-                        ? "bg-accent text-ink hover:bg-accent-hover"
-                        : "border-2 border-ink text-ink hover:bg-ink hover:text-white"
-                    }`}
-                  >
-                    {tier.cta}
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Credit Packs */}
-          <div className="mt-12 rounded-2xl border-2 border-zinc-200 p-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div>
-                <h3 className="text-xl font-bold text-ink mb-1">Need more credits?</h3>
-                <p className="text-sm text-zinc-600">Top up anytime. No subscription change required.</p>
-              </div>
-              <div className="flex gap-4">
-                {creditPacks.map((pack) => (
-                  <div key={pack.credits} className="text-center px-6 py-4 rounded-xl bg-zinc-50">
-                    <p className="text-lg font-bold text-ink">{pack.credits}</p>
-                    <p className="text-xs text-zinc-500">credits</p>
-                    <p className="text-base font-bold text-ink mt-1">${pack.price}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* What's Included */}
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              { icon: Sparkles, text: "Studio IDE for code editing" },
-              { icon: Users, text: "Colleagues marketplace access" },
-              { icon: Bot, text: "Agent add-on upgrades" },
-              { icon: Zap, text: "Hosting included at publish" },
-              { icon: Check, text: "SSL + CDN + daily backups" },
-              { icon: Check, text: "Export your data anytime" },
-            ].map((item) => (
-              <div key={item.text} className="flex items-center gap-3 py-3">
-                <item.icon className="w-5 h-5 text-ink flex-shrink-0" strokeWidth={1.5} />
-                <span className="text-sm text-zinc-600">{item.text}</span>
-              </div>
-            ))}
+          <div className="inline-flex items-center rounded-full border-2 border-zinc-200 p-1">
+            <button onClick={() => setAnnual(false)} className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${!annual ? "bg-ink text-white" : "text-zinc-500"}`}>Monthly</button>
+            <button onClick={() => setAnnual(true)} className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-colors ${annual ? "bg-ink text-white" : "text-zinc-500"}`}>
+              Yearly <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-ink">2 months free</span>
+            </button>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          2. AGENTS — Add-ons
-         ═══════════════════════════════════════════════════ */}
-      <section className="py-20 bg-zinc-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center gap-3 mb-2">
-            <Bot className="w-6 h-6 text-ink" strokeWidth={1.5} />
-            <h2 className="text-3xl font-bold text-ink">Agents</h2>
-          </div>
-          <p className="text-zinc-600 mb-10 max-w-2xl">AI agents trained on your content and voice. Add to any paid Create plan.</p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-            {agents.map((agent) => (
-              <div key={agent.key} className="rounded-2xl bg-white border border-zinc-200 p-6 hover:shadow-lg transition-shadow">
-                <agent.icon className="w-6 h-6 text-ink mb-4" strokeWidth={1.5} />
-                <h3 className="font-bold text-ink mb-1">{agent.name}</h3>
-                <p className="text-2xl font-bold text-ink mb-3">
-                  +${agent.price}<span className="text-sm text-zinc-500 font-normal">/mo</span>
-                </p>
-                <p className="text-sm text-zinc-600 leading-relaxed">{agent.tagline}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* Fleet */}
-            <div className="rounded-2xl bg-accent p-8">
-              <h3 className="text-xl font-bold text-ink mb-1">{agentFleet.name}</h3>
-              <p className="text-3xl font-bold text-ink mb-2">
-                ${agentFleet.price}<span className="text-sm font-normal">/mo</span>
-              </p>
-              <p className="text-sm text-ink/70 mb-4">All four agents. Save ${agentFleet.savings}/mo vs a la carte.</p>
-              <ul className="space-y-1">
-                {agents.map((a) => (
-                  <li key={a.key} className="flex items-center gap-2 text-sm text-ink/80">
-                    <Check className="w-4 h-4 text-ink" strokeWidth={2} />
-                    {a.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Agents+ */}
-            <div className="rounded-2xl bg-ink text-white p-8">
-              <div className="flex items-center gap-2 mb-2">
-                <Brain className="w-5 h-5 text-accent" strokeWidth={1.5} />
-                <h3 className="text-xl font-bold">{agentsPlus.name}</h3>
-              </div>
-              <p className="text-3xl font-bold mb-2">
-                +${agentsPlus.price}<span className="text-sm text-zinc-400 font-normal">/mo</span>
-              </p>
-              <p className="text-sm text-zinc-300 leading-relaxed">{agentsPlus.description}</p>
-            </div>
-
-            {/* Custom */}
-            <div className="rounded-2xl bg-white border border-zinc-200 p-8">
-              <h3 className="text-xl font-bold text-ink mb-1">{customAgents.name}</h3>
-              <p className="text-3xl font-bold text-ink mb-2">{customAgents.priceDisplay}</p>
-              <p className="text-sm text-zinc-600 leading-relaxed">{customAgents.description}</p>
+      <section className="px-6 pb-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex items-center gap-3">
+            <Briefcase className="h-6 w-6 text-ink" />
+            <div>
+              <h2 className="text-3xl font-bold text-ink">Acquire, Hire, and Suite</h2>
+              <p className="text-zinc-600">Per actual user, not company headcount. Pro includes Star Assist AI with human approval.</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════
-          3. COLLEAGUES & SUPPORT — Human services
-         ═══════════════════════════════════════════════════ */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Colleagues */}
-            <div className="rounded-2xl border-2 border-zinc-200 p-8 md:p-10">
-              <div className="flex items-center gap-3 mb-4">
-                <Users className="w-6 h-6 text-ink" strokeWidth={1.5} />
-                <h2 className="text-2xl font-bold text-ink">Colleagues</h2>
-              </div>
-              <p className="text-zinc-600 leading-relaxed mb-6">
-                Access our marketplace of 35,000+ vetted professionals. Designers, developers, strategists, and specialists ready to help you build, launch, and grow.
-              </p>
-              <p className="text-sm text-zinc-500 mb-6">DIY at v1 — you search, schedule, hire, and manage talent yourself using the Employer Dashboard.</p>
-              <Link
-                href="/products/colleagues"
-                className="inline-flex items-center px-6 py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
-              >
-                Explore Colleagues →
-              </Link>
-            </div>
-
-            {/* Support */}
-            <div className="rounded-2xl border-2 border-zinc-200 p-8 md:p-10">
-              <div className="flex items-center gap-3 mb-4">
-                <Headphones className="w-6 h-6 text-ink" strokeWidth={1.5} />
-                <h2 className="text-2xl font-bold text-ink">Support</h2>
-              </div>
-              <p className="text-zinc-600 leading-relaxed mb-6">
-                Productized human services at $110/hr. Dev, SEO, content, design, integrations, growth — hours are fungible across disciplines.
-              </p>
-              <div className="space-y-3 mb-6">
-                {supportTiers.map((tier) => (
-                  <div key={tier.key} className="flex items-center justify-between text-sm">
-                    <div>
-                      <span className="font-semibold text-ink">{tier.name}</span>
-                      <span className="text-zinc-500 ml-2">· {tier.hours}</span>
+          <div className="grid gap-6 lg:grid-cols-3">
+            {perSeatProducts.map((product) => (
+              <Card key={product.key}>
+                <h3 className="text-xl font-bold text-ink">{product.name}</h3>
+                <p className="mt-2 text-sm text-zinc-600">{product.description}</p>
+                <div className="mt-6 grid gap-3">
+                  {product.tiers.map((tier) => (
+                    <div key={tier.key} className={`rounded-xl border p-4 ${tier.recommended ? "border-accent bg-accent/20" : "border-zinc-200"}`}>
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="font-bold text-ink">{tier.name}</p>
+                          <p className="text-xs text-zinc-500">{tier.basis}</p>
+                        </div>
+                        <p className="text-right font-bold text-ink">{priceLabel(tier, annual)}</p>
+                      </div>
+                      {tier.founding && <p className="mt-2 text-xs font-medium text-zinc-600">Founding {formatMoney(tier.founding)}/seat/mo for 12 months</p>}
                     </div>
-                    <span className="font-bold text-ink">{tier.price}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <Link href={`/products/${product.key}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-ink underline underline-offset-4">
+                  View {product.name} <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Card>
+            ))}
+            <Card highlighted>
+              <h3 className="text-xl font-bold text-white">{suiteProduct.name}</h3>
+              <p className="mt-2 text-sm text-zinc-300">{suiteProduct.description}</p>
+              <div className="mt-6 rounded-xl border border-accent/40 bg-white/5 p-4">
+                <p className="text-sm text-zinc-300">{suiteProduct.tiers[0].basis}</p>
+                <p className="mt-1 text-3xl font-bold">{priceLabel(suiteProduct.tiers[0], annual)}</p>
+                <p className="mt-2 text-sm text-accent">{suiteProduct.tiers[0].savings}</p>
+                <p className="mt-1 text-sm text-zinc-300">Founding {formatMoney(suiteProduct.tiers[0].founding)}/seat/mo for 12 months</p>
               </div>
-              <p className="text-xs text-zinc-500 mb-6">No rollover. Overage at $110/hr. Specialty work quoted separately.</p>
-              <Link
-                href="/services/support"
-                className="inline-flex items-center px-6 py-3 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-ink hover:text-white transition-colors"
-              >
-                Learn more →
-              </Link>
+              <Link href="/signup" className="mt-auto inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-bold text-ink hover:bg-accent-hover">Start Suite</Link>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-zinc-50 px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex items-center gap-3">
+            <Database className="h-6 w-6 text-ink" />
+            <div>
+              <h2 className="text-3xl font-bold text-ink">Curate</h2>
+              <p className="text-zinc-600">Per-workspace CMS and content hub. Curate includes hosting for Curate sites.</p>
             </div>
           </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {curateTiers.map((tier) => <TierCard key={tier.key} tier={tier} annual={annual} ctaHref="/signup?product=curate" />)}
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          4. CLOUD — Secondary, for import customers
-         ═══════════════════════════════════════════════════ */}
-      <section className="py-20 bg-zinc-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-ink mb-3">Already have a site?</h2>
-            <p className="text-zinc-600 max-w-2xl mx-auto">
-              Host it on Esteemed Cloud. Import from WordPress, Drupal, GitHub, or any codebase. Custom domain, SSL, CDN, daily backups, and 99.9% uptime included on every tier.
-            </p>
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex items-center gap-3">
+            <Cloud className="h-6 w-6 text-ink" />
+            <div>
+              <h2 className="text-3xl font-bold text-ink">Esteemed Cloud Hosting</h2>
+              <p className="text-zinc-600">Standalone Hosting is for non-Curate sites: bring-your-own, Create-built, React, Node, or Next.</p>
+            </div>
           </div>
+          <h3 className="mb-4 text-xl font-bold text-ink">Self-serve Cloud</h3>
+          <div className="mb-10 grid gap-5 md:grid-cols-4">
+            {cloudTiers.map((tier) => <TierCard key={tier.key} tier={tier} annual={annual} />)}
+          </div>
+          <h3 className="mb-4 text-xl font-bold text-ink">Managed Hosting</h3>
+          <div className="grid gap-5 md:grid-cols-4">
+            {managedHostingTiers.map((tier) => (
+              <TierCard
+                key={tier.key}
+                tier={{ ...tier, basis: tier.supportHours ? `1 site, ${tier.supportHours} support hrs/mo` : "custom" }}
+                annual={annual}
+              />
+            ))}
+          </div>
+          <p className="mt-6 text-sm text-zinc-600">
+            Managed Hosting can include a $0 Create rebuild with a 12-month term. That rebuild is a plain React/Node/Next site, not a Curate migration.
+          </p>
+        </div>
+      </section>
 
-          <div
-            key={annual ? "ca" : "cm"}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 animate-[fadeIn_0.3s_ease-in-out]"
-          >
-            {cloudTiers.map((tier) => {
-              const price = tier.annual === null ? null : annual ? tier.annual : tier.monthly;
-              return (
-                <div key={tier.key} className="rounded-2xl bg-white border border-zinc-200 p-6 hover:shadow-lg transition-shadow">
-                  <h3 className="text-lg font-bold text-ink mb-1">{tier.name}</h3>
-                  <div className="mb-3">
-                    {price === null ? (
-                      <span className="text-2xl font-bold text-ink">Custom</span>
-                    ) : (
-                      <>
-                        {tier.fromPrice && <span className="text-sm text-zinc-500">From </span>}
-                        {annual && tier.monthly && !tier.fromPrice && (
-                          <span className="text-sm text-zinc-400 line-through mr-2">${tier.monthly}</span>
-                        )}
-                        <span className="text-2xl font-bold text-ink">${price}</span>
-                        <span className="text-zinc-500 text-sm">/mo</span>
-                      </>
-                    )}
-                  </div>
-                  <p className="text-sm text-zinc-600">{tier.description}</p>
+      <section className="bg-zinc-50 px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex items-center gap-3">
+            <Rocket className="h-6 w-6 text-ink" />
+            <div>
+              <h2 className="text-3xl font-bold text-ink">Migration to Curate</h2>
+              <p className="text-zinc-600">One-time migration services. Paid migrations land on a Curate subscription.</p>
+            </div>
+          </div>
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {migrationPackages.map((pkg) => (
+              <Card key={pkg.key}>
+                <h3 className="text-lg font-bold text-ink">{pkg.name}</h3>
+                <p className="mt-3 text-3xl font-bold text-ink">{pkg.priceDisplay}</p>
+                <p className="mt-1 text-xs uppercase tracking-wide text-zinc-500">{pkg.type}</p>
+                <p className="mt-4 text-sm leading-6 text-zinc-600">{pkg.scope}</p>
+              </Card>
+            ))}
+          </div>
+          <Link href="/migrate" className="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-bold text-ink hover:bg-accent-hover">
+            Learn about migration <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
+      <section className="px-6 py-20">
+        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+          <Card highlighted>
+            <Brain className="mb-4 h-8 w-8 text-accent" />
+            <h2 className="text-3xl font-bold text-white">{intelligenceProduct.name}</h2>
+            <p className="mt-3 text-zinc-300">{intelligenceProduct.description}</p>
+            <p className="mt-6 text-4xl font-bold">{priceLabel(intelligenceProduct.tiers[0], annual)}</p>
+            <p className="mt-2 text-sm text-accent">Flat per tenant add-on</p>
+          </Card>
+          <Card>
+            <div className="mb-5 flex items-center gap-3">
+              <Bot className="h-6 w-6 text-ink" />
+              <div>
+                <h2 className="text-3xl font-bold text-ink">Agents</h2>
+                <p className="text-zinc-600">Standalone SKUs are launch-gated. Curate Pro includes content agents through entitlements.</p>
+              </div>
+            </div>
+            <div className="grid gap-3 md:grid-cols-3">
+              {agents.map((agent) => (
+                <div key={agent.key} className="rounded-xl border border-zinc-200 p-4">
+                  <agent.icon className="mb-3 h-5 w-5 text-ink" />
+                  <p className="font-bold text-ink">{agent.name}</p>
+                  <p className="text-sm font-semibold text-ink">{formatMoney(agent.price)}/mo</p>
+                  <p className="mt-2 text-xs text-zinc-600">{agent.tagline}</p>
                 </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-8">
-            <Link href="/migrate" className="text-sm font-bold text-ink underline underline-offset-4 hover:no-underline">
-              Migrating from WordPress or Drupal? Learn more →
-            </Link>
-          </div>
+              ))}
+            </div>
+            <p className="mt-5 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">
+              {agentFleet.name}: from {formatMoney(agentFleet.price)}/mo for non-Curate deployments.
+            </p>
+          </Card>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          5. FAQ
-         ═══════════════════════════════════════════════════ */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-8 text-center">Frequently asked questions</h2>
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-8 flex items-center justify-center gap-3 text-center">
+            <Sparkles className="h-6 w-6 text-ink" />
+            <h2 className="text-3xl font-bold text-ink">Frequently Asked Questions</h2>
+          </div>
           <FAQ items={pricingFAQ} />
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          6. FINAL CTA
-         ═══════════════════════════════════════════════════ */}
-      <section className="bg-ink py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to build something Esteemed?</h2>
-          <p className="text-zinc-400 mb-8">Start free. No credit card required.</p>
-          <Link
-            href="/signup"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
-          >
-            Start building free →
-          </Link>
-        </div>
+      <section className="bg-ink px-6 py-20 text-center">
+        <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">Ready to build something Esteemed?</h2>
+        <p className="mb-8 text-zinc-400">Start with the app, CMS, hosting, or migration path that fits.</p>
+        <Link href="/signup" className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-4 text-sm font-bold text-ink hover:bg-accent-hover">
+          Get started <ArrowRight className="h-4 w-4" />
+        </Link>
       </section>
-    </div>
+    </main>
   );
 }

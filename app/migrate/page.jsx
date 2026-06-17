@@ -4,7 +4,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import LoginFork from "@/components/LoginFork";
-import { cloudTiers, agents, agentFleet, customAgents, migrateFAQ, anchorReferences } from "@/lib/data";
+import { managedHostingTiers, migrationPackages, curateTiers, agents, agentFleet, customAgents, migrateFAQ, anchorReferences } from "@/lib/data";
+
+function formatMoney(value) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: value % 1 === 0 ? 0 : 2,
+  }).format(value);
+}
 
 export default function MigratePage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -15,16 +23,18 @@ export default function MigratePage() {
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Talk to your website. Watch it change.
+            Rebuild, host, or migrate to Curate.
           </h1>
           <p className="text-lg text-zinc-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Move your WordPress or Drupal site to Esteemed App and you stop fighting your CMS. Tell us what to change. It changes. That's it.
+            Hosting, Curate, and Migration are independent. Choose a $0 Create
+            rebuild with Managed Hosting, or a paid migration that moves your
+            site onto Curate.
           </p>
           <button
             onClick={() => setModalOpen(true)}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
-            See if your site qualifies
+            See which path fits
           </button>
           <p className="mt-4 text-sm text-zinc-500">
             Trusted by {anchorReferences.map((r) => r.name).join(", ")}.
@@ -72,13 +82,13 @@ export default function MigratePage() {
       {/* How It Works */}
       <section className="py-20 border-t border-zinc-100">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-12">The migration is the part you don't have to think about</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-12">Two paths, clear boundaries</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { step: "1", title: "We look at your current site", desc: "You give us your URL on a 15-minute call. We give you an honest assessment — what migrates cleanly, what needs work, what the fixed price will be." },
-              { step: "2", title: "We rebuild it, you approve", desc: "Most small business sites: 1-3 weeks. We build a working version, send you a private preview link, you tell us what to change." },
-              { step: "3", title: "We migrate your content", desc: "Same URL. No SEO loss. We handle redirects from your old URLs so search rankings stay put." },
-              { step: "4", title: "You start talking to your site", desc: "That's it. You're done with WordPress. Or Drupal. Or whatever it was." },
+              { step: "1", title: "We assess the current site", desc: "You give us your URL. We identify whether a free Create rebuild or paid Curate migration is the right commercial path." },
+              { step: "2", title: "Free rebuild path", desc: "For many simple sites, we build a plain React/Node/Next site and attach it to Managed Hosting with a 12-month term." },
+              { step: "3", title: "Paid migration path", desc: "For CMS-driven sites, we migrate content, media, redirects, and workflows onto Curate at a fixed public package price." },
+              { step: "4", title: "You run on the right product", desc: "Hosting customers pay for Hosting. Curate migration customers pay for Curate. You do not pay both for the same site." },
             ].map((s) => (
               <div key={s.step}>
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-accent text-ink text-sm font-bold mb-4">{s.step}</span>
@@ -87,29 +97,59 @@ export default function MigratePage() {
               </div>
             ))}
           </div>
-          <p className="text-sm text-zinc-500 mt-8">Most migrations are included with a 12-month hosting agreement. Larger sites are flat-priced after the free assessment.</p>
+          <p className="text-sm text-zinc-500 mt-8">The free rebuild is not a CMS migration. Paid migrations land on Curate.</p>
         </div>
       </section>
 
-      {/* Hosting Tiers */}
+      {/* Managed Hosting */}
       <section className="py-20 border-t border-zinc-100">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">What it costs after you're moved</h2>
-          <p className="text-zinc-600 mb-10">Most customers move from a more expensive WordPress agency to one of these and pay less for a better product.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Managed Hosting with optional $0 rebuild</h2>
+          <p className="text-zinc-600 mb-10">For non-Curate sites. The included rebuild is a plain Create-built site, not a CMS migration.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cloudTiers.filter((t) => t.annual !== null).map((tier) => (
+            {managedHostingTiers.filter((t) => t.monthly !== null).map((tier) => (
               <div key={tier.key} className="rounded-2xl border border-zinc-200 p-6">
                 <h3 className="text-xl font-bold text-ink mb-1">{tier.name}</h3>
                 <div className="mb-4">
-                  {tier.fromPrice && <span className="text-sm text-zinc-500">From </span>}
-                  <span className="text-3xl font-bold text-ink">${tier.annual}</span>
+                  <span className="text-3xl font-bold text-ink">{formatMoney(tier.monthly)}</span>
                   <span className="text-zinc-500">/mo</span>
                 </div>
                 <p className="text-sm text-zinc-600">{tier.description}</p>
+                <p className="mt-3 text-sm font-semibold text-ink">{tier.supportHours} support hrs/mo included</p>
               </div>
             ))}
           </div>
-          <p className="text-sm text-zinc-500 mt-6">All tiers include the prompt-driven editing experience. No surprise charges.</p>
+          <p className="text-sm text-zinc-500 mt-6">Support overage is billed at market rate beyond included hours.</p>
+        </div>
+      </section>
+
+      {/* Migration Packages */}
+      <section className="py-20 border-t border-zinc-100 bg-zinc-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Paid migration to Curate</h2>
+          <p className="text-zinc-600 mb-10">One-time migration packages. A paid migration results in a Curate subscription.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {migrationPackages.map((pkg) => (
+              <div key={pkg.key} className="rounded-2xl border border-zinc-200 bg-white p-6">
+                <h3 className="text-lg font-bold text-ink mb-1">{pkg.name}</h3>
+                <p className="text-3xl font-bold text-ink mb-1">{pkg.priceDisplay}</p>
+                <p className="mb-4 text-xs uppercase tracking-wide text-zinc-500">{pkg.type}</p>
+                <p className="text-sm text-zinc-600">{pkg.scope}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 rounded-2xl border border-zinc-200 bg-white p-6">
+            <h3 className="text-xl font-bold text-ink mb-3">Curate subscription after migration</h3>
+            <div className="grid gap-4 md:grid-cols-3">
+              {curateTiers.map((tier) => (
+                <div key={tier.key} className="rounded-xl bg-zinc-50 p-4">
+                  <p className="font-bold text-ink">{tier.name}</p>
+                  <p className="text-sm text-zinc-600">{tier.monthly === null ? "Custom" : `${formatMoney(tier.monthly)}/mo`}</p>
+                  <p className="mt-1 text-xs text-zinc-500">{tier.basis}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

@@ -11,12 +11,7 @@ import {
   Briefcase,
   Brain,
   Bot,
-  Link,
   FileText,
-  Headphones,
-  Mic,
-  Share2,
-  PenLine,
   Sparkles,
   Calculator,
   Minus,
@@ -27,18 +22,19 @@ import {
 /*  Pricing data                                                       */
 /* ------------------------------------------------------------------ */
 
-/* Pricing from Stripe (live products) + Esteemed Digital Pricing Matrix v1 */
-
-const CREATE_TIERS = [
-  { label: "Core", price: 39, credits: "100 credits/mo", stripeId: "prod_UQwEwrbhIisLeS" },
-  { label: "Pro", price: 79, credits: "300 credits/mo", stripeId: "prod_UQwEE1YiHZNjS7" },
-  { label: "Business", price: 169, credits: "800 credits/mo", stripeId: "prod_UQwEP83DYTWwyN" },
-];
+/* Pricing from esteemed-pricing-spec-v2.md. Code should use lookup keys in Stripe. */
 
 const CLOUD_TIERS = [
-  { label: "Starter", price: 149 },
-  { label: "Growth", price: 249 },
-  { label: "Pro", price: 399 },
+  { label: "Basic", price: 9.99, lookupKey: "cloud_basic_monthly" },
+  { label: "Plus", price: 14.99, lookupKey: "cloud_plus_monthly" },
+  { label: "Pro", price: 19.99, lookupKey: "cloud_pro_monthly" },
+  { label: "Multi", price: 39.99, lookupKey: "cloud_multi_monthly" },
+];
+
+const MANAGED_TIERS = [
+  { label: "Essential", price: 149, support: "2 hrs/mo", lookupKey: "managed_essential_monthly" },
+  { label: "Growth", price: 249, support: "5 hrs/mo", lookupKey: "managed_growth_monthly" },
+  { label: "Business", price: 399, support: "10 hrs/mo", lookupKey: "managed_business_monthly" },
 ];
 
 /* Intelligence — pricing spec: flat per-tenant add-on */
@@ -47,68 +43,72 @@ const INTELLIGENCE_TIERS = [
   { label: "Annual", price: 166, note: "$1,990/yr (2 months free)" },
 ];
 
-const CONNECT_TIERS = [
-  { label: "Builder", price: 15, perSeat: true },
-  { label: "Pro", price: 29, perSeat: true },
-  { label: "Scale", price: 49, perSeat: true },
-];
-
 /* Per-seat products — from esteemed-pricing-spec.md */
 const ACQUIRE_TIERS = [
-  { label: "Free", price: 0 },
-  { label: "Starter", price: 149, perSeat: true },
-  { label: "Pro", price: 249, perSeat: true },
+  { label: "Free", price: 0, lookupKey: "acquire_free" },
+  { label: "Starter", price: 149, perSeat: true, lookupKey: "acquire_starter_monthly" },
+  { label: "Pro", price: 249, perSeat: true, lookupKey: "acquire_pro_monthly" },
 ];
 
 const HIRE_TIERS = [
-  { label: "Free", price: 0 },
-  { label: "Starter", price: 149, perSeat: true },
-  { label: "Pro", price: 249, perSeat: true },
+  { label: "Free", price: 0, lookupKey: "hire_free" },
+  { label: "Starter", price: 149, perSeat: true, lookupKey: "hire_starter_monthly" },
+  { label: "Pro", price: 249, perSeat: true, lookupKey: "hire_pro_monthly" },
+];
+
+const SUITE_TIERS = [
+  { label: "Bundle", price: 399, perSeat: true, lookupKey: "suite_bundle_monthly" },
 ];
 
 /* Per-workspace product — Curate */
 const CURATE_TIERS = [
-  { label: "Starter", price: 49 },
-  { label: "Pro", price: 299 },
+  { label: "Starter", price: 49, lookupKey: "curate_starter_monthly" },
+  { label: "Pro", price: 299, lookupKey: "curate_pro_monthly" },
 ];
 
-// Agents are add-ons for Curate and Acquire
-const CURATE_AGENTS = [
-  { id: "publicist", name: "Publicist", price: 129 },
-  { id: "writer", name: "Writer", price: 149 },
+const ALL_AGENTS = [
+  { id: "receptionist", name: "AI Receptionist", price: 99, lookupKey: "agent_receptionist_monthly" },
+  { id: "social", name: "Social", price: 129, lookupKey: "agent_social_monthly" },
+  { id: "blogger", name: "Blogger", price: 149, lookupKey: "agent_blogger_monthly" },
+  { id: "marketer", name: "Marketer", price: 149, lookupKey: "agent_marketer_monthly" },
+  { id: "recruiter", name: "Recruiter", price: 149, lookupKey: "agent_recruiter_monthly" },
+  { id: "publicist", name: "Publicist", price: 149, lookupKey: "agent_publicist_monthly" },
 ];
-const ACQUIRE_AGENTS = [
-  { id: "marketer", name: "Marketer", price: 199 },
-  { id: "recruiter", name: "Recruiter", price: 199 },
-];
-const ALL_AGENTS = [...CURATE_AGENTS, ...ACQUIRE_AGENTS];
-const AGENT_FLEET_PRICE = 599;
-const AGENT_FLEET_ALACARTE = 676;
-const AGENT_FLEET_SAVINGS = AGENT_FLEET_ALACARTE - AGENT_FLEET_PRICE; // 77
+const AGENT_FLEET_PRICE = 199;
 
 const PLATFORM_APPS = [
   {
-    id: "create",
-    name: "Create",
-    sublabel: "Sites \u00b7 apps",
-    icon: Globe,
-    price: null,
-    included: false,
-    costLabel: "$39\u2013$169/mo",
-    tiered: true,
-    tierKey: "create",
-    stripeId: "prod_UQwEwrbhIisLeS",
-  },
-  {
     id: "cloud",
     name: "Cloud",
-    sublabel: "Integrated Hosting",
+    sublabel: "Self-serve hosting",
     icon: Cloud,
+    price: null,
+    included: false,
+    costLabel: "$9.99\u2013$39.99/mo",
+    tiered: true,
+    tierKey: "cloud",
+  },
+  {
+    id: "managed",
+    name: "Managed Hosting",
+    sublabel: "Done-for-you",
+    icon: Globe,
     price: null,
     included: false,
     costLabel: "$149\u2013$399/mo",
     tiered: true,
-    tierKey: "cloud",
+    tierKey: "managed",
+  },
+  {
+    id: "suite",
+    name: "Suite",
+    sublabel: "Acquire + Hire Pro",
+    icon: Sparkles,
+    price: null,
+    included: false,
+    costLabel: "$399/seat/mo",
+    tiered: true,
+    tierKey: "suite",
   },
   {
     id: "acquire",
@@ -150,20 +150,8 @@ const PLATFORM_APPS = [
     icon: Bot,
     price: null,
     included: false,
-    costLabel: "$129\u2013$199/mo each",
+    costLabel: "$99\u2013$149/mo each",
     hasAgentPicker: true,
-  },
-  {
-    id: "connect",
-    name: "Connect",
-    sublabel: "Retrieval",
-    icon: Link,
-    price: null,
-    included: false,
-    costLabel: "$15\u2013$49/user/mo",
-    tiered: true,
-    tierKey: "connect",
-    perSeat: true,
   },
   {
     id: "curate",
@@ -176,57 +164,17 @@ const PLATFORM_APPS = [
     tiered: true,
     tierKey: "curate",
   },
-  {
-    id: "support",
-    name: "Support",
-    sublabel: "Expert Assistance",
-    icon: Headphones,
-    price: 110,
-    included: false,
-    costLabel: "$110/hr",
-    hourly: true,
-  },
 ];
-
-const AI_SERVICES = [
-  {
-    id: "voice-crm",
-    name: "Voice CRM Auto-Reply",
-    icon: Mic,
-    price: 99,
-    desc: "Powered by Esteemed Intelligence",
-  },
-  {
-    id: "social-posting",
-    name: "AI Social Posting",
-    icon: Share2,
-    price: 129,
-    desc: "Powered by Esteemed Intelligence",
-  },
-  {
-    id: "blog-voice",
-    name: "Blog-in-Your-Voice",
-    icon: PenLine,
-    price: 149,
-    desc: "Powered by Esteemed Intelligence",
-  },
-];
-
-const AI_BUNDLE_PRICE = 329;
-const AI_INDIVIDUAL_TOTAL = 99 + 129 + 149; // 377
-const AI_BUNDLE_SAVINGS = AI_INDIVIDUAL_TOTAL - AI_BUNDLE_PRICE; // 48
 
 const TIER_OPTIONS = {
-  create: CREATE_TIERS,
   cloud: CLOUD_TIERS,
+  managed: MANAGED_TIERS,
   acquire: ACQUIRE_TIERS,
   hire: HIRE_TIERS,
+  suite: SUITE_TIERS,
   intelligence: INTELLIGENCE_TIERS,
-  connect: CONNECT_TIERS,
   curate: CURATE_TIERS,
 };
-
-const SUPPORT_ESTIMATED_HOURS = 10;
 
 /* ------------------------------------------------------------------ */
 /*  Styles                                                             */
@@ -266,27 +214,16 @@ export default function CalculatorPage() {
 
   /* ---- app toggles ---- */
   const [activeApps, setActiveApps] = useState({});
-  const [tierSelections, setTierSelections] = useState({ create: 0, cloud: 0, acquire: 0, hire: 0, intelligence: 0, connect: 0, curate: 0 });
+  const [tierSelections, setTierSelections] = useState({ cloud: 0, managed: 0, acquire: 0, hire: 0, suite: 0, intelligence: 0, curate: 0 });
   const [seats, setSeats] = useState(1);
-
-  /* ---- AI service toggles ---- */
-  const [activeServices, setActiveServices] = useState({});
-  const [aiBundle, setAiBundle] = useState(false);
 
   /* ---- agent toggles (add-ons for Curate/Acquire) ---- */
   const [activeAgents, setActiveAgents] = useState({});
   const [agentFleetBundle, setAgentFleetBundle] = useState(false);
 
-  /* ---- support hours ---- */
-  const [supportHours, setSupportHours] = useState(SUPPORT_ESTIMATED_HOURS);
-
   /* ---- toggle helpers ---- */
   const toggleApp = useCallback((id) => {
     setActiveApps((prev) => ({ ...prev, [id]: !prev[id] }));
-  }, []);
-
-  const toggleService = useCallback((id) => {
-    setActiveServices((prev) => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
   const toggleAgent = useCallback((id) => {
@@ -299,14 +236,6 @@ export default function CalculatorPage() {
   const setTier = useCallback((tierKey, idx) => {
     setTierSelections((prev) => ({ ...prev, [tierKey]: idx }));
   }, []);
-
-  /* Auto-bundle: if all 3 individual AI services are on, flip the bundle on */
-  const allThreeServicesOn =
-    activeServices["voice-crm"] &&
-    activeServices["social-posting"] &&
-    activeServices["blog-voice"];
-
-  const effectiveBundle = aiBundle || allThreeServicesOn;
 
   /* ---- line items & total ---- */
   const lineItems = useMemo(() => {
@@ -328,13 +257,6 @@ export default function CalculatorPage() {
           ? `${app.name} \u2014 ${tier.label} (\u00d7${seats} seat${seats !== 1 ? "s" : ""})`
           : `${app.name} \u2014 ${tier.label}`;
         items.push({ label, amount });
-      } else if (app.hourly) {
-        const est = supportHours * app.price;
-        items.push({
-          label: `Support (~${supportHours} hrs \u00d7 ${fmt(app.price)}/hr)`,
-          amount: est,
-          estimated: true,
-        });
       } else if (app.perSeat) {
         items.push({
           label: `${app.name} (\u00d7${seats} seat${seats !== 1 ? "s" : ""})`,
@@ -345,25 +267,11 @@ export default function CalculatorPage() {
       }
     });
 
-    // AI Services — powered by Esteemed Intelligence
-    if (effectiveBundle) {
-      items.push({
-        label: `Intelligence AI Suite (save ${fmt(AI_BUNDLE_SAVINGS)})`,
-        amount: AI_BUNDLE_PRICE,
-      });
-    } else {
-      AI_SERVICES.forEach((svc) => {
-        if (activeServices[svc.id]) {
-          items.push({ label: svc.name, amount: svc.price });
-        }
-      });
-    }
-
     // Agents (add-ons for Curate/Acquire)
     if (activeApps.agents) {
       if (effectiveFleet) {
         items.push({
-          label: `Agent Fleet (save ${fmt(AGENT_FLEET_SAVINGS)})`,
+          label: "Custom / multi-agent bundle",
           amount: AGENT_FLEET_PRICE,
         });
       } else {
@@ -376,7 +284,7 @@ export default function CalculatorPage() {
     }
 
     return items;
-  }, [activeApps, tierSelections, seats, activeServices, effectiveBundle, activeAgents, effectiveFleet, supportHours]);
+  }, [activeApps, tierSelections, seats, activeAgents, effectiveFleet]);
 
   const subtotal = useMemo(
     () => lineItems.reduce((sum, li) => sum + li.amount, 0),
@@ -536,30 +444,9 @@ export default function CalculatorPage() {
                     {app.hasAgentPicker && isActive && (
                       <div className="mt-3 space-y-2">
                         <p className="text-xs font-medium" style={{ color: "#565449" }}>
-                          Curate add-ons
+                          Standalone agents
                         </p>
-                        {CURATE_AGENTS.map((agent) => (
-                          <div key={agent.id} className="flex items-center justify-between">
-                            <span className="text-xs" style={{ color: "rgba(0,0,0,0.85)" }}>
-                              {agent.name} — {fmt(agent.price)}/mo
-                            </span>
-                            <Switch
-                              size="sm"
-                              isSelected={!!activeAgents[agent.id]}
-                              onValueChange={() => toggleAgent(agent.id)}
-                              classNames={{
-                                wrapper: activeAgents[agent.id]
-                                  ? "!bg-[#FEE546] group-data-[selected=true]:!bg-[#FEE546]"
-                                  : "",
-                              }}
-                              aria-label={`Toggle ${agent.name}`}
-                            />
-                          </div>
-                        ))}
-                        <p className="text-xs font-medium mt-2" style={{ color: "#565449" }}>
-                          Acquire add-ons
-                        </p>
-                        {ACQUIRE_AGENTS.map((agent) => (
+                        {ALL_AGENTS.map((agent) => (
                           <div key={agent.id} className="flex items-center justify-between">
                             <span className="text-xs" style={{ color: "rgba(0,0,0,0.85)" }}>
                               {agent.name} — {fmt(agent.price)}/mo
@@ -583,7 +470,7 @@ export default function CalculatorPage() {
                         >
                           <span className="text-xs font-semibold" style={{ color: "rgba(0,0,0,0.85)" }}>
                             Agent Fleet (all 4) — {fmt(AGENT_FLEET_PRICE)}/mo{" "}
-                            <span style={{ color: "#16a34a" }}>save {fmt(AGENT_FLEET_SAVINGS)}</span>
+                            <span style={{ color: "#16a34a" }}>from v2 catalog</span>
                           </span>
                           <Switch
                             size="sm"
@@ -602,205 +489,14 @@ export default function CalculatorPage() {
                             aria-label="Toggle Agent Fleet"
                           />
                         </div>
-                      </div>
-                    )}
-
-                    {/* Support hours input */}
-                    {app.hourly && isActive && (
-                      <div className="flex items-center gap-2 mt-3">
-                        <span
-                          className="text-xs"
-                          style={{ color: "#565449" }}
-                        >
-                          Est. hours
-                        </span>
-                        <div
-                          className="flex items-center rounded-lg overflow-hidden border"
-                          style={{ borderColor: "#D7D7D7" }}
-                        >
-                          <button
-                            onClick={() =>
-                              setSupportHours((h) => Math.max(1, h - 1))
-                            }
-                            className="px-2 py-1 hover:bg-gray-50"
-                            aria-label="Decrease hours"
-                          >
-                            <Minus size={12} />
-                          </button>
-                          <input
-                            type="number"
-                            min={1}
-                            max={200}
-                            value={supportHours}
-                            onChange={(e) => {
-                              const v = parseInt(e.target.value, 10);
-                              if (!isNaN(v) && v >= 1 && v <= 200)
-                                setSupportHours(v);
-                            }}
-                            className="w-12 text-center text-xs border-x py-1 outline-none"
-                            style={{ borderColor: "#D7D7D7" }}
-                          />
-                          <button
-                            onClick={() =>
-                              setSupportHours((h) => Math.min(200, h + 1))
-                            }
-                            className="px-2 py-1 hover:bg-gray-50"
-                            aria-label="Increase hours"
-                          >
-                            <Plus size={12} />
-                          </button>
-                        </div>
+                        <p className="text-[11px]" style={{ color: "#8C8C8C" }}>
+                          Standalone agent SKUs are launch-gated. Curate Pro includes content agents through entitlements.
+                        </p>
                       </div>
                     )}
                   </div>
                 );
               })}
-            </div>
-          </section>
-
-          {/* AI Services */}
-          <section>
-            <h2
-              className="text-lg font-semibold mb-4"
-              style={{ color: "rgba(0,0,0,0.85)" }}
-            >
-              AI Services — Powered by Esteemed Intelligence
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-              {AI_SERVICES.map((svc) => {
-                const Icon = svc.icon;
-                const isActive = !!activeServices[svc.id];
-
-                return (
-                  <div
-                    key={svc.id}
-                    className="flex items-start justify-between p-4"
-                    style={cardStyle}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center"
-                        style={{
-                          background: isActive ? "#FEE546" : "#F0F0ED",
-                        }}
-                      >
-                        <Icon
-                          size={18}
-                          style={{
-                            color: isActive
-                              ? "rgba(0,0,0,0.85)"
-                              : "#8C8C8C",
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <p
-                          className="text-sm font-semibold leading-tight"
-                          style={{ color: "rgba(0,0,0,0.85)" }}
-                        >
-                          {svc.name}
-                        </p>
-                        <p
-                          className="text-xs mt-0.5"
-                          style={{ color: "#565449" }}
-                        >
-                          {fmt(svc.price)}/mo
-                        </p>
-                      </div>
-                    </div>
-                    <Switch
-                      size="sm"
-                      isSelected={isActive}
-                      onValueChange={() => toggleService(svc.id)}
-                      classNames={{
-                        wrapper: isActive
-                          ? "!bg-[#FEE546] group-data-[selected=true]:!bg-[#FEE546]"
-                          : "",
-                        thumb: "bg-white",
-                      }}
-                      aria-label={`Toggle ${svc.name}`}
-                    />
-                  </div>
-                );
-              })}
-
-              {/* Intelligence AI Suite Bundle */}
-              <div
-                className="flex items-start justify-between p-4"
-                style={{
-                  ...cardStyle,
-                  border: effectiveBundle
-                    ? "2px solid #FEE546"
-                    : "1px solid #D7D7D7",
-                }}
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center"
-                    style={{
-                      background: effectiveBundle ? "#FEE546" : "#F0F0ED",
-                    }}
-                  >
-                    <Sparkles
-                      size={18}
-                      style={{
-                        color: effectiveBundle
-                          ? "rgba(0,0,0,0.85)"
-                          : "#8C8C8C",
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <p
-                      className="text-sm font-semibold leading-tight"
-                      style={{ color: "rgba(0,0,0,0.85)" }}
-                    >
-                      Intelligence AI Suite
-                    </p>
-                    <p
-                      className="text-xs mt-0.5"
-                      style={{ color: "#565449" }}
-                    >
-                      {fmt(AI_BUNDLE_PRICE)}/mo{" "}
-                      <span
-                        className="font-medium"
-                        style={{ color: "#16a34a" }}
-                      >
-                        save {fmt(AI_BUNDLE_SAVINGS)}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <Switch
-                  size="sm"
-                  isSelected={effectiveBundle}
-                  onValueChange={(val) => {
-                    setAiBundle(val);
-                    if (val) {
-                      setActiveServices((prev) => ({
-                        ...prev,
-                        "voice-crm": true,
-                        "social-posting": true,
-                        "blog-voice": true,
-                      }));
-                    } else {
-                      setActiveServices((prev) => ({
-                        ...prev,
-                        "voice-crm": false,
-                        "social-posting": false,
-                        "blog-voice": false,
-                      }));
-                    }
-                  }}
-                  classNames={{
-                    wrapper: effectiveBundle
-                      ? "!bg-[#FEE546] group-data-[selected=true]:!bg-[#FEE546]"
-                      : "",
-                    thumb: "bg-white",
-                  }}
-                  aria-label="Toggle Intelligence AI Suite"
-                />
-              </div>
             </div>
           </section>
 
