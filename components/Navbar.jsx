@@ -12,12 +12,12 @@ const productsCol1 = [
   { key: "cloud", name: "Cloud", href: "/products/cloud", desc: "Publish or import and maintain your apps on Esteemed Cloud." },
   { key: "curate", name: "Curate", href: "/products/curate", desc: "Provision an AI-native CMS and media manager on Esteemed Cloud." },
   { key: "agents", name: "Agents", href: "/products/agents", desc: "AI agents trained on your business with Esteemed Agents, featuring Star — AI for work." },
-  { key: "intelligence", name: "Intelligence", href: "/products/intelligence", desc: "Esteemed Intelligence — the shared intelligence layer powering all Esteemed products." },
 ];
 
 const productsCol2 = [
   { key: "hire", name: "Hire", href: "/products/hire", desc: "Esteemed Hire — applicant tracking that integrates with Colleagues and Intelligence." },
   { key: "acquire", name: "Acquire", href: "/products/acquire", desc: "Esteemed Acquire — CRM for client and talent acquisition, powered by Intelligence." },
+  { key: "intelligence", name: "Intelligence", href: "/products/intelligence", desc: "Esteemed Intelligence — the shared intelligence layer powering all Esteemed products." },
   { key: "hcmgpt", name: "HCMGPT", href: "https://hcmgpt.com", desc: "HCMGPT, by Esteemed — the preeminent domain-specific AI for human capital management.", external: true },
 ];
 

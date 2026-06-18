@@ -12,6 +12,7 @@ import {
   Monitor,
   PenLine,
   RefreshCw,
+  Server,
   ShieldCheck,
   Sparkles,
   Users,
@@ -44,7 +45,7 @@ const catalog = {
         blurb:
           "Our AI website builder. Describe what you want and Create drafts a real, brand-aware site in the Studio IDE - then refine it by prompt or in code. Hosting is included the moment you publish.",
         anchor: "As low as $39/mo · free to start",
-        cta: "See Create plans",
+        cta: "See Plans",
         href: "/products/create#plans",
         primary: true,
       },
@@ -55,7 +56,7 @@ const catalog = {
         blurb:
           "Prefer we build it? Our team rebuilds your existing site for free when you start a 12-month Managed Hosting plan - no rebuild fee, ever.",
         anchor: "As low as $0 with Managed Hosting",
-        cta: "See Managed Hosting",
+        cta: "Learn More",
         goto: "hosting",
       },
       {
@@ -65,10 +66,11 @@ const catalog = {
         blurb:
           "Our design experts build your custom, responsive site - free domain & SSL, SEO, and a contact form included. One-time build fee for 4 pages, then a simple annual hosting fee. No surprises.",
         anchor: "$499 one-time build · plus annual hosting",
-        cta: "Start my site",
+        cta: "Learn More",
         href: "/contact",
-        fine:
-          "Want more? Engage a designer to extend your project at $85/hr (3 hr min) - or $75/hr with a 10 hr commitment, used within 40 hrs of purchase.",
+        fine: "Want more?",
+        fineLink: "Hire an Expert",
+        fineGoto: "experts",
       },
     ],
   },
@@ -76,25 +78,36 @@ const catalog = {
     cards: [
       {
         icon: "cloud",
-        name: "Self-serve Cloud",
-        badge: "From $9.99",
-        pills: ["SSL included", "No renewal hikes"],
+        name: "Esteemed Cloud",
+        badge: "Hosting platform",
+        pills: ["JavaScript", "WordPress & Drupal", "Managed edge"],
         blurb:
-          "Bring your own site or a Create build. Fast, fully managed hosting with free SSL and an AI contact form built in - and a price that never doubles at renewal.",
-        anchor: "From $9.99/mo · 4 plans",
-        cta: "See Cloud plans",
+          "Modern hosting for JavaScript, Node, React, WordPress, and Drupal. Bring an existing site or publish from Esteemed Create onto managed cloud infrastructure.",
+        anchor: "Cloud hosting from $9.99/mo",
+        cta: "Learn More",
         href: "/products/cloud#plans",
         primary: true,
       },
       {
-        icon: "cloud",
+        icon: "window",
+        name: "Self-Managed",
+        badge: "From $9.99",
+        pills: ["Bring your own site", "SSL included", "No renewal hikes"],
+        blurb:
+          "Self-managed hosting for teams that want control over their app or CMS. Includes SSL, monitoring, backups, and predictable pricing that never doubles at renewal.",
+        anchor: "From $9.99/mo · 4 plans",
+        cta: "See Plans",
+        href: "/products/cloud#plans",
+      },
+      {
+        icon: "server",
         name: "Managed Hosting",
         badge: "Free rebuild",
         pills: ["Done-for-you", "Support included"],
         blurb:
           "Done-for-you hosting with a free site rebuild and dedicated monthly support hours, on a simple 12-month term. We keep your site fast, patched, and online.",
         anchor: "From $149/mo",
-        cta: "See Managed plans",
+        cta: "See Plans",
         href: "/products/cloud#plans",
       },
     ],
@@ -112,7 +125,7 @@ const catalog = {
         blurb:
           "An AI-native CRM and TRM for talent and revenue teams. Manage every relationship, score and enrich leads, and let Star draft outreach - you approve. Priced per user, not per headcount.",
         anchor: "Free · paid from $149/seat · Pro $249/seat",
-        cta: "See Acquire plans",
+        cta: "See Plans",
         href: "/products/acquire#plans",
         primary: true,
       },
@@ -125,7 +138,7 @@ const catalog = {
         blurb:
           "An AI-native applicant tracking system. Post, source, screen, and move candidates with Star drafting and matching alongside you. Published AI pricing - no sales call to see it.",
         anchor: "Free · paid from $149/seat · Pro $249/seat",
-        cta: "See Hire plans",
+        cta: "See Plans",
         href: "/products/hire#plans",
       },
       {
@@ -135,7 +148,7 @@ const catalog = {
         blurb:
           "The Colleagues talent experience platform for organizations rolling it out company-wide - engagement, internal mobility, and career growth on one platform.",
         anchor: "Contact Sales",
-        cta: "Talk to us",
+        cta: "Learn More",
         href: "/contact",
       },
     ],
@@ -153,7 +166,7 @@ const catalog = {
         blurb:
           "Our AI-native CMS, managed in Esteemed Cloud and priced per workspace. Pro switches on the content agents - Blogger, Social, Marketer - with RAG grounding via Connect.",
         anchor: "From $49/mo · Pro $299/mo",
-        cta: "See Curate plans",
+        cta: "See Plans",
         href: "/products/curate#plans",
         primary: true,
       },
@@ -164,7 +177,7 @@ const catalog = {
         blurb:
           "Already on WordPress or Drupal? We host your self-hosted site as-is at the cost of hosting - then pair it with a Support pack for security patching and updates.",
         anchor: "Hosting from $9.99/mo + Support",
-        cta: "See Hosting",
+        cta: "Learn More",
         goto: "hosting",
       },
       {
@@ -174,7 +187,7 @@ const catalog = {
         blurb:
           "An all-in managed bridge for your current site - security, monitoring, backups, and content edits - with no migration required. Buys you time before you move.",
         anchor: "$399/mo",
-        cta: "Start Care",
+        cta: "Learn More",
         href: "/contact",
       },
       {
@@ -184,7 +197,7 @@ const catalog = {
         blurb:
           "Move any platform - WordPress, Squarespace, Wix, Drupal - onto Curate. Productized and publicly priced, from small sites to multilingual enterprise. A paid migration lands you on a Curate subscription.",
         anchor: "One-time · from $6,500",
-        cta: "See migration packages",
+        cta: "See Plans",
         href: "/migrate",
       },
     ],
@@ -200,7 +213,7 @@ const catalog = {
         blurb:
           "The retrieval layer. Connect your systems so Esteemed AI can reason over your real, current data - grounded, not guessing. Included with managed Curate; standalone for any tenant.",
         anchor: "Included with Curate · standalone Contact Sales",
-        cta: "Contact Sales",
+        cta: "Learn More",
         href: "/products/connect#plans",
       },
       {
@@ -211,7 +224,7 @@ const catalog = {
         blurb:
           "The Company Brain. Persistent memory, continual learning, and custom domain memory that deepen Star across every plan it's attached to.",
         anchor: "$199/mo · per tenant",
-        cta: "Add Intelligence",
+        cta: "See Plans",
         href: "/products/intelligence#plans",
         primary: true,
       },
@@ -224,7 +237,7 @@ const catalog = {
         blurb:
           "AI coworkers that take real work off your plate - Receptionist, Social, Blogger, Marketer, Recruiter, Publicist. Included with Curate Pro; standalone soon.",
         anchor: "From $99/mo",
-        cta: "Notify me",
+        cta: "Learn More",
         href: "/products/agents#plans",
       },
     ],
@@ -240,7 +253,7 @@ const catalog = {
         blurb:
           "Acquire and Hire together, both at Pro, on a single seat. The full talent engine - CRM and ATS - for less than buying each on its own.",
         anchor: "$399/seat/mo · save $99/seat",
-        cta: "See Suite plans",
+        cta: "See Plans",
         href: "/products/acquire#plans",
         primary: true,
       },
@@ -251,7 +264,7 @@ const catalog = {
         blurb:
           "Everything to launch and run a business: an Esteemed Create site, Acquire CRM seats, and a managed Support pack - one onboarding, one invoice.",
         anchor: "Bundle pricing on a quick call",
-        cta: "Build this bundle",
+        cta: "Learn More",
         href: "/contact",
       },
       {
@@ -261,7 +274,7 @@ const catalog = {
         blurb:
           "Your AI content hub, fully wired: Curate Pro with the Connect RAG layer and the Intelligence Company Brain switched on, agents flywheeling.",
         anchor: "Bundle pricing on a quick call",
-        cta: "Build this bundle",
+        cta: "Learn More",
         href: "/contact",
       },
       {
@@ -273,7 +286,7 @@ const catalog = {
         blurb:
           "All five content and marketing agents working together on one bill - and included free with Curate Pro.",
         anchor: "From $199/mo",
-        cta: "Notify me",
+        cta: "Learn More",
         href: "/products/agents#plans",
       },
     ],
@@ -290,7 +303,7 @@ const catalog = {
         blurb:
           "Post roles free and tap a 35,000-member vetted network of professionals. Pay only when you place - no seats, no subscription, no hiring until you find the right person.",
         anchor: "Platform fee as low as 10%",
-        cta: "Post a role",
+        cta: "Learn More",
         href: "/products/colleagues",
         primary: true,
       },
@@ -302,11 +315,11 @@ const catalog = {
         icon: "support",
         name: "Support packs",
         badge: "Most popular",
-        pills: ["Small · Standard · Business"],
+        pills: ["3 · 6 · 8 · 10 hours", "$85/hr"],
         blurb:
           "Monthly blocks of managed support hours - security patching, feature updates, and hands-on help. Pair with Managed CMS or any plan you run with us.",
-        anchor: "Get a quote",
-        cta: "Get a quote",
+        anchor: "$85/hr · monthly support blocks",
+        cta: "Learn More",
         href: "/services/support#plans",
         primary: true,
       },
@@ -317,12 +330,12 @@ const catalog = {
         blurb:
           "On-demand specialist help sourced from top Colleagues professionals - for the work that needs an expert, not a ticket.",
         anchor: "Contact Sales",
-        cta: "Talk to us",
+        cta: "Learn More",
         href: "/contact",
       },
     ],
     note:
-      "Support pack pricing is being finalized - request a quote and we'll size a block to your needs.",
+      "Support packs are final: choose 3, 6, 8, or 10 monthly hours at $85/hr.",
   },
 };
 
@@ -336,6 +349,7 @@ const fallbackIcons = {
   refresh: RefreshCw,
   shield: ShieldCheck,
   migrate: RefreshCw,
+  server: Server,
   users: Users,
   support: Headphones,
 };
@@ -363,14 +377,10 @@ function IconTile({ name, size = "h-12 w-12", official = true }) {
   );
 }
 
-function CategoryHeaderIcon({ name }) {
-  return <IconTile name={name} size="h-[52px] w-[52px]" official={false} />;
-}
-
 function PlanButton({ card, onGoto }) {
   const className = card.primary
-    ? "border-2 border-accent bg-accent text-ink font-bold hover:border-accent-hover hover:bg-accent-hover"
-    : "border-2 border-ink bg-white font-bold text-ink hover:border-accent-hover hover:bg-accent-hover";
+    ? "border-2 border-accent bg-accent text-sm font-bold text-ink hover:border-accent-hover hover:bg-accent-hover"
+    : "border-2 border-ink bg-white text-sm font-bold text-ink hover:border-accent-hover hover:bg-accent-hover";
 
   if (card.goto) {
     return (
@@ -400,7 +410,7 @@ function Tags({ card }) {
   return (
     <div className="mt-3 flex flex-wrap gap-1.5">
       {(card.pills || []).map((pill) => (
-        <Chip key={pill} size="sm" variant="flat" color="default" radius="full">
+        <Chip key={pill} size="sm" variant="flat" radius="full" className="bg-accent-hover text-ink">
           {pill}
         </Chip>
       ))}
@@ -408,8 +418,8 @@ function Tags({ card }) {
         <Chip
           size="sm"
           variant="flat"
-          color="warning"
           radius="full"
+          className="bg-accent-hover text-ink"
           startContent={<Star className="h-2.5 w-2.5" />}
         >
           Founding rates
@@ -427,8 +437,7 @@ function Badge({ card }) {
       size="sm"
       radius="sm"
       variant="flat"
-      color={card.soon ? "default" : "warning"}
-      className="font-bold uppercase"
+      className="bg-accent-hover font-bold uppercase text-ink"
     >
       {card.badge}
     </Chip>
@@ -454,7 +463,21 @@ function StandardLeadCard({ card, onGoto }) {
           {card.fine && (
             <p className="mt-3 flex gap-2 text-xs leading-[1.45] text-zinc-500">
               <Star className="mt-0.5 h-2.5 w-2.5 flex-shrink-0" />
-              <span>{card.fine}</span>
+              <span>
+                {card.fine}
+                {card.fineLink && card.fineGoto && (
+                  <>
+                    {" "}
+                    <button
+                      type="button"
+                      onClick={() => onGoto(card.fineGoto)}
+                      className="font-bold text-ink underline decoration-zinc-300 underline-offset-2 hover:decoration-ink"
+                    >
+                      {card.fineLink}
+                    </button>
+                  </>
+                )}
+              </span>
             </p>
           )}
         </div>
@@ -551,7 +574,7 @@ export default function PricingPage() {
                     "w-full flex-col gap-0 rounded-none bg-transparent p-0 max-[900px]:flex-row max-[900px]:gap-1.5 max-[900px]:overflow-x-auto max-[900px]:pb-1",
                   cursor: "hidden",
                   tab:
-                    "h-auto w-full justify-start rounded-[10px] px-3 py-[11px] max-[900px]:w-auto max-[900px]:flex-shrink-0 max-[900px]:rounded-full max-[900px]:border max-[900px]:border-zinc-200 max-[900px]:bg-white max-[900px]:px-3.5 max-[900px]:py-2.5 data-[selected=true]:bg-[#EDEDEA] max-[900px]:data-[selected=true]:bg-[#1B1E25]",
+                    "group/tab h-auto w-full justify-start rounded-[10px] px-3 py-[11px] hover:bg-[#EDEDEA] max-[900px]:w-auto max-[900px]:flex-shrink-0 max-[900px]:rounded-full max-[900px]:border max-[900px]:border-zinc-200 max-[900px]:bg-white max-[900px]:px-3.5 max-[900px]:py-2.5 data-[selected=true]:bg-[#EDEDEA] max-[900px]:data-[selected=true]:bg-[#1B1E25]",
                   tabContent:
                     "w-full text-left text-[14px] font-semibold text-zinc-600 group-data-[selected=true]:font-bold group-data-[selected=true]:text-ink max-[900px]:group-data-[selected=true]:text-white",
                   panel: "hidden",
@@ -563,7 +586,7 @@ export default function PricingPage() {
                     title={
                       <span className="flex w-full items-center justify-between gap-3">
                         <span>{item.label}</span>
-                        {active === item.id && <ArrowRight className="h-[15px] w-[15px] flex-shrink-0 text-ink max-[900px]:hidden" strokeWidth={2} />}
+                        <ArrowRight className={`h-[15px] w-[15px] flex-shrink-0 text-ink transition-opacity max-[900px]:hidden ${active === item.id ? "opacity-100" : "opacity-0 group-hover/tab:opacity-60"}`} strokeWidth={2} />
                       </span>
                     }
                   />
@@ -574,7 +597,7 @@ export default function PricingPage() {
                 <CardBody className="p-[18px]">
                   <p className="text-sm font-bold text-ink">Not sure where to start?</p>
                   <p className="mt-1.5 text-[13px] leading-[1.45] text-zinc-600">Tell us about your team and we'll map the right plan.</p>
-                  <Button as={Link} href="/contact" radius="full" className="mt-3 w-full border-2 border-accent bg-accent text-sm font-bold text-ink hover:border-accent-hover hover:bg-accent-hover">
+                  <Button as={Link} href="/contact" radius="full" className="mt-3 w-full bg-ink text-sm font-bold text-white transition-transform hover:scale-[1.03]">
                     Talk to us
                   </Button>
                 </CardBody>
@@ -583,14 +606,6 @@ export default function PricingPage() {
           </aside>
 
           <section key={active} className="min-w-0 flex-1">
-            <div className="mb-[30px] flex max-w-[760px] items-start gap-4">
-              <CategoryHeaderIcon name={category.icon} />
-              <div>
-                <h2 className="m-0 text-[clamp(26px,3vw,34px)] font-extrabold leading-[1.05] tracking-tight text-ink">{category.label}</h2>
-                <p className="mt-2 text-[15.5px] leading-[1.5] text-zinc-600">{category.sub}</p>
-              </div>
-            </div>
-
             <div className="grid items-stretch gap-[18px] md:grid-cols-2 xl:grid-cols-3">
               {data.cards.map((card) => (
                 <LeadCard key={card.name} card={card} onGoto={goto} />
@@ -604,11 +619,6 @@ export default function PricingPage() {
               </div>
             )}
 
-            <div className="mt-7 border-t border-zinc-200 px-0 pt-[18px] text-[13px] text-zinc-500">
-              Showing <strong className="mx-1 text-zinc-700">{data.cards.length}</strong> of{" "}
-              <strong className="mx-1 text-zinc-700">{data.cards.length}</strong> {category.label.toLowerCase()}{" "}
-              {data.cards.length === 1 ? "option" : "options"}
-            </div>
           </section>
         </div>
       </section>
