@@ -31,6 +31,17 @@ import {
   suiteProduct,
 } from "@/lib/data";
 
+const productIcons = {
+  acquire: "/images/apps/acquire.svg",
+  hire: "/images/apps/hire.svg",
+  suite: "/images/apps/assist.svg",
+  curate: "/images/apps/curate.svg",
+  intelligence: "/images/apps/intelligence.svg",
+  connect: "/images/apps/connect.svg",
+  support: "/images/apps/support.svg",
+  cloud: "/images/apps/cloud.svg",
+};
+
 function formatMoney(value) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -45,6 +56,34 @@ function priceLabel(tier, annual) {
   const amount = annual && tier.annual ? tier.annual : tier.monthly;
   const suffix = annual && tier.annual ? "/yr" : "/mo";
   return `${formatMoney(amount)}${suffix}`;
+}
+
+function introPrice(tier, annual, preferredIntro) {
+  if (tier.monthly === null || tier.monthly === 0) {
+    return null;
+  }
+
+  if (preferredIntro === "founding" && tier.founding) {
+    return {
+      amount: tier.founding,
+      regular: tier.monthly,
+      term: "For first 12 months",
+    };
+  }
+
+  if (annual && tier.annual) {
+    return {
+      amount: tier.annual / 12,
+      regular: tier.monthly,
+      term: "For first annual term",
+    };
+  }
+
+  return {
+    amount: tier.monthly,
+    regular: null,
+    term: "Renews monthly",
+  };
 }
 
 function hostingFeatures(tier) {
@@ -70,9 +109,39 @@ function managedFeatures(tier) {
   ];
 }
 
-function PricingCard({ tier, annual, ctaHref = "/signup", ctaLabel = "Buy Now", features, eyebrow, recommended = false }) {
+const appTierFeatures = {
+  acquire: {
+    free: ["1 user workspace", "Basic contact management", "Pipeline visibility", "Esteemed Cloud account"],
+    starter: ["Client and talent CRM", "Pipeline stages and follow-ups", "Email-ready workflows", "Core reporting"],
+    pro: ["Everything in Starter", "Star Assist AI with human approval", "Advanced segmentation", "Priority product support"],
+    enterprise: ["Custom seats and controls", "Enterprise onboarding", "Advanced security review", "Custom workflow design"],
+  },
+  hire: {
+    free: ["1 user workspace", "Basic job and candidate tracking", "Candidate notes", "Esteemed Cloud account"],
+    starter: ["Applicant tracking pipeline", "Job and candidate records", "Team hiring workflow", "Core reporting"],
+    pro: ["Everything in Starter", "AI candidate matching", "Colleagues and Intelligence powered insights", "Priority product support"],
+    enterprise: ["Custom hiring workflows", "Enterprise onboarding", "Security and compliance review", "Custom integrations"],
+  },
+  suite: {
+    bundle: ["Acquire Pro included", "Hire Pro included", "Shared workspace and account model", suiteProduct.tiers[0].savings],
+  },
+};
+
+function PricingCard({
+  tier,
+  annual,
+  ctaHref = "/signup",
+  ctaLabel = "Buy Now",
+  features,
+  eyebrow,
+  recommended = false,
+  introTerm,
+  preferredIntro,
+}) {
   const highlighted = recommended || tier.recommended;
   const contact = tier.monthly === null;
+  const intro = introPrice(tier, annual, preferredIntro);
+  const savePercent = intro?.regular && intro.amount < intro.regular ? Math.round((1 - intro.amount / intro.regular) * 100) : null;
 
   return (
     <article className={`relative flex h-full flex-col rounded-2xl border bg-white p-7 shadow-sm ${highlighted ? "border-accent ring-4 ring-accent/25" : "border-zinc-200"}`}>
@@ -85,12 +154,26 @@ function PricingCard({ tier, annual, ctaHref = "/signup", ctaLabel = "Buy Now", 
         {eyebrow && <p className="mb-3 text-xs font-bold uppercase tracking-wide text-zinc-500">{eyebrow}</p>}
         <h3 className="text-2xl font-black text-ink">{tier.name}</h3>
         <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{tier.description || tier.basis}</p>
-        <div className="mt-5 flex items-end gap-1">
-          <span className="text-4xl font-black text-ink">{priceLabel(tier, annual).replace(/\/(mo|yr)/, "")}</span>
-          {tier.monthly !== null && <span className="pb-1 text-sm font-bold text-zinc-700">{annual && tier.annual ? "/yr" : "/mo"}</span>}
-        </div>
-        {annual && tier.annual && <p className="mt-2 w-fit rounded-md bg-amber-100 px-2 py-1 text-xs font-black text-ink">2 months free</p>}
-        {tier.founding && <p className="mt-2 text-sm font-semibold text-zinc-700">Founding: {formatMoney(tier.founding)}/mo for 12 months</p>}
+        {tier.monthly === null || tier.monthly === 0 ? (
+          <div className="mt-5">
+            <span className="text-4xl font-black text-ink">{priceLabel(tier, annual)}</span>
+          </div>
+        ) : (
+          <div className="mt-5">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              {savePercent && <span className="rounded-md bg-amber-100 px-2 py-1 text-xs font-black text-ink">SAVE {savePercent}%</span>}
+              {intro?.regular && <span className="text-sm font-semibold text-zinc-500 line-through">{formatMoney(intro.regular)}</span>}
+            </div>
+            <div className="flex items-end gap-1">
+              <span className="text-4xl font-black text-ink">{formatMoney(intro.amount)}</span>
+              <span className="pb-1 text-sm font-bold text-zinc-700">/mo</span>
+            </div>
+            <p className="mt-1 text-xs font-semibold text-zinc-700">{introTerm || intro.term}</p>
+            {intro?.regular && (
+              <p className="mt-1 text-xs text-zinc-500">Renews at {formatMoney(intro.regular)}/mo after the intro term.</p>
+            )}
+          </div>
+        )}
       </div>
 
       <Link
@@ -114,12 +197,45 @@ function PricingCard({ tier, annual, ctaHref = "/signup", ctaLabel = "Buy Now", 
   );
 }
 
-function CategoryIntro({ icon: Icon, title, description, children }) {
+function ProductMark({ src, alt = "", className = "h-10 w-10" }) {
+  return <img src={src} alt={alt} className={`${className} rounded-md object-contain`} />;
+}
+
+function ProductPricingTab({ product, annual }) {
+  return (
+    <div>
+      <CategoryIntro
+        icon={Briefcase}
+        iconSrc={productIcons[product.key]}
+        title={`Esteemed ${product.name}`}
+        description={product.description}
+      >
+        <Link href={`/products/${product.key}`} className="inline-flex items-center gap-2 rounded-lg border-2 border-ink px-5 py-3 text-sm font-black text-ink hover:bg-ink hover:text-white">
+          Product details <ArrowRight className="h-4 w-4" />
+        </Link>
+      </CategoryIntro>
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        {product.tiers.map((tier) => (
+          <PricingCard
+            key={tier.key}
+            tier={tier}
+            annual={annual}
+            ctaHref={`/signup?product=${product.key}&tier=${tier.key}`}
+            ctaLabel={`Start ${product.name}`}
+            features={appTierFeatures[product.key]?.[tier.key]}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CategoryIntro({ icon: Icon, iconSrc, title, description, children }) {
   return (
     <div className="mb-8 grid gap-5 rounded-2xl bg-zinc-50 p-6 md:grid-cols-[1fr_auto] md:items-center">
       <div className="flex gap-4">
         <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white text-ink shadow-sm">
-          <Icon className="h-6 w-6" />
+          {iconSrc ? <ProductMark src={iconSrc} className="h-9 w-9" /> : <Icon className="h-6 w-6" />}
         </span>
         <div>
           <h2 className="text-2xl font-black text-ink md:text-3xl">{title}</h2>
@@ -151,6 +267,7 @@ function FAQ({ items }) {
 export default function PricingPage() {
   const [annual, setAnnual] = useState(true);
   const [activeCategory, setActiveCategory] = useState("modern");
+  const [activeApp, setActiveApp] = useState("acquire");
 
   const modernHosting = useMemo(
     () =>
@@ -210,6 +327,7 @@ export default function PricingPage() {
             >
               <CategoryIntro
                 icon={Code2}
+                iconSrc={productIcons.cloud}
                 title="Standard Modern hosting"
                 description="Our default hosting path is JavaScript first: Node + React sites with faster delivery, cleaner deployments, and more flexibility than traditional PHP-only hosting."
               >
@@ -226,6 +344,7 @@ export default function PricingPage() {
                     ctaHref="/signup?product=cloud"
                     features={hostingFeatures(tier)}
                     recommended={tier.key === "plus"}
+                    introTerm="For first 3-year term"
                   />
                 ))}
               </div>
@@ -259,6 +378,7 @@ export default function PricingPage() {
                     ctaLabel="Contact Sales"
                     features={managedFeatures(tier)}
                     recommended={tier.key === "growth"}
+                    introTerm="For first 3-year term"
                   />
                 ))}
               </div>
@@ -268,15 +388,16 @@ export default function PricingPage() {
               key="curate"
               title={
                 <div className="text-center">
-                  <p className="text-base font-black">Curate CMS</p>
-                  <p className="hidden text-sm opacity-80 md:block">Content hub and migration tiers</p>
+                  <p className="text-base font-black">Esteemed Curate</p>
+                  <p className="hidden text-sm opacity-80 md:block">AI RAG-native content hub</p>
                 </div>
               }
             >
               <CategoryIntro
                 icon={Database}
-                title="Curate subscriptions"
-                description="Curate is the managed CMS and content hub. It includes managed Curate hosting, publishing workflows, and AI content operations on Pro."
+                iconSrc={productIcons.curate}
+                title="Esteemed Curate subscriptions"
+                description="Esteemed Curate is our managed CMS and AI RAG-native content hub. It makes your content conversational, so agents and customer-facing AI can retrieve, reason over, and answer from approved knowledge."
               >
                 <Link href="/migrate" className="inline-flex items-center gap-2 rounded-lg border-2 border-ink px-5 py-3 text-sm font-black text-ink hover:bg-ink hover:text-white">
                   Migration options <ArrowRight className="h-4 w-4" />
@@ -291,8 +412,8 @@ export default function PricingPage() {
               <div className="mt-12">
                 <CategoryIntro
                   icon={Rocket}
-                  title="Migration to Curate"
-                  description="Paid migrations move WordPress, Drupal, legacy CMS, and custom sites into Curate. Enterprise work starts with discovery."
+                  title="Migration to Esteemed Curate"
+                  description="Paid migrations move WordPress, Drupal, legacy CMS, and custom sites into Esteemed Curate so content becomes structured, searchable, and ready for conversational AI. Enterprise work starts with discovery."
                 />
                 <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
                   {migrationPackages.map((pkg) => (
@@ -322,45 +443,80 @@ export default function PricingPage() {
               <CategoryIntro
                 icon={Briefcase}
                 title="Apps and AI products"
-                description="Acquire, Hire, Suite, Intelligence, and Agents remain independent products. Add them to hosting or run them on their own."
+                description="Acquire, Hire, Suite, Intelligence, and Agents remain independent products. Use the sub-tabs to compare full pricing tiers for each app."
               />
-              <div className="grid gap-6 lg:grid-cols-3">
+              <Tabs
+                aria-label="App pricing"
+                selectedKey={activeApp}
+                onSelectionChange={(key) => setActiveApp(String(key))}
+                classNames={{
+                  base: "mb-8 w-full justify-center",
+                  tabList: "mx-auto w-full max-w-2xl gap-2 rounded-xl bg-zinc-100 p-1",
+                  cursor: "hidden",
+                  tab: "h-11 flex-1 rounded-lg px-4 data-[selected=true]:bg-white data-[selected=true]:shadow-sm",
+                  tabContent: "font-black text-zinc-600 group-data-[selected=true]:text-ink",
+                  panel: "outline-none",
+                }}
+              >
                 {perSeatProducts.map((product) => (
-                  <article key={product.key} className="rounded-2xl border border-zinc-200 bg-white p-7 shadow-sm">
-                    <h3 className="text-2xl font-black text-ink">{product.name}</h3>
-                    <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{product.description}</p>
-                    <div className="mt-6 grid gap-3">
-                      {product.tiers.map((tier) => (
-                        <div key={tier.key} className={`rounded-xl border p-4 ${tier.recommended ? "border-accent bg-accent/20" : "border-zinc-200"}`}>
-                          <div className="flex items-start justify-between gap-3">
-                            <div>
-                              <p className="font-black text-ink">{tier.name}</p>
-                              <p className="text-xs text-zinc-500">{tier.basis}</p>
-                            </div>
-                            <p className="text-right font-black text-ink">{priceLabel(tier, annual)}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <Link href={`/products/${product.key}`} className="mt-6 inline-flex items-center gap-2 text-sm font-black text-ink underline underline-offset-4">
-                      View {product.name} <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </article>
+                  <Tab
+                    key={product.key}
+                    title={
+                      <span className="inline-flex items-center gap-2">
+                        <ProductMark src={productIcons[product.key]} className="h-6 w-6" />
+                        {product.name}
+                      </span>
+                    }
+                  >
+                    <ProductPricingTab product={product} annual={annual} />
+                  </Tab>
                 ))}
-                <PricingCard
-                  tier={suiteProduct.tiers[0]}
-                  annual={annual}
-                  ctaHref="/signup?product=suite"
-                  ctaLabel="Start Suite"
-                  eyebrow={suiteProduct.name}
-                  features={["Acquire Pro", "Hire Pro", "Shared workspace", suiteProduct.tiers[0].savings]}
-                  recommended
-                />
-              </div>
+                <Tab
+                  key="suite"
+                  title={
+                    <span className="inline-flex items-center gap-2">
+                      <ProductMark src={productIcons.suite} className="h-6 w-6" />
+                      Suite
+                    </span>
+                  }
+                >
+                  <CategoryIntro
+                    icon={Briefcase}
+                    iconSrc={productIcons.suite}
+                    title="Esteemed Suite"
+                    description={suiteProduct.description}
+                  />
+                  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    <PricingCard
+                      tier={suiteProduct.tiers[0]}
+                      annual={annual}
+                      ctaHref="/signup?product=suite"
+                      ctaLabel="Start Suite"
+                      eyebrow={suiteProduct.name}
+                      features={appTierFeatures.suite.bundle}
+                      recommended
+                    />
+                    <article className="rounded-2xl border border-zinc-200 bg-white p-7 shadow-sm xl:col-span-2">
+                      <h3 className="text-2xl font-black text-ink">What the bundle replaces</h3>
+                      <p className="mt-2 leading-7 text-zinc-600">
+                        Suite is for teams that need client acquisition and hiring operations in one account. It combines the Pro tiers of Acquire and Hire with shared account structure and a lower seat price than buying both separately.
+                      </p>
+                      <div className="mt-6 grid gap-4 md:grid-cols-2">
+                        {["Acquire Pro CRM/TRM", "Hire Pro ATS", "Shared user and account model", "Founding pricing available"].map((feature) => (
+                          <div key={feature} className="flex gap-3 rounded-xl border border-zinc-200 p-4 text-sm font-semibold text-zinc-700">
+                            <Check className="h-5 w-5 flex-shrink-0 text-ink" />
+                            {feature}
+                          </div>
+                        ))}
+                      </div>
+                    </article>
+                  </div>
+                </Tab>
+              </Tabs>
 
               <div className="mt-10 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
                 <article className="rounded-2xl bg-ink p-7 text-white">
-                  <Brain className="mb-4 h-8 w-8 text-accent" />
+                  <ProductMark src={productIcons.intelligence} className="mb-4 h-10 w-10" />
                   <h3 className="text-3xl font-black">{intelligenceProduct.name}</h3>
                   <p className="mt-3 text-zinc-300">{intelligenceProduct.description}</p>
                   <p className="mt-6 text-4xl font-black">{priceLabel(intelligenceProduct.tiers[0], annual)}</p>
@@ -420,7 +576,7 @@ export default function PricingPage() {
             {[
               ["Modern", "Node + React", "Fast, flexible, and clean for new builds.", Code2],
               ["CMS", "WordPress & Drupal", "Managed updates, backups, security, and support.", ShieldCheck],
-              ["Curate", "CMS + AI workflow", "Best for structured content and migration projects.", Headphones],
+              ["Curate", "AI RAG-native CMS", "Best for structured content, conversational AI, and migration projects.", Headphones],
             ].map(([label, title, copy, Icon]) => (
               <div key={label} className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
                 <Icon className="mb-4 h-6 w-6 text-ink" />
