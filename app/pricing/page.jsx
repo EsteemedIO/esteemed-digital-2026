@@ -408,22 +408,20 @@ function Tags({ card }) {
   if (!card.pills?.length && !card.founding) return null;
 
   return (
-    <div className="mt-3 flex flex-wrap gap-1.5">
+    <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
       {(card.pills || []).map((pill) => (
-        <Chip key={pill} size="sm" variant="flat" radius="full" className="bg-accent-hover text-ink">
+        <span
+          key={pill}
+          className="inline font-extrabold leading-none text-ink [background:linear-gradient(to_top,#FEE546_42%,transparent_42%)]"
+        >
           {pill}
-        </Chip>
+        </span>
       ))}
       {card.founding && (
-        <Chip
-          size="sm"
-          variant="flat"
-          radius="full"
-          className="bg-accent-hover text-ink"
-          startContent={<Star className="h-2.5 w-2.5" />}
-        >
+        <span className="inline-flex items-center gap-1 font-extrabold leading-none text-ink [background:linear-gradient(to_top,#FEE546_42%,transparent_42%)]">
+          <Star className="h-2.5 w-2.5" />
           Founding rates
-        </Chip>
+        </span>
       )}
     </div>
   );
@@ -435,9 +433,13 @@ function Badge({ card }) {
   return (
     <Chip
       size="sm"
-      radius="sm"
+      radius="full"
       variant="flat"
-      className="bg-accent-hover font-bold uppercase text-ink"
+      classNames={{
+        base: "border-2 border-ink bg-white px-2.5 py-1 shadow-none",
+        content: "px-1 text-[11px] font-extrabold uppercase tracking-[0.16em] text-ink",
+      }}
+      startContent={<span className="ml-1 h-2 w-2 rounded-full bg-accent" aria-hidden="true" />}
     >
       {card.badge}
     </Chip>
