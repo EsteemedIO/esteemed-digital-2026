@@ -31,7 +31,7 @@ export default function SupportPage() {
             Services / Support
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Meet Esteemed Support
+            Esteemed Support
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             Get expert human help with what you build or existing apps.
@@ -186,12 +186,12 @@ export default function SupportPage() {
                 connects you to 35,000+ vetted professionals for dedicated
                 engagements — developers, designers, strategists, and more.
               </p>
-              <Link
-                href="/products/colleagues"
-                className="inline-flex items-center text-sm font-bold text-ink hover:underline"
-              >
-                Meet Colleagues &rarr;
-              </Link>
+          <Link
+            href="/products/colleagues"
+            className="inline-flex items-center text-sm font-bold text-ink hover:underline"
+          >
+            Colleagues &rarr;
+          </Link>
             </div>
           </div>
         </div>

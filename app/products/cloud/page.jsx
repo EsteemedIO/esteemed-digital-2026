@@ -51,7 +51,7 @@ export default function CloudPage() {
             Products / Cloud
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Meet Esteemed Cloud
+            Esteemed Cloud
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             Hosting for sites that are not running on Curate: bring-your-own,

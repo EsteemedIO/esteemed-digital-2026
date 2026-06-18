@@ -15,7 +15,7 @@ import {
 export const metadata = {
   title: "Hire",
   description:
-    "Meet Esteemed Hire. Applicant tracking that integrates with Colleagues and Intelligence.",
+    "Esteemed Hire. Applicant tracking that integrates with Colleagues and Intelligence.",
 };
 
 const features = [
@@ -64,7 +64,7 @@ export default function HirePage() {
             Products / Hire
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Meet Esteemed Hire
+            Esteemed Hire
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             Applicant tracking built for how you actually hire. Integrated with

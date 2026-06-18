@@ -13,7 +13,7 @@ import {
 export const metadata = {
   title: "Colleagues",
   description:
-    "Meet Esteemed Colleagues. Talent and opportunity marketplace. Post opportunities and hire contract or direct employees.",
+    "Esteemed Colleagues. Talent and opportunity marketplace. Post opportunities and hire contract or direct employees.",
 };
 
 export default function ColleaguesPage() {
@@ -26,7 +26,7 @@ export default function ColleaguesPage() {
             Services / Colleagues
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Meet Esteemed Colleagues
+            Esteemed Colleagues
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             The talent and opportunity marketplace. Post opportunities and hire

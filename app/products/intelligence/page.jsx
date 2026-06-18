@@ -7,7 +7,7 @@ import { Brain, Database, GitBranch, Shield, Code, Building2 } from "lucide-reac
 export const metadata = {
   title: "Intelligence",
   description:
-    "Meet Esteemed Intelligence — the layer that powers everything. Memory, reasoning, and coherence.",
+    "Esteemed Intelligence — the layer that powers everything. Memory, reasoning, and coherence.",
 };
 
 const prongs = [
@@ -81,7 +81,7 @@ export default function IntelligencePage() {
             Products / Intelligence
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Meet Esteemed Intelligence — the layer that powers everything
+            Esteemed Intelligence — the layer that powers everything
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             Memory. Reasoning. Coherence. A shared intelligence layer that gives

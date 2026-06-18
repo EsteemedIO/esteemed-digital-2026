@@ -369,8 +369,8 @@ function CategoryHeaderIcon({ name }) {
 
 function PlanButton({ card, onGoto }) {
   const className = card.primary
-    ? "bg-[#FEE546] text-ink font-bold hover:bg-[#FCD72B]"
-    : "border-zinc-400 bg-transparent font-bold text-ink hover:bg-[#EDEDEA]";
+    ? "border-2 border-accent bg-accent text-ink font-bold hover:border-accent-hover hover:bg-accent-hover"
+    : "border-2 border-ink bg-white font-bold text-ink hover:border-accent-hover hover:bg-accent-hover";
 
   if (card.goto) {
     return (
@@ -465,7 +465,7 @@ function StandardLeadCard({ card, onGoto }) {
 
 function WideLeadCard({ card, onGoto }) {
   return (
-    <Card className="lead-card h-full overflow-hidden rounded-[18px] border border-zinc-200 bg-white shadow-none transition-colors hover:border-zinc-500 lg:col-span-2">
+    <Card className="lead-card h-full overflow-hidden rounded-[18px] border border-zinc-200 bg-white shadow-none transition-colors hover:border-zinc-500 md:col-span-2">
       <div className="grid h-full min-h-[360px] md:grid-cols-[0.46fr_0.54fr]">
         <CardBody className="flex h-full flex-col p-7 md:p-[30px]">
           <div className="mb-4 flex items-start justify-between gap-3">
@@ -548,7 +548,7 @@ export default function PricingPage() {
                 classNames={{
                   base: "w-full",
                   tabList:
-                    "w-full gap-0 rounded-none bg-transparent p-0 max-[900px]:flex-row max-[900px]:gap-1.5 max-[900px]:overflow-x-auto max-[900px]:pb-1",
+                    "w-full flex-col gap-0 rounded-none bg-transparent p-0 max-[900px]:flex-row max-[900px]:gap-1.5 max-[900px]:overflow-x-auto max-[900px]:pb-1",
                   cursor: "hidden",
                   tab:
                     "h-auto w-full justify-start rounded-[10px] px-3 py-[11px] max-[900px]:w-auto max-[900px]:flex-shrink-0 max-[900px]:rounded-full max-[900px]:border max-[900px]:border-zinc-200 max-[900px]:bg-white max-[900px]:px-3.5 max-[900px]:py-2.5 data-[selected=true]:bg-[#EDEDEA] max-[900px]:data-[selected=true]:bg-[#1B1E25]",
@@ -574,7 +574,7 @@ export default function PricingPage() {
                 <CardBody className="p-[18px]">
                   <p className="text-sm font-bold text-ink">Not sure where to start?</p>
                   <p className="mt-1.5 text-[13px] leading-[1.45] text-zinc-600">Tell us about your team and we'll map the right plan.</p>
-                  <Button as={Link} href="/contact" radius="full" className="mt-3 w-full bg-[#1B1E25] text-sm font-bold text-white">
+                  <Button as={Link} href="/contact" radius="full" className="mt-3 w-full border-2 border-accent bg-accent text-sm font-bold text-ink hover:border-accent-hover hover:bg-accent-hover">
                     Talk to us
                   </Button>
                 </CardBody>

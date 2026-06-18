@@ -8,7 +8,7 @@ import { agents } from "@/lib/data";
 export const metadata = {
   title: "Agents",
   description:
-    "Meet Esteemed Agents — featuring Star. AI agents trained on your business, backed by real people.",
+    "Esteemed Agents — featuring Star. AI agents trained on your business, backed by real people.",
 };
 
 const pricingPlans = agentPricingPlans();
@@ -24,7 +24,7 @@ export default function AgentsPage() {
             Products / Agents
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Meet Esteemed Agents — featuring Star
+            Esteemed Agents — featuring Star
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             AI agents that handle real work — trained on your business, backed
@@ -176,7 +176,7 @@ export default function AgentsPage() {
             href="/products/colleagues"
             className="inline-flex items-center text-sm font-bold text-ink hover:underline"
           >
-            Meet Colleagues &rarr;
+            Colleagues &rarr;
           </Link>
         </div>
       </section>

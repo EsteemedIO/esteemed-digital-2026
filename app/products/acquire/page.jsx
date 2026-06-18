@@ -16,7 +16,7 @@ import {
 export const metadata = {
   title: "Acquire",
   description:
-    "Meet Esteemed Acquire. CRM for client and talent acquisition, powered by Intelligence.",
+    "Esteemed Acquire. CRM for client and talent acquisition, powered by Intelligence.",
 };
 
 const features = [
@@ -65,7 +65,7 @@ export default function AcquirePage() {
             Products / Acquire
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Meet Esteemed Acquire
+            Esteemed Acquire
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             One CRM for both sides of your business. Acquire clients and talent
