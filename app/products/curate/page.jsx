@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { curatePricingPlans } from "@/lib/product-page-pricing";
 import { ArrowRight, Database, FileText, Image, ShieldCheck } from "lucide-react";
 
 export const metadata = {
@@ -29,18 +32,21 @@ const capabilities = [
   },
 ];
 
+const pricingPlans = curatePricingPlans();
+
 export default function CuratePage() {
   return (
     <div className="min-h-screen">
       <section className="py-24 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
+            <ProductIcon product="curate" className="mb-6 h-14 w-14" />
             <p className="mb-4 text-sm font-medium text-zinc-500">Products / Curate</p>
             <h1 className="max-w-3xl text-5xl font-bold leading-tight text-ink md:text-6xl">
-              Content cloud for the Esteemed app ecosystem.
+              Esteemed Curate, the AI RAG-native content cloud.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-600">
-              Curate gives every customer a managed CMS and media workspace for content, assets, brand knowledge, and agent-assisted publishing.
+              Esteemed Curate gives every customer a managed CMS and media workspace for content, assets, brand knowledge, and agent-assisted publishing. It is RAG-native, so your approved content can power conversational AI across your website, agents, and internal tools.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <Link href="/signup?product=curate" className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-4 text-sm font-bold text-ink transition-colors hover:bg-accent-hover">
@@ -72,6 +78,16 @@ export default function CuratePage() {
           </div>
         </div>
       </section>
+
+      <ProductPricingBlock
+        eyebrow="Curate plans"
+        title="Managed CMS and content hub pricing"
+        description="Curate prices per workspace: sites, editors, content workflow, and AI/RAG capabilities. Managed Curate includes Connect for grounding approved knowledge."
+        productKey="curate"
+        plans={pricingPlans}
+        ctaLabel="Checkout"
+        freeHref="/signup?product=curate"
+      />
 
       <section className="border-t border-zinc-100 py-20">
         <div className="mx-auto max-w-7xl px-6">

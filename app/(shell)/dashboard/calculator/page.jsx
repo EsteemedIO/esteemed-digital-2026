@@ -17,6 +17,7 @@ import {
   Minus,
   Plus,
 } from "lucide-react";
+import { checkoutItemsHref } from "@/lib/pricing-catalog";
 
 /* ------------------------------------------------------------------ */
 /*  Pricing data                                                       */
@@ -39,8 +40,8 @@ const MANAGED_TIERS = [
 
 /* Intelligence — pricing spec: flat per-tenant add-on */
 const INTELLIGENCE_TIERS = [
-  { label: "Monthly", price: 199 },
-  { label: "Annual", price: 166, note: "$1,990/yr (2 months free)" },
+  { label: "Monthly", price: 199, lookupKey: "intelligence_monthly" },
+  { label: "Annual", price: 166, note: "$1,990/yr (2 months free)", lookupKey: "intelligence_annual" },
 ];
 
 /* Per-seat products — from esteemed-pricing-spec.md */
@@ -256,7 +257,7 @@ export default function CalculatorPage() {
         const label = tier.perSeat
           ? `${app.name} \u2014 ${tier.label} (\u00d7${seats} seat${seats !== 1 ? "s" : ""})`
           : `${app.name} \u2014 ${tier.label}`;
-        items.push({ label, amount });
+        items.push({ label, amount, lookupKey: tier.lookupKey, quantity: tier.perSeat ? seats : 1 });
       } else if (app.perSeat) {
         items.push({
           label: `${app.name} (\u00d7${seats} seat${seats !== 1 ? "s" : ""})`,
@@ -273,11 +274,13 @@ export default function CalculatorPage() {
         items.push({
           label: "Custom / multi-agent bundle",
           amount: AGENT_FLEET_PRICE,
+          lookupKey: "agents_bundle_monthly",
+          quantity: 1,
         });
       } else {
         ALL_AGENTS.forEach((agent) => {
           if (activeAgents[agent.id]) {
-            items.push({ label: `${agent.name} Agent`, amount: agent.price });
+          items.push({ label: `${agent.name} Agent`, amount: agent.price, lookupKey: agent.lookupKey, quantity: 1 });
           }
         });
       }
@@ -289,6 +292,16 @@ export default function CalculatorPage() {
   const subtotal = useMemo(
     () => lineItems.reduce((sum, li) => sum + li.amount, 0),
     [lineItems]
+  );
+
+  const checkoutItems = useMemo(
+    () => lineItems.filter((item) => item.lookupKey && item.amount > 0),
+    [lineItems]
+  );
+
+  const checkoutUrl = useMemo(
+    () => checkoutItemsHref(checkoutItems, { successPath: "/thanks", cancelPath: "/dashboard/calculator" }),
+    [checkoutItems]
   );
 
   /* ---- auth gate ---- */
@@ -625,15 +638,16 @@ export default function CalculatorPage() {
               </div>
 
               {/* CTA */}
-              <button
-                className="w-full py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
+              <a
+                href={checkoutItems.length > 0 ? checkoutUrl : "/pricing"}
+                className="block w-full rounded-xl py-3 text-center text-sm font-semibold transition-opacity hover:opacity-90"
                 style={{
                   background: "#FEE546",
                   color: "rgba(0,0,0,0.85)",
                 }}
               >
-                Update plan
-              </button>
+                {checkoutItems.length > 0 ? "Checkout selected plan" : "View hosting plans"}
+              </a>
 
               <a
                 href="mailto:sales@esteemed.io"

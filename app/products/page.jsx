@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Sparkles, Cloud, Bot, Brain, Users, Headphones, Library } from "lucide-react";
+import { Users } from "lucide-react";
+import ProductIcon from "@/components/ProductIcon";
 
 export const metadata = {
   title: "Products & Services",
@@ -13,7 +14,7 @@ const items = [
     tagline: "Build websites and apps by talking to AI.",
     description:
       "Describe what you want in plain English and get a working site in minutes. Edit by conversation, preview instantly, publish in one click.",
-    icon: Sparkles,
+    iconProduct: "create",
     href: "/products/create",
     type: "Product",
   },
@@ -22,7 +23,7 @@ const items = [
     tagline: "Hosting that scales with you.",
     description:
       "Managed hosting with SSL, daily backups, monitoring, and a global edge network. Your site stays fast, secure, and always on.",
-    icon: Cloud,
+    iconProduct: "cloud",
     href: "/products/cloud",
     type: "Product",
   },
@@ -31,7 +32,7 @@ const items = [
     tagline: "Content and media management on Esteemed Cloud.",
     description:
       "Provision a dedicated Curate tenant for structured content, digital assets, and agent-assisted publishing. First admin and cloud resources are created from signup.",
-    icon: Library,
+    iconProduct: "curate",
     href: "/products/curate",
     type: "Product",
   },
@@ -40,7 +41,7 @@ const items = [
     tagline: "AI that works like part of your team.",
     description:
       "Voice, Social, Blog, Marketing, and Star agents that handle real work — trained on your business, backed by real people.",
-    icon: Bot,
+    iconProduct: "agents",
     href: "/products/agents",
     type: "Product",
   },
@@ -49,7 +50,7 @@ const items = [
     tagline: "Memory. Reasoning. Coherence.",
     description:
       "A shared intelligence layer that gives your website and agents persistent memory, cross-system reasoning, and continuous learning.",
-    icon: Brain,
+    iconProduct: "intelligence",
     href: "/products/intelligence",
     type: "Product",
   },
@@ -67,7 +68,7 @@ const items = [
     tagline: "Expert human help when you need it.",
     description:
       "Get hands-on assistance with your Esteemed apps or anything you built elsewhere. Hourly plans from our team of specialists.",
-    icon: Headphones,
+    iconProduct: "support",
     href: "/services/support",
     type: "Service",
   },
@@ -98,10 +99,11 @@ export default function ProductsPage() {
                 className="group rounded-2xl border border-zinc-200 p-8 hover:shadow-lg hover:border-accent transition-all"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <item.icon
-                    className="w-8 h-8 text-ink"
-                    strokeWidth={1.5}
-                  />
+                  {item.iconProduct ? (
+                    <ProductIcon product={item.iconProduct} className="h-8 w-8" />
+                  ) : (
+                    <item.icon className="w-8 h-8 text-ink" strokeWidth={1.5} />
+                  )}
                   <span className="text-xs font-medium uppercase tracking-wide text-zinc-400">
                     {item.type}
                   </span>

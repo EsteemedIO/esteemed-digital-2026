@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { agentPricingPlans } from "@/lib/product-page-pricing";
 import { Check, MessageCircle, Mail } from "lucide-react";
 import { agents } from "@/lib/data";
 
@@ -8,12 +11,15 @@ export const metadata = {
     "Meet Esteemed Agents — featuring Star. AI agents trained on your business, backed by real people.",
 };
 
+const pricingPlans = agentPricingPlans();
+
 export default function AgentsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="agents" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Products / Agents
           </p>
@@ -26,6 +32,17 @@ export default function AgentsPage() {
           </p>
         </div>
       </section>
+
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Agent plans"
+          title="Standalone agent SKUs"
+          description="Agents are configured as standalone Stripe SKUs for non-Curate deployments. Curate Pro includes content agents through SKU-gated entitlements."
+          productKey="agents"
+          plans={pricingPlans}
+          ctaLabel="Checkout"
+        />
+      </div>
 
       {/* Star featured */}
       <section className="py-20 border-t border-zinc-100">
@@ -171,7 +188,7 @@ export default function AgentsPage() {
             Add an agent to your plan.
           </h2>
           <Link
-            href="/pricing"
+            href="#plans"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             See pricing

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { supportPricingPlans } from "@/lib/product-page-pricing";
 import {
   Headphones,
   Users,
@@ -18,12 +21,15 @@ export const metadata = {
     "Esteemed Support. Expert human assistance for anything Esteemed apps handle — or anything built elsewhere.",
 };
 
+const pricingPlans = supportPricingPlans();
+
 export default function SupportPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="support" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Products / Support
           </p>
@@ -38,6 +44,18 @@ export default function SupportPage() {
           </p>
         </div>
       </section>
+
+      <ProductPricingBlock
+        eyebrow="Support plans"
+        title="Monthly human support subscriptions"
+        description="Choose a monthly support package for Esteemed apps, existing websites, troubleshooting, content updates, and technical requests. Higher-volume packs reduce the effective hourly rate."
+        productKey="support"
+        plans={pricingPlans}
+        ctaLabel="Start support"
+        contactHref="/support/get-support"
+        fallbackHref="/support/get-support"
+        calculatorHref={null}
+      />
 
       {/* Split treatment */}
       <section className="py-20 border-t border-zinc-100">

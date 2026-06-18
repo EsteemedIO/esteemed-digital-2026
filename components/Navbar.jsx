@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Squeeze as Hamburger } from "hamburger-react";
 import { ChevronDownIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import ProductIcon from "@/components/ProductIcon";
 
 const productsCol1 = [
   { key: "create", name: "Create", href: "/products/create", desc: "Use AI-enabled Esteemed Create to make apps in minutes." },
@@ -127,17 +128,20 @@ function SectionHeading({ children, href }) {
 }
 
 /* Menu link */
-function MegaMenuLink({ href, children, desc, onClick, external }) {
+function MegaMenuLink({ href, children, desc, onClick, external, icon }) {
   const props = external ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
   const Tag = external ? "a" : Link;
   return (
     <Tag {...props} onClick={onClick} className="group flex items-center justify-between py-2 px-3 -mx-3 rounded-lg border border-transparent hover:border-[#282828] transition-all">
-      <div>
-        <span className="text-[1rem] font-medium text-[#282828] group-hover:font-bold">
-          {children}
-          {external && <span className="inline-block ml-1 text-[#282828]">↗</span>}
-        </span>
-        {desc && <span className="block text-xs text-[#444] mt-0.5">{desc}</span>}
+      <div className="flex items-start gap-3">
+        {icon && <ProductIcon product={icon} className="mt-0.5 h-6 w-6 flex-shrink-0" />}
+        <div>
+          <span className="text-[1rem] font-medium text-[#282828] group-hover:font-bold">
+            {children}
+            {external && <span className="inline-block ml-1 text-[#282828]">↗</span>}
+          </span>
+          {desc && <span className="block text-xs text-[#444] mt-0.5">{desc}</span>}
+        </div>
       </div>
       <ArrowRightIcon className="w-4 h-4 text-[#282828] stroke-[2.5] opacity-0 group-hover:opacity-100 transition-opacity ml-4 flex-shrink-0" />
     </Tag>
@@ -276,12 +280,12 @@ export default function Navbar() {
                   <div className="grid grid-cols-2 gap-x-8">
                     <div>
                       {productsCol1.map((item) => (
-                        <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external}>{item.name}</MegaMenuLink>
+                        <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
                       ))}
                     </div>
                     <div>
                       {productsCol2.map((item) => (
-                        <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external}>{item.name}</MegaMenuLink>
+                        <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
                       ))}
                     </div>
                   </div>
@@ -289,7 +293,7 @@ export default function Navbar() {
                 <div>
                   <SectionHeading href="/services">Services</SectionHeading>
                   {servicesGroup.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div className="space-y-3 mt-8">

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { curatePricingPlans } from "@/lib/product-page-pricing";
 import {
   Database,
   Search,
@@ -71,12 +74,15 @@ const steps = [
   },
 ];
 
+const pricingPlans = curatePricingPlans();
+
 export default function ConnectPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="connect" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Products / Connect
           </p>
@@ -92,6 +98,18 @@ export default function ConnectPage() {
           </p>
         </div>
       </section>
+
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Connect pricing"
+          title="Included with managed Curate"
+          description="Esteemed Connect is the RAG layer included with managed Curate. Choose a Curate workspace to connect approved content and systems for AI retrieval."
+          productKey="connect"
+          plans={pricingPlans}
+          ctaLabel="Checkout"
+          freeHref="/signup?product=curate"
+        />
+      </div>
 
       {/* Split treatment */}
       <section className="py-20 border-t border-zinc-100">
@@ -251,7 +269,7 @@ export default function ConnectPage() {
               Get Started
             </Link>
             <Link
-              href="/pricing"
+              href="#plans"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-white text-white text-sm font-bold hover:bg-white hover:text-ink transition-colors"
             >
               See Pricing

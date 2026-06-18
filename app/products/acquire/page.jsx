@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { appPricingPlans, suitePricingPlans } from "@/lib/product-page-pricing";
 import {
   Target,
   Brain,
@@ -49,12 +52,15 @@ const features = [
   },
 ];
 
+const pricingPlans = [...appPricingPlans("acquire"), ...suitePricingPlans()];
+
 export default function AcquirePage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="acquire" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Products / Acquire
           </p>
@@ -68,10 +74,10 @@ export default function AcquirePage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-4 justify-center">
             <Link
-              href="/signup?redirect=create"
+              href="#plans"
               className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-accent text-ink font-bold hover:bg-accent-hover transition-colors"
             >
-              Get started
+              See plans
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
@@ -83,6 +89,18 @@ export default function AcquirePage() {
           </div>
         </div>
       </section>
+
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Acquire plans"
+          title="CRM and talent acquisition pricing"
+          description="Acquire uses the v2 per-seat catalog: Free, Starter, Pro, Enterprise, plus Suite for teams that want Acquire Pro and Hire Pro together."
+          productKey="acquire"
+          plans={pricingPlans}
+          ctaLabel="Checkout"
+          freeHref="/signup?product=acquire&tier=free"
+        />
+      </div>
 
       {/* Dual pipeline */}
       <section className="py-20 border-t border-zinc-100">

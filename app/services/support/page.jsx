@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { supportPricingPlans } from "@/lib/product-page-pricing";
 import {
   Headphones,
   Check,
@@ -15,36 +18,7 @@ export const metadata = {
     "Get expert human help with what you build or existing apps. Hourly support plans from Esteemed.",
 };
 
-const tiers = [
-  {
-    key: "starter",
-    name: "Starter",
-    hours: 20,
-    price: "$2,200",
-    priceNote: "/mo",
-  },
-  {
-    key: "plus",
-    name: "Plus",
-    hours: 40,
-    price: "$4,400",
-    priceNote: "/mo",
-  },
-  {
-    key: "pro",
-    name: "Pro",
-    hours: 80,
-    price: "$8,800",
-    priceNote: "/mo",
-  },
-  {
-    key: "enterprise",
-    name: "Enterprise",
-    hours: "160+",
-    price: "Custom",
-    priceNote: "",
-  },
-];
+const pricingPlans = supportPricingPlans();
 
 export default function SupportPage() {
   return (
@@ -52,6 +26,7 @@ export default function SupportPage() {
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="support" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Services / Support
           </p>
@@ -104,50 +79,17 @@ export default function SupportPage() {
         </div>
       </section>
 
-      {/* Tier structure */}
-      <section className="py-20 border-t border-zinc-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-ink mb-3">
-              Support plans
-            </h2>
-            <p className="text-zinc-600">
-              Standard rate: $110/hr. No rollover. Overage billed at $110/hr.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tiers.map((tier) => (
-              <div
-                key={tier.key}
-                className="rounded-2xl border border-zinc-200 p-8 text-center"
-              >
-                <h3 className="text-xl font-bold text-ink mb-1">
-                  {tier.name}
-                </h3>
-                <p className="text-sm text-zinc-500 mb-4">
-                  {tier.hours} hrs/mo
-                </p>
-                <p className="text-3xl font-bold text-ink">
-                  {tier.price}
-                  {tier.priceNote && (
-                    <span className="text-sm text-zinc-500 font-normal">
-                      {tier.priceNote}
-                    </span>
-                  )}
-                </p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
-            >
-              Get started with Support
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ProductPricingBlock
+        eyebrow="Support plans"
+        title="Monthly human support subscriptions"
+        description="Choose a monthly support package for Esteemed apps, existing websites, troubleshooting, content updates, and technical requests. Higher-volume packs reduce the effective hourly rate."
+        productKey="support"
+        plans={pricingPlans}
+        ctaLabel="Start support"
+        contactHref="/support/get-support"
+        fallbackHref="/support/get-support"
+        calculatorHref={null}
+      />
 
       {/* What's included */}
       <section className="py-20 border-t border-zinc-100">

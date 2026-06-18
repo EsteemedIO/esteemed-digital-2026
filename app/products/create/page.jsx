@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { createPricingPlans } from "@/lib/product-page-pricing";
 import {
   Sparkles,
   MessageSquare,
@@ -37,12 +40,15 @@ const steps = [
   },
 ];
 
+const pricingPlans = createPricingPlans();
+
 export default function CreatePage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="create" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Products / Create
           </p>
@@ -60,7 +66,7 @@ export default function CreatePage() {
               Try Create &rarr;
             </Link>
             <Link
-              href="/pricing"
+              href="#plans"
               className="px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-ink hover:text-paper transition-colors"
             >
               See pricing
@@ -68,6 +74,19 @@ export default function CreatePage() {
           </div>
         </div>
       </section>
+
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Create plans"
+          title="Build with Esteemed Create"
+          description="Create pricing is separate from the v2 Stripe catalog today, so these plans start account signup instead of Checkout until the Create SKUs are added."
+          productKey="create"
+          plans={pricingPlans}
+          ctaLabel="Get started"
+          fallbackHref="/signup?redirect=create"
+          freeHref="/signup?redirect=create"
+        />
+      </div>
 
       {/* How it works */}
       <section className="py-20 border-t border-zinc-100">

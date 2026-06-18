@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { intelligencePricingPlans } from "@/lib/product-page-pricing";
 import { Brain, Database, GitBranch, Shield, Code, Building2 } from "lucide-react";
 
 export const metadata = {
@@ -65,12 +68,15 @@ const useCases = [
   },
 ];
 
+const pricingPlans = intelligencePricingPlans();
+
 export default function IntelligencePage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="intelligence" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Products / Intelligence
           </p>
@@ -85,10 +91,10 @@ export default function IntelligencePage() {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/pricing"
+              href="#plans"
               className="px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
             >
-              Get started
+              See plans
             </Link>
             <Link
               href="/contact"
@@ -99,6 +105,17 @@ export default function IntelligencePage() {
           </div>
         </div>
       </section>
+
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Intelligence pricing"
+          title="Deep substrate add-on"
+          description="Esteemed Intelligence is a flat per-tenant add-on for persistent memory, reasoning, coherence, and custom domain intelligence."
+          productKey="intelligence"
+          plans={pricingPlans}
+          ctaLabel="Checkout"
+        />
+      </div>
 
       {/* Three Prongs */}
       <section className="py-20 border-t border-zinc-100">

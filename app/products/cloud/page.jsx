@@ -1,12 +1,17 @@
 import Link from "next/link";
-import { Cloud, Shield, HardDrive, Activity, Check, ArrowRight } from "lucide-react";
-import { cloudTiers, managedHostingTiers } from "@/lib/data";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { Cloud, Shield, HardDrive, Activity, ArrowRight } from "lucide-react";
+import { cloudPricingPlans, managedHostingPricingPlans } from "@/lib/product-page-pricing";
 
 export const metadata = {
   title: "Cloud",
   description:
     "Hosting that scales with you. Managed hosting with SSL, daily backups, monitoring, and a global edge network.",
 };
+
+const cloudPlans = cloudPricingPlans();
+const managedPlans = managedHostingPricingPlans();
 
 const includes = [
   {
@@ -35,20 +40,13 @@ const includes = [
   },
 ];
 
-function formatMoney(value) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: value % 1 === 0 ? 0 : 2,
-  }).format(value);
-}
-
 export default function CloudPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="cloud" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Products / Cloud
           </p>
@@ -61,7 +59,7 @@ export default function CloudPage() {
           </p>
           <div className="mt-10">
             <Link
-              href="/pricing"
+              href="#plans"
               className="px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
             >
               See plans
@@ -98,81 +96,25 @@ export default function CloudPage() {
         </div>
       </section>
 
-      {/* Tier structure */}
-      <section className="py-20 border-t border-zinc-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-10 text-center">
-            Self-serve Cloud
-          </h2>
-          <p className="mx-auto mb-10 max-w-2xl text-center text-zinc-600">
-            GoDaddy-aligned pricing with SSL included and no forced CMS migration.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {cloudTiers.map((tier) => (
-              <div
-                key={tier.key}
-                className="rounded-2xl border border-zinc-200 p-6"
-              >
-                <h3 className="text-2xl font-bold text-ink mb-1">
-                  {tier.name}
-                </h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-ink">
-                    {formatMoney(tier.monthly)}
-                  </span>
-                  <span className="text-sm text-zinc-500 font-normal">/mo</span>
-                  <p className="mt-1 text-xs text-zinc-500">{formatMoney(tier.annual)}/yr</p>
-                </div>
-                <p className="text-sm text-zinc-600 mb-6">{tier.description}</p>
-                <Link
-                  href="/pricing"
-                  className="inline-flex items-center justify-center w-full px-6 py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
-                >
-                  Get started
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Cloud plans"
+          title="Self-serve Cloud Website Hosting"
+          description="GoDaddy-aligned website hosting with SSL included and no forced CMS migration. Best for bring-your-own, Create-built, React, Node, and Next sites."
+          productKey="cloud"
+          plans={cloudPlans}
+          ctaLabel="Checkout"
+        />
 
-      {/* Managed Hosting */}
-      <section className="py-20 border-t border-zinc-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-4 text-center">
-            Managed Hosting
-          </h2>
-          <p className="mx-auto mb-10 max-w-2xl text-center text-zinc-600">
-            Done-for-you hosting with included support hours. Managed plans can
-            include a $0 Create rebuild with a 12-month term.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {managedHostingTiers.map((tier) => (
-              <div key={tier.key} className="rounded-2xl border border-zinc-200 p-6">
-                <h3 className="text-2xl font-bold text-ink mb-1">{tier.name}</h3>
-                <div className="mb-4">
-                  {tier.monthly === null ? (
-                    <span className="text-2xl font-bold text-ink">Custom</span>
-                  ) : (
-                    <>
-                      <span className="text-3xl font-bold text-ink">{formatMoney(tier.monthly)}</span>
-                      <span className="text-sm text-zinc-500 font-normal">/mo</span>
-                      <p className="mt-1 text-xs text-zinc-500">{formatMoney(tier.annual)}/yr</p>
-                    </>
-                  )}
-                </div>
-                <p className="text-sm text-zinc-600 mb-3">{tier.description}</p>
-                {tier.supportHours && (
-                  <p className="text-sm font-semibold text-ink">{tier.supportHours} support hrs/mo included</p>
-                )}
-                <Link href="/pricing" className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-bold text-ink transition-colors hover:bg-accent-hover">
-                  {tier.monthly === null ? "Contact us" : "Get started"}
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        <ProductPricingBlock
+          eyebrow="Managed Hosting"
+          title="Done-for-you managed website hosting"
+          description="Managed Hosting includes support hours and can include a $0 Create rebuild with a 12-month term."
+          productKey="cloud"
+          plans={managedPlans}
+          ctaLabel="Checkout"
+        />
+      </div>
 
       {/* Integrated with Create */}
       <section className="py-20 border-t border-zinc-100">
@@ -224,7 +166,7 @@ export default function CloudPage() {
             Launch your site today.
           </h2>
           <Link
-            href="/pricing"
+            href="#plans"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             See plans

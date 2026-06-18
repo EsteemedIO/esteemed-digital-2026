@@ -1,4 +1,7 @@
 import Link from "next/link";
+import ProductPricingBlock from "@/components/ProductPricingBlock";
+import ProductIcon from "@/components/ProductIcon";
+import { appPricingPlans, suitePricingPlans } from "@/lib/product-page-pricing";
 import {
   ClipboardCheck,
   Users,
@@ -48,12 +51,15 @@ const features = [
   },
 ];
 
+const pricingPlans = [...appPricingPlans("hire"), ...suitePricingPlans()];
+
 export default function HirePage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <ProductIcon product="hire" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
             Products / Hire
           </p>
@@ -67,10 +73,10 @@ export default function HirePage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-4 justify-center">
             <Link
-              href="/signup?redirect=create"
+              href="#plans"
               className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-accent text-ink font-bold hover:bg-accent-hover transition-colors"
             >
-              Get started
+              See plans
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
@@ -82,6 +88,18 @@ export default function HirePage() {
           </div>
         </div>
       </section>
+
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Hire plans"
+          title="Applicant tracking pricing"
+          description="Hire uses the v2 per-seat catalog: Free, Starter, Pro, Enterprise, plus Suite for teams that want Hire Pro and Acquire Pro together."
+          productKey="hire"
+          plans={pricingPlans}
+          ctaLabel="Checkout"
+          freeHref="/signup?product=hire&tier=free"
+        />
+      </div>
 
       {/* How it connects */}
       <section className="py-20 border-t border-zinc-100">
