@@ -73,7 +73,7 @@ async function getPrices(items, secretKey) {
 }
 
 export async function GET(request) {
-  const secretKey = process.env.STRIPE_SECRET_KEY;
+  const secretKey = process.env.STRIPE_SECRET_KEY || process.env.STRIPE_RESTRICTED_KEY;
   if (!secretKey) {
     return NextResponse.json({ error: "Stripe checkout is not configured." }, { status: 500 });
   }
