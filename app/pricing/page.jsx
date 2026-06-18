@@ -1,331 +1,548 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Tab, Tabs } from "@heroui/react";
-import { ArrowRight, Check, ChevronDown, Cloud, Code2, Server, ShieldCheck, Sparkles } from "lucide-react";
-import { cloudTiers, managedHostingTiers, pricingFAQ } from "@/lib/data";
-import { checkoutHref, formatMoney } from "@/lib/pricing-catalog";
+import { Button, Card, CardBody, CardFooter, CardHeader, Chip, Tab, Tabs } from "@heroui/react";
+import {
+  ArrowRight,
+  Briefcase,
+  Cloud,
+  Grid2X2,
+  Headphones,
+  Monitor,
+  PenLine,
+  RefreshCw,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  WandSparkles,
+} from "lucide-react";
 import ProductIcon from "@/components/ProductIcon";
 
-const modernPromos = {
-  basic: { amount: 9.99, regular: 19.99, savePercent: 50, term: "For first 3-yr term" },
-  plus: { amount: 14.99, regular: 29.99, savePercent: 50, term: "For first 3-yr term" },
-  pro: { amount: 19.99, regular: 34.99, savePercent: 43, term: "For first 3-yr term" },
-  multi: { amount: 39.99, regular: 66.99, savePercent: 40, term: "For first 3-yr term" },
-};
-
-const cmsTiers = [
+const categories = [
   {
-    key: "cms-basic",
-    name: "Hosting for WordPress & Drupal Basic",
-    monthly: 6.99,
-    promo: { amount: 6.99, regular: 14.99, savePercent: 53, term: "For first 1-yr term" },
-    description: "Best for hosting simple CMS websites.",
-    features: ["1 website", "10 GB NVMe storage", "WordPress or Drupal", "Admin dashboard included", "Free SSL Certificate", "Weekly backups", "Core update support", "Automated malware scans and removal"],
+    id: "websites",
+    label: "Websites",
+    icon: Monitor,
+    sub: "Get a website — build it yourself, or have us build it for you.",
+    cards: [
+      {
+        iconProduct: "create",
+        name: "Esteemed Create",
+        badge: "Start for free",
+        tags: ["AI builder", "Hosting included"],
+        blurb:
+          "Our AI website builder. Describe what you want and Create drafts a real, brand-aware site in the Studio IDE, then refine it by prompt or in code.",
+        anchor: "As low as $39/mo · free to start",
+        cta: "See Create plans",
+        href: "/products/create#plans",
+        primary: true,
+      },
+      {
+        icon: RefreshCw,
+        name: "Free Website Rebuild",
+        tags: ["Done-for-you", "12-month term"],
+        blurb:
+          "Prefer we build it? Our team rebuilds your existing site for free when you start a 12-month Managed Hosting plan.",
+        anchor: "$0 with Managed Hosting",
+        cta: "See Managed Hosting",
+        goto: "hosting",
+      },
+      {
+        icon: PenLine,
+        name: "Website Design Services",
+        tags: ["Done-for-you", "Custom build"],
+        blurb:
+          "Our design experts build your custom, responsive site with SSL, SEO basics, and a contact form included.",
+        anchor: "Custom build · Contact Sales",
+        cta: "Start my site",
+        href: "/contact",
+      },
+    ],
   },
   {
-    key: "cms-deluxe",
-    name: "Hosting for WordPress & Drupal Deluxe",
-    monthly: 10.99,
-    promo: { amount: 10.99, regular: 19.99, savePercent: 45, term: "For first 1-yr term" },
-    description: "Ideal as you grow, with upgraded resources.",
-    recommended: true,
-    features: ["1 website (add up to 99 sites)", "20 GB NVMe storage", "WordPress or Drupal", "Free SSL Certificate", "Daily backups", "Core update support", "Up to 2x faster performance with CDN", "Enhanced security with DDoS protection", "Staging site"],
+    id: "hosting",
+    label: "Hosting",
+    icon: Cloud,
+    sub: "Fast, managed hosting on Esteemed Cloud. SSL and AI contact form included; never doubles at renewal.",
+    cards: [
+      {
+        iconProduct: "cloud",
+        name: "Self-serve Cloud",
+        badge: "From $9.99",
+        tags: ["SSL included", "No renewal hikes"],
+        blurb:
+          "Bring your own site or a Create build. Fast, fully managed hosting with free SSL and an AI contact form built in.",
+        anchor: "From $9.99/mo · 4 plans",
+        cta: "See Cloud plans",
+        href: "/products/cloud#plans",
+        primary: true,
+      },
+      {
+        iconProduct: "cloud",
+        name: "Managed Hosting",
+        badge: "Free rebuild",
+        tags: ["Done-for-you", "Support included"],
+        blurb:
+          "Done-for-you hosting with a free site rebuild and dedicated monthly support hours on a simple 12-month term.",
+        anchor: "From $149/mo",
+        cta: "See Managed plans",
+        href: "/products/cloud#plans",
+      },
+    ],
+    note:
+      "Create includes hosting at publish. Standalone Hosting is for bring-your-own, non-Create, or existing sites.",
   },
   {
-    key: "cms-ultimate",
-    name: "Hosting for WordPress & Drupal Ultimate",
-    monthly: 14.99,
-    promo: { amount: 14.99, regular: 26.99, savePercent: 44, term: "For first 1-yr term" },
-    description: "Our best single-site CMS plan. Plus, sell online.",
-    features: ["1 website (add up to 99 sites)", "30 GB NVMe storage", "WordPress or Drupal", "Free SSL Certificate", "Daily backups", "SEO optimizer", "WooCommerce or Drupal Commerce ready", "Priority Support", "PHP version control", "Git integration"],
+    id: "hiring",
+    label: "Hiring & Outreach",
+    icon: Briefcase,
+    sub: "AI-native CRM and ATS, priced per actual user — not company headcount.",
+    cards: [
+      {
+        iconProduct: "acquire",
+        name: "Acquire",
+        badge: "Free to start",
+        founding: true,
+        tags: ["Per seat", "Star Assist AI"],
+        blurb:
+          "An AI-native CRM and TRM for talent and revenue teams. Manage relationships, score leads, and let Star draft outreach.",
+        anchor: "Free · paid from $149/seat · Pro $249/seat",
+        cta: "See Acquire plans",
+        href: "/products/acquire#plans",
+        primary: true,
+      },
+      {
+        iconProduct: "hire",
+        name: "Hire",
+        badge: "Free to start",
+        founding: true,
+        tags: ["Per seat", "Star Assist AI"],
+        blurb:
+          "An AI-native applicant tracking system. Post, source, screen, and move candidates with Star drafting and matching alongside you.",
+        anchor: "Free · paid from $149/seat · Pro $249/seat",
+        cta: "See Hire plans",
+        href: "/products/hire#plans",
+      },
+      {
+        icon: Users,
+        name: "EXP — Colleagues Enterprise",
+        tags: ["Enterprise", "Talent experience"],
+        blurb:
+          "The Colleagues talent experience platform for organizations rolling it out company-wide.",
+        anchor: "Contact Sales",
+        cta: "Talk to us",
+        href: "/contact",
+      },
+    ],
+    note: "Buying both? Suite pairs Acquire + Hire at Pro and saves $99/seat/mo.",
+  },
+  {
+    id: "content",
+    label: "Content Management",
+    icon: PenLine,
+    sub: "Run your content on Esteemed — our AI-native CMS, or your own platform managed by us.",
+    cards: [
+      {
+        iconProduct: "curate",
+        name: "Esteemed Curate",
+        badge: "AI-native CMS",
+        founding: true,
+        tags: ["Per workspace", "AI content hub"],
+        blurb:
+          "Our AI-native CMS, managed in Esteemed Cloud and priced per workspace. Pro switches on content agents with RAG grounding via Connect.",
+        anchor: "From $49/mo · Pro $299/mo",
+        cta: "See Curate plans",
+        href: "/products/curate#plans",
+        primary: true,
+      },
+      {
+        icon: Monitor,
+        name: "Managed CMS",
+        tags: ["WordPress", "Drupal"],
+        blurb:
+          "Already on WordPress or Drupal? We host your self-hosted site as-is, then pair it with a Support pack for security and updates.",
+        anchor: "Hosting from $9.99/mo + Support",
+        cta: "See Hosting",
+        goto: "hosting",
+      },
+      {
+        icon: ShieldCheck,
+        name: "Care",
+        tags: ["Managed bridge"],
+        blurb:
+          "An all-in managed bridge for your current site: security, monitoring, backups, and content edits with no migration required.",
+        anchor: "$399/mo",
+        cta: "Start Care",
+        href: "/contact",
+      },
+      {
+        icon: RefreshCw,
+        name: "Migration",
+        tags: ["One-time service"],
+        blurb:
+          "Move WordPress, Squarespace, Wix, Drupal, Joomla, or custom systems onto Curate with public package pricing.",
+        anchor: "One-time · from $6,500",
+        cta: "See migration packages",
+        href: "/migrate",
+      },
+    ],
+    note:
+      "Squarespace is a valid migration source, but it cannot be hosted on our infrastructure as-is.",
+  },
+  {
+    id: "ai",
+    label: "AI Add-ons",
+    icon: Sparkles,
+    sub: "Deepen any plan with retrieval, memory, and agents. Attach to anything you already run.",
+    cards: [
+      {
+        iconProduct: "connect",
+        name: "Connect",
+        tags: ["RAG grounding"],
+        blurb:
+          "The retrieval layer. Connect your systems so Esteemed AI can reason over your real, current data.",
+        anchor: "Included with Curate · standalone Contact Sales",
+        cta: "Contact Sales",
+        href: "/products/connect#plans",
+      },
+      {
+        iconProduct: "intelligence",
+        name: "Intelligence",
+        badge: "Most popular",
+        tags: ["Company Brain"],
+        blurb:
+          "Persistent memory, continual learning, and custom domain memory that deepen Star across every plan it is attached to.",
+        anchor: "$199/mo · per tenant",
+        cta: "Add Intelligence",
+        href: "/products/intelligence#plans",
+        primary: true,
+      },
+      {
+        iconProduct: "assist",
+        name: "Esteemed Agents",
+        badge: "Coming soon",
+        soon: true,
+        tags: ["Launching soon"],
+        blurb:
+          "AI coworkers that take real work off your plate: Receptionist, Social, Blogger, Marketer, Recruiter, and Publicist.",
+        anchor: "From $99/mo",
+        cta: "Notify me",
+        href: "/products/agents#plans",
+      },
+    ],
+  },
+  {
+    id: "bundles",
+    label: "Bundles",
+    icon: Grid2X2,
+    sub: "Buy together, save together. Compose websites, SaaS, content, and support into one plan.",
+    cards: [
+      {
+        iconProduct: "acquire",
+        name: "Esteemed Suite",
+        badge: "Most popular",
+        founding: true,
+        tags: ["CRM + ATS"],
+        blurb:
+          "Acquire and Hire together, both at Pro, on a single seat. The full talent engine for less than buying each on its own.",
+        anchor: "$399/seat/mo · save $99/seat",
+        cta: "See Suite plans",
+        href: "/products/acquire#plans",
+        primary: true,
+      },
+      {
+        iconProduct: "create",
+        name: "Business-in-a-Box",
+        tags: ["Websites", "SaaS", "Support"],
+        blurb:
+          "Everything to launch and run a business: a Create site, Acquire seats, and a managed Support pack.",
+        anchor: "Bundle pricing on a quick call",
+        cta: "Build this bundle",
+        href: "/contact",
+      },
+      {
+        iconProduct: "curate",
+        name: "Content Engine",
+        tags: ["Curate", "Connect", "Intelligence"],
+        blurb:
+          "Your AI content hub, fully wired: Curate Pro with Connect and the Intelligence Company Brain switched on.",
+        anchor: "Bundle pricing on a quick call",
+        cta: "Build this bundle",
+        href: "/contact",
+      },
+    ],
+    note:
+      "Suite is published; cross-category bundles are priced per mix on a short call.",
+  },
+  {
+    id: "experts",
+    label: "Hire Experts",
+    icon: Users,
+    sub: "Hire from a 35,000-member professional network. Free to join; pay only when you place.",
+    cards: [
+      {
+        icon: Users,
+        name: "Membership",
+        badge: "Free",
+        tags: ["Professionals"],
+        blurb:
+          "Profile, community, and career tools for professionals in the Esteemed Colleagues network.",
+        anchor: "Free to professionals, forever",
+        cta: "Join Colleagues",
+        href: "/products/colleagues",
+      },
+      {
+        icon: Briefcase,
+        name: "Hire from Colleagues",
+        badge: "Most popular",
+        tags: ["Pay on placement"],
+        blurb:
+          "Post roles free and tap a 35,000-member vetted professional network. Pay only when you place.",
+        anchor: "Platform fee as low as 10%",
+        cta: "Post a role",
+        href: "/products/colleagues",
+        primary: true,
+      },
+    ],
+  },
+  {
+    id: "support",
+    label: "Support",
+    icon: Headphones,
+    sub: "Managed support packages and expert help, on demand.",
+    cards: [
+      {
+        iconProduct: "support",
+        name: "Support packs",
+        badge: "Most popular",
+        tags: ["2 hr", "5 hr", "10 hr"],
+        blurb:
+          "Monthly blocks of managed support hours for security patching, feature updates, troubleshooting, and hands-on help.",
+        anchor: "From $170/mo",
+        cta: "See Support plans",
+        href: "/services/support#plans",
+        primary: true,
+      },
+      {
+        icon: Users,
+        name: "Expert Help",
+        tags: ["From the network"],
+        blurb:
+          "On-demand specialist help sourced from top Colleagues professionals for work that needs an expert, not a ticket.",
+        anchor: "Contact Sales",
+        cta: "Talk to us",
+        href: "/contact",
+      },
+    ],
   },
 ];
 
-function cloudFeatures(tier) {
-  const common = ["Custom domain + SSL", "Daily backups", "Global CDN", "Git-based deploys", "30-day money-back guarantee"];
-  if (tier.key === "basic") return ["1 JavaScript website", "Node + React runtime", "25 GB NVMe storage", ...common];
-  if (tier.key === "plus") return ["3 JavaScript websites", "Node + React runtime", "50 GB NVMe storage", "Staging site", "Security monitoring", ...common];
-  if (tier.key === "pro") return ["5 JavaScript websites", "Node + React runtime", "100 GB NVMe storage", "Priority support", "Application monitoring", "Enhanced security with DDoS protection", ...common];
-  return ["Up to 10 JavaScript websites", "Node + React runtime", "200 GB NVMe storage", "Staging sites", "Priority support", "Application monitoring", ...common];
-}
-
-function managedFeatures(tier) {
-  if (tier.monthly === null) {
-    return ["Multi-site hosting", "Dedicated infrastructure", "Custom SLA", "Custom support model"];
-  }
-  return ["Done-for-you hosting", "Free Create rebuild with 12-month term", `${tier.supportHours} support hrs/mo included`, "SSL, monitoring, and backups", "Support overage available"];
-}
-
-function cardPrice(tier, annual, promo) {
-  if (tier.monthly === null) return { headline: "Custom", note: tier.description };
-  if (promo) return { headline: formatMoney(promo.amount), regular: promo.regular, savePercent: promo.savePercent, note: promo.term, suffix: "/mo" };
-  if (annual && tier.annual) return { headline: formatMoney(tier.annual / 12), note: `Billed ${formatMoney(tier.annual)}/yr`, suffix: "/mo", badge: "2 months free" };
-  return { headline: formatMoney(tier.monthly), note: tier.description, suffix: "/mo" };
-}
-
-function PricingCard({ tier, annual, promo, features, ctaHref, ctaLabel = "Buy Now", recommended }) {
-  const highlighted = recommended || tier.recommended;
-  const contact = tier.monthly === null;
-  const price = cardPrice(tier, annual, promo);
-
+function Star({ className = "h-3 w-3", fill = "#B89D1F" }) {
   return (
-    <article className={`relative flex h-full flex-col rounded-lg border bg-white p-7 shadow-sm ${highlighted ? "border-accent ring-4 ring-accent/25" : "border-zinc-200"}`}>
-      {highlighted && (
-        <div className="absolute inset-x-0 top-0 rounded-t-lg bg-accent px-7 py-3 text-xs font-black uppercase tracking-wide text-ink">Recommended</div>
-      )}
-      <div className={highlighted ? "pt-8" : ""}>
-        <h3 className="text-2xl font-black text-ink">{tier.name}</h3>
-        <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{tier.description}</p>
-        <div className="mt-5">
-          <div className="mb-2 flex flex-wrap items-center gap-2">
-            {price.badge && <span className="rounded-md bg-amber-100 px-2 py-1 text-xs font-black text-ink">{price.badge}</span>}
-            {price.savePercent && <span className="rounded-md bg-amber-100 px-2 py-1 text-xs font-black text-ink">SAVE {price.savePercent}%</span>}
-            {price.regular && <span className="text-sm font-semibold text-zinc-500 line-through">{formatMoney(price.regular)}</span>}
-          </div>
-          <div className="flex items-end gap-1">
-            <span className="text-4xl font-black text-ink">{price.headline}</span>
-            {price.suffix && <span className="pb-1 text-sm font-bold text-zinc-700">{price.suffix}</span>}
-          </div>
-          {price.note && <p className="mt-1 text-xs font-semibold text-zinc-600">{price.note}</p>}
-          {price.regular && <p className="mt-1 text-xs text-zinc-500">Renews at {formatMoney(price.regular)}/mo after the intro term.</p>}
-        </div>
-      </div>
-
-      <Link href={contact ? "/contact" : ctaHref} className="mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800">
-        {contact ? "Contact Sales" : ctaLabel}
-      </Link>
-
-      <ul className="mt-6 space-y-3">
-        {features.map((feature) => (
-          <li key={feature} className="flex gap-3 text-sm leading-5 text-zinc-700">
-            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border border-zinc-200">
-              <Check className="h-4 w-4 text-ink" />
-            </span>
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
-    </article>
+    <svg viewBox="0 0 268 268" className={className} aria-hidden="true">
+      <path d="M133.5 38L164.228 100.683L233 111.008L183.25 159.68L194.956 229L133.5 196.552L72.0441 229L83.75 159.68L34 111.008L102.772 100.683L133.5 38Z" fill={fill} />
+    </svg>
   );
 }
 
-function FAQ({ items }) {
-  const [openIndex, setOpenIndex] = useState(null);
+function IconTile({ item, size = "h-12 w-12" }) {
+  if (item.iconProduct) {
+    return (
+      <span className={`${size} flex flex-shrink-0 items-center justify-center rounded-xl border border-zinc-200 bg-white`}>
+        <ProductIcon product={item.iconProduct} className="h-9 w-9" />
+      </span>
+    );
+  }
+
+  const Icon = item.icon || WandSparkles;
   return (
-    <div className="divide-y divide-zinc-200">
-      {items.map((item, i) => (
-        <div key={item.q}>
-          <button onClick={() => setOpenIndex(openIndex === i ? null : i)} className="flex w-full items-center justify-between py-6 text-left">
-            <span className="pr-8 text-lg font-semibold text-ink">{item.q}</span>
-            <ChevronDown className={`h-5 w-5 flex-shrink-0 text-zinc-400 transition-transform ${openIndex === i ? "rotate-180" : ""}`} />
-          </button>
-          {openIndex === i && <p className="pb-6 leading-relaxed text-zinc-600">{item.a}</p>}
+    <span className={`${size} flex flex-shrink-0 items-center justify-center rounded-xl bg-accent text-ink`}>
+      <Icon className="h-6 w-6" strokeWidth={2} />
+    </span>
+  );
+}
+
+function LeadCard({ card, onGoto }) {
+  const href = card.goto ? undefined : card.href || "/contact";
+  const cta = card.goto ? (
+    <Button
+      variant={card.primary ? "solid" : "bordered"}
+      color={card.primary ? "primary" : "default"}
+      radius="full"
+      className={card.primary ? "bg-accent text-ink font-bold" : "border-zinc-300 font-bold text-ink"}
+      onPress={() => onGoto(card.goto)}
+      endContent={<ArrowRight className="h-4 w-4" />}
+    >
+      {card.cta}
+    </Button>
+  ) : (
+    <Button
+      as={Link}
+      href={href}
+      variant={card.primary ? "solid" : "bordered"}
+      color={card.primary ? "primary" : "default"}
+      radius="full"
+      className={card.primary ? "bg-accent text-ink font-bold" : "border-zinc-300 font-bold text-ink"}
+      endContent={<ArrowRight className="h-4 w-4" />}
+    >
+      {card.cta}
+    </Button>
+  );
+
+  return (
+    <Card className="h-full rounded-2xl border border-zinc-200 bg-white shadow-none transition-colors hover:border-zinc-900">
+      <CardHeader className="flex items-start justify-between gap-4 p-6 pb-0">
+        <IconTile item={card} />
+        {card.badge && (
+          <Chip
+            size="sm"
+            variant="flat"
+            className={card.soon ? "bg-zinc-100 text-zinc-600" : "bg-accent text-ink"}
+          >
+            {card.badge}
+          </Chip>
+        )}
+      </CardHeader>
+      <CardBody className="flex flex-col p-6">
+        <h3 className="text-2xl font-black tracking-tight text-ink">{card.name}</h3>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {(card.tags || []).map((tag) => (
+            <Chip key={tag} size="sm" variant="bordered" className="border-zinc-200 text-zinc-600">
+              {tag}
+            </Chip>
+          ))}
+          {card.founding && (
+            <Chip size="sm" variant="bordered" className="border-zinc-300 text-zinc-700" startContent={<Star className="h-3 w-3" />}>
+              Founding rates
+            </Chip>
+          )}
         </div>
-      ))}
-    </div>
+        <p className="mt-4 text-sm leading-6 text-zinc-600">{card.blurb}</p>
+      </CardBody>
+      <CardFooter className="flex flex-col items-start gap-4 p-6 pt-0">
+        <p className="text-sm font-bold text-ink">{card.anchor}</p>
+        {cta}
+      </CardFooter>
+    </Card>
   );
 }
 
 export default function PricingPage() {
-  const [annual, setAnnual] = useState(true);
-  const [activeCategory, setActiveCategory] = useState("cloud");
-
-  const modernHosting = useMemo(
-    () =>
-      cloudTiers.map((tier) => ({
-        ...tier,
-        name:
-          {
-            basic: "Cloud Website Economy",
-            plus: "Cloud Website Deluxe",
-            pro: "Cloud Website Ultimate",
-            multi: "Cloud Website Multi-Site",
-          }[tier.key] || tier.name,
-        description:
-          tier.key === "basic"
-            ? "Standard Modern hosting for one Node + React site."
-            : tier.description.replace("site", "Node + React site"),
-      })),
-    []
-  );
+  const [active, setActive] = useState("websites");
+  const category = categories.find((item) => item.id === active) || categories[0];
+  const ActiveIcon = category.icon;
 
   return (
-    <main className="min-h-screen bg-white">
-      <section className="px-6 pb-14 pt-24 text-center">
-        <div className="mx-auto max-w-5xl">
-          <ProductIcon product="cloud" className="mx-auto mb-5 h-14 w-14" />
-          <p className="mb-4 text-sm font-black uppercase tracking-wide text-zinc-500">Esteemed Cloud pricing</p>
-          <h1 className="mx-auto max-w-4xl text-5xl font-black leading-tight text-ink md:text-6xl">Choose your best hosting solution</h1>
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-zinc-600">
-            Cloud Website Hosting for Standard Modern JavaScript sites, managed WordPress and Drupal hosting for existing CMS properties, and Managed Hosting when you want us to handle the site.
-          </p>
-          <div className="mt-9 inline-flex items-center rounded-full border-2 border-zinc-200 bg-white p-1">
-            <button onClick={() => setAnnual(false)} className={`rounded-full px-5 py-2 text-sm font-bold transition-colors ${!annual ? "bg-ink text-white" : "text-zinc-500"}`}>Monthly</button>
-            <button onClick={() => setAnnual(true)} className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-bold transition-colors ${annual ? "bg-ink text-white" : "text-zinc-500"}`}>
-              Annual <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-black text-ink">2 months free</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 pb-20">
+    <main className="min-h-screen bg-[#FAFAF7]">
+      <section className="px-6 py-16 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <Tabs
-            aria-label="Hosting pricing categories"
-            selectedKey={activeCategory}
-            onSelectionChange={(key) => setActiveCategory(String(key))}
-            classNames={{
-              base: "w-full justify-center",
-              tabList: "mx-auto mb-10 w-full max-w-5xl gap-0 rounded-full border border-zinc-200 bg-white p-1 shadow-sm",
-              cursor: "hidden",
-              tab: "h-auto min-h-16 flex-1 rounded-full px-4 py-3 data-[selected=true]:bg-ink",
-              tabContent: "text-zinc-800 group-data-[selected=true]:text-white",
-              panel: "outline-none",
-            }}
-            color="default"
-          >
-            <Tab
-              key="cloud"
-              title={
-                <div className="text-center">
-                  <p className="text-base font-black">Cloud Website Hosting</p>
-                  <p className="hidden text-sm opacity-80 md:block">Node + React, faster and more flexible</p>
-                </div>
-              }
-            >
-              <div className="mb-8 grid gap-5 rounded-lg bg-zinc-50 p-6 md:grid-cols-[1fr_auto] md:items-center">
-                <div className="flex gap-4">
-                  <Code2 className="mt-1 h-8 w-8 flex-shrink-0 text-ink" />
-                  <div>
-                    <h2 className="text-2xl font-black text-ink md:text-3xl">Standard Modern hosting</h2>
-                    <p className="mt-2 max-w-3xl leading-7 text-zinc-600">Our default hosting path is JavaScript first: Node + React sites with faster delivery, cleaner deployments, and more flexibility than traditional PHP-only hosting.</p>
-                  </div>
-                </div>
-                <Link href="/products/cloud" className="inline-flex items-center gap-2 rounded-lg border-2 border-ink px-5 py-3 text-sm font-black text-ink hover:bg-ink hover:text-white">Hosting details <ArrowRight className="h-4 w-4" /></Link>
-              </div>
-              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {modernHosting.map((tier) => (
-                  <PricingCard
-                    key={tier.key}
-                    tier={tier}
-                    annual={annual}
-                    promo={!annual ? modernPromos[tier.key] : null}
-                    ctaHref={checkoutHref({ lookupKey: annual ? tier.annualLookupKey : tier.lookupKey, successPath: `/thanks?product=cloud&tier=${tier.key}`, cancelPath: "/pricing" })}
-                    features={cloudFeatures(tier)}
-                    recommended={tier.key === "plus"}
-                  />
-                ))}
-              </div>
-            </Tab>
-
-            <Tab
-              key="cms"
-              title={
-                <div className="text-center">
-                  <p className="text-base font-black">WordPress & Drupal</p>
-                  <p className="hidden text-sm opacity-80 md:block">Managed CMS hosting</p>
-                </div>
-              }
-            >
-              <div className="mb-8 rounded-lg bg-zinc-50 p-6">
-                <div className="flex gap-4">
-                  <ShieldCheck className="mt-1 h-8 w-8 flex-shrink-0 text-ink" />
-                  <div>
-                    <h2 className="text-2xl font-black text-ink md:text-3xl">Hosting for WordPress & Drupal</h2>
-                    <p className="mt-2 max-w-3xl leading-7 text-zinc-600">Keep existing WordPress and Drupal sites stable while Esteemed handles updates, backups, monitoring, security, and support. Modern JavaScript hosting remains our standard path for new builds.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="grid gap-6 md:grid-cols-3">
-                {cmsTiers.map((tier) => (
-                  <PricingCard key={tier.key} tier={tier} annual={annual} promo={!annual ? tier.promo : null} ctaHref="/contact" ctaLabel="Contact Sales" features={tier.features} />
-                ))}
-              </div>
-            </Tab>
-
-            <Tab
-              key="managed"
-              title={
-                <div className="text-center">
-                  <p className="text-base font-black">Managed Hosting</p>
-                  <p className="hidden text-sm opacity-80 md:block">Done-for-you with support hours</p>
-                </div>
-              }
-            >
-              <div className="mb-8 rounded-lg bg-zinc-50 p-6">
-                <div className="flex gap-4">
-                  <Server className="mt-1 h-8 w-8 flex-shrink-0 text-ink" />
-                  <div>
-                    <h2 className="text-2xl font-black text-ink md:text-3xl">Managed Hosting</h2>
-                    <p className="mt-2 max-w-3xl leading-7 text-zinc-600">Done-for-you hosting with included support hours. Managed plans can include a $0 Create rebuild with a 12-month hosting agreement.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {managedHostingTiers.map((tier) => (
-                  <PricingCard
-                    key={tier.key}
-                    tier={tier}
-                    annual={annual}
-                    ctaHref={tier.monthly === null ? "/contact" : checkoutHref({ lookupKey: annual ? tier.annualLookupKey : tier.lookupKey, successPath: `/thanks?product=managed&tier=${tier.key}`, cancelPath: "/pricing" })}
-                    features={managedFeatures(tier)}
-                    recommended={tier.key === "growth"}
-                  />
-                ))}
-              </div>
-            </Tab>
-          </Tabs>
+          <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-zinc-500">
+            <Star className="h-3.5 w-3.5" />
+            Plans & pricing
+          </p>
+          <h1 className="mt-4 max-w-4xl text-5xl font-black leading-tight tracking-tight text-ink md:text-6xl">
+            Pick what you need. Pay for nothing you don't.
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-600">
+            Transparent, published pricing across the platform. Annual plans include two months free on recurring products.
+          </p>
         </div>
       </section>
 
-      <section className="bg-zinc-50 px-6 py-20">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <section className="bg-ink px-6 py-4 text-white">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3">
+          <Star className="h-4 w-4" fill="#FEE546" />
+          <p className="m-0 text-sm leading-6 text-white/85">
+            <strong className="text-white">Every offering is a separate purchase — none requires another.</strong>{" "}
+            Host without migrating. Hire without the website. Take only what you need.
+          </p>
+        </div>
+      </section>
+
+      <section className="px-6 py-10">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[260px_1fr] lg:items-start">
+          <aside className="lg:sticky lg:top-24">
+            <p className="mb-3 px-3 text-xs font-black uppercase tracking-[0.14em] text-zinc-500">Browse by need</p>
+            <Tabs
+              aria-label="Pricing categories"
+              selectedKey={active}
+              onSelectionChange={(key) => setActive(String(key))}
+              classNames={{
+                base: "w-full",
+                tabList: "w-full gap-1 rounded-2xl border border-zinc-200 bg-white p-2 lg:flex-col",
+                cursor: "hidden",
+                tab: "h-auto justify-start rounded-xl px-3 py-3 data-[selected=true]:bg-accent",
+                tabContent: "w-full text-left font-semibold text-zinc-600 group-data-[selected=true]:text-ink",
+                panel: "hidden",
+              }}
+            >
+              {categories.map((item) => (
+                <Tab
+                  key={item.id}
+                  title={
+                    <span className="flex w-full items-center justify-between gap-3">
+                      <span>{item.label}</span>
+                      <ArrowRight className="h-4 w-4 opacity-50" />
+                    </span>
+                  }
+                />
+              ))}
+            </Tabs>
+
+            <div className="mt-4 rounded-2xl border border-zinc-200 bg-white p-5">
+              <p className="font-bold text-ink">Not sure where to start?</p>
+              <p className="mt-2 text-sm leading-6 text-zinc-600">Tell us about your team and we'll map the right plan.</p>
+              <Button as={Link} href="/contact" radius="full" className="mt-4 w-full bg-ink font-bold text-white">
+                Talk to us
+              </Button>
+            </div>
+          </aside>
+
+          <section>
+            <div className="mb-8 flex max-w-3xl items-start gap-4">
+              <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-accent text-ink">
+                <ActiveIcon className="h-7 w-7" strokeWidth={2} />
+              </span>
+              <div>
+                <h2 className="text-3xl font-black tracking-tight text-ink md:text-4xl">{category.label}</h2>
+                <p className="mt-2 text-base leading-7 text-zinc-600">{category.sub}</p>
+              </div>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {category.cards.map((card) => (
+                <LeadCard key={card.name} card={card} onGoto={setActive} />
+              ))}
+            </div>
+
+            {category.note && (
+              <div className="mt-6 flex max-w-4xl items-start gap-3 text-sm leading-6 text-zinc-500">
+                <Star className="mt-1 h-3.5 w-3.5 flex-shrink-0" />
+                <p>{category.note}</p>
+              </div>
+            )}
+
+            <div className="mt-8 border-t border-zinc-200 pt-5 text-sm text-zinc-500">
+              Showing <strong className="text-zinc-700">{category.cards.length}</strong> of{" "}
+              <strong className="text-zinc-700">{category.cards.length}</strong> {category.label.toLowerCase()} options.
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section className="px-6 py-16">
+        <div className="mx-auto grid max-w-7xl gap-6 rounded-2xl bg-ink p-8 text-white md:grid-cols-[1fr_auto] md:items-center">
           <div>
-            <div className="mb-4 flex items-center gap-3">
-              <Cloud className="h-6 w-6 text-ink" />
-              <h2 className="text-3xl font-black text-ink">Which hosting path fits?</h2>
-            </div>
-            <p className="leading-7 text-zinc-600">Choose Cloud Website Hosting for new JavaScript sites, WordPress & Drupal hosting for existing CMS properties, and Managed Hosting when you want included support hours and a hands-on team.</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/contact" className="inline-flex items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white hover:bg-zinc-800">Contact Sales</Link>
-              <Link href="/products/cloud" className="inline-flex items-center gap-2 rounded-lg border-2 border-ink px-5 py-3 text-sm font-black text-ink hover:bg-ink hover:text-white">Hosting details <ArrowRight className="h-4 w-4" /></Link>
-            </div>
+            <h2 className="text-3xl font-black tracking-tight">Not sure where to start?</h2>
+            <p className="mt-2 max-w-2xl text-white/70">
+              We can map websites, hosting, SaaS, content, AI, support, and hiring into one practical plan.
+            </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              ["Modern", "Node + React", "Fast, flexible, and clean for new builds.", Code2],
-              ["CMS", "WordPress & Drupal", "Managed updates, backups, security, and support.", ShieldCheck],
-              ["Managed", "Support included", "Done-for-you hosting with monthly support hours.", Server],
-            ].map(([label, title, copy, Icon]) => (
-              <div key={label} className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
-                <Icon className="mb-4 h-6 w-6 text-ink" />
-                <p className="text-xs font-black uppercase tracking-wide text-zinc-500">{label}</p>
-                <h3 className="mt-1 font-black text-ink">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-zinc-600">{copy}</p>
-              </div>
-            ))}
-          </div>
+          <Button as={Link} href="/contact" radius="full" className="bg-accent px-7 font-bold text-ink" endContent={<ArrowRight className="h-4 w-4" />}>
+            Talk to us
+          </Button>
         </div>
-      </section>
-
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-8 flex items-center justify-center gap-3 text-center">
-            <Sparkles className="h-6 w-6 text-ink" />
-            <h2 className="text-3xl font-black text-ink">Frequently Asked Questions</h2>
-          </div>
-          <FAQ items={pricingFAQ} />
-        </div>
-      </section>
-
-      <section className="bg-ink px-6 py-20 text-center">
-        <h2 className="mb-4 text-3xl font-black text-white md:text-4xl">Ready to host with Esteemed?</h2>
-        <p className="mb-8 text-zinc-400">Start with Cloud Website Hosting or talk to us about managed hosting.</p>
-        <Link href="/contact" className="inline-flex items-center gap-2 rounded-lg bg-accent px-8 py-4 text-sm font-black text-ink hover:bg-accent-hover">
-          Contact Sales <ArrowRight className="h-4 w-4" />
-        </Link>
       </section>
     </main>
   );

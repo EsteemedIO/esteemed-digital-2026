@@ -182,8 +182,8 @@ export default function Navbar() {
   return (
     <>
       <header ref={navRef} className="sticky top-0 z-50 bg-white border-b border-zinc-200" onMouseLeave={() => setOpenMenu(null)}>
-        {/* Nav container — 1450px to match live site */}
-        <nav className="mx-auto px-6 flex items-center justify-between h-16" style={{ maxWidth: "1450px" }}>
+        {/* Nav container widened for the product-heavy mega menu. */}
+        <nav className="mx-auto px-6 flex items-center justify-between h-16" style={{ maxWidth: "1800px" }}>
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
             <img src="/esteemed-logo.svg" alt="Esteemed" className="w-32 md:w-40 h-auto" fetchPriority="high" />
@@ -273,7 +273,7 @@ export default function Navbar() {
 
         {openMenu === "products" && (
           <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
-            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
+            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1800px" }}>
               <div className="grid grid-cols-4 gap-x-8">
                 <div className="col-span-2">
                   <SectionHeading href="/products">Products</SectionHeading>
@@ -308,7 +308,7 @@ export default function Navbar() {
 
         {openMenu === "solutions" && (
           <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
-            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
+            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1800px" }}>
               <div className="grid grid-cols-4 gap-8">
                 <div>
                   <SectionHeading>Use Cases</SectionHeading>
@@ -341,7 +341,7 @@ export default function Navbar() {
 
         {openMenu === "resources" && (
           <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
-            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1450px" }}>
+            <div className="mx-auto px-6 py-8" style={{ maxWidth: "1800px" }}>
               <div className="grid grid-cols-4 gap-8">
                 <div>
                   <SectionHeading>Resources</SectionHeading>

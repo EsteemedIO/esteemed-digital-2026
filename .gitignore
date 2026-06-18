@@ -36,3 +36,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .claude-flow/
+
+# Design handoff exports
+docs/designs/esteemed-web-pricing-update/
