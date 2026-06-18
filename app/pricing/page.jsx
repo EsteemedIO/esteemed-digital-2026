@@ -24,7 +24,6 @@ import {
   cloudTiers,
   curateTiers,
   intelligenceProduct,
-  managedHostingTiers,
   migrationPackages,
   perSeatProducts,
   pricingFAQ,
@@ -58,54 +57,105 @@ function priceLabel(tier, annual) {
   return `${formatMoney(amount)}${suffix}`;
 }
 
-function introPrice(tier, annual, preferredIntro) {
+function introPrice(tier, annual, preferredIntro, discountRate, promo) {
   if (tier.monthly === null || tier.monthly === 0) {
     return null;
   }
 
+  if (promo) {
+    return {
+      amount: promo.amount,
+      regular: promo.regular,
+      term: promo.term,
+      savePercent: promo.savePercent,
+    };
+  }
+
   if (preferredIntro === "founding" && tier.founding) {
+    const regular = discountRate ? tier.founding / (1 - discountRate) : tier.monthly;
     return {
       amount: tier.founding,
-      regular: tier.monthly,
+      regular,
       term: "For first 12 months",
     };
   }
 
+  const amount = annual && tier.annual ? tier.annual / 12 : tier.monthly;
+  const regular = discountRate ? amount / (1 - discountRate) : tier.monthly;
+
   if (annual && tier.annual) {
     return {
-      amount: tier.annual / 12,
-      regular: tier.monthly,
+      amount,
+      regular,
       term: "For first annual term",
     };
   }
 
   return {
-    amount: tier.monthly,
-    regular: null,
+    amount,
+    regular,
     term: "Renews monthly",
   };
 }
 
 function hostingFeatures(tier) {
-  const base = ["Custom domain + SSL", "Daily backups", "Security monitoring", "Esteemed support"];
+  if (tier.key === "basic") {
+    return [
+      "1 JavaScript website",
+      "Node + React runtime",
+      "25 GB NVMe storage",
+      "Custom domain + SSL",
+      "Daily backups",
+      "Global CDN",
+      "Git-based deploys",
+      "30-day money-back guarantee",
+    ];
+  }
 
-  if (tier.key === "basic") return ["1 JavaScript site", "Node + React hosting", ...base.slice(0, 2)];
-  if (tier.key === "plus") return ["1 JavaScript site", "Node + React hosting", "Staging environment", "Global CDN", ...base.slice(0, 2)];
-  if (tier.key === "pro") return ["1 JavaScript site", "Node + React hosting", "Priority support", "Staging + CDN", ...base];
-  return ["Up to 5 JavaScript sites", "Node + React hosting", "Staging + CDN", "Priority support", ...base];
-}
+  if (tier.key === "plus") {
+    return [
+      "3 JavaScript websites",
+      "Node + React runtime",
+      "50 GB NVMe storage",
+      "Custom domain + SSL",
+      "Daily backups",
+      "Up to 2x faster performance with CDN",
+      "Staging site",
+      "Security monitoring",
+      "Git-based deploys",
+      "30-day money-back guarantee",
+    ];
+  }
 
-function managedFeatures(tier) {
-  if (tier.key === "enterprise") {
-    return ["WordPress and Drupal estates", "Dedicated infrastructure", "Custom SLA", "Security hardening", "Migration planning"];
+  if (tier.key === "pro") {
+    return [
+      "5 JavaScript websites",
+      "Node + React runtime",
+      "100 GB NVMe storage",
+      "Custom domain + SSL",
+      "Daily backups",
+      "Up to 2x faster performance with CDN",
+      "Staging site",
+      "Enhanced security with DDoS protection",
+      "Priority support",
+      "Application monitoring",
+      "Git-based deploys",
+    ];
   }
 
   return [
-    "WordPress or Drupal site",
-    `${tier.supportHours} support hrs/mo`,
-    "Plugin and module updates",
-    "Backups and uptime monitoring",
-    "Security maintenance",
+    "Up to 10 JavaScript websites",
+    "Node + React runtime",
+    "200 GB NVMe storage",
+    "Custom domains + SSL",
+    "Daily backups",
+    "Up to 2x faster performance with CDN",
+    "Staging sites",
+    "Enhanced security with DDoS protection",
+    "Priority support",
+    "Application monitoring",
+    "Global data centers",
+    "Git-based deploys",
   ];
 }
 
@@ -127,6 +177,110 @@ const appTierFeatures = {
   },
 };
 
+const promoDiscounts = {
+  cloud: {
+    basic: 0.5,
+    plus: 0.45,
+    pro: 0.45,
+    multi: 0.4,
+  },
+  managed: {
+    essential: 0.5,
+    growth: 0.45,
+    business: 0.4,
+  },
+  curate: {
+    starter: 0.5,
+    pro: 0.4,
+  },
+  acquire: {
+    starter: 0.4,
+    pro: 0.4,
+  },
+  hire: {
+    starter: 0.4,
+    pro: 0.4,
+  },
+  suite: {
+    bundle: 0.4,
+  },
+};
+
+const modernHostingPromos = {
+  basic: { amount: 9.99, regular: 19.99, savePercent: 50, term: "For first 3-yr term" },
+  plus: { amount: 14.99, regular: 29.99, savePercent: 50, term: "For first 3-yr term" },
+  pro: { amount: 19.99, regular: 34.99, savePercent: 43, term: "For first 3-yr term" },
+  multi: { amount: 39.99, regular: 66.99, savePercent: 40, term: "For first 3-yr term" },
+};
+
+const cmsHostingTiers = [
+  {
+    key: "cms-basic",
+    name: "Hosting for WordPress & Drupal Basic",
+    monthly: 6.99,
+    description: "Best for hosting simple CMS websites.",
+    promo: { amount: 6.99, regular: 14.99, savePercent: 53, term: "For first 1-yr term" },
+    features: [
+      "1 website",
+      "10 GB NVMe storage",
+      "WordPress or Drupal",
+      "Admin dashboard included",
+      "Free SSL Certificate",
+      "Weekly backups",
+      "Core update support",
+      "AI content assistant ready",
+      "Automated malware scans and removal",
+      "30-day money-back guarantee",
+    ],
+  },
+  {
+    key: "cms-deluxe",
+    name: "Hosting for WordPress & Drupal Deluxe",
+    monthly: 10.99,
+    description: "Ideal as you grow, with upgraded resources.",
+    recommended: true,
+    promo: { amount: 10.99, regular: 19.99, savePercent: 45, term: "For first 1-yr term" },
+    features: [
+      "1 website (add up to 99 sites)",
+      "20 GB NVMe storage",
+      "WordPress or Drupal",
+      "Admin dashboard included",
+      "Free SSL Certificate",
+      "Daily backups",
+      "Core update support",
+      "Up to 2x faster performance with CDN",
+      "Enhanced security with DDoS protection",
+      "Staging site",
+      "30-day money-back guarantee",
+    ],
+  },
+  {
+    key: "cms-ultimate",
+    name: "Hosting for WordPress & Drupal Ultimate",
+    monthly: 14.99,
+    description: "Our best single-site CMS plan. Plus, sell online.",
+    promo: { amount: 14.99, regular: 26.99, savePercent: 44, term: "For first 1-yr term" },
+    features: [
+      "1 website (add up to 99 sites)",
+      "30 GB NVMe storage",
+      "WordPress or Drupal",
+      "Admin dashboard included",
+      "Free SSL Certificate",
+      "Daily backups",
+      "Core update support",
+      "Up to 2x faster performance with CDN",
+      "Enhanced security with DDoS protection",
+      "Staging site",
+      "SEO optimizer",
+      "WooCommerce or Drupal Commerce ready",
+      "Priority Support",
+      "PHP version control",
+      "Application monitoring",
+      "Git integration",
+    ],
+  },
+];
+
 function PricingCard({
   tier,
   annual,
@@ -137,11 +291,13 @@ function PricingCard({
   recommended = false,
   introTerm,
   preferredIntro,
+  discountRate,
+  promo,
 }) {
   const highlighted = recommended || tier.recommended;
   const contact = tier.monthly === null;
-  const intro = introPrice(tier, annual, preferredIntro);
-  const savePercent = intro?.regular && intro.amount < intro.regular ? Math.round((1 - intro.amount / intro.regular) * 100) : null;
+  const intro = introPrice(tier, annual, preferredIntro, discountRate, promo);
+  const savePercent = intro?.savePercent ?? (intro?.regular && intro.amount < intro.regular ? Math.round((1 - intro.amount / intro.regular) * 100) : null);
 
   return (
     <article className={`relative flex h-full flex-col rounded-2xl border bg-white p-7 shadow-sm ${highlighted ? "border-accent ring-4 ring-accent/25" : "border-zinc-200"}`}>
@@ -223,6 +379,7 @@ function ProductPricingTab({ product, annual }) {
             ctaHref={`/signup?product=${product.key}&tier=${tier.key}`}
             ctaLabel={`Start ${product.name}`}
             features={appTierFeatures[product.key]?.[tier.key]}
+            discountRate={promoDiscounts[product.key]?.[tier.key]}
           />
         ))}
       </div>
@@ -273,7 +430,13 @@ export default function PricingPage() {
     () =>
       cloudTiers.map((tier) => ({
         ...tier,
-        name: tier.name.replace("Cloud", "Modern"),
+        name:
+          {
+            basic: "Modern Hosting Economy",
+            plus: "Modern Hosting Deluxe",
+            pro: "Modern Hosting Ultimate",
+            multi: "Modern Hosting Multi-Site",
+          }[tier.key] || tier.name.replace("Cloud", "Modern"),
         description:
           tier.key === "basic"
             ? "Standard Modern hosting for one Node + React site."
@@ -344,7 +507,8 @@ export default function PricingPage() {
                     ctaHref="/signup?product=cloud"
                     features={hostingFeatures(tier)}
                     recommended={tier.key === "plus"}
-                    introTerm="For first 3-year term"
+                    introTerm="For first 3-yr term"
+                    promo={modernHostingPromos[tier.key]}
                   />
                 ))}
               </div>
@@ -368,17 +532,18 @@ export default function PricingPage() {
                   Contact Sales
                 </Link>
               </CategoryIntro>
-              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {managedHostingTiers.map((tier) => (
+              <div className="grid gap-6 md:grid-cols-3">
+                {cmsHostingTiers.map((tier) => (
                   <PricingCard
                     key={tier.key}
                     tier={tier}
                     annual={annual}
                     ctaHref="/contact"
-                    ctaLabel="Contact Sales"
-                    features={managedFeatures(tier)}
-                    recommended={tier.key === "growth"}
-                    introTerm="For first 3-year term"
+                    ctaLabel="Buy Now"
+                    features={tier.features}
+                    recommended={tier.recommended}
+                    introTerm={tier.promo.term}
+                    promo={tier.promo}
                   />
                 ))}
               </div>
@@ -405,7 +570,13 @@ export default function PricingPage() {
               </CategoryIntro>
               <div className="grid gap-6 md:grid-cols-3">
                 {curateTiers.map((tier) => (
-                  <PricingCard key={tier.key} tier={tier} annual={annual} ctaHref="/signup?product=curate" />
+                  <PricingCard
+                    key={tier.key}
+                    tier={tier}
+                    annual={annual}
+                    ctaHref="/signup?product=curate"
+                    discountRate={promoDiscounts.curate[tier.key]}
+                  />
                 ))}
               </div>
 
@@ -494,6 +665,7 @@ export default function PricingPage() {
                       ctaLabel="Start Suite"
                       eyebrow={suiteProduct.name}
                       features={appTierFeatures.suite.bundle}
+                      discountRate={promoDiscounts.suite.bundle}
                       recommended
                     />
                     <article className="rounded-2xl border border-zinc-200 bg-white p-7 shadow-sm xl:col-span-2">
