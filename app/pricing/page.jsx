@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button, Card, CardBody, CardFooter, CardHeader, Chip, Tab, Tabs } from "@heroui/react";
+import { Button, Card, CardBody, Chip, Tab, Tabs } from "@heroui/react";
 import {
   ArrowRight,
   Briefcase,
@@ -20,285 +20,275 @@ import {
 import ProductIcon from "@/components/ProductIcon";
 
 const categories = [
-  {
-    id: "websites",
-    label: "Websites",
-    icon: Monitor,
-    sub: "Get a website — build it yourself, or have us build it for you.",
+  { id: "websites", label: "Websites", icon: "window", sub: "Get a website - build it yourself, or have us build it for you." },
+  { id: "hosting", label: "Hosting", icon: "cloud", sub: "Fast, managed hosting on Esteemed Cloud. SSL and AI contact form included - and it never doubles at renewal." },
+  { id: "hiring", label: "Hiring & Outreach", icon: "briefcase", sub: "AI-native CRM and ATS, priced per actual user - not company headcount. The AI tier is published, not gated behind a sales call." },
+  { id: "content", label: "Content Management", icon: "pen", sub: "Run your content on Esteemed - our AI-native CMS, or your own platform managed by us." },
+  { id: "ai", label: "AI Add-ons", icon: "sparkles", sub: "Deepen any plan with retrieval, memory, and agents. Attach to anything you already run." },
+  { id: "bundles", label: "Bundles", icon: "grid", sub: "Buy together, save together. Compose websites, SaaS, content, and support into one plan." },
+  { id: "experts", label: "Hire Experts", icon: "users", sub: "Hire vetted professionals from a 35,000-member network. Free to post a role; pay only when you place." },
+  { id: "support", label: "Support", icon: "support", sub: "Managed support packages and expert help, on demand." },
+];
+
+const catalog = {
+  websites: {
     cards: [
       {
-        iconProduct: "create",
+        icon: "create",
         name: "Esteemed Create",
         badge: "Start for free",
-        tags: ["AI builder", "Hosting included"],
+        wide: true,
+        pills: ["AI builder", "Hosting included"],
+        image: "/pricing/assets/create-preview.png",
+        imageBg: "#FFF4B8",
         blurb:
-          "Our AI website builder. Describe what you want and Create drafts a real, brand-aware site in the Studio IDE, then refine it by prompt or in code.",
+          "Our AI website builder. Describe what you want and Create drafts a real, brand-aware site in the Studio IDE - then refine it by prompt or in code. Hosting is included the moment you publish.",
         anchor: "As low as $39/mo · free to start",
         cta: "See Create plans",
         href: "/products/create#plans",
         primary: true,
       },
       {
-        icon: RefreshCw,
+        icon: "refresh",
         name: "Free Website Rebuild",
-        tags: ["Done-for-you", "12-month term"],
+        pills: ["Done-for-you"],
         blurb:
-          "Prefer we build it? Our team rebuilds your existing site for free when you start a 12-month Managed Hosting plan.",
-        anchor: "$0 with Managed Hosting",
+          "Prefer we build it? Our team rebuilds your existing site for free when you start a 12-month Managed Hosting plan - no rebuild fee, ever.",
+        anchor: "As low as $0 with Managed Hosting",
         cta: "See Managed Hosting",
         goto: "hosting",
       },
       {
-        icon: PenLine,
+        icon: "pen",
         name: "Website Design Services",
-        tags: ["Done-for-you", "Custom build"],
+        pills: ["Done-for-you", "4 pages"],
         blurb:
-          "Our design experts build your custom, responsive site with SSL, SEO basics, and a contact form included.",
-        anchor: "Custom build · Contact Sales",
+          "Our design experts build your custom, responsive site - free domain & SSL, SEO, and a contact form included. One-time build fee for 4 pages, then a simple annual hosting fee. No surprises.",
+        anchor: "$499 one-time build · plus annual hosting",
         cta: "Start my site",
         href: "/contact",
+        fine:
+          "Want more? Engage a designer to extend your project at $85/hr (3 hr min) - or $75/hr with a 10 hr commitment, used within 40 hrs of purchase.",
       },
     ],
   },
-  {
-    id: "hosting",
-    label: "Hosting",
-    icon: Cloud,
-    sub: "Fast, managed hosting on Esteemed Cloud. SSL and AI contact form included; never doubles at renewal.",
+  hosting: {
     cards: [
       {
-        iconProduct: "cloud",
+        icon: "cloud",
         name: "Self-serve Cloud",
         badge: "From $9.99",
-        tags: ["SSL included", "No renewal hikes"],
+        pills: ["SSL included", "No renewal hikes"],
         blurb:
-          "Bring your own site or a Create build. Fast, fully managed hosting with free SSL and an AI contact form built in.",
+          "Bring your own site or a Create build. Fast, fully managed hosting with free SSL and an AI contact form built in - and a price that never doubles at renewal.",
         anchor: "From $9.99/mo · 4 plans",
         cta: "See Cloud plans",
         href: "/products/cloud#plans",
         primary: true,
       },
       {
-        iconProduct: "cloud",
+        icon: "cloud",
         name: "Managed Hosting",
         badge: "Free rebuild",
-        tags: ["Done-for-you", "Support included"],
+        pills: ["Done-for-you", "Support included"],
         blurb:
-          "Done-for-you hosting with a free site rebuild and dedicated monthly support hours on a simple 12-month term.",
+          "Done-for-you hosting with a free site rebuild and dedicated monthly support hours, on a simple 12-month term. We keep your site fast, patched, and online.",
         anchor: "From $149/mo",
         cta: "See Managed plans",
         href: "/products/cloud#plans",
       },
     ],
     note:
-      "Create includes hosting at publish. Standalone Hosting is for bring-your-own, non-Create, or existing sites.",
+      "Esteemed Create includes hosting at publish - Create customers don't separately buy Cloud. Standalone Hosting is for bring-your-own or non-Create sites.",
   },
-  {
-    id: "hiring",
-    label: "Hiring & Outreach",
-    icon: Briefcase,
-    sub: "AI-native CRM and ATS, priced per actual user — not company headcount.",
+  hiring: {
     cards: [
       {
-        iconProduct: "acquire",
+        icon: "acquire",
         name: "Acquire",
         badge: "Free to start",
         founding: true,
-        tags: ["Per seat", "Star Assist AI"],
+        pills: ["Per seat", "Star Assist AI"],
         blurb:
-          "An AI-native CRM and TRM for talent and revenue teams. Manage relationships, score leads, and let Star draft outreach.",
+          "An AI-native CRM and TRM for talent and revenue teams. Manage every relationship, score and enrich leads, and let Star draft outreach - you approve. Priced per user, not per headcount.",
         anchor: "Free · paid from $149/seat · Pro $249/seat",
         cta: "See Acquire plans",
         href: "/products/acquire#plans",
         primary: true,
       },
       {
-        iconProduct: "hire",
+        icon: "hire",
         name: "Hire",
         badge: "Free to start",
         founding: true,
-        tags: ["Per seat", "Star Assist AI"],
+        pills: ["Per seat", "Star Assist AI"],
         blurb:
-          "An AI-native applicant tracking system. Post, source, screen, and move candidates with Star drafting and matching alongside you.",
+          "An AI-native applicant tracking system. Post, source, screen, and move candidates with Star drafting and matching alongside you. Published AI pricing - no sales call to see it.",
         anchor: "Free · paid from $149/seat · Pro $249/seat",
         cta: "See Hire plans",
         href: "/products/hire#plans",
       },
       {
-        icon: Users,
-        name: "EXP — Colleagues Enterprise",
-        tags: ["Enterprise", "Talent experience"],
+        icon: "users",
+        name: "EXP - Colleagues Enterprise",
+        pills: ["Enterprise", "Talent experience"],
         blurb:
-          "The Colleagues talent experience platform for organizations rolling it out company-wide.",
+          "The Colleagues talent experience platform for organizations rolling it out company-wide - engagement, internal mobility, and career growth on one platform.",
         anchor: "Contact Sales",
         cta: "Talk to us",
         href: "/contact",
       },
     ],
-    note: "Buying both? Suite pairs Acquire + Hire at Pro and saves $99/seat/mo.",
+    note:
+      "Buying both? The Suite bundle pairs Acquire + Hire at Pro and saves $99/seat/mo - see Bundles. Deeper AI lives under AI Add-ons.",
   },
-  {
-    id: "content",
-    label: "Content Management",
-    icon: PenLine,
-    sub: "Run your content on Esteemed — our AI-native CMS, or your own platform managed by us.",
+  content: {
     cards: [
       {
-        iconProduct: "curate",
+        icon: "curate",
         name: "Esteemed Curate",
         badge: "AI-native CMS",
         founding: true,
-        tags: ["Per workspace", "AI content hub"],
+        pills: ["Per workspace", "AI content hub"],
         blurb:
-          "Our AI-native CMS, managed in Esteemed Cloud and priced per workspace. Pro switches on content agents with RAG grounding via Connect.",
+          "Our AI-native CMS, managed in Esteemed Cloud and priced per workspace. Pro switches on the content agents - Blogger, Social, Marketer - with RAG grounding via Connect.",
         anchor: "From $49/mo · Pro $299/mo",
         cta: "See Curate plans",
         href: "/products/curate#plans",
         primary: true,
       },
       {
-        icon: Monitor,
+        icon: "window",
         name: "Managed CMS",
-        tags: ["WordPress", "Drupal"],
+        pills: ["WordPress & Drupal"],
         blurb:
-          "Already on WordPress or Drupal? We host your self-hosted site as-is, then pair it with a Support pack for security and updates.",
+          "Already on WordPress or Drupal? We host your self-hosted site as-is at the cost of hosting - then pair it with a Support pack for security patching and updates.",
         anchor: "Hosting from $9.99/mo + Support",
         cta: "See Hosting",
         goto: "hosting",
       },
       {
-        icon: ShieldCheck,
+        icon: "shield",
         name: "Care",
-        tags: ["Managed bridge"],
+        pills: ["Managed bridge"],
         blurb:
-          "An all-in managed bridge for your current site: security, monitoring, backups, and content edits with no migration required.",
+          "An all-in managed bridge for your current site - security, monitoring, backups, and content edits - with no migration required. Buys you time before you move.",
         anchor: "$399/mo",
         cta: "Start Care",
         href: "/contact",
       },
       {
-        icon: RefreshCw,
+        icon: "migrate",
         name: "Migration",
-        tags: ["One-time service"],
+        pills: ["One-time service"],
         blurb:
-          "Move WordPress, Squarespace, Wix, Drupal, Joomla, or custom systems onto Curate with public package pricing.",
+          "Move any platform - WordPress, Squarespace, Wix, Drupal - onto Curate. Productized and publicly priced, from small sites to multilingual enterprise. A paid migration lands you on a Curate subscription.",
         anchor: "One-time · from $6,500",
         cta: "See migration packages",
         href: "/migrate",
       },
     ],
     note:
-      "Squarespace is a valid migration source, but it cannot be hosted on our infrastructure as-is.",
+      "Squarespace can't be hosted on our infrastructure (it's closed) - but it's a valid migration source.",
   },
-  {
-    id: "ai",
-    label: "AI Add-ons",
-    icon: Sparkles,
-    sub: "Deepen any plan with retrieval, memory, and agents. Attach to anything you already run.",
+  ai: {
     cards: [
       {
-        iconProduct: "connect",
+        icon: "connect",
         name: "Connect",
-        tags: ["RAG grounding"],
+        pills: ["RAG grounding"],
         blurb:
-          "The retrieval layer. Connect your systems so Esteemed AI can reason over your real, current data.",
+          "The retrieval layer. Connect your systems so Esteemed AI can reason over your real, current data - grounded, not guessing. Included with managed Curate; standalone for any tenant.",
         anchor: "Included with Curate · standalone Contact Sales",
         cta: "Contact Sales",
         href: "/products/connect#plans",
       },
       {
-        iconProduct: "intelligence",
+        icon: "intelligence",
         name: "Intelligence",
         badge: "Most popular",
-        tags: ["Company Brain"],
+        pills: ["Attaches to any plan"],
         blurb:
-          "Persistent memory, continual learning, and custom domain memory that deepen Star across every plan it is attached to.",
+          "The Company Brain. Persistent memory, continual learning, and custom domain memory that deepen Star across every plan it's attached to.",
         anchor: "$199/mo · per tenant",
         cta: "Add Intelligence",
         href: "/products/intelligence#plans",
         primary: true,
       },
       {
-        iconProduct: "assist",
+        icon: "assist",
         name: "Esteemed Agents",
         badge: "Coming soon",
         soon: true,
-        tags: ["Launching soon"],
+        pills: ["Launching soon"],
         blurb:
-          "AI coworkers that take real work off your plate: Receptionist, Social, Blogger, Marketer, Recruiter, and Publicist.",
+          "AI coworkers that take real work off your plate - Receptionist, Social, Blogger, Marketer, Recruiter, Publicist. Included with Curate Pro; standalone soon.",
         anchor: "From $99/mo",
         cta: "Notify me",
         href: "/products/agents#plans",
       },
     ],
   },
-  {
-    id: "bundles",
-    label: "Bundles",
-    icon: Grid2X2,
-    sub: "Buy together, save together. Compose websites, SaaS, content, and support into one plan.",
+  bundles: {
     cards: [
       {
-        iconProduct: "acquire",
+        icon: "acquire",
         name: "Esteemed Suite",
         badge: "Most popular",
         founding: true,
-        tags: ["CRM + ATS"],
+        pills: ["CRM + ATS"],
         blurb:
-          "Acquire and Hire together, both at Pro, on a single seat. The full talent engine for less than buying each on its own.",
+          "Acquire and Hire together, both at Pro, on a single seat. The full talent engine - CRM and ATS - for less than buying each on its own.",
         anchor: "$399/seat/mo · save $99/seat",
         cta: "See Suite plans",
         href: "/products/acquire#plans",
         primary: true,
       },
       {
-        iconProduct: "create",
+        icon: "create",
         name: "Business-in-a-Box",
-        tags: ["Websites", "SaaS", "Support"],
+        pills: ["Websites + SaaS + Support"],
         blurb:
-          "Everything to launch and run a business: a Create site, Acquire seats, and a managed Support pack.",
+          "Everything to launch and run a business: an Esteemed Create site, Acquire CRM seats, and a managed Support pack - one onboarding, one invoice.",
         anchor: "Bundle pricing on a quick call",
         cta: "Build this bundle",
         href: "/contact",
       },
       {
-        iconProduct: "curate",
+        icon: "curate",
         name: "Content Engine",
-        tags: ["Curate", "Connect", "Intelligence"],
+        pills: ["Curate + Connect + Intelligence"],
         blurb:
-          "Your AI content hub, fully wired: Curate Pro with Connect and the Intelligence Company Brain switched on.",
+          "Your AI content hub, fully wired: Curate Pro with the Connect RAG layer and the Intelligence Company Brain switched on, agents flywheeling.",
         anchor: "Bundle pricing on a quick call",
         cta: "Build this bundle",
         href: "/contact",
+      },
+      {
+        icon: "assist",
+        name: "Agents Bundle",
+        badge: "Coming soon",
+        soon: true,
+        pills: ["Launching soon"],
+        blurb:
+          "All five content and marketing agents working together on one bill - and included free with Curate Pro.",
+        anchor: "From $199/mo",
+        cta: "Notify me",
+        href: "/products/agents#plans",
       },
     ],
     note:
-      "Suite is published; cross-category bundles are priced per mix on a short call.",
+      "Suite is published; cross-category bundles are priced per mix on a short call, so you only pay for what you take.",
   },
-  {
-    id: "experts",
-    label: "Hire Experts",
-    icon: Users,
-    sub: "Hire from a 35,000-member professional network. Free to join; pay only when you place.",
+  experts: {
     cards: [
       {
-        icon: Users,
-        name: "Membership",
-        badge: "Free",
-        tags: ["Professionals"],
-        blurb:
-          "Profile, community, and career tools for professionals in the Esteemed Colleagues network.",
-        anchor: "Free to professionals, forever",
-        cta: "Join Colleagues",
-        href: "/products/colleagues",
-      },
-      {
-        icon: Briefcase,
+        icon: "users",
         name: "Hire from Colleagues",
         badge: "Most popular",
-        tags: ["Pay on placement"],
+        pills: ["Pay on placement"],
         blurb:
-          "Post roles free and tap a 35,000-member vetted professional network. Pay only when you place.",
+          "Post roles free and tap a 35,000-member vetted network of professionals. Pay only when you place - no seats, no subscription, no hiring until you find the right person.",
         anchor: "Platform fee as low as 10%",
         cta: "Post a role",
         href: "/products/colleagues",
@@ -306,37 +296,51 @@ const categories = [
       },
     ],
   },
-  {
-    id: "support",
-    label: "Support",
-    icon: Headphones,
-    sub: "Managed support packages and expert help, on demand.",
+  support: {
     cards: [
       {
-        iconProduct: "support",
+        icon: "support",
         name: "Support packs",
         badge: "Most popular",
-        tags: ["2 hr", "5 hr", "10 hr"],
+        pills: ["Small · Standard · Business"],
         blurb:
-          "Monthly blocks of managed support hours for security patching, feature updates, troubleshooting, and hands-on help.",
-        anchor: "From $170/mo",
-        cta: "See Support plans",
+          "Monthly blocks of managed support hours - security patching, feature updates, and hands-on help. Pair with Managed CMS or any plan you run with us.",
+        anchor: "Get a quote",
+        cta: "Get a quote",
         href: "/services/support#plans",
         primary: true,
       },
       {
-        icon: Users,
+        icon: "users",
         name: "Expert Help",
-        tags: ["From the network"],
+        pills: ["From the network"],
         blurb:
-          "On-demand specialist help sourced from top Colleagues professionals for work that needs an expert, not a ticket.",
+          "On-demand specialist help sourced from top Colleagues professionals - for the work that needs an expert, not a ticket.",
         anchor: "Contact Sales",
         cta: "Talk to us",
         href: "/contact",
       },
     ],
+    note:
+      "Support pack pricing is being finalized - request a quote and we'll size a block to your needs.",
   },
-];
+};
+
+const fallbackIcons = {
+  window: Monitor,
+  cloud: Cloud,
+  briefcase: Briefcase,
+  pen: PenLine,
+  sparkles: Sparkles,
+  grid: Grid2X2,
+  refresh: RefreshCw,
+  shield: ShieldCheck,
+  migrate: RefreshCw,
+  users: Users,
+  support: Headphones,
+};
+
+const officialIcons = new Set(["acquire", "hire", "create", "curate", "connect", "intelligence", "assist", "support", "cloud"]);
 
 function Star({ className = "h-3 w-3", fill = "#B89D1F" }) {
   return (
@@ -346,202 +350,266 @@ function Star({ className = "h-3 w-3", fill = "#B89D1F" }) {
   );
 }
 
-function IconTile({ item, size = "h-12 w-12" }) {
-  if (item.iconProduct) {
-    return (
-      <span className={`${size} flex flex-shrink-0 items-center justify-center rounded-xl border border-zinc-200 bg-white`}>
-        <ProductIcon product={item.iconProduct} className="h-9 w-9" />
-      </span>
-    );
+function IconTile({ name, size = "h-12 w-12", official = true }) {
+  if (official && officialIcons.has(name)) {
+    return <ProductIcon product={name} className={size} />;
   }
 
-  const Icon = item.icon || WandSparkles;
+  const Icon = fallbackIcons[name] || WandSparkles;
   return (
-    <span className={`${size} flex flex-shrink-0 items-center justify-center rounded-xl bg-accent text-ink`}>
-      <Icon className="h-6 w-6" strokeWidth={2} />
+    <span className={`${size} flex flex-shrink-0 items-center justify-center rounded-xl bg-[#FEE546] text-ink`}>
+      <Icon className="h-[56%] w-[56%]" strokeWidth={2} />
     </span>
   );
 }
 
-function LeadCard({ card, onGoto }) {
-  const href = card.goto ? undefined : card.href || "/contact";
-  const cta = card.goto ? (
-    <Button
-      variant={card.primary ? "solid" : "bordered"}
-      color={card.primary ? "primary" : "default"}
-      radius="full"
-      className={card.primary ? "bg-accent text-ink font-bold" : "border-zinc-300 font-bold text-ink"}
-      onPress={() => onGoto(card.goto)}
-      endContent={<ArrowRight className="h-4 w-4" />}
-    >
-      {card.cta}
-    </Button>
-  ) : (
-    <Button
-      as={Link}
-      href={href}
-      variant={card.primary ? "solid" : "bordered"}
-      color={card.primary ? "primary" : "default"}
-      radius="full"
-      className={card.primary ? "bg-accent text-ink font-bold" : "border-zinc-300 font-bold text-ink"}
-      endContent={<ArrowRight className="h-4 w-4" />}
-    >
-      {card.cta}
-    </Button>
-  );
+function CategoryHeaderIcon({ name }) {
+  return <IconTile name={name} size="h-[52px] w-[52px]" official={false} />;
+}
+
+function PlanButton({ card, onGoto }) {
+  const className = card.primary
+    ? "bg-[#FEE546] text-ink font-bold hover:bg-[#FCD72B]"
+    : "border-zinc-400 bg-transparent font-bold text-ink hover:bg-[#EDEDEA]";
+
+  if (card.goto) {
+    return (
+      <Button variant={card.primary ? "solid" : "bordered"} radius="full" className={className} onPress={() => onGoto(card.goto)}>
+        {card.cta}
+      </Button>
+    );
+  }
 
   return (
-    <Card className="h-full rounded-2xl border border-zinc-200 bg-white shadow-none transition-colors hover:border-zinc-900">
-      <CardHeader className="flex items-start justify-between gap-4 p-6 pb-0">
-        <IconTile item={card} />
-        {card.badge && (
-          <Chip
-            size="sm"
-            variant="flat"
-            className={card.soon ? "bg-zinc-100 text-zinc-600" : "bg-accent text-ink"}
-          >
-            {card.badge}
-          </Chip>
-        )}
-      </CardHeader>
-      <CardBody className="flex flex-col p-6">
-        <h3 className="text-2xl font-black tracking-tight text-ink">{card.name}</h3>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {(card.tags || []).map((tag) => (
-            <Chip key={tag} size="sm" variant="bordered" className="border-zinc-200 text-zinc-600">
-              {tag}
-            </Chip>
-          ))}
-          {card.founding && (
-            <Chip size="sm" variant="bordered" className="border-zinc-300 text-zinc-700" startContent={<Star className="h-3 w-3" />}>
-              Founding rates
-            </Chip>
+    <Button
+      as={Link}
+      href={card.href || "/contact"}
+      variant={card.primary ? "solid" : "bordered"}
+      radius="full"
+      className={className}
+      isDisabled={card.soon}
+    >
+      {card.cta}
+    </Button>
+  );
+}
+
+function Tags({ card }) {
+  if (!card.pills?.length && !card.founding) return null;
+
+  return (
+    <div className="mt-3 flex flex-wrap gap-1.5">
+      {(card.pills || []).map((pill) => (
+        <Chip key={pill} size="sm" variant="flat" color="default" radius="full">
+          {pill}
+        </Chip>
+      ))}
+      {card.founding && (
+        <Chip
+          size="sm"
+          variant="flat"
+          color="warning"
+          radius="full"
+          startContent={<Star className="h-2.5 w-2.5" />}
+        >
+          Founding rates
+        </Chip>
+      )}
+    </div>
+  );
+}
+
+function Badge({ card }) {
+  if (!card.badge) return null;
+
+  return (
+    <Chip
+      size="sm"
+      radius="sm"
+      variant="flat"
+      color={card.soon ? "default" : "warning"}
+      className="font-bold uppercase"
+    >
+      {card.badge}
+    </Chip>
+  );
+}
+
+function StandardLeadCard({ card, onGoto }) {
+  return (
+    <Card className="lead-card h-full rounded-[18px] border border-zinc-200 bg-white shadow-none transition-colors hover:border-zinc-500">
+      <CardBody className="flex h-full flex-col p-[26px]">
+        <div className="mb-[18px] flex items-start justify-between gap-3">
+          <IconTile name={card.icon} />
+          <Badge card={card} />
+        </div>
+
+        <h3 className="text-[22px] font-extrabold leading-tight tracking-tight text-ink">{card.name}</h3>
+        <Tags card={card} />
+        <p className="mt-4 text-[14.5px] leading-[1.55] text-zinc-600">{card.blurb}</p>
+
+        <div className="mt-auto pt-[22px]">
+          <p className="mb-4 text-[14.5px] font-semibold text-ink">{card.anchor}</p>
+          <PlanButton card={card} onGoto={onGoto} />
+          {card.fine && (
+            <p className="mt-3 flex gap-2 text-xs leading-[1.45] text-zinc-500">
+              <Star className="mt-0.5 h-2.5 w-2.5 flex-shrink-0" />
+              <span>{card.fine}</span>
+            </p>
           )}
         </div>
-        <p className="mt-4 text-sm leading-6 text-zinc-600">{card.blurb}</p>
       </CardBody>
-      <CardFooter className="flex flex-col items-start gap-4 p-6 pt-0">
-        <p className="text-sm font-bold text-ink">{card.anchor}</p>
-        {cta}
-      </CardFooter>
     </Card>
   );
+}
+
+function WideLeadCard({ card, onGoto }) {
+  return (
+    <Card className="lead-card h-full overflow-hidden rounded-[18px] border border-zinc-200 bg-white shadow-none transition-colors hover:border-zinc-500 lg:col-span-2">
+      <div className="grid h-full min-h-[360px] md:grid-cols-[0.46fr_0.54fr]">
+        <CardBody className="flex h-full flex-col p-7 md:p-[30px]">
+          <div className="mb-4 flex items-start justify-between gap-3">
+            <IconTile name={card.icon} size="h-[52px] w-[52px]" />
+            <Badge card={card} />
+          </div>
+          <h3 className="text-[26px] font-extrabold leading-tight tracking-tight text-ink">{card.name}</h3>
+          <Tags card={card} />
+          <p className="mt-3 max-w-[420px] text-[14.5px] leading-[1.55] text-zinc-600">{card.blurb}</p>
+          <div className="mt-auto pt-[22px]">
+            <p className="mb-3.5 text-[14.5px] font-semibold text-ink">{card.anchor}</p>
+            <PlanButton card={card} onGoto={onGoto} />
+          </div>
+        </CardBody>
+        <div
+          className="order-first min-h-[220px] bg-cover bg-left md:order-none md:min-h-0"
+          role="img"
+          aria-label={`${card.name} preview`}
+          style={{
+            backgroundColor: card.imageBg || "#EDEDEA",
+            backgroundImage: `url(${card.image})`,
+          }}
+        />
+      </div>
+    </Card>
+  );
+}
+
+function LeadCard({ card, onGoto }) {
+  if (card.wide) return <WideLeadCard card={card} onGoto={onGoto} />;
+  return <StandardLeadCard card={card} onGoto={onGoto} />;
 }
 
 export default function PricingPage() {
   const [active, setActive] = useState("websites");
   const category = categories.find((item) => item.id === active) || categories[0];
-  const ActiveIcon = category.icon;
+  const data = catalog[active] || catalog.websites;
+
+  const goto = (id) => {
+    setActive(id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <main className="min-h-screen bg-[#FAFAF7]">
-      <section className="px-6 py-16 md:py-20">
-        <div className="mx-auto max-w-7xl">
-          <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-zinc-500">
-            <Star className="h-3.5 w-3.5" />
+    <main className="min-h-screen bg-[#FAFAF7] text-ink">
+      <section className="bg-[#FAFAF7]">
+        <div className="mx-auto max-w-[1800px] px-6 py-[52px] pb-[26px]">
+          <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
+            <Star className="h-3 w-3" />
             Plans & pricing
           </p>
-          <h1 className="mt-4 max-w-4xl text-5xl font-black leading-tight tracking-tight text-ink md:text-6xl">
+          <h1 className="mt-3.5 max-w-[800px] text-[clamp(38px,4.6vw,56px)] font-extrabold leading-[1.03] tracking-tight text-ink">
             Pick what you need. Pay for nothing you don't.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-600">
-            Transparent, published pricing across the platform. Annual plans include two months free on recurring products.
+          <p className="mt-4 max-w-[600px] text-[17px] leading-[1.5] text-zinc-600">
+            Transparent, published pricing across the platform. Annual plans include two months free.
           </p>
         </div>
       </section>
 
-      <section className="bg-ink px-6 py-4 text-white">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3">
-          <Star className="h-4 w-4" fill="#FEE546" />
-          <p className="m-0 text-sm leading-6 text-white/85">
-            <strong className="text-white">Every offering is a separate purchase — none requires another.</strong>{" "}
+      <section className="bg-[#1B1E25] text-white">
+        <div className="mx-auto flex max-w-[1800px] flex-wrap items-center gap-3 px-6 py-4">
+          <Star className="h-[15px] w-[15px]" fill="#FEE546" />
+          <p className="m-0 text-sm leading-[1.5] text-white/85">
+            <strong className="text-white">Every offering is a separate purchase - none requires another.</strong>{" "}
             Host without migrating. Hire without the website. Take only what you need.
           </p>
         </div>
       </section>
 
-      <section className="px-6 py-10">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[260px_1fr] lg:items-start">
-          <aside className="lg:sticky lg:top-24">
-            <p className="mb-3 px-3 text-xs font-black uppercase tracking-[0.14em] text-zinc-500">Browse by need</p>
-            <Tabs
-              aria-label="Pricing categories"
-              selectedKey={active}
-              onSelectionChange={(key) => setActive(String(key))}
-              classNames={{
-                base: "w-full",
-                tabList: "w-full gap-1 rounded-2xl border border-zinc-200 bg-white p-2 lg:flex-col",
-                cursor: "hidden",
-                tab: "h-auto justify-start rounded-xl px-3 py-3 data-[selected=true]:bg-accent",
-                tabContent: "w-full text-left font-semibold text-zinc-600 group-data-[selected=true]:text-ink",
-                panel: "hidden",
-              }}
-            >
-              {categories.map((item) => (
-                <Tab
-                  key={item.id}
-                  title={
-                    <span className="flex w-full items-center justify-between gap-3">
-                      <span>{item.label}</span>
-                      <ArrowRight className="h-4 w-4 opacity-50" />
-                    </span>
-                  }
-                />
-              ))}
-            </Tabs>
+      <section className="bg-[#FAFAF7]">
+        <div className="pane mx-auto flex max-w-[1800px] items-start gap-11 px-6 py-9 pb-6 max-[900px]:flex-col max-[900px]:gap-6">
+          <aside className="w-[248px] flex-shrink-0 max-[900px]:sticky max-[900px]:top-16 max-[900px]:z-20 max-[900px]:-mx-6 max-[900px]:w-[calc(100%+3rem)] max-[900px]:border-b max-[900px]:border-zinc-200 max-[900px]:bg-[#FAFAF7] max-[900px]:px-6 max-[900px]:py-2">
+            <div className="sticky top-[92px] max-[900px]:static">
+              <p className="mb-3 pl-3 text-xs font-bold uppercase tracking-[0.12em] text-zinc-500 max-[900px]:hidden">Browse by need</p>
+              <Tabs
+                aria-label="Pricing categories"
+                selectedKey={active}
+                onSelectionChange={(key) => setActive(String(key))}
+                classNames={{
+                  base: "w-full",
+                  tabList:
+                    "w-full gap-0 rounded-none bg-transparent p-0 max-[900px]:flex-row max-[900px]:gap-1.5 max-[900px]:overflow-x-auto max-[900px]:pb-1",
+                  cursor: "hidden",
+                  tab:
+                    "h-auto w-full justify-start rounded-[10px] px-3 py-[11px] max-[900px]:w-auto max-[900px]:flex-shrink-0 max-[900px]:rounded-full max-[900px]:border max-[900px]:border-zinc-200 max-[900px]:bg-white max-[900px]:px-3.5 max-[900px]:py-2.5 data-[selected=true]:bg-[#EDEDEA] max-[900px]:data-[selected=true]:bg-[#1B1E25]",
+                  tabContent:
+                    "w-full text-left text-[14px] font-semibold text-zinc-600 group-data-[selected=true]:font-bold group-data-[selected=true]:text-ink max-[900px]:group-data-[selected=true]:text-white",
+                  panel: "hidden",
+                }}
+              >
+                {categories.map((item) => (
+                  <Tab
+                    key={item.id}
+                    title={
+                      <span className="flex w-full items-center justify-between gap-3">
+                        <span>{item.label}</span>
+                        {active === item.id && <ArrowRight className="h-[15px] w-[15px] flex-shrink-0 text-ink max-[900px]:hidden" strokeWidth={2} />}
+                      </span>
+                    }
+                  />
+                ))}
+              </Tabs>
 
-            <div className="mt-4 rounded-2xl border border-zinc-200 bg-white p-5">
-              <p className="font-bold text-ink">Not sure where to start?</p>
-              <p className="mt-2 text-sm leading-6 text-zinc-600">Tell us about your team and we'll map the right plan.</p>
-              <Button as={Link} href="/contact" radius="full" className="mt-4 w-full bg-ink font-bold text-white">
-                Talk to us
-              </Button>
+              <Card className="mt-[22px] rounded-[18px] border border-zinc-200 bg-[#EDEDEA] shadow-none max-[900px]:hidden">
+                <CardBody className="p-[18px]">
+                  <p className="text-sm font-bold text-ink">Not sure where to start?</p>
+                  <p className="mt-1.5 text-[13px] leading-[1.45] text-zinc-600">Tell us about your team and we'll map the right plan.</p>
+                  <Button as={Link} href="/contact" radius="full" className="mt-3 w-full bg-[#1B1E25] text-sm font-bold text-white">
+                    Talk to us
+                  </Button>
+                </CardBody>
+              </Card>
             </div>
           </aside>
 
-          <section>
-            <div className="mb-8 flex max-w-3xl items-start gap-4">
-              <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-accent text-ink">
-                <ActiveIcon className="h-7 w-7" strokeWidth={2} />
-              </span>
+          <section key={active} className="min-w-0 flex-1">
+            <div className="mb-[30px] flex max-w-[760px] items-start gap-4">
+              <CategoryHeaderIcon name={category.icon} />
               <div>
-                <h2 className="text-3xl font-black tracking-tight text-ink md:text-4xl">{category.label}</h2>
-                <p className="mt-2 text-base leading-7 text-zinc-600">{category.sub}</p>
+                <h2 className="m-0 text-[clamp(26px,3vw,34px)] font-extrabold leading-[1.05] tracking-tight text-ink">{category.label}</h2>
+                <p className="mt-2 text-[15.5px] leading-[1.5] text-zinc-600">{category.sub}</p>
               </div>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {category.cards.map((card) => (
-                <LeadCard key={card.name} card={card} onGoto={setActive} />
+            <div className="grid items-stretch gap-[18px] md:grid-cols-2 xl:grid-cols-3">
+              {data.cards.map((card) => (
+                <LeadCard key={card.name} card={card} onGoto={goto} />
               ))}
             </div>
 
-            {category.note && (
-              <div className="mt-6 flex max-w-4xl items-start gap-3 text-sm leading-6 text-zinc-500">
-                <Star className="mt-1 h-3.5 w-3.5 flex-shrink-0" />
-                <p>{category.note}</p>
+            {data.note && (
+              <div className="mt-5 flex max-w-[880px] items-start gap-2.5">
+                <Star className="mt-0.5 h-3 w-3 flex-shrink-0" />
+                <p className="m-0 text-[12.5px] leading-[1.5] text-zinc-500">{data.note}</p>
               </div>
             )}
 
-            <div className="mt-8 border-t border-zinc-200 pt-5 text-sm text-zinc-500">
-              Showing <strong className="text-zinc-700">{category.cards.length}</strong> of{" "}
-              <strong className="text-zinc-700">{category.cards.length}</strong> {category.label.toLowerCase()} options.
+            <div className="mt-7 border-t border-zinc-200 px-0 pt-[18px] text-[13px] text-zinc-500">
+              Showing <strong className="mx-1 text-zinc-700">{data.cards.length}</strong> of{" "}
+              <strong className="mx-1 text-zinc-700">{data.cards.length}</strong> {category.label.toLowerCase()}{" "}
+              {data.cards.length === 1 ? "option" : "options"}
             </div>
           </section>
-        </div>
-      </section>
-
-      <section className="px-6 py-16">
-        <div className="mx-auto grid max-w-7xl gap-6 rounded-2xl bg-ink p-8 text-white md:grid-cols-[1fr_auto] md:items-center">
-          <div>
-            <h2 className="text-3xl font-black tracking-tight">Not sure where to start?</h2>
-            <p className="mt-2 max-w-2xl text-white/70">
-              We can map websites, hosting, SaaS, content, AI, support, and hiring into one practical plan.
-            </p>
-          </div>
-          <Button as={Link} href="/contact" radius="full" className="bg-accent px-7 font-bold text-ink" endContent={<ArrowRight className="h-4 w-4" />}>
-            Talk to us
-          </Button>
         </div>
       </section>
     </main>
