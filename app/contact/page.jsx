@@ -2,18 +2,35 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Select, SelectItem } from "@heroui/react";
+
+const interestOptions = [
+  { key: "create", label: "Create" },
+  { key: "cloud-hosting", label: "Cloud hosting" },
+  { key: "curate", label: "Curate" },
+  { key: "acquire", label: "Acquire" },
+  { key: "hire", label: "Hire" },
+  { key: "intelligence", label: "Intelligence" },
+  { key: "agents", label: "Agents" },
+  { key: "colleagues", label: "Colleagues" },
+  { key: "support", label: "Support" },
+  { key: "website-design", label: "Website design" },
+];
+const interestLabels = Object.fromEntries(interestOptions.map((option) => [option.key, option.label]));
 
 export default function ContactPage() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
+  const [interests, setInterests] = useState(new Set([]));
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+    const selectedInterests = Array.from(interests).map((key) => interestLabels[key] || key);
 
     try {
       await fetch("/api/lead-capture", {
@@ -23,6 +40,7 @@ export default function ContactPage() {
           name,
           email,
           company,
+          interests: selectedInterests,
           message,
           source: "contact-form",
         }),
@@ -71,6 +89,24 @@ export default function ContactPage() {
               onChange={(e) => setCompany(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm outline-none focus:border-zinc-400 transition-colors"
             />
+            <Select
+              label="What are you interested in?"
+              placeholder="Select one or more"
+              selectionMode="multiple"
+              selectedKeys={interests}
+              onSelectionChange={(keys) => setInterests(keys === "all" ? new Set(interestOptions.map((option) => option.key)) : keys)}
+              radius="lg"
+              classNames={{
+                trigger: "min-h-12 rounded-xl border border-zinc-200 bg-white shadow-none data-[hover=true]:border-zinc-400",
+                label: "text-zinc-500",
+                value: "text-sm text-ink",
+                popoverContent: "rounded-xl",
+              }}
+            >
+              {interestOptions.map((option) => (
+                <SelectItem key={option.key}>{option.label}</SelectItem>
+              ))}
+            </Select>
             <textarea
               required
               placeholder="Message"

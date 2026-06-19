@@ -23,8 +23,8 @@ import ProductIcon from "@/components/ProductIcon";
 const categories = [
   { id: "websites", label: "Websites", icon: "window", sub: "Get a website - build it yourself, or have us build it for you." },
   { id: "hosting", label: "Hosting", icon: "cloud", sub: "Fast, managed hosting on Esteemed Cloud. SSL and AI contact form included - and it never doubles at renewal." },
-  { id: "hiring", label: "Hiring & Outreach", icon: "briefcase", sub: "AI-native CRM and ATS, priced per actual user - not company headcount. The AI tier is published, not gated behind a sales call." },
   { id: "content", label: "Content Management", icon: "pen", sub: "Run your content on Esteemed - our AI-native CMS, or your own platform managed by us." },
+  { id: "hiring", label: "Hiring & Outreach", icon: "briefcase", sub: "AI-native CRM and ATS, priced per actual user - not company headcount. The AI tier is published, not gated behind a sales call." },
   { id: "ai", label: "AI Add-ons", icon: "sparkles", sub: "Deepen any plan with retrieval, memory, and agents. Attach to anything you already run." },
   { id: "bundles", label: "Bundles", icon: "grid", sub: "Buy together, save together. Compose websites, SaaS, content, and support into one plan." },
   { id: "experts", label: "Hire Experts", icon: "users", sub: "Hire vetted professionals from a 35,000-member network. Free to post a role; pay only when you place." },
@@ -436,10 +436,9 @@ function Badge({ card }) {
       radius="full"
       variant="flat"
       classNames={{
-        base: "border-2 border-ink bg-white px-2.5 py-1 shadow-none",
-        content: "px-1 text-[11px] font-extrabold uppercase tracking-[0.16em] text-ink",
+        base: "bg-accent-hover px-2.5 py-1 shadow-none",
+        content: "px-1 text-[12px] font-bold text-ink",
       }}
-      startContent={<span className="ml-1 h-2 w-2 rounded-full bg-accent" aria-hidden="true" />}
     >
       {card.badge}
     </Chip>

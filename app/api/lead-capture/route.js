@@ -1,13 +1,30 @@
 import { NextResponse } from "next/server";
 
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 export async function POST(request) {
-  const { email, name, prompt, source } = await request.json();
+  const { email, name, company, interests = [], message, prompt, source } = await request.json();
 
   if (!email) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
   }
 
   const results = { crm: false, prospectEmail: false, internalEmail: false };
+  const selectedInterests = Array.isArray(interests) ? interests : [];
+  const promptText = prompt || message || "";
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeCompany = escapeHtml(company);
+  const safeSource = escapeHtml(source);
+  const safePrompt = escapeHtml(promptText);
+  const safeInterests = selectedInterests.map(escapeHtml);
 
   // 1. Oceanic CRM — create Contact + log Activity
   try {
@@ -29,7 +46,9 @@ export async function POST(request) {
           body: JSON.stringify({
             type: "lead-capture",
             source,
-            prompt: prompt || "",
+            prompt: promptText,
+            company: company || "",
+            interests: selectedInterests,
             timestamp: new Date().toISOString(),
           }),
         });
@@ -52,8 +71,8 @@ export async function POST(request) {
           from: "Esteemed <hello@esteemed.io>",
           to: email,
           subject: "We got your idea.",
-          html: `<p>Hi${name ? ` ${name}` : ""},</p>
-<p>We received your message${prompt ? `:</p><blockquote style="border-left:3px solid #FEE546;padding-left:12px;color:#555;">${prompt}</blockquote><p>` : ". "}A real person from our team will be in touch within one business day to start building with you.</p>
+          html: `<p>Hi${safeName ? ` ${safeName}` : ""},</p>
+<p>We received your message${safePrompt ? `:</p><blockquote style="border-left:3px solid #FEE546;padding-left:12px;color:#555;">${safePrompt}</blockquote><p>` : ". "}A real person from our team will be in touch within one business day to start building with you.</p>
 <p>— The Esteemed Team</p>`,
         }),
       });
@@ -76,10 +95,12 @@ export async function POST(request) {
           from: "Esteemed Leads <hello@esteemed.io>",
           to: notifyEmail,
           subject: `New lead: ${email}`,
-          html: `<p><strong>Name:</strong> ${name || "(not provided)"}</p>
-<p><strong>Email:</strong> ${email}</p>
-<p><strong>Source:</strong> ${source}</p>
-<p><strong>Prompt:</strong> ${prompt || "(empty)"}</p>
+          html: `<p><strong>Name:</strong> ${safeName || "(not provided)"}</p>
+<p><strong>Email:</strong> ${safeEmail}</p>
+<p><strong>Company:</strong> ${safeCompany || "(not provided)"}</p>
+<p><strong>Interests:</strong> ${safeInterests.length ? safeInterests.join(", ") : "(not provided)"}</p>
+<p><strong>Source:</strong> ${safeSource}</p>
+<p><strong>Message:</strong> ${safePrompt || "(empty)"}</p>
 <p><strong>Time:</strong> ${new Date().toISOString()}</p>`,
         }),
       });
