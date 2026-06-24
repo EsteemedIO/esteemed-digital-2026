@@ -16,7 +16,7 @@ export async function POST(request) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
   }
 
-  const results = { crm: false, prospectEmail: false, internalEmail: false };
+  const results = { crm: false, forms: false, prospectEmail: false, internalEmail: false };
   const selectedInterests = Array.isArray(interests) ? interests : [];
   const promptText = prompt || message || "";
   const safeName = escapeHtml(name);
@@ -30,6 +30,40 @@ export async function POST(request) {
     escapeHtml(key),
     Array.isArray(value) ? value.map(escapeHtml).join(", ") : escapeHtml(value),
   ]);
+
+  // The live esteemed.io forms submit to a DO Serverless function that feeds Acquire.
+  // Keep partner applications on that same path while this Next app replaces Drupal.
+  try {
+    const shouldUseFormsBridge = formId === "partner_application" || source === "partner-application";
+    const formsApi =
+      process.env.ESTEEMED_FORMS_API_URL ||
+      "https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-40cb0fd1-016f-4383-8b38-97bdc816fd0f/forms/submit";
+
+    if (shouldUseFormsBridge && formsApi) {
+      const formsRes = await fetch(formsApi, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _form_id: formId || "partner_application",
+          name: name || "",
+          email,
+          company: company || "",
+          interests: selectedInterests,
+          message: promptText,
+          source: source || "",
+          ...details,
+        }),
+      });
+
+      if (!formsRes.ok) {
+        throw new Error(`Forms bridge HTTP ${formsRes.status}`);
+      }
+
+      results.forms = true;
+    }
+  } catch (err) {
+    console.error("Forms bridge error:", err.message);
+  }
 
   // 1. Oceanic CRM — create Contact + log Activity
   try {
