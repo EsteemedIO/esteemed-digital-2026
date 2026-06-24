@@ -10,7 +10,7 @@ function escapeHtml(value = "") {
 }
 
 export async function POST(request) {
-  const { email, name, company, interests = [], message, prompt, source } = await request.json();
+  const { email, name, company, interests = [], message, prompt, source, formId, details = {} } = await request.json();
 
   if (!email) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -25,6 +25,11 @@ export async function POST(request) {
   const safeSource = escapeHtml(source);
   const safePrompt = escapeHtml(promptText);
   const safeInterests = selectedInterests.map(escapeHtml);
+  const safeFormId = escapeHtml(formId);
+  const safeDetails = Object.entries(details || {}).map(([key, value]) => [
+    escapeHtml(key),
+    Array.isArray(value) ? value.map(escapeHtml).join(", ") : escapeHtml(value),
+  ]);
 
   // 1. Oceanic CRM — create Contact + log Activity
   try {
@@ -49,6 +54,8 @@ export async function POST(request) {
             prompt: promptText,
             company: company || "",
             interests: selectedInterests,
+            formId: formId || "",
+            details,
             timestamp: new Date().toISOString(),
           }),
         });
@@ -100,7 +107,9 @@ export async function POST(request) {
 <p><strong>Company:</strong> ${safeCompany || "(not provided)"}</p>
 <p><strong>Interests:</strong> ${safeInterests.length ? safeInterests.join(", ") : "(not provided)"}</p>
 <p><strong>Source:</strong> ${safeSource}</p>
+<p><strong>Form:</strong> ${safeFormId || "(not provided)"}</p>
 <p><strong>Message:</strong> ${safePrompt || "(empty)"}</p>
+${safeDetails.length ? `<p><strong>Details:</strong></p><ul>${safeDetails.map(([key, value]) => `<li><strong>${key}:</strong> ${value || "(empty)"}</li>`).join("")}</ul>` : ""}
 <p><strong>Time:</strong> ${new Date().toISOString()}</p>`,
         }),
       });
