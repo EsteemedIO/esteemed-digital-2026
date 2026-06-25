@@ -44,19 +44,23 @@ export async function POST(request) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          formId: formId || "partner_application",
           _form_id: formId || "partner_application",
-          name: name || "",
-          email,
-          company: company || "",
-          interests: selectedInterests,
-          message: promptText,
-          source: source || "",
-          ...details,
+          fields: {
+            name: name || "",
+            email,
+            company: company || "",
+            interests: selectedInterests,
+            message: promptText,
+            source: source || "",
+            ...details,
+          },
         }),
       });
 
       if (!formsRes.ok) {
-        throw new Error(`Forms bridge HTTP ${formsRes.status}`);
+        const errorText = await formsRes.text();
+        throw new Error(`Forms bridge HTTP ${formsRes.status}: ${errorText}`);
       }
 
       results.forms = true;
