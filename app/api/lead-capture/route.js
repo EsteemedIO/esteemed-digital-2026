@@ -34,7 +34,9 @@ export async function POST(request) {
   // The live esteemed.io forms submit to a DO Serverless function that feeds Acquire.
   // Keep partner applications on that same path while this Next app replaces Drupal.
   try {
-    const shouldUseFormsBridge = formId === "partner_application" || source === "partner-application";
+    const bridgedForms = new Set(["contact", "partner_application"]);
+    const shouldUseFormsBridge =
+      bridgedForms.has(formId) || source === "contact-form" || source === "partner-application";
     const formsApi =
       process.env.ESTEEMED_FORMS_API_URL ||
       "https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-40cb0fd1-016f-4383-8b38-97bdc816fd0f/forms/submit";
@@ -44,8 +46,8 @@ export async function POST(request) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          formId: formId || "partner_application",
-          _form_id: formId || "partner_application",
+          formId: formId || (source === "partner-application" ? "partner_application" : "contact"),
+          _form_id: formId || (source === "partner-application" ? "partner_application" : "contact"),
           fields: {
             name: name || "",
             email,

@@ -43,6 +43,10 @@ export default function ContactPage() {
           interests: selectedInterests,
           message,
           source: "contact-form",
+          formId: "contact",
+          details: {
+            selected_interests: selectedInterests,
+          },
         }),
       });
     } catch {
