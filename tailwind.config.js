@@ -17,13 +17,13 @@ module.exports = {
         ink: '#282828',
         paper: '#FFFFFF',
         accent: '#FEE546',
-        'accent-hover': '#fef08a',
+        'accent-hover': '#FFF489',
 
         // Esteemed Platform Shell design tokens
         es: {
           // 1. Brand yellow
           yellow:          "#FEE546",
-          "yellow-hover":  "#FCD72B",
+          "yellow-hover":  "#FFF489",
           "yellow-press":  "#EFC600",
           "yellow-50":     "#FFFCE6",
           "yellow-100":    "#FFF7B8",
@@ -177,7 +177,7 @@ module.exports = {
         "es-md":         "0 8px 24px rgba(30, 28, 18, 0.10)",
         "es-star-input": "0 10px 30px rgba(30, 28, 18, 0.10), 0 2px 8px rgba(30, 28, 18, 0.06)",
         "es-panel":      "0 24px 60px rgba(20, 18, 10, 0.18), 0 4px 12px rgba(20, 18, 10, 0.08)",
-        "es-tile-hover": "0 0 0 2px #FCD72B, 0 8px 20px rgba(252, 215, 43, 0.30)",
+        "es-tile-hover": "0 0 0 2px #FFF489, 0 8px 20px rgba(255, 244, 137, 0.30)",
       },
 
       /* ----------------------------------------------------------------

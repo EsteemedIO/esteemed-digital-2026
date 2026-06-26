@@ -187,13 +187,13 @@ export default function AppSwitcher({ currentApp }) {
                   href={app.href}
                   className="group flex flex-col items-center text-center rounded-[16px] p-3 transition-all"
                   style={{
-                    border: isActive ? "2px solid #FCD72B" : "1px solid #D7D7D7",
+                    border: isActive ? "2px solid #FEE546" : "1px solid #D7D7D7",
                     borderRadius: 16,
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive) {
-                      e.currentTarget.style.boxShadow = "0 0 0 2px #FCD72B, 0 8px 20px rgba(252,215,43,0.30)";
-                      e.currentTarget.style.borderColor = "#FCD72B";
+                      e.currentTarget.style.boxShadow = "0 0 0 2px #FFF489, 0 8px 20px rgba(255,244,137,0.30)";
+                      e.currentTarget.style.borderColor = "#FFF489";
                     }
                   }}
                   onMouseLeave={(e) => {

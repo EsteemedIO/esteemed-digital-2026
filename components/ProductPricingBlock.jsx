@@ -90,7 +90,7 @@ function PricingCard({
         <h3 className="text-2xl font-black text-ink">{plan.name}</h3>
         <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{plan.description || plan.basis}</p>
         <div className="mt-5">
-          {price.badge && <span className="mb-2 inline-flex rounded-md bg-amber-100 px-2 py-1 text-xs font-black text-ink">{price.badge}</span>}
+          {price.badge && <span className="mb-2 inline-flex rounded-md bg-accent px-2 py-1 text-xs font-black text-ink">{price.badge}</span>}
           <div className="flex items-end gap-1">
             <span className="text-4xl font-black text-ink">{price.headline}</span>
             {price.suffix && <span className="pb-1 text-sm font-bold text-zinc-700">{price.suffix}</span>}

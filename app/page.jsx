@@ -137,7 +137,7 @@ function PricingPreview() {
               <div
                 key={tier.key}
                 className={`rounded-2xl p-8 flex flex-col relative transition-shadow hover:shadow-lg ${
-                  isRec ? "bg-ink text-white" : "bg-accent-hover text-ink"
+                  isRec ? "bg-ink text-white" : "bg-accent text-ink"
                 }`}
               >
                 {isRec && (

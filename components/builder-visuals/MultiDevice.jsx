@@ -162,7 +162,7 @@ export default function MultiDevice() {
         style={{
           right: "-20%", top: "-20%",
           width: "70%", height: "70%",
-          background: "radial-gradient(closest-side, #FFF4B8 30%, transparent 70%)",
+          background: "radial-gradient(closest-side, #FEE546 30%, transparent 70%)",
           filter: "blur(20px)",
         }}
       />

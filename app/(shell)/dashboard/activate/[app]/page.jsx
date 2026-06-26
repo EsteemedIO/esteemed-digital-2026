@@ -552,7 +552,7 @@ export default function ActivateAppPage({ params }) {
       <div className="flex items-start gap-5 mb-10">
         <div
           className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0"
-          style={{ border: "2px solid #FEE546", background: "#FFFEF5" }}
+          style={{ border: "2px solid #FEE546", background: "#FEE546" }}
         >
           <AppIcon className="w-7 h-7" style={{ color: "rgba(0,0,0,0.85)" }} />
         </div>
@@ -600,7 +600,7 @@ export default function ActivateAppPage({ params }) {
                   >
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
-                      style={{ background: "#FFFEF5", border: "1px solid #FEE546" }}
+                      style={{ background: "#FEE546", border: "1px solid #FEE546" }}
                     >
                       <FeatureIcon
                         className="w-5 h-5"
@@ -645,7 +645,7 @@ export default function ActivateAppPage({ params }) {
                   >
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ border: "1px solid #FEE546", background: "#FFFEF5" }}
+                      style={{ border: "1px solid #FEE546", background: "#FEE546" }}
                     >
                       <IntIcon
                         className="w-5 h-5"
@@ -712,7 +712,7 @@ export default function ActivateAppPage({ params }) {
                           "cursor-pointer rounded-xl p-4 w-full max-w-full",
                           "border transition-colors",
                           selectedTier === tier.name
-                            ? "border-[#FEE546] bg-[#FFFEF5]"
+                            ? "border-[#FEE546] bg-[#FEE546]"
                             : "border-[#D7D7D7] bg-white hover:border-[#FEE546]",
                         ].join(" "),
                         label: "w-full",

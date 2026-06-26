@@ -4,7 +4,7 @@ import { useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 
 const bgMap = {
-  butter: { bg: "#FFF4B8", text: "#282828" },
+  butter: { bg: "#FEE546", text: "#282828" },
   sky: { bg: "#E0E9F2", text: "#282828" },
   lilac: { bg: "#E4DBF0", text: "#282828" },
   mint: { bg: "#DCEDE0", text: "#282828" },

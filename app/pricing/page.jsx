@@ -41,7 +41,7 @@ const catalog = {
         wide: true,
         pills: ["AI builder", "Hosting included"],
         image: "/pricing/assets/create-preview.png",
-        imageBg: "#FFF4B8",
+        imageBg: "#FEE546",
         blurb:
           "Our AI website builder. Describe what you want and Create drafts a real, brand-aware site in the Studio IDE - then refine it by prompt or in code. Hosting is included the moment you publish.",
         anchor: "As low as $39/mo · free to start",
@@ -436,7 +436,7 @@ function Badge({ card }) {
       radius="full"
       variant="flat"
       classNames={{
-        base: "bg-accent-hover px-2.5 py-1 shadow-none",
+        base: "bg-accent px-2.5 py-1 shadow-none",
         content: "px-1 text-[12px] font-bold text-ink",
       }}
     >

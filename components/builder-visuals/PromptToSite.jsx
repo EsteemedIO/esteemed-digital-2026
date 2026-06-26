@@ -42,7 +42,7 @@ export default function PromptToSite() {
   return (
     <div
       className="w-full h-full relative overflow-hidden"
-      style={{ background: "#FFF4B8" }}
+      style={{ background: "#FEE546" }}
     >
       {/* soft blob */}
       <div
@@ -50,7 +50,7 @@ export default function PromptToSite() {
         style={{
           left: "-10%", bottom: "-20%",
           width: "60%", height: "60%",
-          background: "radial-gradient(closest-side, #FFE89B, transparent)",
+          background: "radial-gradient(closest-side, #FEE546, transparent)",
           filter: "blur(20px)",
         }}
       />
@@ -218,7 +218,7 @@ export default function PromptToSite() {
               style={{ padding: "8px 16px", borderTop: "1px solid rgba(26,26,26,0.06)", height: 50 }}
             >
               <div style={{ fontFamily: "Georgia, serif", fontSize: 9, color: "#1A1A1A", marginRight: 4 }}>Featured</div>
-              {["#F8F3E8", "#DCEDE0", "#FFF4B8"].map((c, i) => (
+              {["#F8F3E8", "#DCEDE0", "#FEE546"].map((c, i) => (
                 <div key={i} className="relative overflow-hidden" style={{ width: 30, height: 32, borderRadius: 4, background: c }}>
                   <div className="absolute" style={{ left: "50%", top: 4, transform: "translateX(-50%)", width: 8, height: 22, background: ["#E8624D", "#5FA77E", "#E8B57A"][i], borderRadius: 1 }} />
                 </div>
