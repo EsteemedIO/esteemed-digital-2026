@@ -79,7 +79,7 @@ export default function CreatePage() {
         <ProductPricingBlock
           eyebrow="Create plans"
           title="Build with Esteemed Create"
-          description="Create pricing is separate from the v2 Stripe catalog today, so these plans start account signup instead of Checkout until the Create SKUs are added."
+          description="AI-powered building with Studio IDE. Credits power prompts, refinements, and rebuilds; paid plans include hosting at publish."
           productKey="create"
           plans={pricingPlans}
           ctaLabel="Get started"
