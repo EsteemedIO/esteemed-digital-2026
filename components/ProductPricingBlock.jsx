@@ -27,12 +27,15 @@ function getPlanPrice(plan, billing) {
   }
 
   if (billing === "annual" && plan.annual) {
+    const monthlyEquivalent = plan.annual / 12;
+    const savings = plan.monthly ? Math.round((1 - plan.annual / (plan.monthly * 12)) * 100) : 0;
+
     return {
-      headline: formatMoney(plan.annual / 12),
-      suffix: "/mo",
-      note: `Billed ${formatMoney(plan.annual)}/yr`,
+      headline: formatMoney(plan.annual),
+      suffix: "/yr",
+      note: `Equivalent to ${formatMoney(monthlyEquivalent)}/mo`,
       lookupKey: plan.annualLookupKey || plan.lookupKey,
-      badge: "2 months free",
+      badge: savings > 0 ? `Save ${savings}%` : "Annual",
     };
   }
 
