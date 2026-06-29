@@ -223,7 +223,7 @@ export default function AppSwitcher({ currentApp }) {
           {/* Action Links */}
           <div className="px-5 py-3 space-y-1">
             <Link
-              href="/settings/plan"
+              href="/dashboard/plans"
               className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-neutral-100 transition-colors"
             >
               <Settings className="w-4 h-4 text-[#565449]" />
