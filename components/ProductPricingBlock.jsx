@@ -136,7 +136,7 @@ export default function ProductPricingBlock({
   freeHref,
   contactHref = "/contact",
   fallbackHref,
-  calculatorHref = "/dashboard/calculator",
+  calculatorHref = null,
 }) {
   const hasAnnual = plans.some((plan) => plan.annual);
   const [billing, setBilling] = useState(hasAnnual ? "annual" : "monthly");
