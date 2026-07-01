@@ -89,20 +89,32 @@ export default async function BusinessResourceCenterPage({ searchParams }) {
                 <Link
                   key={post.id}
                   href={`/blog/business-resource-center/${post.slug}`}
-                  className="group rounded-2xl border border-zinc-200 p-6 hover:border-zinc-400 hover:shadow-sm transition-all"
+                  className="group rounded-2xl border border-zinc-200 overflow-hidden hover:border-zinc-400 hover:shadow-sm transition-all flex flex-col"
                 >
-                  {post.categories?.[0]?.category && (
-                    <span className="text-xs font-medium text-zinc-400 uppercase tracking-wide">
-                      {post.categories[0].category}
-                    </span>
+                  {post.featuredImage?.url && (
+                    <div className="aspect-[16/9] overflow-hidden bg-zinc-100">
+                      <img
+                        src={`https://curate.esteemed.io${post.featuredImage.sizes?.thumbnail?.url ?? post.featuredImage.url}`}
+                        alt={post.featuredImage.altText ?? post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
                   )}
-                  <h2 className="text-lg font-semibold text-ink mt-2 mb-2 group-hover:text-zinc-600 transition-colors line-clamp-3">
-                    {post.title}
-                  </h2>
-                  {post.excerpt && (
-                    <p className="text-sm text-zinc-500 line-clamp-2 mb-4">{post.excerpt}</p>
-                  )}
-                  <span className="text-xs text-zinc-400">{formatDate(post.publishedAt)}</span>
+                  <div className="p-6 flex flex-col flex-1">
+                    {post.categories?.[0]?.category && (
+                      <span className="text-xs font-medium text-zinc-400 uppercase tracking-wide">
+                        {post.categories[0].category}
+                      </span>
+                    )}
+                    <h2 className="text-lg font-semibold text-ink mt-2 mb-2 group-hover:text-zinc-600 transition-colors line-clamp-3">
+                      {post.title}
+                    </h2>
+                    {post.excerpt && (
+                      <p className="text-sm text-zinc-500 line-clamp-2 mb-4">{post.excerpt}</p>
+                    )}
+                    <span className="text-xs text-zinc-400 mt-auto">{formatDate(post.publishedAt)}</span>
+                  </div>
                 </Link>
               ))}
             </div>
