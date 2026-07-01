@@ -79,7 +79,7 @@ export default async function PostPage({ params }) {
       {post.featuredImage?.url && (
         <div className="max-w-3xl mx-auto px-6 pt-10">
           <img
-            src={`https://curate.esteemed.io${post.featuredImage.sizes?.card?.url ?? post.featuredImage.url}`}
+            src={post.featuredImage.sizes?.card?.url ?? post.featuredImage.url}
             alt={post.featuredImage.altText ?? post.title}
             className="w-full rounded-2xl object-cover max-h-96"
           />

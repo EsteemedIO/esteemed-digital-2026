@@ -94,7 +94,7 @@ export default async function BusinessResourceCenterPage({ searchParams }) {
                   {post.featuredImage?.url && (
                     <div className="aspect-[16/9] overflow-hidden bg-zinc-100">
                       <img
-                        src={`https://curate.esteemed.io${post.featuredImage.sizes?.thumbnail?.url ?? post.featuredImage.url}`}
+                        src={post.featuredImage.sizes?.thumbnail?.url ?? post.featuredImage.url}
                         alt={post.featuredImage.altText ?? post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
