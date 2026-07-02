@@ -81,23 +81,6 @@
               </a>
             </#if>
           </#list>
-          <#list social.providers as provider>
-            <#if provider.alias != "google">
-              <#assign providerLabel = provider.displayName>
-              <#if provider.alias?contains("linkedin")>
-                <#assign providerLabel = "LinkedIn">
-              </#if>
-              <#if provider.alias?contains("github")>
-                <#assign providerLabel = "GitHub">
-              </#if>
-            <a id="social-${provider.alias}" class="social-button social-${provider.alias}" href="${provider.loginUrl}">
-              <span class="social-icon" aria-hidden="true">
-                <#if provider.alias?contains("github")>GH<#elseif provider.alias?contains("linkedin")>in<#else>${providerLabel?substring(0,1)}</#if>
-              </span>
-              <span>Sign in with ${providerLabel}</span>
-            </a>
-            </#if>
-          </#list>
         </div>
       </#if>
     </section>
