@@ -98,7 +98,7 @@ export async function GET(request) {
   if (shouldRequireTestMode(request.url) && isLiveModeKey(secretKey) && !isTestModeKey(secretKey)) {
     return NextResponse.json(
       { error: "Stripe checkout is set to test mode for this environment, but a live Stripe key is configured." },
-      { status: 503 },
+      { status: 409 },
     );
   }
 
