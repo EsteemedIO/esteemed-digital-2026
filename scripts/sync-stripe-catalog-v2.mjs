@@ -14,7 +14,7 @@ const products = [
   { name: "Esteemed Suite", module: "suite", notes: "Acquire + Hire Pro bundle" },
   { name: "Esteemed Intelligence", module: "intelligence", notes: "Per-tenant substrate add-on" },
   { name: "Esteemed Curate", module: "curate", notes: "Per-workspace CMS / content hub" },
-  { name: "Esteemed Cloud", module: "hosting", notes: "Self-serve and managed website hosting" },
+  { name: "Esteemed Cloud - Sites", module: "hosting", notes: "Self-serve and managed website hosting for sites" },
   { name: "Esteemed Migration", module: "migration", notes: "One-time migration service plus Care bridge" },
   { name: "Esteemed Agents", module: "agents", notes: "AI add-ons, launch-gated standalone SKUs" },
 ];

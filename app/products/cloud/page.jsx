@@ -5,9 +5,9 @@ import { Cloud, Shield, HardDrive, Activity, ArrowRight } from "lucide-react";
 import { cloudPricingPlans, managedHostingPricingPlans } from "@/lib/product-page-pricing";
 
 export const metadata = {
-  title: "Cloud",
+  title: "Esteemed Cloud - Sites",
   description:
-    "Hosting that scales with you. Managed hosting with SSL, daily backups, monitoring, and a global edge network.",
+    "Website hosting on Esteemed Cloud. Self-serve and managed plans with SSL, backups, monitoring, and support.",
 };
 
 const cloudPlans = cloudPricingPlans();
@@ -48,10 +48,10 @@ export default function CloudPage() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <ProductIcon product="cloud" className="mx-auto mb-6 h-14 w-14" />
           <p className="text-sm font-medium text-zinc-500 mb-4">
-            Products / Cloud
+            Products / Cloud - Sites
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Esteemed Cloud
+            Esteemed Cloud - Sites
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
             Hosting for sites that are not running on Curate: bring-your-own,
@@ -99,7 +99,7 @@ export default function CloudPage() {
       <div id="plans">
         <ProductPricingBlock
           eyebrow="Cloud plans"
-          title="Self-serve Cloud Website Hosting"
+          title="Self-serve Cloud Sites"
           description="GoDaddy-aligned website hosting with SSL included and no forced CMS migration. Best for bring-your-own, Create-built, React, Node, and Next sites."
           productKey="cloud"
           plans={cloudPlans}
@@ -108,7 +108,7 @@ export default function CloudPage() {
 
         <ProductPricingBlock
           eyebrow="Managed Hosting"
-          title="Done-for-you managed website hosting"
+          title="Done-for-you Managed Sites"
           description="Managed Hosting includes support hours and can include a $0 Create rebuild with a 12-month term."
           productKey="cloud"
           plans={managedPlans}
