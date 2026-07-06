@@ -109,7 +109,7 @@ export default function CloudPage() {
         <ProductPricingBlock
           eyebrow="Managed Hosting"
           title="Done-for-you Managed Sites"
-          description="Managed Hosting includes support hours and can include a $0 Create rebuild with a 12-month term."
+          description="Managed Hosting includes support hours and a $0 Create rebuild with a 12-month term: 5 pages on Essential, 12 pages on Growth, and a full standard site on Business."
           productKey="cloud"
           plans={managedPlans}
           ctaLabel="Checkout"
@@ -145,8 +145,11 @@ export default function CloudPage() {
             </h2>
             <p className="text-zinc-600 leading-relaxed mb-6">
               Managed Hosting can include a $0 Create rebuild as part of a
-              12-month hosting agreement. Paid migrations are separate
-              productized services that move your current site onto Curate.
+              12-month hosting agreement. Essential includes 5 pages, Growth
+              includes 12 pages, and Business includes a full standard site with
+              a soft cap around 30 pages. Extra Essential/Growth pages are billed
+              once at $100/page. Paid migrations are separate productized
+              services that move your current site onto Curate.
             </p>
             <Link
               href="/migrate"

@@ -158,14 +158,16 @@ customer's site as-is (bring-your-own or Create-built), with no CMS re-platform 
 
 | Tier | Monthly | Annual (2 mo free) | Basis |
 |---|---|---|---|
-| **Managed Essential** | $149/mo | $1,490/yr | 1 site, 2 support hrs/mo |
-| **Managed Growth** | $249/mo | $2,490/yr | 1 site, 5 support hrs/mo |
-| **Managed Business** | $399/mo | $3,990/yr | 1 site, 10 support hrs/mo |
+| **Managed Essential** | $149/mo | $1,490/yr | 1 site, 2 support hrs/mo, 5-page Create rebuild allowance |
+| **Managed Growth** | $249/mo | $2,490/yr | 1 site, 5 support hrs/mo, 12-page Create rebuild allowance |
+| **Managed Business** | $399/mo | $3,990/yr | 1 site, 10 support hrs/mo, full standard-site Create rebuild, soft cap ~30 pages |
 | **Managed Enterprise** | Contact Sales | custom | multi-site / dedicated / SLA |
 
 Hosting add-ons: **support overage** billed at the $75–$85/hr market rate beyond included hours;
 **managed DB / infra** marked up over DO cost (priced to market). Free rebuild = $0 line on a
-Managed plan (see §1.12). *Tier names are deliberately distinct from the per-seat apps: Hosting uses
+Managed plan (see §1.12). Essential/Growth rebuild page overage is billed once at **$100/page**
+via `hosting_page_overage`; Business does not count pages unless the scope trips to Enterprise.
+*Tier names are deliberately distinct from the per-seat apps: Hosting uses
 **Essential / Growth / Business / Enterprise** so its $149/$399 tiers aren't confused with the
 Acquire/Hire Starter/Pro seats or the $399 Suite seat.*
 
@@ -275,6 +277,7 @@ non-Curate deployments (Tier-2 hosting add-ons, HCMGPT, or direct tenant install
 | `managed_business_monthly` | $399 | month | flat (1 site) |
 | `managed_business_annual` | $3,990 | year | flat (1 site) |
 | `managed_enterprise_custom` | custom | — | per contract |
+| `hosting_page_overage` | $100 | one-time | per_page (per_unit; quantity = pages over allowance) |
 | `hosting_support_overage` | metered | month | usage (per hour, $75–$85) |
 | `migration_care_monthly` | $399 | month | flat (1 site, bridge) |
 | `migration_smb_standard` | $6,500 | one-time | service |
@@ -302,6 +305,19 @@ founding:      true | false
 entitlement:   <entitlement_key from §4>
 ```
 
+Managed Hosting price metadata also carries build-scoping fields:
+
+| Price(s) | `page_allowance` | `page_overage_applies` | `page_soft_cap` |
+|---|---|---|---|
+| `managed_essential_monthly`, `managed_essential_annual` | `5` | `true` | — |
+| `managed_growth_monthly`, `managed_growth_annual` | `12` | `true` | — |
+| `managed_business_monthly`, `managed_business_annual` | `unlimited_standard` | `false` | `30` |
+| `managed_enterprise_custom` | `bespoke` | `false` | — |
+
+`hosting_page_overage` is a billing-only one-time price under Esteemed Cloud. It grants no
+entitlement and is invoiced with `quantity = pages over allowance` for Managed Essential/Growth
+rebuilds only.
+
 ### Founding-rate mechanic
 
 Founding is its own Price object (not a coupon). Contract term enforces the 12-month lock; at the
@@ -327,6 +343,7 @@ Roles gate *views*; entitlements gate *access*. A user needs both. Roles are nec
 | `agent_*` (standalone), `agents_bundle_monthly` | `module.agents` (non-Curate deployments) | per-agent activation |
 | `cloud_*` (basic/plus/pro/multi) | `module.hosting` | hosting_self_serve |
 | `managed_*` (essential/growth/business), `managed_enterprise_custom` | `module.hosting` | hosting_managed |
+| `hosting_page_overage` | none — billing line only | — |
 | `migration_care_monthly` | `module.hosting` (bridge on current platform) | — |
 | `migration_*` (one-time packages) | none directly — results in a `module.curate` subscription | — |
 
@@ -421,8 +438,13 @@ with room above via the Autonomous tier.
 - **Name collision — RESOLVED.** Hosting tiers renamed to **Essential / Growth / Business /
   Enterprise** so the $149/$399 hosting prices aren't confused with the Acquire/Hire Starter/Pro
   seats or the $399 Suite seat. (Self-serve Cloud keeps Basic/Plus/Pro/Multi — clearly distinct.)
-- **Free-rebuild accounting.** Confirm the $0 rebuild is tracked as a line on the Managed Hosting
-  agreement (not a Stripe product), and the 12-month term is enforced via `subscription_schedule`.
+- **Free-rebuild page allowance — RESOLVED: 5 / 12 / full-site.** Managed Essential includes 5
+  pages, Growth includes 12 pages, and Business includes a full standard site with a soft cap around
+  30 pages. Overage `hosting_page_overage` is $100/page one-time and applies to Essential/Growth
+  only. Business does not count pages; 30+ pages or multi-location / portal / non-trivial commerce /
+  dedicated SLA scopes trip to Managed Enterprise. The $0 rebuild is tracked as a line on the Managed
+  Hosting agreement, not a Stripe product, and the 12-month term is enforced via
+  `subscription_schedule`.
 - **Managed Hosting founding rates** — none defined (free-rebuild is the lever instead). Confirm.
 - **Care bridge → migration conversion — DECIDED: discretionary closing lever.** No advertised or
   automatic credit. As a rep-discretion closing tool, credit up to **3 months of Care paid (cap

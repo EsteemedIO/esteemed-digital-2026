@@ -65,7 +65,7 @@ const websitePaths = [
     note: "Done-for-you managed hosting with monthly expert support.",
     lookupKey: "managed_growth_monthly",
     href: "/products/cloud",
-    bullets: ["5 support hours/month", "Managed updates and fixes", "Performance and uptime monitoring"],
+    bullets: ["12-page Create rebuild included", "5 support hours/month", "$100/page overage beyond allowance"],
     cta: "Checkout",
     chip: "Managed",
   },

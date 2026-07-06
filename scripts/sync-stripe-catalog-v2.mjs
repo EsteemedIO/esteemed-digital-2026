@@ -1,10 +1,10 @@
 const API_BASE = "https://api.stripe.com/v1";
 
-const apiKey = process.env.STRIPE_API_KEY;
+const apiKey = process.env.STRIPE_API_KEY || process.env.STRIPE_RESTRICTED_KEY;
 const dryRun = process.argv.includes("--dry-run");
 
 if (!apiKey) {
-  console.error("STRIPE_API_KEY is required.");
+  console.error("STRIPE_API_KEY or STRIPE_RESTRICTED_KEY is required.");
   process.exit(1);
 }
 
@@ -55,12 +55,13 @@ const prices = [
   ["hosting", "cloud_pro_annual", 19900, "year", "flat", "pro", "module.hosting", "hosting_self_serve"],
   ["hosting", "cloud_multi_monthly", 3999, "month", "flat", "multi", "module.hosting", "hosting_self_serve"],
   ["hosting", "cloud_multi_annual", 39900, "year", "flat", "multi", "module.hosting", "hosting_self_serve"],
-  ["hosting", "managed_essential_monthly", 14900, "month", "flat", "essential", "module.hosting", "hosting_managed"],
-  ["hosting", "managed_essential_annual", 149000, "year", "flat", "essential", "module.hosting", "hosting_managed"],
-  ["hosting", "managed_growth_monthly", 24900, "month", "flat", "growth", "module.hosting", "hosting_managed"],
-  ["hosting", "managed_growth_annual", 249000, "year", "flat", "growth", "module.hosting", "hosting_managed"],
-  ["hosting", "managed_business_monthly", 39900, "month", "flat", "business", "module.hosting", "hosting_managed"],
-  ["hosting", "managed_business_annual", 399000, "year", "flat", "business", "module.hosting", "hosting_managed"],
+  ["hosting", "managed_essential_monthly", 14900, "month", "flat", "essential", "module.hosting", "hosting_managed", false, { page_allowance: "5", page_overage_applies: "true" }],
+  ["hosting", "managed_essential_annual", 149000, "year", "flat", "essential", "module.hosting", "hosting_managed", false, { page_allowance: "5", page_overage_applies: "true" }],
+  ["hosting", "managed_growth_monthly", 24900, "month", "flat", "growth", "module.hosting", "hosting_managed", false, { page_allowance: "12", page_overage_applies: "true" }],
+  ["hosting", "managed_growth_annual", 249000, "year", "flat", "growth", "module.hosting", "hosting_managed", false, { page_allowance: "12", page_overage_applies: "true" }],
+  ["hosting", "managed_business_monthly", 39900, "month", "flat", "business", "module.hosting", "hosting_managed", false, { page_allowance: "unlimited_standard", page_overage_applies: "false", page_soft_cap: "30" }],
+  ["hosting", "managed_business_annual", 399000, "year", "flat", "business", "module.hosting", "hosting_managed", false, { page_allowance: "unlimited_standard", page_overage_applies: "false", page_soft_cap: "30" }],
+  ["hosting", "hosting_page_overage", 10000, null, "one_time", "addon", "", "", false, { entitlement: "none" }],
   ["migration", "migration_care_monthly", 39900, "month", "flat", "care", "module.hosting", ""],
   ["migration", "migration_smb_standard", 650000, null, "one_time", "standard", "", ""],
   ["migration", "migration_smb_plus", 950000, null, "one_time", "plus", "", ""],
@@ -74,7 +75,7 @@ const prices = [
   ["agents", "agent_recruiter_monthly", 14900, "month", "flat", "addon", "module.agents", "agent_recruiter"],
   ["agents", "agent_publicist_monthly", 14900, "month", "flat", "addon", "module.agents", "agent_publicist"],
   ["agents", "agents_bundle_monthly", 19900, "month", "flat", "addon", "module.agents", "agents_bundle"],
-].map(([module, lookupKey, amount, interval, seatType, tier, entitlement, aiLevel, founding = false]) => ({
+].map(([module, lookupKey, amount, interval, seatType, tier, entitlement, aiLevel, founding = false, extraMetadata = {}]) => ({
   module,
   lookupKey,
   amount,
@@ -84,6 +85,7 @@ const prices = [
   entitlement,
   aiLevel,
   founding,
+  extraMetadata,
 }));
 
 function form(params) {
@@ -126,6 +128,22 @@ async function listAll(resource) {
   }
 }
 
+function metadataForPrice(price) {
+  return Object.fromEntries(
+    Object.entries({
+      module: price.module,
+      tier: price.tier,
+      interval: price.interval || "one_time",
+      seat_type: price.seatType,
+      founding: price.founding ? "true" : "false",
+      entitlement: price.entitlement,
+      ai_level: price.aiLevel,
+      catalog: "esteemed-pricing-v2",
+      ...price.extraMetadata,
+    }).filter(([, value]) => value !== undefined && value !== null && value !== ""),
+  );
+}
+
 const existingProducts = await listAll("products");
 const existingPrices = await listAll("prices");
 const productByModule = new Map(
@@ -163,6 +181,22 @@ for (const product of products) {
 for (const price of prices) {
   const existing = priceByLookup.get(price.lookupKey);
   if (existing) {
+    const nextMetadata = metadataForPrice(price);
+    const metadataPatch = Object.fromEntries(
+      Object.entries(nextMetadata).filter(([key, value]) => existing.metadata?.[key] !== value),
+    );
+    if (Object.keys(metadataPatch).length > 0) {
+      if (dryRun) {
+        console.log(`would update metadata ${price.lookupKey}: ${Object.keys(metadataPatch).join(", ")}`);
+      } else {
+        await stripe(
+          "POST",
+          `/prices/${existing.id}`,
+          Object.fromEntries(Object.entries(metadataPatch).map(([key, value]) => [`metadata[${key}]`, value])),
+        );
+        console.log(`updated metadata ${price.lookupKey}: ${existing.id}`);
+      }
+    }
     console.log(`price exists ${price.lookupKey}: ${existing.id}`);
     continue;
   }
@@ -180,14 +214,9 @@ for (const price of prices) {
     currency: "usd",
     unit_amount: price.amount,
     lookup_key: price.lookupKey,
-    "metadata[module]": price.module,
-    "metadata[tier]": price.tier,
-    "metadata[interval]": price.interval || "one_time",
-    "metadata[seat_type]": price.seatType,
-    "metadata[founding]": price.founding ? "true" : "false",
-    "metadata[entitlement]": price.entitlement,
-    "metadata[ai_level]": price.aiLevel,
-    "metadata[catalog]": "esteemed-pricing-v2",
+    ...Object.fromEntries(
+      Object.entries(metadataForPrice(price)).map(([key, value]) => [`metadata[${key}]`, value]),
+    ),
   };
   if (price.interval) {
     params["recurring[interval]"] = price.interval;

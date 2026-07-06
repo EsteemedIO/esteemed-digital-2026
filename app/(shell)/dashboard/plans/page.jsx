@@ -147,6 +147,15 @@ export default function PlansPage() {
                       const features = tier.features || [
                         tier.description,
                         tier.supportHours ? `${tier.supportHours} support hours/month` : null,
+                        group.key === "managed" && tier.pageAllowance && tier.pageOverageApplies
+                          ? `Free Create rebuild up to ${tier.pageAllowance} pages`
+                          : null,
+                        group.key === "managed" && tier.pageOverageApplies
+                          ? "$100/page one-time overage beyond allowance"
+                          : null,
+                        group.key === "managed" && tier.pageSoftCap
+                          ? `Full standard site included, soft cap around ${tier.pageSoftCap} pages`
+                          : null,
                         group.key === "cloud" ? "SSL, backups, monitoring" : null,
                         group.key === "cloud" ? "Modern JavaScript, WordPress, and Drupal ready" : null,
                       ].filter(Boolean);
