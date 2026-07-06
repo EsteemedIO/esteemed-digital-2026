@@ -3,23 +3,27 @@
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+import { Button, Chip } from "@heroui/react";
 import {
-  Brush,
-  Cloud,
-  Target,
-  Briefcase,
-  Brain,
+  ArrowRight,
   Bot,
-  Link as LinkIcon,
-  LayoutGrid,
-  Headphones,
+  Brain,
+  Briefcase,
   Calculator,
-  Settings,
-  BookOpen,
+  Check,
+  Cloud,
   ExternalLink,
+  FolderKanban,
+  Headphones,
+  LayoutGrid,
   MessageSquare,
+  Paintbrush,
+  Settings,
+  Target,
   Users,
 } from "lucide-react";
+import { checkoutHref, productIconPaths } from "@/lib/pricing-catalog";
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -28,32 +32,116 @@ function getGreeting() {
   return "Good evening";
 }
 
-const apps = [
-  { name: "Create", sublabel: "Esteemed Create", icon: Brush, status: "active", url: "https://create.esteemed.io" },
-  { name: "Cloud", sublabel: "Esteemed Cloud", icon: Cloud, status: "active", url: "https://cloud.esteemed.io" },
-  { name: "Acquire", sublabel: "Esteemed Acquire", icon: Target, status: "available", slug: "acquire" },
-  { name: "Hire", sublabel: "Esteemed Hire", icon: Briefcase, status: "available", slug: "hire" },
-  { name: "Intelligence", sublabel: "Esteemed Intelligence", icon: Brain, status: "available", slug: "intelligence" },
-  { name: "Agents", sublabel: "Esteemed Agents", icon: Bot, status: "available", slug: "agents" },
-  { name: "Connect", sublabel: "Esteemed Connect", icon: LinkIcon, status: "available", slug: "connect" },
-  { name: "Curate", sublabel: "Esteemed Curate", icon: LayoutGrid, status: "available", slug: "curate" },
-  { name: "Support", sublabel: "Esteemed Support", icon: Headphones, status: "available", slug: "support" },
+const websitePaths = [
+  {
+    name: "Build a new website",
+    product: "Esteemed Create Core",
+    icon: productIconPaths.create,
+    price: "$39/mo",
+    note: "AI-assisted website creation with hosting included at publish.",
+    lookupKey: "create_core_monthly",
+    href: "/products/create",
+    bullets: ["Custom domain + SSL", "Studio IDE and prompt editing", "Colleagues marketplace access"],
+    cta: "Checkout",
+    chip: "Start Here",
+  },
+  {
+    name: "Host an existing site",
+    product: "Esteemed Cloud - Sites Plus",
+    icon: productIconPaths.cloud,
+    price: "$14.99/mo",
+    note: "Fast self-managed hosting for JavaScript, WordPress, and Drupal sites.",
+    lookupKey: "cloud_plus_monthly",
+    href: "/products/cloud",
+    bullets: ["Node + React ready", "Staging and CDN", "SSL, backups, monitoring"],
+    cta: "Checkout",
+    chip: "Popular",
+  },
+  {
+    name: "Let us manage it",
+    product: "Managed Growth",
+    icon: productIconPaths.cloud,
+    price: "$249/mo",
+    note: "Done-for-you managed hosting with monthly expert support.",
+    lookupKey: "managed_growth_monthly",
+    href: "/products/cloud",
+    bullets: ["5 support hours/month", "Managed updates and fixes", "Performance and uptime monitoring"],
+    cta: "Checkout",
+    chip: "Managed",
+  },
 ];
 
-const quickLinks = [
-  { label: "Calculator", description: "Estimate your monthly cost", href: "/dashboard/calculator", icon: Calculator },
-  { label: "Settings", description: "Manage your account", href: "/dashboard/settings", icon: Settings },
-  { label: "Documentation", description: "Help and guides", href: "https://docs.esteemed.io", icon: BookOpen, external: true },
+const accountCards = [
+  {
+    label: "Plans & billing",
+    description: "Choose a website plan, review subscriptions, and start checkout.",
+    href: "/dashboard/plans",
+    icon: Calculator,
+    primary: true,
+  },
+  {
+    label: "Projects",
+    description: "Track Create builds, migrations, launches, and support work.",
+    href: "/dashboard/projects",
+    icon: FolderKanban,
+  },
+  {
+    label: "Settings",
+    description: "Manage workspace profile, team access, and billing details.",
+    href: "/dashboard/settings",
+    icon: Settings,
+  },
+  {
+    label: "Support",
+    description: "Get help with your site, apps, integrations, or launch plan.",
+    href: "/dashboard/support",
+    icon: Headphones,
+  },
 ];
+
+const apps = [
+  { name: "Create", sublabel: "Sites and apps", icon: productIconPaths.create, status: "active", url: "https://create.esteemed.io" },
+  { name: "Cloud", sublabel: "Integrated hosting", icon: productIconPaths.cloud, status: "active", url: "https://cloud.esteemed.io" },
+  { name: "Acquire", sublabel: "CRM and TRM", icon: productIconPaths.acquire, status: "available", slug: "acquire" },
+  { name: "Hire", sublabel: "ATS", icon: productIconPaths.hire, status: "available", slug: "hire" },
+  { name: "Intelligence", sublabel: "Memory and reasoning", icon: productIconPaths.intelligence, status: "available", slug: "intelligence" },
+  { name: "Agents", sublabel: "Intelligent agents", icon: productIconPaths.agents, status: "available", slug: "agents" },
+  { name: "Connect", sublabel: "Retrieval", icon: productIconPaths.connect, status: "available", slug: "connect" },
+  { name: "Curate", sublabel: "CMS and DAM", icon: productIconPaths.curate, status: "available", slug: "curate" },
+  { name: "Support", sublabel: "Expert assistance", icon: productIconPaths.support, status: "available", slug: "support" },
+];
+
+const externalApps = [
+  {
+    label: "HCMGPT, by Esteemed",
+    description: "Open HCMGPT",
+    href: "https://hcmgpt.com",
+    icon: MessageSquare,
+  },
+  {
+    label: "Colleagues, by Esteemed",
+    description: "Open Colleagues",
+    href: "https://colleagues.esteemed.io",
+    icon: Users,
+  },
+];
+
+function IconTile({ src, alt, className = "" }) {
+  return (
+    <div className={`flex h-12 w-12 items-center justify-center rounded-[8px] border border-es-border bg-white ${className}`}>
+      <Image src={src} alt={alt} width={34} height={34} className="h-8 w-8 object-contain" />
+    </div>
+  );
+}
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex min-h-[60vh] items-center justify-center">
         <div
-          className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin"
+          className="h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"
           style={{ borderColor: "#D7D7D7", borderTopColor: "transparent" }}
         />
       </div>
@@ -69,155 +157,198 @@ export default function DashboardPage() {
     session?.user?.email?.split("@")[0] ||
     "there";
 
-  const greeting = getGreeting();
-
   return (
-    <div>
-      {/* Header */}
-      <h1 className="text-es-3xl font-es-semibold tracking-es-tight text-es-fg-1 mb-1">
-        {greeting}, {firstName}
-      </h1>
-      <p className="text-es-base text-es-fg-2 mb-8">
-        Here is what is happening across your workspace.
-      </p>
-
-      {/* Your Apps */}
-      <h2 className="text-es-lg font-es-semibold text-es-fg-1 mb-4">Your Apps</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-es-4">
-        {apps.map((app) => {
-          const Icon = app.icon;
-          const isActive = app.status === "active";
-
-          return (
-            <div
-              key={app.name}
-              className="bg-es-surface border border-es-border rounded-es-lg p-es-5 flex flex-col gap-es-4 transition-shadow duration-es-base ease-es-out hover:shadow-es-md"
+    <div className="mx-auto max-w-[1440px]">
+      <section className="mb-6 rounded-es-lg border border-es-border bg-white p-6">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="mb-2 text-es-sm font-es-semibold text-es-fg-2">
+              {getGreeting()}, {firstName}
+            </p>
+            <h1 className="max-w-4xl text-es-3xl font-es-semibold tracking-es-tight text-es-fg-1">
+              Website command center
+            </h1>
+            <p className="mt-3 max-w-3xl text-es-base leading-es-relaxed text-es-fg-2">
+              Start a new website, host an existing one, or hand it to Esteemed for managed delivery. This is the account surface for website sales first, with the rest of the Esteemed Platform available as the workspace grows.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Button
+              as={Link}
+              href="/dashboard/plans"
+              className="bg-es-yellow px-5 font-semibold text-es-fg-on-yellow hover:bg-es-yellow-hover"
+              radius="sm"
+              endContent={<ArrowRight size={16} />}
             >
-              {/* Top row: icon + status */}
-              <div className="flex items-start justify-between">
-                <div
-                  className="flex items-center justify-center rounded-es-sm"
-                  style={{
-                    width: 48,
-                    height: 48,
-                    border: "2px solid #FEE546",
+              See Plans
+            </Button>
+            <Button
+              as={Link}
+              href="/products/cloud"
+              className="bg-[#111111] px-5 font-semibold text-white hover:scale-[1.02] hover:bg-[#111111]"
+              radius="sm"
+              variant="solid"
+            >
+              Learn More
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-8">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <div>
+            <h2 className="text-es-lg font-es-semibold text-es-fg-1">Launch a Website</h2>
+            <p className="text-es-sm text-es-fg-2">The three checkout paths we need working for launch.</p>
+          </div>
+          <Link href="/dashboard/plans" className="text-es-sm font-es-semibold text-es-fg-1 underline underline-offset-4">
+            Manage plans
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {websitePaths.map((plan) => (
+            <article key={plan.product} className="flex min-h-[360px] flex-col rounded-es-lg border border-es-border bg-white p-5">
+              <div className="mb-5 flex items-start justify-between gap-3">
+                <IconTile src={plan.icon} alt="" />
+                <Chip
+                  size="sm"
+                  variant="flat"
+                  classNames={{
+                    base: "bg-es-yellow-hover text-es-fg-1",
+                    content: "font-semibold",
                   }}
                 >
-                  <Icon size={24} className="text-es-fg-1" strokeWidth={1.5} />
-                </div>
-                <div className="flex items-center gap-es-2">
-                  <span
-                    className="inline-block rounded-full"
-                    style={{
-                      width: 8,
-                      height: 8,
-                      backgroundColor: isActive ? "#07BC0C" : "#B8B8B8",
-                    }}
-                  />
-                  <span className="text-es-sm text-es-fg-2">
-                    {isActive ? "Active" : "Available"}
-                  </span>
-                </div>
+                  {plan.chip}
+                </Chip>
               </div>
-
-              {/* Name + sublabel */}
-              <div>
-                <p className="text-es-base font-es-semibold text-es-fg-1">{app.name}</p>
-                <p className="text-es-sm text-es-fg-3">{app.sublabel}</p>
+              <p className="text-es-sm font-es-semibold text-es-fg-2">{plan.name}</p>
+              <h3 className="mt-1 text-es-xl font-es-semibold tracking-es-tight text-es-fg-1">{plan.product}</h3>
+              <div className="mt-4 flex items-end gap-1">
+                <span className="text-[34px] font-es-bold leading-none tracking-es-tight text-es-fg-1">{plan.price}</span>
               </div>
-
-              {/* Action button */}
-              {isActive ? (
-                <a
-                  href={app.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-auto inline-flex items-center justify-center gap-es-2 rounded-es-sm border border-es-border px-es-4 py-es-2 text-es-sm font-es-medium text-es-fg-1 bg-es-surface transition-colors duration-es-fast hover:bg-es-surface-alt"
+              <p className="mt-3 min-h-[48px] text-es-sm leading-es-relaxed text-es-fg-2">{plan.note}</p>
+              <ul className="mt-4 space-y-2">
+                {plan.bullets.map((bullet) => (
+                  <li key={bullet} className="flex gap-2 text-es-sm text-es-fg-2">
+                    <Check size={16} className="mt-0.5 shrink-0 text-es-fg-1" />
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-auto flex gap-2 pt-5">
+                <Button
+                  as="a"
+                  href={checkoutHref({
+                    lookupKey: plan.lookupKey,
+                    successPath: "/thanks",
+                    cancelPath: "/dashboard",
+                  })}
+                  className="flex-1 bg-es-yellow font-semibold text-es-fg-on-yellow hover:bg-es-yellow-hover"
+                  radius="sm"
                 >
-                  Manage
-                  <ExternalLink size={14} />
-                </a>
-              ) : (
-                <Link
-                  href={`/dashboard/activate/${app.slug}`}
-                  className="mt-auto inline-flex items-center justify-center rounded-es-sm bg-es-yellow px-es-4 py-es-2 text-es-sm font-es-medium text-es-fg-on-yellow transition-colors duration-es-fast hover:bg-es-yellow-hover"
-                >
-                  Activate
-                </Link>
-              )}
-            </div>
-          );
-        })}
-      </div>
+                  {plan.cta}
+                </Button>
+                <Button as={Link} href={plan.href} radius="sm" variant="bordered" className="border-es-border font-semibold text-es-fg-1">
+                  Details
+                </Button>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-      {/* Quick Links */}
-      <h2 className="text-es-lg font-es-semibold text-es-fg-1 mt-10 mb-4">Quick Links</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-es-4">
-        {quickLinks.map((link) => {
-          const Icon = link.icon;
-          const Wrapper = link.external ? "a" : Link;
-          const extraProps = link.external
-            ? { target: "_blank", rel: "noopener noreferrer" }
-            : {};
-
+      <section className="mb-8 grid grid-cols-1 gap-4 lg:grid-cols-4">
+        {accountCards.map((card) => {
+          const Icon = card.icon;
           return (
-            <Wrapper
-              key={link.label}
-              href={link.href}
-              {...extraProps}
-              className="flex items-center gap-es-4 bg-es-surface border border-es-border rounded-es-lg p-es-5 transition-shadow duration-es-base ease-es-out hover:shadow-es-md"
+            <Link
+              key={card.label}
+              href={card.href}
+              className="rounded-es-lg border border-es-border bg-white p-5 transition-colors hover:bg-es-surface-alt"
             >
-              <div className="flex items-center justify-center rounded-es-sm bg-es-surface-alt" style={{ width: 40, height: 40 }}>
-                <Icon size={20} className="text-es-fg-2" strokeWidth={1.5} />
+              <div
+                className="mb-4 flex h-10 w-10 items-center justify-center rounded-es-sm"
+                style={{ background: card.primary ? "#FEE546" : "#F5F5F4" }}
+              >
+                <Icon size={20} className="text-es-fg-1" strokeWidth={1.8} />
               </div>
-              <div>
-                <p className="text-es-base font-es-medium text-es-fg-1">{link.label}</p>
-                <p className="text-es-sm text-es-fg-3">{link.description}</p>
-              </div>
-              {link.external && <ExternalLink size={14} className="ml-auto text-es-fg-3" />}
-            </Wrapper>
+              <p className="text-es-base font-es-semibold text-es-fg-1">{card.label}</p>
+              <p className="mt-1 text-es-sm leading-es-relaxed text-es-fg-2">{card.description}</p>
+            </Link>
           );
         })}
-      </div>
+      </section>
 
-      {/* External Apps */}
-      <h2 className="text-es-lg font-es-semibold text-es-fg-1 mt-10 mb-4">External Apps</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-es-4">
-        <a
-          href="https://hcmgpt.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-between bg-es-surface border border-es-border rounded-es-lg p-es-5 transition-shadow duration-es-base ease-es-out hover:shadow-es-md"
-        >
-          <div className="flex items-center gap-es-4">
-            <div className="flex items-center justify-center rounded-es-sm bg-es-surface-alt" style={{ width: 40, height: 40 }}>
-              <MessageSquare size={20} className="text-es-fg-2" strokeWidth={1.5} />
-            </div>
-            <div>
-              <p className="text-es-base font-es-medium text-es-fg-1">HCMGPT, by Esteemed</p>
-              <p className="text-es-sm text-es-fg-3">Open HCMGPT</p>
-            </div>
-          </div>
-          <ExternalLink size={16} className="text-es-fg-3" />
-        </a>
-        <a
-          href="https://colleagues.esteemed.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-between bg-es-surface border border-es-border rounded-es-lg p-es-5 transition-shadow duration-es-base ease-es-out hover:shadow-es-md"
-        >
-          <div className="flex items-center gap-es-4">
-            <div className="flex items-center justify-center rounded-es-sm bg-es-surface-alt" style={{ width: 40, height: 40 }}>
-              <Users size={20} className="text-es-fg-2" strokeWidth={1.5} />
-            </div>
-            <div>
-              <p className="text-es-base font-es-medium text-es-fg-1">Colleagues, by Esteemed</p>
-              <p className="text-es-sm text-es-fg-3">Open Colleagues</p>
-            </div>
-          </div>
-          <ExternalLink size={16} className="text-es-fg-3" />
-        </a>
-      </div>
+      <section className="mb-8">
+        <h2 className="mb-4 text-es-lg font-es-semibold text-es-fg-1">Esteemed Platform</h2>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {apps.map((app) => {
+            const isActive = app.status === "active";
+            return (
+              <div key={app.name} className="flex flex-col gap-4 rounded-es-lg border border-es-border bg-white p-5 transition-colors hover:bg-es-surface-alt">
+                <div className="flex items-start justify-between">
+                  <IconTile src={app.icon} alt="" />
+                  <div className="flex items-center gap-2">
+                    <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: isActive ? "#07BC0C" : "#B8B8B8" }} />
+                    <span className="text-es-sm text-es-fg-2">{isActive ? "Active" : "Available"}</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-es-base font-es-semibold text-es-fg-1">{app.name}</p>
+                  <p className="text-es-sm text-es-fg-3">{app.sublabel}</p>
+                </div>
+                {isActive ? (
+                  <a
+                    href={app.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center justify-center gap-2 rounded-es-sm border border-es-border bg-white px-es-4 py-es-2 text-es-sm font-es-semibold text-es-fg-1 transition-colors hover:bg-es-surface-alt"
+                  >
+                    Manage
+                    <ExternalLink size={14} />
+                  </a>
+                ) : (
+                  <Link
+                    href={`/dashboard/activate/${app.slug}`}
+                    className="mt-auto inline-flex items-center justify-center rounded-es-sm bg-es-yellow px-es-4 py-es-2 text-es-sm font-es-semibold text-es-fg-on-yellow transition-colors hover:bg-es-yellow-hover"
+                  >
+                    Activate
+                  </Link>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section>
+        <h2 className="mb-4 text-es-lg font-es-semibold text-es-fg-1">Related Apps</h2>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {externalApps.map((app) => {
+            const Icon = app.icon;
+            return (
+              <a
+                key={app.label}
+                href={app.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-es-lg border border-es-border bg-white p-5 transition-colors hover:bg-es-surface-alt"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-es-sm bg-es-surface-alt">
+                    <Icon size={20} className="text-es-fg-2" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <p className="text-es-base font-es-semibold text-es-fg-1">{app.label}</p>
+                    <p className="text-es-sm text-es-fg-3">{app.description}</p>
+                  </div>
+                </div>
+                <ExternalLink size={16} className="text-es-fg-3" />
+              </a>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }
