@@ -3,6 +3,24 @@ import { getAllowedLookupKeys } from "@/lib/pricing-catalog";
 
 const STRIPE_API_BASE = "https://api.stripe.com/v1";
 
+function isTestModeKey(secretKey) {
+  return secretKey?.startsWith("sk_test_") || secretKey?.startsWith("rk_test_");
+}
+
+function isLiveModeKey(secretKey) {
+  return secretKey?.startsWith("sk_live_") || secretKey?.startsWith("rk_live_");
+}
+
+function shouldRequireTestMode(requestUrl) {
+  const explicitMode = process.env.STRIPE_CHECKOUT_MODE;
+  if (explicitMode === "test") return true;
+  if (explicitMode === "live") return false;
+
+  const nextAuthUrl = process.env.NEXTAUTH_URL || "";
+  const host = new URL(requestUrl).host;
+  return host.endsWith(".ondigitalocean.app") || nextAuthUrl.includes(".ondigitalocean.app");
+}
+
 function parsePath(value, fallback) {
   if (!value || !value.startsWith("/")) return fallback;
   if (value.startsWith("//")) return fallback;
@@ -76,6 +94,12 @@ export async function GET(request) {
   const secretKey = process.env.STRIPE_SECRET_KEY || process.env.STRIPE_RESTRICTED_KEY;
   if (!secretKey) {
     return NextResponse.json({ error: "Stripe checkout is not configured." }, { status: 500 });
+  }
+  if (shouldRequireTestMode(request.url) && isLiveModeKey(secretKey) && !isTestModeKey(secretKey)) {
+    return NextResponse.json(
+      { error: "Stripe checkout is set to test mode for this environment, but a live Stripe key is configured." },
+      { status: 503 },
+    );
   }
 
   const url = new URL(request.url);
