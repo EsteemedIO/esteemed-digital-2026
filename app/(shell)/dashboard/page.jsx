@@ -7,20 +7,13 @@ import Image from "next/image";
 import { Button, Chip } from "@heroui/react";
 import {
   ArrowRight,
-  Bot,
-  Brain,
-  Briefcase,
   Calculator,
   Check,
   Cloud,
   ExternalLink,
-  FolderKanban,
   Headphones,
-  LayoutGrid,
   MessageSquare,
-  Paintbrush,
   Settings,
-  Target,
   Users,
 } from "lucide-react";
 import { checkoutHref, productIconPaths } from "@/lib/pricing-catalog";
@@ -80,10 +73,10 @@ const accountCards = [
     primary: true,
   },
   {
-    label: "Projects",
-    description: "Track Create builds, migrations, launches, and support work.",
-    href: "/dashboard/projects",
-    icon: FolderKanban,
+    label: "Sites",
+    description: "Manage Create builds, Cloud deploys, live URLs, and Git imports.",
+    href: "/dashboard/sites",
+    icon: Cloud,
   },
   {
     label: "Settings",

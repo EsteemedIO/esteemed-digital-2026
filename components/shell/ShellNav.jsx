@@ -7,6 +7,7 @@ import {
   Home,
   MessageSquare,
   Calendar,
+  Globe,
   FolderKanban,
   Workflow,
   Bot,
@@ -32,6 +33,7 @@ import {
 
 const navItems = [
   { label: "Home", href: "/dashboard", icon: Home },
+  { label: "Sites", href: "/dashboard/sites", icon: Globe },
   { label: "Conversations", href: "/dashboard/conversations", icon: MessageSquare },
   { label: "Calendar", href: "/dashboard/calendar", icon: Calendar },
   { label: "Projects", href: "/dashboard/projects", icon: FolderKanban },
