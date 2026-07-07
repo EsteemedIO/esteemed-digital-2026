@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import {
   UserCheck,
   Settings,
@@ -118,12 +117,12 @@ export default function IndustryPage({
             )}
             <h1 className="heading-3">{title}</h1>
             <p className="subtitle max-w-xl text-ink/70">{heroDescription}</p>
-            <Link
+            <a
               href={ctaHref}
               className="inline-block rounded-full bg-accent px-8 py-3 font-semibold text-ink transition hover:bg-accent-hover"
             >
               {ctaText}
-            </Link>
+            </a>
           </div>
           <div className="relative flex-1">
             <Image
@@ -283,12 +282,12 @@ export default function IndustryPage({
             {closingHeading}
           </h2>
           <p className="mb-8 text-lg text-paper/70">{closingText}</p>
-          <Link
+          <a
             href={ctaHref}
             className="inline-block rounded-full bg-accent px-10 py-4 font-semibold text-ink transition hover:bg-accent-hover"
           >
             {ctaText}
-          </Link>
+          </a>
         </div>
       </section>
     </main>

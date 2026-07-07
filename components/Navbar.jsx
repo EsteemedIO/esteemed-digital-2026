@@ -263,13 +263,13 @@ export default function Navbar() {
                 >
                   Log In
                 </button>
-                <Link
+                <a
                   href="/signup"
                   className="inline-flex items-center px-3 md:px-4 rounded-full border-2 border-accent bg-accent text-ink text-sm font-semibold hover:bg-accent-hover hover:border-accent-hover transition-colors leading-none"
                   style={{ paddingTop: 6, paddingBottom: 6 }}
                 >
                   Sign Up
-                </Link>
+                </a>
               </>
             )}
             <div className="md:hidden bg-white relative z-10">
