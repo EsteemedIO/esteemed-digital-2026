@@ -160,6 +160,7 @@ export default function SitesPage() {
   const [sites, setSites] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [inventoryMessage, setInventoryMessage] = useState("");
   const [isImporting, setIsImporting] = useState(false);
   const [importStatus, setImportStatus] = useState("");
   const [form, setForm] = useState({ repoUrl: "", branch: "main", name: "" });
@@ -167,11 +168,13 @@ export default function SitesPage() {
   async function loadSites() {
     setIsLoading(true);
     setError("");
+    setInventoryMessage("");
     try {
       const response = await fetch("/api/cloud/sites", { cache: "no-store" });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || "Unable to load sites.");
       setSites(payload.apps || []);
+      if (payload.message) setInventoryMessage(payload.message);
     } catch (loadError) {
       setError(loadError.message || "Unable to load sites.");
     } finally {
@@ -318,6 +321,16 @@ export default function SitesPage() {
               <div>
                 <p className="font-es-semibold">Create inventory is unavailable</p>
                 <p>{error}</p>
+              </div>
+            </div>
+          )}
+
+          {inventoryMessage && (
+            <div className="mb-4 flex gap-3 rounded-es-sm border border-es-border bg-es-yellow-hover p-4 text-es-sm text-es-fg-1">
+              <AlertCircle size={18} className="shrink-0" />
+              <div>
+                <p className="font-es-semibold">Account site inventory is pending Create scoping</p>
+                <p>{inventoryMessage}</p>
               </div>
             </div>
           )}

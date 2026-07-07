@@ -10,6 +10,22 @@ function normalizeApps(payload) {
   return [];
 }
 
+function getOwnerId(app) {
+  return app.user_id || app.userId || app.owner_id || app.ownerId || app.created_by || app.createdBy || app.cloud?.created_by || app.cloud?.user_id;
+}
+
+function getOwnerEmail(app) {
+  return app.user_email || app.userEmail || app.owner_email || app.ownerEmail || app.created_by_email || app.createdByEmail || app.cloud?.user_email;
+}
+
+function belongsToToken(app, token) {
+  const ownerId = getOwnerId(app);
+  const ownerEmail = getOwnerEmail(app);
+  if (ownerId && token.sub && ownerId === token.sub) return true;
+  if (ownerEmail && token.email && ownerEmail.toLowerCase() === token.email.toLowerCase()) return true;
+  return false;
+}
+
 export async function GET(request) {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   if (!token) {
@@ -26,6 +42,8 @@ export async function GET(request) {
       headers: {
         Accept: "application/json",
         ...(token.accessToken ? { Authorization: `Bearer ${token.accessToken}` } : {}),
+        ...(token.sub ? { "X-User-Id": token.sub } : {}),
+        ...(token.email ? { "X-User-Email": token.email } : {}),
       },
       cache: "no-store",
     });
@@ -38,7 +56,13 @@ export async function GET(request) {
       );
     }
 
-    const apps = normalizeApps(payload).map((app) => ({
+    const upstreamApps = normalizeApps(payload);
+    const hasScopedOwnership = upstreamApps.some((app) => getOwnerId(app) || getOwnerEmail(app));
+    const scopedApps = hasScopedOwnership
+      ? upstreamApps.filter((app) => belongsToToken(app, token))
+      : [];
+
+    const apps = scopedApps.map((app) => ({
       id: app.id,
       name: app.name || app.cloud_name || app.id,
       framework: app.framework || "react",
@@ -57,6 +81,11 @@ export async function GET(request) {
       success: true,
       apps,
       total: apps.length,
+      upstreamTotal: upstreamApps.length,
+      integrationStatus: hasScopedOwnership ? "scoped" : "unscoped",
+      message: hasScopedOwnership
+        ? null
+        : "Create site inventory is connected, but the upstream endpoint is not returning user ownership fields yet. Global Create inventory is hidden until account scoping is available.",
       upstream: "create",
     });
   } catch (error) {

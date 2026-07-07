@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const CREATE_CLOUD_BASE = process.env.CREATE_CLOUD_CONSOLE_URL || "https://create.esteemed.io/cloud/";
+const CREATE_CLOUD_BASE = process.env.CREATE_CLOUD_CONSOLE_URL || "";
 
 export async function POST(request) {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
@@ -13,15 +13,22 @@ export async function POST(request) {
   if (!body.repoUrl) {
     return NextResponse.json({ error: "GitHub repo URL is required." }, { status: 400 });
   }
+  if (!CREATE_CLOUD_BASE) {
+    return NextResponse.json(
+      { error: "Git import is not configured. Set CREATE_CLOUD_CONSOLE_URL to the Create cloud-console base URL." },
+      { status: 501 },
+    );
+  }
 
   try {
-    const response = await fetch(new URL("api/cloud/github/import", CREATE_CLOUD_BASE), {
+    const response = await fetch(new URL("/api/cloud/github/import", CREATE_CLOUD_BASE), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         ...(token.accessToken ? { Authorization: `Bearer ${token.accessToken}` } : {}),
         ...(token.sub ? { "X-User-Id": token.sub } : {}),
+        ...(token.email ? { "X-User-Email": token.email } : {}),
       },
       body: JSON.stringify({
         repoUrl: body.repoUrl,
