@@ -7,25 +7,34 @@ import { Squeeze as Hamburger } from "hamburger-react";
 import { ChevronDownIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import ProductIcon from "@/components/ProductIcon";
 
-const productsCol1 = [
-  { key: "create", name: "Create", href: "/products/create", desc: "Use AI-enabled Esteemed Create to make apps in minutes." },
-  { key: "cloud", name: "Cloud", href: "/products/cloud", desc: "Publish or import and maintain your apps on Esteemed Cloud." },
-  { key: "curate", name: "Curate", href: "/products/curate", desc: "Provision an AI-native CMS and media manager on Esteemed Cloud." },
-  { key: "agents", name: "Agents", href: "/products/agents", desc: "AI agents trained on your business with Esteemed Agents, featuring Star — AI for work." },
+const websitesGroup = [
+  { key: "website-design", name: "Website Design", href: "/services/website-design" },
+  { key: "create", name: "AI Website Builder", href: "/products/create" },
+  { key: "cloud", name: "Website Hosting", href: "/products/cloud" },
+  { key: "ecommerce", name: "Ecommerce", href: "/services/ecommerce" },
+  { key: "blogs", name: "Blogs", href: "/services/blogs" },
+  { key: "dashboards", name: "Dashboards", href: "/services/dashboards" },
+  { key: "seo", name: "SEO", href: "/services/seo" },
 ];
 
-const productsCol2 = [
-  { key: "hire", name: "Hire", href: "/products/hire", desc: "Esteemed Hire — applicant tracking that integrates with Colleagues and Intelligence." },
-  { key: "acquire", name: "Acquire", href: "/products/acquire", desc: "Esteemed Acquire — CRM for client and talent acquisition, powered by Intelligence." },
-  { key: "intelligence", name: "Intelligence", href: "/products/intelligence", desc: "Esteemed Intelligence — the shared intelligence layer powering all Esteemed products." },
-  { key: "hcmgpt", name: "HCMGPT", href: "https://hcmgpt.com", desc: "HCMGPT, by Esteemed — the preeminent domain-specific AI for human capital management.", external: true },
+const businessToolsGroup = [
+  { key: "business-email", name: "Business Email", href: "/services/business-email" },
+  { key: "curate", name: "Content Management", href: "/products/curate" },
+  { key: "acquire", name: "Customer Relationship Management", href: "/products/acquire" },
+  { key: "hire", name: "Applicant Tracking", href: "/products/hire" },
+  { key: "intelligence", name: "Business Intelligence + Memory", href: "/products/intelligence" },
+  { key: "hcmgpt", name: "Human Capital Intelligence", href: "https://hcmgpt.com", external: true },
+  { key: "agents", name: "AI Agents", href: "/products/agents" },
 ];
-
-const productsGroup = [...productsCol1, ...productsCol2];
 
 const servicesGroup = [
-  { key: "colleagues", name: "Colleagues", href: "/products/colleagues", desc: "Colleagues, by Esteemed — talent and opportunity marketplace. Post opportunities and hire contract or direct employees." },
-  { key: "support", name: "Support", href: "/services/support", desc: "Esteemed Support — expert human help for Esteemed apps or anything you built elsewhere." },
+  { key: "hire-expert", name: "Hire an Expert", href: "/services/hire-an-expert" },
+  { key: "web-support", name: "Web Support Plans", href: "/services/support" },
+  { key: "talent-management", name: "Talent Management", href: "/services/talent-management" },
+  { key: "content-strategy", name: "Content Strategy", href: "/services/content-strategy" },
+  { key: "content-production", name: "Content Production", href: "/services/content-production" },
+  { key: "sem", name: "Search Engine Marketing", href: "/services/search-engine-marketing" },
+  { key: "ai-visibility", name: "AI Visibility", href: "/services/ai-visibility" },
 ];
 
 const solutionsUseCases = [
@@ -82,7 +91,8 @@ const mobileSections = [
   {
     label: "Products & Services",
     subgroups: [
-      { heading: "Products", items: productsGroup },
+      { heading: "Websites", items: websitesGroup },
+      { heading: "Business Tools", items: businessToolsGroup },
       { heading: "Services", items: servicesGroup },
     ],
   },
@@ -275,30 +285,27 @@ export default function Navbar() {
           <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
             <div className="mx-auto px-6 py-8" style={{ maxWidth: "1800px" }}>
               <div className="grid grid-cols-4 gap-x-8">
-                <div className="col-span-2">
-                  <SectionHeading href="/products">Products</SectionHeading>
-                  <div className="grid grid-cols-2 gap-x-8">
-                    <div>
-                      {productsCol1.map((item) => (
-                        <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
-                      ))}
-                    </div>
-                    <div>
-                      {productsCol2.map((item) => (
-                        <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
-                      ))}
-                    </div>
-                  </div>
+                <div>
+                  <SectionHeading>Websites</SectionHeading>
+                  {websitesGroup.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
+                  ))}
+                </div>
+                <div>
+                  <SectionHeading>Business Tools</SectionHeading>
+                  {businessToolsGroup.map((item) => (
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
+                  ))}
                 </div>
                 <div>
                   <SectionHeading href="/services">Services</SectionHeading>
                   {servicesGroup.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} desc={item.desc} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div className="space-y-3 mt-8">
                   <FeaturedCard href="/products/create" onClick={closeMenu}>Try Esteemed Create</FeaturedCard>
-                  <FeaturedCard href="/products/colleagues" onClick={closeMenu}>Hire an Expert</FeaturedCard>
+                  <FeaturedCard href="/services/hire-an-expert" onClick={closeMenu}>Hire an Expert</FeaturedCard>
                   <FeaturedCard href="/services/support" onClick={closeMenu}>Get Support</FeaturedCard>
                 </div>
               </div>
