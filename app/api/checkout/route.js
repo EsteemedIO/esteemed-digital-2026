@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getAllowedLookupKeys } from "@/lib/pricing-catalog";
 
 const STRIPE_API_BASE = "https://api.stripe.com/v1";
+const CHECKOUT_SESSION_PLACEHOLDER = "{CHECKOUT_SESSION_ID}";
 
 function isTestModeKey(secretKey) {
   return secretKey?.startsWith("sk_test_") || secretKey?.startsWith("rk_test_");
@@ -107,9 +108,11 @@ function getRequestOrigin(request) {
 function buildReturnUrl(origin, path, fallback, sessionPlaceholder = false) {
   const returnUrl = new URL(parsePath(path, fallback), origin);
   if (sessionPlaceholder) {
-    returnUrl.searchParams.set("session_id", "{CHECKOUT_SESSION_ID}");
+    returnUrl.searchParams.set("session_id", CHECKOUT_SESSION_PLACEHOLDER);
   }
-  return returnUrl.toString();
+  return returnUrl
+    .toString()
+    .replace(encodeURIComponent(CHECKOUT_SESSION_PLACEHOLDER), CHECKOUT_SESSION_PLACEHOLDER);
 }
 
 async function stripeRequest(method, path, body, secretKey) {
