@@ -35,9 +35,9 @@ export default function AgentsPage() {
 
       <div id="plans">
         <ProductPricingBlock
-          eyebrow="Agent plans"
-          title="Standalone agent SKUs"
-          description="Agents are configured as standalone Stripe SKUs for non-Curate deployments. Curate Pro includes content agents through SKU-gated entitlements."
+          eyebrow="Agent Plans"
+          title="Esteemed Agents"
+          description="Standalone agents for any deployment. Curate Pro customers get content agents included."
           productKey="agents"
           plans={pricingPlans}
           ctaLabel="Buy Now"
