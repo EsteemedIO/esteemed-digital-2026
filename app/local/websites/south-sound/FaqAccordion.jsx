@@ -1,36 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Minus } from "lucide-react";
 
-function FaqItem({ q, a }) {
-  const [open, setOpen] = useState(false);
+function Icon({ name, size = 20, stroke = 1.75 }) {
+  const paths = {
+    plus: <><path d="M12 5v14M5 12h14" /></>,
+    minus: <><path d="M5 12h14" /></>,
+  };
   return (
-    <div className="border-b border-zinc-200">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between gap-4 py-5 text-left"
-      >
-        <span className="text-lg font-semibold text-ink">{q}</span>
-        {open ? (
-          <Minus className="h-5 w-5 shrink-0 text-zinc-400" />
-        ) : (
-          <Plus className="h-5 w-5 shrink-0 text-zinc-400" />
-        )}
-      </button>
-      {open && (
-        <p className="pb-5 text-zinc-600 leading-relaxed">{a}</p>
-      )}
-    </div>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {paths[name] || null}
+    </svg>
   );
 }
 
 export default function FaqAccordion({ faqs }) {
+  const [open, setOpen] = useState(0);
   return (
     <div>
-      {faqs.map((f) => (
-        <FaqItem key={f.q} q={f.q} a={f.a} />
-      ))}
+      {faqs.map((f, i) => {
+        const on = open === i;
+        return (
+          <div key={i} style={{ borderBottom: "1px solid var(--es-border)" }}>
+            <button onClick={() => setOpen(on ? -1 : i)} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, textAlign: "left", background: "none", border: "none", cursor: "pointer", padding: "22px 0", font: "inherit" }}>
+              <span style={{ fontFamily: "var(--es-font-display)", fontWeight: 700, fontSize: 18, letterSpacing: "-.01em", color: "var(--es-fg-1)" }}>{f.q}</span>
+              <span style={{ flexShrink: 0, color: "var(--es-ink-900)" }}><Icon name={on ? "minus" : "plus"} size={20} stroke={2.25} /></span>
+            </button>
+            {on && <p style={{ fontSize: 15.5, lineHeight: 1.6, color: "var(--es-fg-2)", margin: "0 0 22px", maxWidth: 620 }}>{f.a}</p>}
+          </div>
+        );
+      })}
     </div>
   );
 }
