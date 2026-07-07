@@ -223,6 +223,7 @@ non-Curate deployments (Tier-2 hosting add-ons, HCMGPT, or direct tenant install
 | Esteemed Suite | `suite` | Entitles acquire + hire at Pro |
 | Esteemed Intelligence | `intelligence` | Per-seat add-on substrate |
 | Esteemed Curate | `curate` | Per-workspace CMS / content hub |
+| Esteemed Create | `create` | AI-assisted website and app builder with Studio IDE |
 | Esteemed Cloud | `hosting` | Per-site managed website hosting (self-serve + managed) |
 | Esteemed Migration | `migration` | One-time migration service (any platform → Curate) + Care bridge |
 | Esteemed Agents | `agents` | AI add-ons — standalone SKUs, bundled in Curate, HCMGPT Assist skills (not yet GA) |
@@ -262,6 +263,14 @@ non-Curate deployments (Tier-2 hosting add-ons, HCMGPT, or direct tenant install
 | `curate_editor_seat_monthly` | $19 | month | per_seat (add-on) |
 | `curate_site_addon_monthly` | $39 | month | per_site (add-on) |
 | `curate_traffic_overage` | metered | month | usage (per 1,000 views) |
+| `create_free` | $0 | month | flat |
+| `create_core_monthly` | $39 | month | flat |
+| `create_core_annual` | $348 | year | flat |
+| `create_pro_monthly` | $79 | month | flat |
+| `create_pro_annual` | $708 | year | flat |
+| `create_business_monthly` | $169 | month | flat |
+| `create_business_annual` | $1,548 | year | flat |
+| `create_enterprise_custom` | custom | — | per contract |
 | `cloud_basic_monthly` | $9.99 | month | flat (1 site) |
 | `cloud_basic_annual` | $99 | year | flat (1 site) |
 | `cloud_plus_monthly` | $14.99 | month | flat (1 site) |
