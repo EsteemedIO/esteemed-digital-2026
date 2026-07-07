@@ -3,9 +3,9 @@ import { Users } from "lucide-react";
 import ProductIcon from "@/components/ProductIcon";
 
 export const metadata = {
-  title: "Products & Services",
+  title: "Products | Esteemed",
   description:
-    "Everything Esteemed offers — Create, Cloud, Agents, Intelligence, Colleagues, and Support.",
+    "Esteemed products by name — Create, Cloud, Curate, Acquire, Hire, Intelligence, Agents, HCMGPT, and Colleagues.",
 };
 
 const items = [
@@ -16,7 +16,6 @@ const items = [
       "Describe what you want in plain English and get a working site in minutes. Edit by conversation, preview instantly, publish in one click.",
     iconProduct: "create",
     href: "/products/create",
-    type: "Product",
   },
   {
     name: "Cloud",
@@ -25,25 +24,30 @@ const items = [
       "Managed hosting with SSL, daily backups, monitoring, and a global edge network. Your site stays fast, secure, and always on.",
     iconProduct: "cloud",
     href: "/products/cloud",
-    type: "Product",
   },
   {
     name: "Curate",
     tagline: "Content and media management on Esteemed Cloud.",
     description:
-      "Provision a dedicated Curate tenant for structured content, digital assets, and agent-assisted publishing. First admin and cloud resources are created from signup.",
+      "Provision a dedicated Curate tenant for structured content, digital assets, and agent-assisted publishing.",
     iconProduct: "curate",
     href: "/products/curate",
-    type: "Product",
   },
   {
-    name: "Agents",
-    tagline: "AI that works like part of your team.",
+    name: "Acquire",
+    tagline: "CRM for client and talent acquisition.",
     description:
-      "Voice, Social, Blog, Marketing, and Star agents that handle real work — trained on your business, backed by real people.",
-    iconProduct: "agents",
-    href: "/products/agents",
-    type: "Product",
+      "Customer relationship management powered by Intelligence. Manage leads, clients, and talent pipelines in one place.",
+    iconProduct: "acquire",
+    href: "/products/acquire",
+  },
+  {
+    name: "Hire",
+    tagline: "Applicant tracking that integrates with everything.",
+    description:
+      "Full-featured ATS integrated with Colleagues and Intelligence. Post jobs, track candidates, and hire smarter.",
+    iconProduct: "hire",
+    href: "/products/hire",
   },
   {
     name: "Intelligence",
@@ -52,25 +56,31 @@ const items = [
       "A shared intelligence layer that gives your website and agents persistent memory, cross-system reasoning, and continuous learning.",
     iconProduct: "intelligence",
     href: "/products/intelligence",
-    type: "Product",
+  },
+  {
+    name: "Agents",
+    tagline: "AI that works like part of your team.",
+    description:
+      "Voice, Social, Blog, Marketing, and Star agents that handle real work — trained on your business, backed by real people.",
+    iconProduct: "agents",
+    href: "/products/agents",
+  },
+  {
+    name: "HCMGPT",
+    tagline: "Domain-specific AI for human capital management.",
+    description:
+      "The preeminent AI for HR, recruiting, and workforce intelligence. Purpose-built for human capital professionals.",
+    iconProduct: "hcmgpt",
+    href: "https://hcmgpt.com",
+    external: true,
   },
   {
     name: "Colleagues",
     tagline: "Vetted talent, on demand.",
     description:
-      "Search 35,000+ vetted professionals. Post engagements, manage projects, or find your next role. Hiring and jobseeking in one platform.",
+      "Search 35,000+ vetted professionals. Post engagements, manage projects, or find your next role.",
     icon: Users,
     href: "/products/colleagues",
-    type: "Service",
-  },
-  {
-    name: "Support",
-    tagline: "Expert human help when you need it.",
-    description:
-      "Get hands-on assistance with your Esteemed apps or anything you built elsewhere. Hourly plans from our team of specialists.",
-    iconProduct: "support",
-    href: "/services/support",
-    type: "Service",
   },
 ];
 
@@ -92,36 +102,40 @@ export default function ProductsPage() {
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {items.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="group rounded-2xl border border-zinc-200 p-8 hover:shadow-lg hover:border-accent transition-all"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  {item.iconProduct ? (
-                    <ProductIcon product={item.iconProduct} className="h-8 w-8" />
-                  ) : (
-                    <item.icon className="w-8 h-8 text-ink" strokeWidth={1.5} />
-                  )}
-                  <span className="text-xs font-medium uppercase tracking-wide text-zinc-400">
-                    {item.type}
+            {items.map((item) => {
+              const Tag = item.external ? "a" : Link;
+              const tagProps = item.external
+                ? { href: item.href, target: "_blank", rel: "noopener noreferrer" }
+                : { href: item.href };
+              return (
+                <Tag
+                  key={item.name}
+                  {...tagProps}
+                  className="group rounded-2xl border border-zinc-200 p-8 hover:shadow-lg hover:border-accent transition-all"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    {item.iconProduct ? (
+                      <ProductIcon product={item.iconProduct} className="h-8 w-8" />
+                    ) : (
+                      <item.icon className="w-8 h-8 text-ink" strokeWidth={1.5} />
+                    )}
+                  </div>
+                  <h2 className="text-xl font-bold text-ink mb-1">
+                    {item.name}
+                    {item.external && <span className="ml-1">↗</span>}
+                  </h2>
+                  <p className="text-sm font-medium text-zinc-500 mb-3">
+                    {item.tagline}
+                  </p>
+                  <p className="text-sm text-zinc-600 leading-relaxed">
+                    {item.description}
+                  </p>
+                  <span className="inline-block mt-4 text-sm font-medium text-ink group-hover:underline">
+                    Learn more &rarr;
                   </span>
-                </div>
-                <h2 className="text-xl font-bold text-ink mb-1">
-                  {item.name}
-                </h2>
-                <p className="text-sm font-medium text-zinc-500 mb-3">
-                  {item.tagline}
-                </p>
-                <p className="text-sm text-zinc-600 leading-relaxed">
-                  {item.description}
-                </p>
-                <span className="inline-block mt-4 text-sm font-medium text-ink group-hover:underline">
-                  Learn more &rarr;
-                </span>
-              </Link>
-            ))}
+                </Tag>
+              );
+            })}
           </div>
         </div>
       </section>

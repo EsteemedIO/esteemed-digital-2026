@@ -305,7 +305,7 @@ export default function Navbar() {
                 </div>
                 <div className="space-y-3 mt-8">
                   <FeaturedCard href="/products/create" onClick={closeMenu}>Try Esteemed Create</FeaturedCard>
-                  <FeaturedCard href="/services/hire-an-expert" onClick={closeMenu}>Hire an Expert</FeaturedCard>
+                  <FeaturedCard href="/products" onClick={closeMenu}>Products by Name</FeaturedCard>
                   <FeaturedCard href="/services/support" onClick={closeMenu}>Get Support</FeaturedCard>
                 </div>
               </div>
@@ -421,7 +421,7 @@ export default function Navbar() {
         </nav>
         <div className="p-5 space-y-3">
           <FeaturedCard href="/products/create" onClick={closeMobile}>Try Esteemed Create</FeaturedCard>
-          <FeaturedCard href="/products/colleagues" onClick={closeMobile}>Hire an Expert</FeaturedCard>
+          <FeaturedCard href="/products" onClick={closeMobile}>Products by Name</FeaturedCard>
           <FeaturedCard href="/services/support" onClick={closeMobile}>Get Support</FeaturedCard>
         </div>
       </div>
