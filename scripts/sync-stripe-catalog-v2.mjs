@@ -1,10 +1,10 @@
 const API_BASE = "https://api.stripe.com/v1";
 
-const apiKey = process.env.STRIPE_API_KEY || process.env.STRIPE_RESTRICTED_KEY;
+const apiKey = process.env.STRIPE_API_KEY || process.env.STRIPE_RESTRICTED_KEY || process.env.STRIPE_SECRET_KEY;
 const dryRun = process.argv.includes("--dry-run");
 
 if (!apiKey) {
-  console.error("STRIPE_API_KEY or STRIPE_RESTRICTED_KEY is required.");
+  console.error("STRIPE_API_KEY, STRIPE_RESTRICTED_KEY, or STRIPE_SECRET_KEY is required.");
   process.exit(1);
 }
 
