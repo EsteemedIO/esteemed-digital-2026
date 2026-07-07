@@ -13,7 +13,6 @@ const websitesGroup = [
   { key: "cloud", name: "Website Hosting", href: "/products/cloud" },
   { key: "ecommerce", name: "Ecommerce", href: "/services/ecommerce" },
   { key: "blogs", name: "Blogs", href: "/services/blogs" },
-  { key: "dashboards", name: "Dashboards", href: "/services/dashboards" },
   { key: "seo", name: "SEO", href: "/services/seo" },
 ];
 
