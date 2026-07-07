@@ -56,6 +56,54 @@ function parseItems(url) {
   return [];
 }
 
+function isLocalOrigin(origin) {
+  try {
+    const host = new URL(origin).hostname;
+    return host === "localhost" || host === "127.0.0.1" || host === "::1";
+  } catch {
+    return false;
+  }
+}
+
+function configuredPublicOrigin() {
+  const configured =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.SITE_URL ||
+    process.env.NEXTAUTH_URL ||
+    "";
+
+  if (!configured) return null;
+
+  try {
+    const origin = new URL(configured).origin;
+    return isLocalOrigin(origin) ? null : origin;
+  } catch {
+    return null;
+  }
+}
+
+function getRequestOrigin(request) {
+  const forwardedHost = request.headers.get("x-forwarded-host");
+  const forwardedProto = request.headers.get("x-forwarded-proto") || "https";
+
+  if (forwardedHost) {
+    return `${forwardedProto.split(",")[0]}://${forwardedHost.split(",")[0]}`;
+  }
+
+  const host = request.headers.get("host");
+  if (host) {
+    const protocol = host.includes("localhost") ? "http" : "https";
+    return `${protocol}://${host}`;
+  }
+
+  const origin = new URL(request.url).origin;
+  if (isLocalOrigin(origin)) {
+    return configuredPublicOrigin() || origin;
+  }
+
+  return origin;
+}
+
 function buildReturnUrl(origin, path, fallback, sessionPlaceholder = false) {
   const returnUrl = new URL(parsePath(path, fallback), origin);
   if (sessionPlaceholder) {
@@ -103,7 +151,7 @@ export async function GET(request) {
   }
 
   const url = new URL(request.url);
-  const origin = url.origin;
+  const origin = getRequestOrigin(request);
   const items = parseItems(url);
   const allowedLookupKeys = getAllowedLookupKeys();
 
