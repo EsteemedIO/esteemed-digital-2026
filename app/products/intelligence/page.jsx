@@ -113,7 +113,7 @@ export default function IntelligencePage() {
           description="Esteemed Intelligence is a flat per-tenant add-on for persistent memory, reasoning, coherence, and custom domain intelligence."
           productKey="intelligence"
           plans={pricingPlans}
-          ctaLabel="Checkout"
+          ctaLabel="Buy Now"
         />
       </div>
 

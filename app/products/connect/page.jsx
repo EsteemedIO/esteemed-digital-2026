@@ -106,7 +106,7 @@ export default function ConnectPage() {
           description="Esteemed Connect is the RAG layer included with managed Curate. Choose a Curate workspace to connect approved content and systems for AI retrieval."
           productKey="connect"
           plans={pricingPlans}
-          ctaLabel="Checkout"
+          ctaLabel="Buy Now"
           freeHref="/signup?product=curate"
         />
       </div>

@@ -103,7 +103,7 @@ export default function CloudPage() {
           description="GoDaddy-aligned website hosting with SSL included and no forced CMS migration. Best for bring-your-own, Create-built, React, Node, and Next sites."
           productKey="cloud"
           plans={cloudPlans}
-          ctaLabel="Checkout"
+          ctaLabel="Buy Now"
         />
 
         <ProductPricingBlock
@@ -112,7 +112,7 @@ export default function CloudPage() {
           description="Managed Hosting includes support hours and a $0 Create rebuild with a 12-month term: 5 pages on Essential, 12 pages on Growth, and a full standard site on Business."
           productKey="cloud"
           plans={managedPlans}
-          ctaLabel="Checkout"
+          ctaLabel="Buy Now"
         />
       </div>
 

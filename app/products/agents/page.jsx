@@ -40,7 +40,7 @@ export default function AgentsPage() {
           description="Agents are configured as standalone Stripe SKUs for non-Curate deployments. Curate Pro includes content agents through SKU-gated entitlements."
           productKey="agents"
           plans={pricingPlans}
-          ctaLabel="Checkout"
+          ctaLabel="Buy Now"
         />
       </div>
 

@@ -44,7 +44,7 @@ const catalog = {
         imageBg: "#FEE546",
         blurb:
           "Our AI website builder. Describe what you want and Create drafts a real, brand-aware site in the Studio IDE - then refine it by prompt or in code. Hosting is included the moment you publish.",
-        anchor: "As low as $39/mo · free to start",
+        anchor: "As low as $29/mo with annual plan · free to start",
         cta: "See Plans",
         href: "/products/create#plans",
         primary: true,
@@ -83,7 +83,7 @@ const catalog = {
         pills: ["JavaScript", "WordPress & Drupal", "Managed edge"],
         blurb:
           "Modern hosting for JavaScript, Node, React, WordPress, and Drupal. Bring an existing site or publish from Esteemed Create onto managed cloud infrastructure.",
-        anchor: "Cloud hosting from $9.99/mo",
+        anchor: "As low as $8.25/mo with annual plan",
         cta: "Learn More",
         href: "/products/cloud#plans",
         primary: true,
@@ -165,7 +165,7 @@ const catalog = {
         pills: ["Per workspace", "AI content hub"],
         blurb:
           "Our AI-native CMS, managed in Esteemed Cloud and priced per workspace. Pro switches on the content agents - Blogger, Social, Marketer - with RAG grounding via Connect.",
-        anchor: "From $49/mo · Pro $299/mo",
+        anchor: "As low as $40.83/mo with annual plan",
         cta: "See Plans",
         href: "/products/curate#plans",
         primary: true,

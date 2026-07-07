@@ -96,7 +96,7 @@ export default function HirePage() {
           description="Hire uses the v2 per-seat catalog: Free, Starter, Pro, Enterprise, plus Suite for teams that want Hire Pro and Acquire Pro together."
           productKey="hire"
           plans={pricingPlans}
-          ctaLabel="Checkout"
+          ctaLabel="Buy Now"
           freeHref="/signup?product=hire&tier=free"
         />
       </div>

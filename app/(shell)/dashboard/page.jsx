@@ -35,7 +35,7 @@ const websitePaths = [
     lookupKey: "create_core_monthly",
     href: "/products/create",
     bullets: ["Custom domain + SSL", "Studio IDE and prompt editing", "Colleagues marketplace access"],
-    cta: "Checkout",
+    cta: "Buy Now",
     chip: "Start Here",
   },
   {
@@ -47,7 +47,7 @@ const websitePaths = [
     lookupKey: "cloud_plus_monthly",
     href: "/products/cloud",
     bullets: ["Node + React ready", "Staging and CDN", "SSL, backups, monitoring"],
-    cta: "Checkout",
+    cta: "Buy Now",
     chip: "Popular",
   },
   {
@@ -59,7 +59,7 @@ const websitePaths = [
     lookupKey: "managed_growth_monthly",
     href: "/products/cloud",
     bullets: ["12-page Create rebuild included", "5 support hours/month", "$100/page overage beyond allowance"],
-    cta: "Checkout",
+    cta: "Buy Now",
     chip: "Managed",
   },
 ];
@@ -67,7 +67,7 @@ const websitePaths = [
 const accountCards = [
   {
     label: "Plans & billing",
-    description: "Choose a website plan, review subscriptions, and start checkout.",
+    description: "Choose a website plan, review subscriptions, and purchase.",
     href: "/dashboard/plans",
     icon: Calculator,
     primary: true,

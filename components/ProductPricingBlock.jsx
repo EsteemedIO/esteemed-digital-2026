@@ -31,19 +31,22 @@ function getPlanPrice(plan, billing) {
     const savings = plan.monthly ? Math.round((1 - plan.annual / (plan.monthly * 12)) * 100) : 0;
 
     return {
-      headline: formatMoney(plan.annual),
-      suffix: "/yr",
-      note: `Equivalent to ${formatMoney(monthlyEquivalent)}/mo`,
+      headline: formatMoney(monthlyEquivalent),
+      suffix: "/mo",
+      note: `${formatMoney(plan.annual)} billed annually`,
       lookupKey: plan.annualLookupKey || plan.lookupKey,
       badge: savings > 0 ? `Save ${savings}%` : "Annual",
     };
   }
+
+  const annualMonthly = plan.annual ? formatMoney(plan.annual / 12) : null;
 
   return {
     headline: formatMoney(plan.monthly),
     suffix: "/mo",
     note: plan.basis || "Monthly billing",
     lookupKey: plan.lookupKey,
+    annualHint: annualMonthly ? `As low as ${annualMonthly}/mo with annual plan` : null,
   };
 }
 
@@ -99,6 +102,9 @@ function PricingCard({
             {price.suffix && <span className="pb-1 text-sm font-bold text-zinc-700">{price.suffix}</span>}
           </div>
           {price.note && <p className="mt-1 text-xs font-semibold text-zinc-600">{price.note}</p>}
+          {price.annualHint && (
+            <p className="mt-2 text-xs font-bold text-emerald-600">{price.annualHint}</p>
+          )}
           {plan.founding && billing === "monthly" && (
             <p className="mt-1 text-xs text-zinc-500">Founding rate: {formatMoney(plan.founding)}/mo for first 12 months.</p>
           )}
@@ -109,7 +115,7 @@ function PricingCard({
         href={href}
         className="mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
       >
-        {plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : ctaLabel || "Checkout"}
+        {plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : ctaLabel || "Buy Now"}
       </Link>
 
       <ul className="mt-6 space-y-3">
@@ -132,14 +138,14 @@ export default function ProductPricingBlock({
   description,
   productKey,
   plans,
-  ctaLabel = "Checkout",
+  ctaLabel = "Buy Now",
   freeHref,
   contactHref = "/contact",
   fallbackHref,
   calculatorHref = null,
 }) {
   const hasAnnual = plans.some((plan) => plan.annual);
-  const [billing, setBilling] = useState(hasAnnual ? "annual" : "monthly");
+  const [billing, setBilling] = useState("monthly");
 
   return (
     <section className="border-t border-zinc-100 py-20">

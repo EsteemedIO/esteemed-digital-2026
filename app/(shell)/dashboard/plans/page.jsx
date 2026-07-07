@@ -89,7 +89,7 @@ export default function PlansPage() {
               Plans & features
             </h1>
             <p className="mt-3 max-w-3xl text-es-base leading-es-relaxed text-es-fg-2">
-              Choose the website plan to sell or activate first. Checkout uses Stripe lookup keys, so this page can support the launch flow before deeper subscription management is wired in.
+              Choose the website plan to sell or activate first. Purchase uses Stripe lookup keys, so this page can support the launch flow before deeper subscription management is wired in.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:min-w-[520px]">
@@ -224,7 +224,7 @@ export default function PlansPage() {
                               className="flex-1 bg-es-yellow font-semibold text-es-fg-on-yellow hover:bg-es-yellow-hover"
                               radius="sm"
                             >
-                              {canCheckout ? "Checkout" : "Talk to Us"}
+                              {canCheckout ? "Buy Now" : "Talk to Us"}
                             </Button>
                             <Button
                               as={Link}

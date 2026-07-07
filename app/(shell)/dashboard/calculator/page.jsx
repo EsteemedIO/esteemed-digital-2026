@@ -646,7 +646,7 @@ export default function CalculatorPage() {
                   color: "rgba(0,0,0,0.85)",
                 }}
               >
-                {checkoutItems.length > 0 ? "Checkout selected plan" : "View hosting plans"}
+                {checkoutItems.length > 0 ? "Buy Now" : "View hosting plans"}
               </a>
 
               <a

@@ -85,7 +85,7 @@ export default function CuratePage() {
         description="Curate prices per workspace: sites, editors, content workflow, and AI/RAG capabilities. Managed Curate includes Connect for grounding approved knowledge."
         productKey="curate"
         plans={pricingPlans}
-        ctaLabel="Checkout"
+        ctaLabel="Buy Now"
         freeHref="/signup?product=curate"
       />
 

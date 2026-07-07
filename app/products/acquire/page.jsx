@@ -97,7 +97,7 @@ export default function AcquirePage() {
           description="Acquire uses the v2 per-seat catalog: Free, Starter, Pro, Enterprise, plus Suite for teams that want Acquire Pro and Hire Pro together."
           productKey="acquire"
           plans={pricingPlans}
-          ctaLabel="Checkout"
+          ctaLabel="Buy Now"
           freeHref="/signup?product=acquire&tier=free"
         />
       </div>
