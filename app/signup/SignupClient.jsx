@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
-import SocialLoginButtons from "@/components/SocialLoginButtons";
+import AuthEntryCard from "@/components/AuthEntryCard";
 
 const CREATE_URL = "https://create.esteemed.io";
 const COLLEAGUES_URL = "https://colleagues.esteemed.io";
@@ -225,36 +225,7 @@ function AccountSignup({ callbackUrl }) {
     );
   }
 
-  return (
-    <div className="flex min-h-[calc(100vh-64px)] items-center justify-center px-6">
-      <div className="w-full max-w-sm">
-        <div className="mb-8 text-center">
-          <h1 className="mb-2 text-3xl font-bold text-ink">Create your account</h1>
-          <p className="text-sm text-zinc-600">One account for everything Esteemed.</p>
-        </div>
-
-        <button onClick={() => signIn("keycloak", { callbackUrl })} className="mb-4 w-full rounded-full bg-accent py-3 text-sm font-bold text-ink transition-colors hover:bg-accent-hover">
-          Sign up with email
-        </button>
-
-        <div className="mb-4 flex items-center gap-3">
-          <div className="h-px flex-1 bg-zinc-200" />
-          <span className="text-xs text-zinc-400">or</span>
-          <div className="h-px flex-1 bg-zinc-200" />
-        </div>
-
-        <SocialLoginButtons callbackUrl={callbackUrl} />
-
-        <p className="mt-6 text-center text-sm text-zinc-500">
-          Already have an account? <a href="/login" className="font-medium text-ink underline underline-offset-4 hover:no-underline">Log in</a>
-        </p>
-
-        <p className="mt-6 text-center text-xs text-zinc-400">
-          By creating an account, you agree to our <Link href="/terms" className="underline hover:text-zinc-600">Terms</Link> and <Link href="/privacy" className="underline hover:text-zinc-600">Privacy Policy</Link>.
-        </p>
-      </div>
-    </div>
-  );
+  return <AuthEntryCard mode="signup" callbackUrl={callbackUrl} />;
 }
 
 function SignupContent() {
