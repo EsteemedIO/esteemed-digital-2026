@@ -156,8 +156,8 @@ export default function LeadCaptureForm({
           <Input
             isRequired
             variant="bordered"
-            labelPlacement="outside"
-            label="Name"
+            aria-label="Name"
+            placeholder="Name"
             value={form.name}
             onValueChange={(value) => updateField("name", value)}
             classNames={fieldClassNames}
@@ -165,9 +165,9 @@ export default function LeadCaptureForm({
           <Input
             isRequired
             variant="bordered"
-            labelPlacement="outside"
             type="email"
-            label="Email"
+            aria-label="Email"
+            placeholder="Email"
             value={form.email}
             onValueChange={(value) => updateField("email", value)}
             classNames={fieldClassNames}
@@ -177,16 +177,16 @@ export default function LeadCaptureForm({
         <div className="grid gap-4 md:grid-cols-2">
           <Input
             variant="bordered"
-            labelPlacement="outside"
-            label="Phone"
+            aria-label="Phone"
+            placeholder="Phone"
             value={form.phone}
             onValueChange={(value) => updateField("phone", value)}
             classNames={fieldClassNames}
           />
           <Input
             variant="bordered"
-            labelPlacement="outside"
-            label="Company"
+            aria-label="Company"
+            placeholder="Company"
             value={form.company}
             onValueChange={(value) => updateField("company", value)}
             classNames={fieldClassNames}
@@ -196,17 +196,15 @@ export default function LeadCaptureForm({
         <Input
           isRequired={config.websiteRequired}
           variant="bordered"
-          labelPlacement="outside"
-          label={config.websiteRequired ? "Current website" : "Website"}
-          placeholder="https://"
+          aria-label={config.websiteRequired ? "Current website" : "Website"}
+          placeholder={config.websiteRequired ? "Current website" : "Website"}
           value={form.websiteUrl}
           onValueChange={(value) => updateField("websiteUrl", value)}
           classNames={fieldClassNames}
         />
 
         <Select
-          label="What are you interested in?"
-          labelPlacement="outside"
+          aria-label="What are you interested in?"
           placeholder="Select one or more"
           selectionMode="multiple"
           variant="bordered"
