@@ -95,6 +95,58 @@ const steps = [
 
 const previewTiers = createTiers.filter((t) => t.key !== "enterprise");
 
+const clientLogos = [
+  {
+    name: "New York Life",
+    mark: "NEW YORK LIFE",
+    className: "font-serif tracking-[0.08em]",
+  },
+  {
+    name: "FrankCrum",
+    mark: "FrankCrum",
+    className: "font-sans tracking-normal",
+  },
+  {
+    name: "Alvernia University",
+    mark: "ALVERNIA UNIVERSITY",
+    className: "font-serif tracking-[0.12em]",
+  },
+  {
+    name: "MDVIP",
+    mark: "MDVIP",
+    className: "font-sans tracking-[0.14em]",
+  },
+  {
+    name: "Astound Broadband",
+    mark: "astound",
+    className: "font-sans tracking-normal lowercase",
+  },
+];
+
+function ClientLogoBand() {
+  return (
+    <section className="border-y border-zinc-100 bg-white py-14">
+      <div className="mx-auto max-w-7xl px-6">
+        <p className="text-center text-xs font-black uppercase tracking-[0.18em] text-zinc-500">
+          Join leading organizations that work with us
+        </p>
+        <div className="mt-10 grid grid-cols-2 items-center gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
+          {clientLogos.map((logo) => (
+            <div key={logo.name} className="flex min-h-16 items-center justify-center">
+              <span
+                aria-label={logo.name}
+                className={`text-center text-xl font-black leading-none text-ink md:text-2xl ${logo.className}`}
+              >
+                {logo.mark}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PricingPreview() {
   const [annual, setAnnual] = useState(true);
 
@@ -208,6 +260,8 @@ export default function Home() {
     <>
       {/* Section 1: Chat Hero */}
       <ChatHero />
+
+      <ClientLogoBand />
 
       {/* Section 2: Meet Esteemed Create */}
       <section className="py-20 border-t border-zinc-100">

@@ -44,9 +44,23 @@ const variants = {
 };
 
 const fieldClassNames = {
-  inputWrapper: "rounded-xl border border-zinc-200 bg-white shadow-none data-[hover=true]:border-zinc-400 group-data-[focus=true]:border-zinc-500",
-  label: "font-semibold text-zinc-600",
-  input: "text-ink",
+  label: "text-sm font-bold text-zinc-700",
+  inputWrapper: "min-h-14 rounded-xl border border-zinc-200 bg-white shadow-none data-[hover=true]:border-zinc-400 group-data-[focus=true]:border-zinc-500",
+  input: "text-base font-semibold text-ink placeholder:text-zinc-400",
+};
+
+const selectClassNames = {
+  label: "text-sm font-bold text-zinc-700",
+  trigger: "min-h-14 rounded-xl border border-zinc-200 bg-white px-4 shadow-none data-[hover=true]:border-zinc-400 data-[focus=true]:border-zinc-500",
+  value: "text-base font-semibold text-ink",
+  popoverContent: "z-[100] rounded-xl border border-zinc-200 bg-white shadow-xl",
+  listbox: "p-2",
+};
+
+const textareaClassNames = {
+  ...fieldClassNames,
+  inputWrapper: "min-h-40 rounded-xl border border-zinc-200 bg-white shadow-none data-[hover=true]:border-zinc-400 group-data-[focus=true]:border-zinc-500",
+  input: "min-h-32 text-base font-semibold leading-6 text-ink placeholder:text-zinc-400",
 };
 
 export function getLeadFormVariant(intent) {
@@ -141,6 +155,8 @@ export default function LeadCaptureForm({
         <div className="grid gap-4 md:grid-cols-2">
           <Input
             isRequired
+            variant="bordered"
+            labelPlacement="outside"
             label="Name"
             value={form.name}
             onValueChange={(value) => updateField("name", value)}
@@ -148,6 +164,8 @@ export default function LeadCaptureForm({
           />
           <Input
             isRequired
+            variant="bordered"
+            labelPlacement="outside"
             type="email"
             label="Email"
             value={form.email}
@@ -158,12 +176,16 @@ export default function LeadCaptureForm({
 
         <div className="grid gap-4 md:grid-cols-2">
           <Input
+            variant="bordered"
+            labelPlacement="outside"
             label="Phone"
             value={form.phone}
             onValueChange={(value) => updateField("phone", value)}
             classNames={fieldClassNames}
           />
           <Input
+            variant="bordered"
+            labelPlacement="outside"
             label="Company"
             value={form.company}
             onValueChange={(value) => updateField("company", value)}
@@ -173,6 +195,8 @@ export default function LeadCaptureForm({
 
         <Input
           isRequired={config.websiteRequired}
+          variant="bordered"
+          labelPlacement="outside"
           label={config.websiteRequired ? "Current website" : "Website"}
           placeholder="https://"
           value={form.websiteUrl}
@@ -182,31 +206,35 @@ export default function LeadCaptureForm({
 
         <Select
           label="What are you interested in?"
+          labelPlacement="outside"
           placeholder="Select one or more"
           selectionMode="multiple"
+          variant="bordered"
           selectedKeys={interests}
-          onSelectionChange={(keys) => setInterests(keys === "all" ? new Set(interestOptions.map((option) => option.key)) : keys)}
-          radius="lg"
-          classNames={{
-            trigger: "min-h-12 rounded-xl border border-zinc-200 bg-white shadow-none data-[hover=true]:border-zinc-400",
-            label: "font-semibold text-zinc-600",
-            value: "text-sm text-ink",
-            popoverContent: "rounded-xl",
+          onSelectionChange={(keys) => {
+            setInterests(keys === "all" ? new Set(interestOptions.map((option) => option.key)) : new Set(keys));
+            setError("");
           }}
+          renderValue={(items) => items.map((item) => item.textValue).join(", ")}
+          classNames={selectClassNames}
         >
           {interestOptions.map((option) => (
-            <SelectItem key={option.key}>{option.label}</SelectItem>
+            <SelectItem key={option.key} textValue={option.label}>
+              {option.label}
+            </SelectItem>
           ))}
         </Select>
 
         <Textarea
           isRequired
+          variant="bordered"
+          labelPlacement="outside"
           label={config.messageLabel}
           placeholder={config.messagePlaceholder}
           minRows={5}
           value={form.message}
           onValueChange={(value) => updateField("message", value)}
-          classNames={fieldClassNames}
+          classNames={textareaClassNames}
         />
 
         <Button

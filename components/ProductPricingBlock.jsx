@@ -137,14 +137,33 @@ function PricingCard({
       </Link>
 
       <ul className="mt-6 space-y-3">
-        {(plan.features || []).map((feature) => (
-          <li key={feature} className="flex gap-3 text-sm leading-5 text-zinc-700">
+        {(plan.features || []).map((feature) => {
+          const featureText = typeof feature === "string" ? feature : feature.text;
+          const featureLabel = typeof feature === "string" ? null : feature.label;
+
+          return (
+          <li key={featureText} className="flex gap-3 text-sm leading-5 text-zinc-700">
             <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border border-zinc-200">
               <Check className="h-4 w-4 text-ink" />
             </span>
-            <span>{feature}</span>
+            <span>
+              {featureLabel && (
+                <Chip
+                  size="sm"
+                  radius="sm"
+                  classNames={{
+                    base: "mb-1 mr-2 bg-accent text-ink align-middle",
+                    content: "px-1 text-[11px] font-black",
+                  }}
+                >
+                  {featureLabel}
+                </Chip>
+              )}
+              {featureText}
+            </span>
           </li>
-        ))}
+          );
+        })}
       </ul>
     </article>
   );

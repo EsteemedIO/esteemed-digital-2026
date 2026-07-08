@@ -16,6 +16,7 @@ function ContactContent() {
           context={{
             page: "/contact",
             intent: searchParams.get("intent") || "contact",
+            market: searchParams.get("market") || null,
           }}
         />
       </section>

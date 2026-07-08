@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
-import { Cloud, Shield, HardDrive, Activity, ArrowRight } from "lucide-react";
+import { Cloud, Shield, HardDrive, Activity, ArrowRight, Check } from "lucide-react";
 import { cloudPricingPlans, managedHostingPricingPlans } from "@/lib/product-page-pricing";
 
 export const metadata = {
@@ -12,6 +12,20 @@ export const metadata = {
 
 const cloudPlans = cloudPricingPlans();
 const managedPlans = managedHostingPricingPlans();
+
+const limitedTimeOffer = {
+  label: "For a Limited Time",
+  title: "Claim your free website rebuild",
+  body:
+    "Start a 12-month Managed Hosting plan and our team rebuilds your existing website for free. No rebuild fee. No catch. Just a better site with hosting, SSL, backups, and a team behind it.",
+  bullets: [
+    "$0 rebuild with a 12-month Managed Hosting plan",
+    "Website Design Services from $499 for 4 pages",
+    "Hosting from $9.99/mo with SSL and backups included",
+  ],
+  fine:
+    "Free rebuild applies to eligible standard sites with an active 12-month Managed Hosting plan. Additional pages and custom work are scoped before work begins.",
+};
 
 const includes = [
   {
@@ -54,7 +68,7 @@ export default function CloudPage() {
             Esteemed Cloud - Sites
           </h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
-            Hosting for sites that are not running on Curate: bring-your-own,
+            Hosting for sites that are not running on a managed CMS: bring-your-own,
             Create-built, React, Node, and Next sites on Esteemed Cloud.
           </p>
           <div className="mt-10">
@@ -97,6 +111,39 @@ export default function CloudPage() {
       </section>
 
       <div id="plans">
+        <section id="free-rebuild" className="scroll-mt-24 border-t border-zinc-100 bg-accent/25 py-14">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="grid gap-8 rounded-2xl border border-accent bg-white p-8 shadow-sm md:grid-cols-[1.05fr_.95fr] md:p-10">
+              <div>
+                <span className="inline-flex rounded-md bg-accent px-2.5 py-1 text-xs font-black text-ink">
+                  {limitedTimeOffer.label}
+                </span>
+                <h2 className="mt-4 text-3xl font-black text-ink md:text-4xl">
+                  {limitedTimeOffer.title}
+                </h2>
+                <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-700">
+                  {limitedTimeOffer.body}
+                </p>
+              </div>
+              <div className="flex flex-col justify-center">
+                <ul className="space-y-3">
+                  {limitedTimeOffer.bullets.map((bullet) => (
+                    <li key={bullet} className="flex gap-3 text-sm font-semibold leading-6 text-zinc-800">
+                      <span className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md bg-accent text-xs font-black text-ink">
+                        <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                      </span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-xs font-medium leading-5 text-zinc-500">
+                  {limitedTimeOffer.fine}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <ProductPricingBlock
           eyebrow="Cloud plans"
           title="Self-serve Cloud Sites"
@@ -124,7 +171,7 @@ export default function CloudPage() {
           </h2>
           <p className="text-zinc-600 leading-relaxed mb-4">
             Create builds plain React, Node, and Next sites. Those sites land on
-            Hosting, not Curate, unless you separately choose a Curate CMS
+            Hosting, not a managed CMS, unless you separately choose a CMS
             migration.
           </p>
           <Link
@@ -141,7 +188,7 @@ export default function CloudPage() {
         <div className="max-w-4xl mx-auto px-6">
           <div className="rounded-2xl border border-accent p-8 md:p-10">
             <h2 className="text-2xl font-bold text-ink mb-3">
-              Need a rebuild or a Curate migration?
+              Need a rebuild or a CMS migration?
             </h2>
             <p className="text-zinc-600 leading-relaxed mb-6">
               Managed Hosting can include a $0 Create rebuild as part of a
@@ -149,7 +196,8 @@ export default function CloudPage() {
               includes 12 pages, and Business includes a full standard site with
               a soft cap around 30 pages. Extra Essential/Growth pages are billed
               once at $100/page. Paid migrations are separate productized
-              services that move your current site onto Curate.
+              services that move your current WordPress, Drupal, or other CMS
+              site onto our AI-first CMS.
             </p>
             <Link
               href="/migrate"

@@ -23,12 +23,12 @@ export default function MigratePage() {
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Rebuild, host, or migrate to Curate.
+            Rebuild, host, or migrate your CMS.
           </h1>
           <p className="text-lg text-zinc-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Hosting, Curate, and Migration are independent. Choose a $0 Create
-            rebuild with Managed Hosting, or a paid migration that moves your
-            site onto Curate.
+            Move from WordPress, Drupal, or another CMS to Esteemed Curate: our
+            AI-first, JavaScript-based content system with performance,
+            integrated AI, and expert support built in.
           </p>
           <button
             onClick={() => setModalOpen(true)}
@@ -39,16 +39,6 @@ export default function MigratePage() {
           <p className="mt-4 text-sm text-zinc-500">
             Trusted by {anchorReferences.map((r) => r.name).join(", ")}.
           </p>
-        </div>
-      </section>
-
-      {/* Demo placeholder */}
-      <section className="py-16 border-t border-zinc-100">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="aspect-video rounded-2xl bg-zinc-100 flex items-center justify-center">
-            <p className="text-zinc-400 text-sm">Demo video — coming soon</p>
-          </div>
-          <p className="text-center text-xs text-zinc-400 mt-3">Real footage. No edits. This is what your website becomes.</p>
         </div>
       </section>
 
@@ -85,10 +75,10 @@ export default function MigratePage() {
           <h2 className="text-3xl md:text-4xl font-bold text-ink mb-12">Two paths, clear boundaries</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { step: "1", title: "We assess the current site", desc: "You give us your URL. We identify whether a free Create rebuild or paid Curate migration is the right commercial path." },
+              { step: "1", title: "We assess the current site", desc: "You give us your URL. We identify whether a free Create rebuild or paid CMS migration is the right commercial path." },
               { step: "2", title: "Free rebuild path", desc: "For many simple sites, we build a plain React/Node/Next site and attach it to Managed Hosting with a 12-month term." },
-              { step: "3", title: "Paid migration path", desc: "For CMS-driven sites, we migrate content, media, redirects, and workflows onto Curate at a fixed public package price." },
-              { step: "4", title: "You run on the right product", desc: "Hosting customers pay for Hosting. Curate migration customers pay for Curate. You do not pay both for the same site." },
+              { step: "3", title: "Paid CMS migration path", desc: "For CMS-driven sites, we migrate content, media, redirects, and workflows onto Esteemed Curate at a fixed public package price." },
+              { step: "4", title: "You run on the right product", desc: "Hosting customers pay for Hosting. CMS migration customers pay for Curate. You do not pay both for the same site." },
             ].map((s) => (
               <div key={s.step}>
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-accent text-ink text-sm font-bold mb-4">{s.step}</span>
@@ -97,7 +87,7 @@ export default function MigratePage() {
               </div>
             ))}
           </div>
-          <p className="text-sm text-zinc-500 mt-8">The free rebuild is not a CMS migration. Paid migrations land on Curate.</p>
+          <p className="text-sm text-zinc-500 mt-8">The free rebuild is not a CMS migration. Paid migrations land on Esteemed Curate.</p>
         </div>
       </section>
 
@@ -105,7 +95,7 @@ export default function MigratePage() {
       <section className="py-20 border-t border-zinc-100">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Managed Hosting with optional $0 rebuild</h2>
-          <p className="text-zinc-600 mb-10">For non-Curate sites. The included rebuild is a plain Create-built site, not a CMS migration.</p>
+          <p className="text-zinc-600 mb-10">For sites that do not need a managed CMS. The included rebuild is a plain Create-built site, not a CMS migration.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {managedHostingTiers.filter((t) => t.monthly !== null).map((tier) => (
               <div key={tier.key} className="rounded-2xl border border-zinc-200 p-6">
@@ -126,8 +116,14 @@ export default function MigratePage() {
       {/* Migration Packages */}
       <section className="py-20 border-t border-zinc-100 bg-zinc-50">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Paid migration to Curate</h2>
-          <p className="text-zinc-600 mb-10">One-time migration packages. A paid migration results in a Curate subscription.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">Paid CMS migration to Esteemed Curate</h2>
+          <p className="text-zinc-600 mb-10">
+            One-time migration packages for WordPress, Drupal, and other CMS
+            sites. A paid migration results in an Esteemed Curate subscription:
+            an AI-first, performant JavaScript CMS built on Payload without the
+            enterprise pricing model, plus expert integrated support from our
+            team.
+          </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {migrationPackages.map((pkg) => (
               <div key={pkg.key} className="rounded-2xl border border-zinc-200 bg-white p-6">
@@ -139,7 +135,7 @@ export default function MigratePage() {
             ))}
           </div>
           <div className="mt-10 rounded-2xl border border-zinc-200 bg-white p-6">
-            <h3 className="text-xl font-bold text-ink mb-3">Curate subscription after migration</h3>
+            <h3 className="text-xl font-bold text-ink mb-3">Esteemed Curate subscription after migration</h3>
             <div className="grid gap-4 md:grid-cols-3">
               {curateTiers.map((tier) => (
                 <div key={tier.key} className="rounded-xl bg-zinc-50 p-4">
