@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Tab, Tabs } from "@heroui/react";
+import { Chip, Tab, Tabs } from "@heroui/react";
 import { ArrowRight, Check } from "lucide-react";
 import { checkoutHref, formatMoney } from "@/lib/pricing-catalog";
 import ProductIcon from "@/components/ProductIcon";
@@ -28,14 +28,16 @@ function getPlanPrice(plan, billing) {
 
   if (billing === "annual" && plan.annual) {
     const monthlyEquivalent = plan.annual / 12;
-    const savings = plan.monthly ? Math.round((1 - plan.annual / (plan.monthly * 12)) * 100) : 0;
+    const annualAtMonthlyRate = plan.monthly ? plan.monthly * 12 : null;
+    const savings = annualAtMonthlyRate ? Math.round((1 - plan.annual / annualAtMonthlyRate) * 100) : 0;
 
     return {
-      headline: formatMoney(monthlyEquivalent),
-      suffix: "/mo",
-      note: `${formatMoney(plan.annual)} billed annually`,
+      headline: formatMoney(plan.annual),
+      suffix: "/yr",
+      note: `Equivalent to ${formatMoney(monthlyEquivalent)}/mo, billed annually`,
       lookupKey: plan.annualLookupKey || plan.lookupKey,
       badge: savings > 0 ? `Save ${savings}%` : "Annual",
+      compareAt: savings > 0 ? formatMoney(annualAtMonthlyRate) : null,
     };
   }
 
@@ -96,7 +98,23 @@ function PricingCard({
         <h3 className="text-2xl font-black text-ink">{plan.name}</h3>
         <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{plan.description || plan.basis}</p>
         <div className="mt-5">
-          {price.badge && <span className="mb-2 inline-flex rounded-md bg-accent px-2 py-1 text-xs font-black text-ink">{price.badge}</span>}
+          {(price.badge || price.compareAt) && (
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              {price.badge && (
+                <Chip
+                  size="sm"
+                  radius="sm"
+                  classNames={{
+                    base: "bg-accent text-ink",
+                    content: "px-1 text-xs font-black",
+                  }}
+                >
+                  {price.badge}
+                </Chip>
+              )}
+              {price.compareAt && <span className="text-xs font-bold text-zinc-500 line-through">{price.compareAt}</span>}
+            </div>
+          )}
           <div className="flex items-end gap-1">
             <span className="text-4xl font-black text-ink">{price.headline}</span>
             {price.suffix && <span className="pb-1 text-sm font-bold text-zinc-700">{price.suffix}</span>}
@@ -145,7 +163,7 @@ export default function ProductPricingBlock({
   calculatorHref = null,
 }) {
   const hasAnnual = plans.some((plan) => plan.annual);
-  const [billing, setBilling] = useState("monthly");
+  const [billing, setBilling] = useState(hasAnnual ? "annual" : "monthly");
 
   return (
     <section className="border-t border-zinc-100 py-20">
