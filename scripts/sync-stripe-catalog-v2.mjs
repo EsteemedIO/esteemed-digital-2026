@@ -16,6 +16,7 @@ const products = [
   { name: "Esteemed Curate", module: "curate", notes: "Per-workspace CMS / content hub" },
   { name: "Esteemed Create", module: "create", notes: "AI-assisted website and app builder with Studio IDE" },
   { name: "Esteemed Cloud - Sites", module: "hosting", notes: "Self-serve and managed website hosting for sites" },
+  { name: "Esteemed Support", module: "support", notes: "Monthly human support hour subscriptions" },
   { name: "Esteemed Migration", module: "migration", notes: "One-time migration service plus Care bridge" },
   { name: "Esteemed Agents", module: "agents", notes: "AI add-ons, launch-gated standalone SKUs" },
 ];
@@ -70,6 +71,10 @@ const prices = [
   ["hosting", "managed_business_monthly", 39900, "month", "flat", "business", "module.hosting", "hosting_managed", false, { page_allowance: "unlimited_standard", page_overage_applies: "false", page_soft_cap: "30" }],
   ["hosting", "managed_business_annual", 399000, "year", "flat", "business", "module.hosting", "hosting_managed", false, { page_allowance: "unlimited_standard", page_overage_applies: "false", page_soft_cap: "30" }],
   ["hosting", "hosting_page_overage", 10000, null, "one_time", "addon", "", "", false, { entitlement: "none" }],
+  ["support", "support_3_hours_monthly", 25500, "month", "flat", "3_hours", "module.support", "human_support", false, { support_hours: "3", hourly_rate: "85" }],
+  ["support", "support_6_hours_monthly", 51000, "month", "flat", "6_hours", "module.support", "human_support", false, { support_hours: "6", hourly_rate: "85" }],
+  ["support", "support_8_hours_monthly", 68000, "month", "flat", "8_hours", "module.support", "human_support", false, { support_hours: "8", hourly_rate: "85" }],
+  ["support", "support_10_hours_monthly", 85000, "month", "flat", "10_hours", "module.support", "human_support", false, { support_hours: "10", hourly_rate: "85" }],
   ["migration", "migration_care_monthly", 39900, "month", "flat", "care", "module.hosting", ""],
   ["migration", "migration_smb_standard", 650000, null, "one_time", "standard", "", ""],
   ["migration", "migration_smb_plus", 950000, null, "one_time", "plus", "", ""],
