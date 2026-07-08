@@ -13,12 +13,12 @@ export const metadata = {
     icon: "/favicon.svg",
   },
   title: {
-    default: "Esteemed — AI + Human gold standard",
+    default: "Esteemed — The AI+Human platform for work globally",
     template: "%s | Esteemed",
   },
   description: "Build everything you need with Esteemed. AI to start. Experts to grow.",
   openGraph: {
-    title: "Esteemed — AI + Human gold standard",
+    title: "Esteemed — The AI+Human platform for work globally",
     description: "Build everything you need with Esteemed. AI to start. Experts to grow.",
     url: "https://esteemed.io",
     siteName: "Esteemed",
@@ -26,7 +26,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Esteemed — AI + Human gold standard",
+    title: "Esteemed — The AI+Human platform for work globally",
     description: "Build everything you need with Esteemed. AI to start. Experts to grow.",
   },
 };

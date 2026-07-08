@@ -116,7 +116,7 @@
 /* --- Platform section --- */
 .local-page .plat-sec { padding: 92px clamp(20px,3vw,48px) 24px; }
 .local-page .plat-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-bottom: 44px; }
-.local-page .plat-title { font-family: var(--es-font-display); font-weight: 800; font-size: clamp(30px,3.6vw,48px); letter-spacing: -.03em; line-height: 1.04; margin: 0; color: var(--es-fg-1); max-width: 560px; }
+.local-page .plat-title { font-family: var(--es-font-display); font-weight: 800; font-size: clamp(30px,3.6vw,48px); letter-spacing: -.03em; line-height: 1.04; margin: 0; color: var(--es-fg-1); }
 .local-page .plat-sub { font-size: 16px; line-height: 1.55; color: var(--es-fg-2); margin: 6px 0 0; max-width: 540px; }
 .local-page .plat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
 .local-page .plat-card { position: relative; border-radius: 20px; overflow: hidden; min-height: 520px; padding: 30px 28px; display: flex; flex-direction: column; color: #fff; background: #0b0b0b; }

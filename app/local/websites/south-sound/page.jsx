@@ -7,7 +7,7 @@ import FaqAccordion from "./FaqAccordion";
 export const metadata = {
   title: "Websites for South Sound Businesses | Esteemed",
   description:
-    "Expert website design, hosting, and WebOps for businesses in Olympia, Tumwater & Lacey. Free website rebuild with Managed Hosting. Local team since 2011.",
+    "Esteemed - Your local top-rated south sound web hosting and AI solutions partner.",
 };
 
 /* ── Market data (from local-data.jsx) ── */
@@ -83,6 +83,7 @@ const M = {
     { q: "What if I already have a website?", a: "Perfect. We\u2019ll rebuild it fresh, or simply host and maintain your current site as-is with a Care plan. Either way, no migration headaches on your end." },
     { q: "How long does a rebuild take?", a: "Most standard sites go live within two weeks of our kickoff consult, depending on how quickly we get your content and photos." },
     { q: "What happens after my site launches?", a: "That\u2019s where WebOps comes in. Our local team handles hosting, security, updates and content changes, and works on your SEO so the right customers keep finding you \u2014 on Google and in AI answers." },
+    { q: "Why do local businesses choose Esteemed?", a: "Esteemed has over 15 years of experience building and supporting websites for agencies across the country, major non-profits like the IEEE, universities like Alvernia and the University of Oklahoma, and local and state government. We\u2019re now bringing that same top-tier agency experience to local businesses across the South Sound \u2014 helping contribute to the growth of our local economy with enterprise-grade tools and hands-on support at a price that works for Main Street." },
   ],
 };
 
