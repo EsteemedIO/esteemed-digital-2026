@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Chip, Tab, Tabs } from "@heroui/react";
 import { ArrowRight, Check } from "lucide-react";
@@ -183,6 +183,11 @@ export default function ProductPricingBlock({
 }) {
   const hasAnnual = plans.some((plan) => plan.annual);
   const [billing, setBilling] = useState(hasAnnual ? "annual" : "monthly");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("billing") === "monthly") setBilling("monthly");
+  }, []);
 
   return (
     <section className="border-t border-zinc-100 py-20">
