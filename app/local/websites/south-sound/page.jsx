@@ -10,7 +10,7 @@ export const metadata = {
     "Expert website design, hosting, and WebOps for businesses in Olympia, Tumwater & Lacey. Free website rebuild with Managed Hosting. Local team since 2011.",
 };
 
-/* ── Market data ── */
+/* ── Market data (from local-data.jsx) ── */
 const M = {
   region: "South Sound",
   state: "Washington",
@@ -24,6 +24,8 @@ const M = {
   sub: "Expert websites and ongoing WebOps support, built by your neighbors in Olympia, Tumwater and Lacey since 2011. Start with a free rebuild \u2014 no fee, ever.",
   ctaPrimary: "Claim your free rebuild",
   ctaSecondary: "Book a local consult",
+  rebuildHref: "/products/cloud#plans",
+  consultHref: "/contact?intent=consult",
   stats: [
     { n: "15 yrs", l: "Serving South Sound businesses" },
     { n: "120+", l: "Local websites designed & built" },
@@ -46,30 +48,15 @@ const M = {
     { title: "Business Email", desc: "Make it official with Business Email from Google Workspace \u2014 set up with your domain in minutes.", mock: "email" },
     { title: "Domains", desc: "Register your dream domain. Free WHOIS privacy, SSL and premium DNS included.", mock: "domain" },
   ],
-  offerings: [
-    { icon: "pen", name: "Website design", tag: "Design & build",
-      body: "A custom, mobile-ready website designed and built by our team \u2014 or draft your own with Esteemed Create. Free domain, SSL and contact form included.",
-      points: ["Website Design Services \u2014 $499 one-time, 4 pages", "Esteemed Create \u2014 free to start, plans from $39/mo", "Free domain, SSL & AI contact form"],
-      price: "Free to start \u00b7 design from $499", cta: "See design options", href: "/services/website-design" },
-    { icon: "server", name: "WebOps \u00b7 Tech", tag: "Managed & secure",
-      body: "We keep your site fast, secure and online \u2014 managed hosting, SSL, backups, monitoring and updates, all handled for you.",
-      points: ["Managed hosting from $9.99/mo", "Security, backups & uptime monitoring", "Updates & fixes handled for you"],
-      price: "From $9.99/mo", cta: "See WebOps plans", href: "/products/cloud" },
-    { icon: "search", name: "WebOps \u00b7 Content & SEO", tag: "Get found & grow",
-      body: "Ongoing content updates and search optimization so the right customers find you \u2014 on Google and in AI answers alike.",
-      points: ["Copy & content updates by our team", "Local SEO to rank across the South Sound", "Tuned for AI answer engines (AEO)"],
-      price: "Support plans from $149/mo", cta: "See WebOps plans", href: "/services/support" },
-  ],
-  capNote: "Expert-built, and support sold as simple hourly add-ons \u2014 no monthly lock-in.",
   capabilities: [
-    { title: "Online Store", headline: "Sell online", body: "Sell products with a fast, secure checkout, powered by our Commerce stack.", src: "https://images.pexels.com/photos/2467287/pexels-photo-2467287.jpeg?auto=compress&cs=tinysrgb&w=1400" },
-    { title: "Scheduling", headline: "Get booked", body: "Seamless appointment booking and calendar management, right from your site.", src: "https://images.pexels.com/photos/35134952/pexels-photo-35134952.jpeg?auto=compress&cs=tinysrgb&w=1400" },
-    { title: "Blog", headline: "Publish with ease", body: "Share news and stories yourself \u2014 no developer required.", src: "https://images.pexels.com/photos/29884920/pexels-photo-29884920.jpeg?auto=compress&cs=tinysrgb&w=1400" },
-    { title: "Forms", headline: "Capture every lead", body: "Turn visitors into customers with an AI-assisted contact form, built right in.", src: "https://images.pexels.com/photos/9303590/pexels-photo-9303590.jpeg?auto=compress&cs=tinysrgb&w=1400" },
-    { title: "Donations", headline: "Raise more", body: "Accept one-time and recurring gifts \u2014 with goals, receipts and donor updates built in.", src: "https://images.pexels.com/photos/34164459/pexels-photo-34164459.jpeg?auto=compress&cs=tinysrgb&w=1400" },
-    { title: "Memberships", headline: "Grow your community", body: "Offer member-only content, classes and perks with recurring subscriptions.", src: "https://images.pexels.com/photos/613868/pexels-photo-613868.jpeg?auto=compress&cs=tinysrgb&w=1400" },
-    { title: "Local SEO", headline: "Get found locally", body: "Rank across Olympia, Tumwater and Lacey \u2014 and show up in AI answers.", src: "https://images.pexels.com/photos/7400281/pexels-photo-7400281.jpeg?auto=compress&cs=tinysrgb&w=1400" },
-    { title: "Galleries", headline: "Show your best work", body: "Present your work, menu or portfolio with rich, fast media layouts.", src: "https://images.pexels.com/photos/12735489/pexels-photo-12735489.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+    { title: "Online Store", headline: "Sell online", body: "Sell products with a fast, secure checkout, powered by our Commerce stack.", img: "cap-store", src: "https://images.pexels.com/photos/2467287/pexels-photo-2467287.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+    { title: "Scheduling", headline: "Get booked", body: "Seamless appointment booking and calendar management, right from your site.", img: "cap-book", src: "https://images.pexels.com/photos/35134952/pexels-photo-35134952.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+    { title: "Blog", headline: "Publish with ease", body: "Share news and stories yourself \u2014 no developer required.", img: "cap-blog", src: "https://images.pexels.com/photos/29884920/pexels-photo-29884920.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+    { title: "Forms", headline: "Capture every lead", body: "Turn visitors into customers with an AI-assisted contact form, built right in.", img: "cap-forms", src: "https://images.pexels.com/photos/9303590/pexels-photo-9303590.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+    { title: "Donations", headline: "Raise more", body: "Accept one-time and recurring gifts \u2014 with goals, receipts and donor updates built in.", img: "cap-donate", src: "https://images.pexels.com/photos/34164459/pexels-photo-34164459.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+    { title: "Memberships", headline: "Grow your community", body: "Offer member-only content, classes and perks with recurring subscriptions.", img: "cap-member", src: "https://images.pexels.com/photos/613868/pexels-photo-613868.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+    { title: "Local SEO", headline: "Get found locally", body: "Rank across Olympia, Tumwater and Lacey \u2014 and show up in AI answers.", img: "cap-seo", src: "https://images.pexels.com/photos/7400281/pexels-photo-7400281.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+    { title: "Galleries", headline: "Show your best work", body: "Present your work, menu or portfolio with rich, fast media layouts.", img: "cap-gallery", src: "https://images.pexels.com/photos/12735489/pexels-photo-12735489.jpeg?auto=compress&cs=tinysrgb&w=1400" },
   ],
   steps: [
     { n: "01", title: "Say hello", body: "Book a free local consult \u2014 phone, video, or coffee in Olympia. Tell us about your business and what you need." },
@@ -99,7 +86,7 @@ const M = {
   ],
 };
 
-/* ── SVG Icons (matching design handoff exactly) ── */
+/* ── SVG Icons ── */
 function EsStar({ size = 14, fill = "#FEE546" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 268 268" aria-hidden="true">
@@ -130,7 +117,7 @@ function Icon({ name, size = 20, stroke = 1.75 }) {
   );
 }
 
-/* ── Section header (from handoff) ── */
+/* ── Section header ── */
 function SectionHead({ kicker, title, sub, center }) {
   return (
     <div style={{ maxWidth: center ? 720 : 640, margin: center ? "0 auto" : 0, textAlign: center ? "center" : "left" }}>
@@ -141,7 +128,7 @@ function SectionHead({ kicker, title, sub, center }) {
   );
 }
 
-/* ── Platform mock UIs (from handoff) ── */
+/* ── Platform mock UIs ── */
 function PlatformMock({ type }) {
   if (type === "editor") return (
     <div className="pm-browser">
@@ -190,18 +177,24 @@ function PlatformMock({ type }) {
   return null;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   Page — matches design App() render order exactly:
+   Hero → Stats → Platform → ServicesCarousel → How → Offer → Faq → Testimonials → FinalCta
+   ══════════════════════════════════════════════════════════════ */
 export default function SouthSoundPage() {
   return (
     <div className="local-page">
+
       {/* ── Hero ── */}
       <header className="hero-full">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/local/olympia/olympia-wa-shutterstock_546546937-1024x683.jpg"
           alt={M.citiesInline}
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
         <div className="hero-scrim"></div>
-        <div className="hero-inner">
+        <div className="container hero-inner">
           <div className="hero-tags">
             <div className="prog-tag on-photo"><EsStar size={13} fill="#FEE546" /><span>{M.program}</span></div>
             <div className="loc-pill on-photo"><Icon name="pin" size={14} stroke={2.2} /><span>{M.region}, {M.stateAbbr}</span></div>
@@ -211,8 +204,8 @@ export default function SouthSoundPage() {
           </h1>
           <p className="hero-sub">{M.sub}</p>
           <div className="hero-cta">
-            <Link href="#offer" className="btn btn-primary">{M.ctaPrimary}</Link>
-            <Link href="/contact" className="btn btn-onDark">{M.ctaSecondary}</Link>
+            <Link href={M.rebuildHref} className="btn btn-primary">{M.ctaPrimary}</Link>
+            <Link href={M.consultHref} className="btn btn-onDark">{M.ctaSecondary}</Link>
           </div>
           <div className="hero-meta">
             <span className="hero-star"><EsStar size={15} fill="#FEE546" /></span>
@@ -233,35 +226,6 @@ export default function SouthSoundPage() {
         </div>
       </div>
 
-      {/* ── Trusted by ── */}
-      <section className="container" style={{ padding: "48px 32px 8px" }}>
-        <div className="trust-strip">
-          <div>
-            <div className="es-eyebrow" style={{ marginBottom: 14 }}>Trusted by teams large &amp; small</div>
-            <div style={{ fontFamily: "var(--es-font-display)", fontWeight: 800, fontSize: "clamp(22px,2.5vw,32px)", letterSpacing: "-.02em", lineHeight: 1.08, color: "var(--es-fg-1)" }}>No project too big. No business too small.</div>
-            <p style={{ fontSize: 15, lineHeight: 1.55, color: "var(--es-fg-2)", margin: "12px 0 0", maxWidth: 440 }}>From South Sound main streets to major institutions. We&apos;re proud to build for organizations like the University of Oklahoma&apos;s MUAT, Alvernia University, the IEEE, and Washington&apos;s Department of Fish &amp; Wildlife.</p>
-          </div>
-          <div className="trust-logos">
-            {["University of Oklahoma", "Alvernia University", "IEEE", "WDFW"].map(n => <span key={n} className="trust-logo">{n}</span>)}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Why ── */}
-      <section className="container" style={{ padding: "84px 32px 28px" }}>
-        <SectionHead kicker="Why local businesses choose us" title="Big-agency websites, with a South Sound handshake" sub="Expert website design and WebOps support — the tech, content and SEO — backed by people who live and work where you do." />
-        <div className="why-grid">
-          {M.why.map((w, i) => (
-            <div key={i} className="why-item">
-              <div className="why-ico"><Icon name={w.icon} size={22} stroke={1.9} /></div>
-              <div className="why-accent"></div>
-              <div className="why-title">{w.title}</div>
-              <p className="why-body">{w.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ── Platform ── */}
       <section className="plat-sec">
         <div className="plat-head">
@@ -271,10 +235,8 @@ export default function SouthSoundPage() {
         <div className="plat-grid">
           {M.platformApps.map((a, i) => (
             <div key={i} className={`plat-card pmc-${a.mock}`}>
-              <div className="plat-card-head">
-                <div className="plat-card-title">{a.title}</div>
-                <p className="plat-card-desc">{a.desc}</p>
-              </div>
+              <div className="plat-card-title">{a.title}</div>
+              <p className="plat-card-desc">{a.desc}</p>
               <div className="plat-art"><PlatformMock type={a.mock} /></div>
               <span className="plat-arrow"><Icon name="arrow" size={17} stroke={2.25} /></span>
             </div>
@@ -310,8 +272,8 @@ export default function SouthSoundPage() {
             <h2 style={{ fontFamily: "var(--es-font-display)", fontWeight: 800, fontSize: "clamp(30px,3.4vw,44px)", letterSpacing: "-.03em", lineHeight: 1.03, margin: "14px 0 0", textWrap: "balance", color: "#fff" }}>{M.offer.title}</h2>
             <p style={{ fontSize: 17, lineHeight: 1.55, color: "rgba(255,255,255,.8)", margin: "16px 0 0", maxWidth: 460 }}>{M.offer.body}</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
-              <Link href="/contact" className="btn btn-primary">{M.ctaPrimary}</Link>
-              <Link href="/contact" className="btn btn-onDark">{M.ctaSecondary}</Link>
+              <Link href={M.rebuildHref} className="btn btn-primary">{M.ctaPrimary}</Link>
+              <Link href={M.consultHref} className="btn btn-onDark">{M.ctaSecondary}</Link>
             </div>
           </div>
           <div className="offer-band-r">
@@ -328,9 +290,6 @@ export default function SouthSoundPage() {
         </div>
       </section>
 
-      {/* ── Testimonials ── */}
-      <Testimonials testimonials={M.testimonials} />
-
       {/* ── FAQ ── */}
       <section style={{ background: "var(--es-warm-100)", borderTop: "1px solid var(--es-border)", borderBottom: "1px solid var(--es-border)" }}>
         <div className="container faq-wrap">
@@ -339,14 +298,17 @@ export default function SouthSoundPage() {
         </div>
       </section>
 
+      {/* ── Testimonials ── */}
+      <Testimonials testimonials={M.testimonials} />
+
       {/* ── Final CTA ── */}
       <section className="final-cta-full">
         <div className="container" style={{ textAlign: "center" }}>
           <h2 style={{ fontFamily: "var(--es-font-display)", fontWeight: 800, fontSize: "clamp(32px,4vw,52px)", letterSpacing: "-.03em", lineHeight: 1.02, margin: 0, textWrap: "balance", color: "var(--es-ink-1000)" }}>Ready when you are, {M.region}.</h2>
           <p style={{ fontSize: 19, lineHeight: 1.5, color: "rgba(0,0,0,.72)", margin: "16px auto 0", maxWidth: 600 }}>Claim your free website rebuild and get a local team in your corner — from {M.citiesInline}.</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center", marginTop: 30 }}>
-            <Link href="/contact" className="btn btn-onYellow">{M.ctaPrimary}</Link>
-            <Link href="/contact" className="btn btn-onYellowGhost">{M.ctaSecondary}</Link>
+            <Link href={M.rebuildHref} className="btn btn-onYellow">{M.ctaPrimary}</Link>
+            <Link href={M.consultHref} className="btn btn-onYellowGhost">{M.ctaSecondary}</Link>
           </div>
         </div>
       </section>

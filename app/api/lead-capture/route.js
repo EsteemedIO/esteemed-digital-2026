@@ -10,7 +10,7 @@ function escapeHtml(value = "") {
 }
 
 export async function POST(request) {
-  const { email, name, company, interests = [], message, prompt, source, formId, details = {} } = await request.json();
+  const { email, name, company, phone, websiteUrl, interests = [], message, prompt, source, formId, details = {} } = await request.json();
 
   if (!email) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -22,6 +22,8 @@ export async function POST(request) {
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
   const safeCompany = escapeHtml(company);
+  const safePhone = escapeHtml(phone);
+  const safeWebsiteUrl = escapeHtml(websiteUrl);
   const safeSource = escapeHtml(source);
   const safePrompt = escapeHtml(promptText);
   const safeInterests = selectedInterests.map(escapeHtml);
@@ -34,9 +36,9 @@ export async function POST(request) {
   // The live esteemed.io forms submit to a DO Serverless function that feeds Acquire.
   // Keep partner applications on that same path while this Next app replaces Drupal.
   try {
-    const bridgedForms = new Set(["contact", "partner_application"]);
+    const bridgedForms = new Set(["contact", "partner_application", "local_consult"]);
     const shouldUseFormsBridge =
-      bridgedForms.has(formId) || source === "contact-form" || source === "partner-application";
+      bridgedForms.has(formId) || source === "contact-form" || source === "partner-application" || source === "local-consult";
     const formsApi =
       process.env.ESTEEMED_FORMS_API_URL ||
       "https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-40cb0fd1-016f-4383-8b38-97bdc816fd0f/forms/submit";
@@ -52,6 +54,8 @@ export async function POST(request) {
             name: name || "",
             email,
             company: company || "",
+            phone: phone || "",
+            websiteUrl: websiteUrl || "",
             interests: selectedInterests,
             message: promptText,
             source: source || "",
@@ -80,7 +84,7 @@ export async function POST(request) {
       const contactRes = await fetch(`${crmBase}/contacts`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${crmKey}` },
-        body: JSON.stringify({ email, name: name || "" }),
+        body: JSON.stringify({ email, name: name || "", phone: phone || "", websiteUrl: websiteUrl || "" }),
       });
       const contact = await contactRes.json();
 
@@ -93,6 +97,8 @@ export async function POST(request) {
             source,
             prompt: promptText,
             company: company || "",
+            phone: phone || "",
+            websiteUrl: websiteUrl || "",
             interests: selectedInterests,
             formId: formId || "",
             details,
@@ -145,6 +151,8 @@ export async function POST(request) {
           html: `<p><strong>Name:</strong> ${safeName || "(not provided)"}</p>
 <p><strong>Email:</strong> ${safeEmail}</p>
 <p><strong>Company:</strong> ${safeCompany || "(not provided)"}</p>
+<p><strong>Phone:</strong> ${safePhone || "(not provided)"}</p>
+<p><strong>Website:</strong> ${safeWebsiteUrl || "(not provided)"}</p>
 <p><strong>Interests:</strong> ${safeInterests.length ? safeInterests.join(", ") : "(not provided)"}</p>
 <p><strong>Source:</strong> ${safeSource}</p>
 <p><strong>Form:</strong> ${safeFormId || "(not provided)"}</p>
