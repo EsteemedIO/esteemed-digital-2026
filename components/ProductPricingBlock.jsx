@@ -170,6 +170,7 @@ function PricingCard({
 }
 
 export default function ProductPricingBlock({
+  id,
   eyebrow = "Plans",
   title,
   description,
@@ -190,7 +191,7 @@ export default function ProductPricingBlock({
   }, []);
 
   return (
-    <section className="border-t border-zinc-100 py-20">
+    <section id={id} className="scroll-mt-24 border-t border-zinc-100 py-20">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-10 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
           <div className="flex gap-4">

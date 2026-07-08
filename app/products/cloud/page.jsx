@@ -154,6 +154,7 @@ export default function CloudPage() {
         />
 
         <ProductPricingBlock
+          id="managed-hosting"
           eyebrow="Managed Hosting"
           title="Done-for-you Managed Sites"
           description="Managed Hosting includes support hours and a $0 Create rebuild with a 12-month term: 5 pages on Essential, 12 pages on Growth, and a full standard site on Business."

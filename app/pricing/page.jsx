@@ -108,7 +108,7 @@ const catalog = {
           "Done-for-you hosting with a free site rebuild and dedicated monthly support hours, on a simple 12-month term. We keep your site fast, patched, and online.",
         anchor: "From $149/mo",
         cta: "See Plans",
-        href: "/products/cloud#plans",
+        href: "/products/cloud#managed-hosting",
       },
     ],
     note:
