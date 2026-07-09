@@ -17,8 +17,12 @@ export async function POST(request) {
   }
 
   const results = { crm: false, forms: false, prospectEmail: false, internalEmail: false };
+  const errors = [];
   const selectedInterests = Array.isArray(interests) ? interests : [];
   const promptText = prompt || message || "";
+  const bridgedForms = new Set(["contact", "partner_application", "local_consult"]);
+  const shouldUseFormsBridge =
+    bridgedForms.has(formId) || source === "contact-form" || source === "partner-application" || source === "local-consult";
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
   const safeCompany = escapeHtml(company);
@@ -36,9 +40,6 @@ export async function POST(request) {
   // The live esteemed.io forms submit to a DO Serverless function that feeds Acquire.
   // Keep partner applications on that same path while this Next app replaces Drupal.
   try {
-    const bridgedForms = new Set(["contact", "partner_application", "local_consult"]);
-    const shouldUseFormsBridge =
-      bridgedForms.has(formId) || source === "contact-form" || source === "partner-application" || source === "local-consult";
     const formsApi =
       process.env.ESTEEMED_FORMS_API_URL ||
       "https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-40cb0fd1-016f-4383-8b38-97bdc816fd0f/forms/submit";
@@ -53,13 +54,14 @@ export async function POST(request) {
           fields: {
             name: name || "",
             email,
-            company: company || "",
+            company_name: company || "",
             phone: phone || "",
-            websiteUrl: websiteUrl || "",
-            interests: selectedInterests,
+            website_url: websiteUrl || "",
+            interests: selectedInterests.join(", "),
             message: promptText,
             source: source || "",
             ...details,
+            selected_interests: selectedInterests.join(", "),
           },
         }),
       });
@@ -73,6 +75,7 @@ export async function POST(request) {
     }
   } catch (err) {
     console.error("Forms bridge error:", err.message);
+    errors.push(`Forms bridge: ${err.message}`);
   }
 
   // 1. Oceanic CRM — create Contact + log Activity
@@ -110,6 +113,7 @@ export async function POST(request) {
     }
   } catch (err) {
     console.error("CRM error:", err.message);
+    errors.push(`CRM: ${err.message}`);
   }
 
   // 2. Resend — prospect confirmation email
@@ -133,6 +137,7 @@ export async function POST(request) {
     }
   } catch (err) {
     console.error("Resend (prospect) error:", err.message);
+    errors.push(`Prospect email: ${err.message}`);
   }
 
   // 3. Resend — internal notification
@@ -165,6 +170,11 @@ ${safeDetails.length ? `<p><strong>Details:</strong></p><ul>${safeDetails.map(([
     }
   } catch (err) {
     console.error("Resend (internal) error:", err.message);
+    errors.push(`Internal email: ${err.message}`);
+  }
+
+  if (shouldUseFormsBridge && !results.forms && !results.crm) {
+    return NextResponse.json({ error: "Lead capture failed", results, errors }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true, results });
