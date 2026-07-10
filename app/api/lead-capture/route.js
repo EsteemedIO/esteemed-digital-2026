@@ -9,6 +9,14 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#039;");
 }
 
+function splitName(value = "") {
+  const parts = String(value).trim().split(/\s+/).filter(Boolean);
+  return {
+    firstName: parts[0] || "Website",
+    lastName: parts.slice(1).join(" ") || "Lead",
+  };
+}
+
 export async function POST(request) {
   const { email, name, company, phone, websiteUrl, interests = [], message, prompt, source, formId, details = {} } = await request.json();
 
@@ -37,6 +45,46 @@ export async function POST(request) {
     Array.isArray(value) ? value.map(escapeHtml).join(", ") : escapeHtml(value),
   ]);
 
+  // Preferred path for the new site: send leads to Esteemed Acquire's public inbound API.
+  try {
+    const inboundUrl = process.env.ACQUIRE_INBOUND_API_URL;
+    const inboundKey = process.env.ACQUIRE_INBOUND_API_KEY;
+
+    if (inboundUrl && inboundKey) {
+      const { firstName, lastName } = splitName(name);
+      const inboundRes = await fetch(`${inboundUrl.replace(/\/$/, "")}/contacts`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${inboundKey}` },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          company: company || "Not provided",
+          source: source || formId || "esteemed.io/contact",
+          useCase: [
+            selectedInterests.length ? `Interests: ${selectedInterests.join(", ")}` : "",
+            promptText ? `Message: ${promptText}` : "",
+            websiteUrl ? `Website: ${websiteUrl}` : "",
+            phone ? `Phone: ${phone}` : "",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+
+      if (inboundRes.ok || inboundRes.status === 409) {
+        results.crm = true;
+      } else {
+        const errorText = await inboundRes.text();
+        throw new Error(`Acquire inbound HTTP ${inboundRes.status}: ${errorText}`);
+      }
+    }
+  } catch (err) {
+    console.error("Acquire inbound error:", err.message);
+    errors.push(`Acquire inbound: ${err.message}`);
+  }
+
   // The live esteemed.io forms submit to a DO Serverless function that feeds Acquire.
   // Keep partner applications on that same path while this Next app replaces Drupal.
   try {
@@ -44,7 +92,7 @@ export async function POST(request) {
       process.env.ESTEEMED_FORMS_API_URL ||
       "https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-40cb0fd1-016f-4383-8b38-97bdc816fd0f/forms/submit";
 
-    if (shouldUseFormsBridge && formsApi) {
+    if (shouldUseFormsBridge && formsApi && !results.crm) {
       const formsRes = await fetch(formsApi, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
