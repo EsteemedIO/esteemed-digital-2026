@@ -30,6 +30,8 @@ const variants = {
     defaultInterests: [],
     messageLabel: "Message",
     messagePlaceholder: "Tell us what you need.",
+    successTitle: "Request received.",
+    successMessage: "Thanks. We received your request and a real person from Esteemed will follow up within one business day.",
   },
   consult: {
     formId: "local_consult",
@@ -40,6 +42,8 @@ const variants = {
     defaultInterests: ["local-consult", "website-design", "cloud-hosting"],
     messageLabel: "What should we cover?",
     messagePlaceholder: "Current site, goals, timeline, budget, or anything you want us to know before we talk.",
+    successTitle: "Consult request received.",
+    successMessage: "Thanks. We received your local consult request and will follow up to schedule the conversation.",
   },
 };
 
@@ -72,7 +76,7 @@ export default function LeadCaptureForm({
   variant = "contact",
   compact = false,
   context = {},
-  onSubmittedPath = "/thanks",
+  onSubmittedPath = "",
 }) {
   const router = useRouter();
   const config = variants[variant] || variants.contact;
@@ -88,6 +92,7 @@ export default function LeadCaptureForm({
   const [interests, setInterests] = useState(initialInterests);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   function updateField(name, value) {
     setForm((current) => ({ ...current, [name]: value }));
@@ -129,11 +134,31 @@ export default function LeadCaptureForm({
         throw new Error("Lead capture failed.");
       }
 
-      router.push(onSubmittedPath);
+      if (onSubmittedPath) {
+        router.push(onSubmittedPath);
+        return;
+      }
+
+      setSubmitted(true);
+      setSubmitting(false);
     } catch {
       setError("Something went wrong. Please try again or contact us directly.");
       setSubmitting(false);
     }
+  }
+
+  function resetForm() {
+    setForm({
+      name: "",
+      email: "",
+      phone: "",
+      company: "",
+      websiteUrl: "",
+      message: "",
+    });
+    setInterests(initialInterests);
+    setError("");
+    setSubmitted(false);
   }
 
   return (
@@ -145,6 +170,20 @@ export default function LeadCaptureForm({
         </div>
       )}
 
+      {submitted ? (
+        <div className="rounded-2xl border border-zinc-200 bg-white px-6 py-8 text-center shadow-sm">
+          <h2 className="mb-3 text-3xl font-bold text-ink">{config.successTitle}</h2>
+          <p className="mx-auto mb-6 max-w-xl text-base leading-7 text-zinc-600">{config.successMessage}</p>
+          <Button
+            type="button"
+            radius="full"
+            className="bg-accent px-8 text-sm font-bold text-ink transition-colors hover:bg-accent-hover"
+            onPress={resetForm}
+          >
+            Send another request
+          </Button>
+        </div>
+      ) : (
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
@@ -244,8 +283,9 @@ export default function LeadCaptureForm({
           {config.submitLabel}
         </Button>
       </form>
+      )}
 
-      {!compact && (
+      {!compact && !submitted && (
         <p className="mt-4 text-center text-xs text-zinc-400">
           We respond within one business day. We do not share your information.
         </p>
