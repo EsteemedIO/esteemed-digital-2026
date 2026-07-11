@@ -8,77 +8,77 @@ import { ChevronDownIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import ProductIcon from "@/components/ProductIcon";
 
 const websitesGroup = [
-  { key: "website-design", name: "Website Design", href: "/services/website-design" },
-  { key: "create", name: "AI Website Builder", href: "/products/create" },
-  { key: "cloud", name: "Website Hosting", href: "/products/cloud" },
-  { key: "ecommerce", name: "Ecommerce", href: "/services/ecommerce" },
-  { key: "blogs", name: "Blogs", href: "/services/blogs" },
-  { key: "seo", name: "SEO", href: "/services/seo" },
+  { key: "create", name: "AI Website Builder", href: "/products/create", desc: "Build and edit websites with AI, then publish to Cloud." },
+  { key: "cloud", name: "Website Hosting", href: "/products/cloud", desc: "Managed hosting for WordPress, Drupal, and modern JavaScript." },
+  { key: "ecommerce", name: "Ecommerce", href: "/services/ecommerce", desc: "Stores, checkout flows, subscriptions, and payment setup." },
+  { key: "blogs", name: "Blogs", href: "/services/blogs", desc: "Blog setup, content structure, publishing, and optimization." },
+  { key: "seo", name: "SEO", href: "/services/seo", desc: "Technical SEO, local search, and content visibility." },
 ];
 
 const businessToolsGroup = [
-  { key: "business-email", name: "Business Email", href: "/services/business-email" },
-  { key: "curate", name: "Content Management", href: "/products/curate" },
-  { key: "acquire", name: "Customer Relationship Management", href: "/products/acquire" },
-  { key: "hire", name: "Applicant Tracking", href: "/products/hire" },
-  { key: "intelligence", name: "Business Intelligence + Memory", href: "/products/intelligence" },
-  { key: "hcmgpt", name: "Human Capital Intelligence", href: "https://hcmgpt.com", external: true },
-  { key: "agents", name: "AI Agents", href: "/products/agents" },
+  { key: "business-email", name: "Business Email", href: "/services/business-email", desc: "Professional email, domains, and account setup." },
+  { key: "curate", name: "Content Management", href: "/products/curate", desc: "AI-native CMS and RAG-ready knowledge management." },
+  { key: "acquire", name: "Customer Relationship Management", href: "/products/acquire", desc: "Pipeline, outreach, and relationship management." },
+  { key: "hire", name: "Applicant Tracking", href: "/products/hire", desc: "Recruiting workflows, candidates, jobs, and hiring teams." },
+  { key: "intelligence", name: "Business Intelligence + Memory", href: "/products/intelligence", desc: "Shared memory, context, and domain intelligence." },
+  { key: "hcmgpt", name: "Human Capital Intelligence", href: "https://hcmgpt.com", external: true, desc: "AI for HR, workforce, talent, and people operations." },
+  { key: "agents", name: "AI Agents", href: "/products/agents", desc: "Role-based agents for marketing, sales, support, and recruiting." },
 ];
 
 const servicesGroup = [
-  { key: "hire-expert", name: "Hire an Expert", href: "/services/hire-an-expert" },
-  { key: "web-support", name: "Web Support Plans", href: "/services/support" },
-  { key: "talent-management", name: "Talent Management", href: "/services/talent-management" },
-  { key: "content-strategy", name: "Content Strategy", href: "/services/content-strategy" },
-  { key: "content-production", name: "Content Production", href: "/services/content-production" },
-  { key: "sem", name: "Search Engine Marketing", href: "/services/search-engine-marketing" },
-  { key: "ai-visibility", name: "AI Visibility", href: "/services/ai-visibility" },
+  { key: "website-design", name: "Website Design", href: "/services/website-design", desc: "Custom sites, rebuilds, landing pages, and launch support." },
+  { key: "hire-expert", name: "Hire an Expert", href: "/services/hire-an-expert", desc: "On-demand help from builders, designers, and operators." },
+  { key: "web-support", name: "Web Support Plans", href: "/services/support", desc: "Monthly support blocks for site fixes and improvements." },
+  { key: "talent-management", name: "Talent Management", href: "/services/talent-management", desc: "Recruiting, onboarding, workforce, and HR operations." },
+  { key: "content-strategy", name: "Content Strategy", href: "/services/content-strategy", desc: "Messaging, editorial planning, and conversion paths." },
+  { key: "content-production", name: "Content Production", href: "/services/content-production", desc: "Copy, campaigns, pages, blogs, and launch content." },
+  { key: "sem", name: "Search Engine Marketing", href: "/services/search-engine-marketing", desc: "Paid search setup, landing pages, and campaign support." },
+  { key: "ai-visibility", name: "AI Visibility", href: "/services/ai-visibility", desc: "Make your business easier for AI search to understand." },
 ];
 
 const solutionsUseCases = [
-  { key: "launch-marketing", name: "Launch a marketing site", href: "/solutions/launch-marketing-site" },
-  { key: "build-internal", name: "Build an internal tool", href: "/solutions/build-internal-tool" },
-  { key: "hire-talent", name: "Hire technical talent", href: "/solutions/hire-technical-talent" },
-  { key: "modernize-legacy", name: "Modernize a legacy site", href: "/solutions/modernize-legacy-site" },
+  { key: "launch-marketing", name: "Launch a marketing site", href: "/solutions/launch-marketing-site", desc: "Create, host, and improve your public website." },
+  { key: "build-internal", name: "Build an internal tool", href: "/solutions/build-internal-tool", desc: "Turn team workflows into lightweight apps." },
+  { key: "hire-talent", name: "Hire technical talent", href: "/solutions/hire-technical-talent", desc: "Find builders and technical experts through Colleagues." },
+  { key: "modernize-legacy", name: "Modernize a legacy site", href: "/solutions/modernize-legacy-site", desc: "Move older sites into a faster modern stack." },
 ];
 
 const solutionsRoles = [
-  { key: "marketing-leaders", name: "Marketing leaders", href: "/solutions/marketing-leaders" },
-  { key: "founders", name: "Founders", href: "/solutions/founders" },
-  { key: "it-directors", name: "IT directors", href: "/solutions/it-directors" },
-  { key: "hr-teams", name: "HR teams", href: "/solutions/hr-teams" },
+  { key: "marketing-leaders", name: "Marketing leaders", href: "/solutions/marketing-leaders", desc: "Launch pages, campaigns, content, and AI visibility." },
+  { key: "founders", name: "Founders", href: "/solutions/founders", desc: "Build the site, stack, and support needed to sell." },
+  { key: "it-directors", name: "IT directors", href: "/solutions/it-directors", desc: "Cloud, security, modernization, and implementation help." },
+  { key: "hr-teams", name: "HR teams", href: "/solutions/hr-teams", desc: "Recruiting, workforce intelligence, and talent operations." },
 ];
 
 const solutionsSegments = [
-  { key: "startups", name: "Startups", href: "/solutions/startups" },
-  { key: "small-business", name: "Small Business", href: "/solutions/small-business" },
-  { key: "mid-market", name: "Mid-market", href: "/solutions/mid-market" },
-  { key: "enterprise", name: "Enterprise", href: "/solutions/enterprise" },
-  { key: "nonprofits", name: "Nonprofits", href: "/solutions/nonprofits" },
-  { key: "higher-ed", name: "Higher Ed", href: "/solutions/higher-ed" },
+  { key: "startups", name: "Startups", href: "/solutions/startups", desc: "Launch quickly without overbuilding your stack." },
+  { key: "small-business", name: "Small Business", href: "/solutions/small-business", desc: "Websites, hosting, support, and local growth." },
+  { key: "mid-market", name: "Mid-market", href: "/solutions/mid-market", desc: "Modernize operations with AI, services, and support." },
+  { key: "enterprise", name: "Enterprise", href: "/solutions/enterprise", desc: "Custom implementations, governance, and support." },
+  { key: "nonprofits", name: "Nonprofits", href: "/solutions/nonprofits", desc: "Affordable digital systems for mission-driven teams." },
+  { key: "higher-ed", name: "Higher Ed", href: "/solutions/higher-ed", desc: "Digital programs, workforce support, and student services." },
 ];
 
 const solutionsIndustries = [
-  { key: "consumer-hospitality", name: "Consumer & Hospitality", href: "/solutions/industries/consumer-and-hospitality" },
-  { key: "construction", name: "Construction", href: "/solutions/industries/construction" },
-  { key: "financial-services", name: "Financial Services", href: "/solutions/industries/financial-services" },
-  { key: "gov-edu-nonprofit", name: "Government, Education & Non-profit", href: "/solutions/industries/government-education-and-non-profit" },
-  { key: "healthcare", name: "Healthcare & Life Sciences", href: "/solutions/industries/healthcare-and-life-sciences" },
-  { key: "professional-services", name: "Professional & Business Services", href: "/solutions/industries/professional-and-business-services" },
-  { key: "tech-media", name: "Technology & Media", href: "/solutions/industries/technology-and-media" },
+  { key: "consumer-hospitality", name: "Consumer & Hospitality", href: "/solutions/industries/consumer-and-hospitality", desc: "Local marketing, hiring, booking, and customer operations." },
+  { key: "construction", name: "Construction", href: "/solutions/industries/construction", desc: "Project visibility, recruiting, websites, and operations." },
+  { key: "financial-services", name: "Financial Services", href: "/solutions/industries/financial-services", desc: "Client acquisition, compliance-aware content, and support." },
+  { key: "gov-edu-nonprofit", name: "Government, Education & Non-profit", href: "/solutions/industries/government-education-and-non-profit", desc: "Accessible sites, programs, content, and staffing support." },
+  { key: "healthcare", name: "Healthcare & Life Sciences", href: "/solutions/industries/healthcare-and-life-sciences", desc: "Patient, provider, and workforce digital operations." },
+  { key: "professional-services", name: "Professional & Business Services", href: "/solutions/industries/professional-and-business-services", desc: "Lead generation, delivery systems, and expert support." },
+  { key: "tech-media", name: "Technology & Media", href: "/solutions/industries/technology-and-media", desc: "Product, content, publishing, and growth operations." },
 ];
 
 const resourceItems = [
-  { key: "resource-center", name: "Business Resource Center", href: "/resources" },
-  { key: "career-catalyst", name: "Career Catalyst Blog", href: "/blog/career-catalyst" },
-  { key: "newsroom", name: "Newsroom", href: "/newsroom" },
-  { key: "documentation", name: "Documentation", href: "https://help.esteemed.io", external: true },
+  { key: "resource-center", name: "Business Resource Center", href: "/resources", desc: "Guides for websites, AI, hiring, and growth." },
+  { key: "career-catalyst", name: "Career Catalyst Blog", href: "/blog/career-catalyst", desc: "Career advice, hiring insights, and workforce ideas." },
+  { key: "newsroom", name: "Newsroom", href: "/newsroom", desc: "Company updates, announcements, and launch notes." },
+  { key: "documentation", name: "Documentation", href: "https://help.esteemed.io", external: true, desc: "Help docs for products, account setup, and support." },
 ];
 
 const communityItems = [
-  { key: "events", name: "Events", href: "/resources/events" },
-  { key: "discord", name: "Discord", href: "https://discord.gg/esteemed", external: true },
+  { key: "events", name: "Events", href: "/resources/events", desc: "Webinars, demos, workshops, and community sessions." },
+  { key: "discord", name: "Discord", href: "https://discord.gg/esteemed", external: true, desc: "Join the Esteemed community and product conversations." },
 ];
 
 const resourceFeatured = [
@@ -141,18 +141,18 @@ function MegaMenuLink({ href, children, desc, onClick, external, icon }) {
   const props = external ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
   const Tag = external ? "a" : Link;
   return (
-    <Tag {...props} onClick={onClick} className="group flex items-center justify-between py-2 px-3 -mx-3 rounded-lg border border-transparent hover:border-[#282828] transition-all">
-      <div className="flex items-start gap-3">
-        {icon && <ProductIcon product={icon} className="mt-0.5 h-6 w-6 flex-shrink-0" />}
-        <div>
-          <span className="text-[1rem] font-medium text-[#282828] group-hover:font-bold">
+    <Tag {...props} onClick={onClick} className="group flex items-start justify-between py-3 px-3 -mx-3 rounded-lg border border-transparent hover:border-[#282828] transition-all">
+      <div className="flex min-w-0 items-start gap-4">
+        {icon && <ProductIcon product={icon} className="mt-0.5 h-10 w-10 flex-shrink-0" />}
+        <div className="min-w-0">
+          <span className="block text-[1rem] font-semibold leading-5 text-[#282828] group-hover:font-bold">
             {children}
             {external && <span className="inline-block ml-1 text-[#282828]">↗</span>}
           </span>
-          {desc && <span className="block text-xs text-[#444] mt-0.5">{desc}</span>}
+          {desc && <span className="mt-1 block max-w-[21rem] text-[12px] leading-5 text-[#444]">{desc}</span>}
         </div>
       </div>
-      <ArrowRightIcon className="w-4 h-4 text-[#282828] stroke-[2.5] opacity-0 group-hover:opacity-100 transition-opacity ml-4 flex-shrink-0" />
+      <ArrowRightIcon className="mt-1 w-4 h-4 text-[#282828] stroke-[2.5] opacity-0 group-hover:opacity-100 transition-opacity ml-4 flex-shrink-0" />
     </Tag>
   );
 }
@@ -268,7 +268,7 @@ export default function Navbar() {
                   className="inline-flex items-center px-3 md:px-4 rounded-full border-2 border-accent bg-accent text-ink text-sm font-semibold hover:bg-accent-hover hover:border-accent-hover transition-colors leading-none"
                   style={{ paddingTop: 6, paddingBottom: 6 }}
                 >
-                  Sign Up
+                  Get Started
                 </a>
               </>
             )}
@@ -281,25 +281,25 @@ export default function Navbar() {
         {/* ---- Mega menu panels ---- */}
 
         {openMenu === "products" && (
-          <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
+          <div onMouseEnter={() => setOpenMenu("products")} className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
             <div className="mx-auto px-6 py-8" style={{ maxWidth: "1800px" }}>
               <div className="grid grid-cols-4 gap-x-8">
                 <div>
                   <SectionHeading>Websites</SectionHeading>
                   {websitesGroup.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div>
                   <SectionHeading>Business Tools</SectionHeading>
                   {businessToolsGroup.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div>
-                  <SectionHeading href="/services">Services</SectionHeading>
+                  <SectionHeading href="/services/hire-an-expert">Hire an Expert</SectionHeading>
                   {servicesGroup.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu} external={item.external}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div className="space-y-3 mt-8">
@@ -313,31 +313,31 @@ export default function Navbar() {
         )}
 
         {openMenu === "solutions" && (
-          <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
+          <div onMouseEnter={() => setOpenMenu("solutions")} className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
             <div className="mx-auto px-6 py-8" style={{ maxWidth: "1800px" }}>
               <div className="grid grid-cols-4 gap-8">
                 <div>
                   <SectionHeading>Use Cases</SectionHeading>
                   {solutionsUseCases.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div>
                   <SectionHeading>Roles</SectionHeading>
                   {solutionsRoles.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div>
                   <SectionHeading>Segments</SectionHeading>
                   {solutionsSegments.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div>
                   <SectionHeading>Industries Served</SectionHeading>
                   {solutionsIndustries.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
               </div>
@@ -346,19 +346,19 @@ export default function Navbar() {
         )}
 
         {openMenu === "resources" && (
-          <div className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
+          <div onMouseEnter={() => setOpenMenu("resources")} className="hidden md:block absolute left-0 right-0 border-t border-zinc-200 bg-white shadow-lg">
             <div className="mx-auto px-6 py-8" style={{ maxWidth: "1800px" }}>
               <div className="grid grid-cols-4 gap-8">
                 <div>
                   <SectionHeading>Resources</SectionHeading>
                   {resourceItems.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu} external={item.external}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div>
                   <SectionHeading>Community</SectionHeading>
                   {communityItems.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} onClick={closeMenu} external={item.external}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu} external={item.external}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div />

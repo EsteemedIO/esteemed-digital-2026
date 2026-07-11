@@ -11,13 +11,13 @@ test.describe('Auth Integration — Keycloak OIDC', () => {
     await expect(page.locator('h1')).toBeVisible();
   });
 
-  test('navbar shows Login and Sign Up when unauthenticated', async ({ page }) => {
+  test('navbar shows Login and Get Started when unauthenticated', async ({ page }) => {
     await page.goto(BASE);
     // Desktop login button
     const loginBtn = page.locator('button:has-text("Login")').first();
     await expect(loginBtn).toBeVisible();
-    // Sign Up link
-    const signupLink = page.locator('a:has-text("Sign Up")').first();
+    // Get Started link
+    const signupLink = page.locator('a:has-text("Get Started")').first();
     await expect(signupLink).toBeVisible();
   });
 

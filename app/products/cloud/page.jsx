@@ -1,6 +1,8 @@
 import Link from "next/link";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
+import ServicesCarousel from "@/components/ServicesCarousel/ServicesCarousel";
+import VideoHero from "@/components/VideoHero";
 import { Cloud, Shield, HardDrive, Activity, ArrowRight, Check } from "lucide-react";
 import { cloudPricingPlans, managedHostingPricingPlans } from "@/lib/product-page-pricing";
 
@@ -9,6 +11,17 @@ export const metadata = {
   description:
     "Website hosting on Esteemed Cloud. Self-serve and managed plans with SSL, backups, monitoring, and support.",
 };
+
+const capabilities = [
+  { title: "Online Store", headline: "Sell online", body: "Sell products with a fast, secure checkout, powered by our Commerce stack.", img: "cap-store", src: "https://images.pexels.com/photos/2467287/pexels-photo-2467287.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+  { title: "Scheduling", headline: "Get booked", body: "Seamless appointment booking and calendar management, right from your site.", img: "cap-book", src: "https://images.pexels.com/photos/35134952/pexels-photo-35134952.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+  { title: "Blog", headline: "Publish with ease", body: "Share news and stories yourself — no developer required.", img: "cap-blog", src: "https://images.pexels.com/photos/29884920/pexels-photo-29884920.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+  { title: "Forms", headline: "Capture every lead", body: "Turn visitors into customers with an AI-assisted contact form, built right in.", img: "cap-forms", src: "https://images.pexels.com/photos/9303590/pexels-photo-9303590.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+  { title: "Donations", headline: "Raise more", body: "Accept one-time and recurring gifts — with goals, receipts and donor updates built in.", img: "cap-donate", src: "https://images.pexels.com/photos/34164459/pexels-photo-34164459.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+  { title: "Memberships", headline: "Grow your community", body: "Offer member-only content, classes and perks with recurring subscriptions.", img: "cap-member", src: "https://images.pexels.com/photos/613868/pexels-photo-613868.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+  { title: "SEO", headline: "Get found online", body: "Rank higher in search and show up in AI answers — wherever your customers are.", img: "cap-seo", src: "https://images.pexels.com/photos/7400281/pexels-photo-7400281.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+  { title: "Galleries", headline: "Show your best work", body: "Present your work, menu or portfolio with rich, fast media layouts.", img: "cap-gallery", src: "https://images.pexels.com/photos/12735489/pexels-photo-12735489.jpeg?auto=compress&cs=tinysrgb&w=1400" },
+];
 
 const cloudPlans = cloudPricingPlans();
 const managedPlans = managedHostingPricingPlans();
@@ -57,30 +70,33 @@ const includes = [
 export default function CloudPage() {
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="py-28">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <ProductIcon product="cloud" className="mx-auto mb-6 h-14 w-14" />
-          <p className="text-sm font-medium text-zinc-500 mb-4">
-            Products / Cloud - Sites
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Esteemed Cloud - Sites
-          </h1>
-          <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
-            Hosting for sites that are not running on a managed CMS: bring-your-own,
-            Create-built, React, Node, and Next sites on Esteemed Cloud.
-          </p>
-          <div className="mt-10">
-            <Link
-              href="#plans"
-              className="px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
-            >
-              See plans
-            </Link>
-          </div>
+      {/* Hero — video background with progress nav */}
+      <VideoHero>
+        <p className="text-sm font-medium text-white/70 mb-4">
+          Esteemed Cloud / Sites
+        </p>
+        <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+          A website is<br className="hidden md:inline" /> your digital front door.
+        </h1>
+        <p className="text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
+          Let us help you create or redesign your site free.
+        </p>
+        <div className="mt-10">
+          <Link
+            href="#managed-hosting"
+            className="px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+          >
+            Get Started
+          </Link>
         </div>
-      </section>
+      </VideoHero>
+
+      {/* Services carousel */}
+      <ServicesCarousel
+        capabilities={capabilities}
+        title="Everything your site needs to grow."
+        subtitle="Built-in tools that come with your Cloud site."
+      />
 
       {/* What it includes */}
       <section className="py-20 border-t border-zinc-100">
@@ -159,6 +175,7 @@ export default function CloudPage() {
           title="Done-for-you Managed Sites"
           description="Managed Hosting includes support hours and a $0 Create rebuild with a 12-month term: 5 pages on Essential, 12 pages on Growth, and a full standard site on Business."
           productKey="cloud"
+          defaultBilling="monthly"
           plans={managedPlans}
           ctaLabel="Buy Now"
         />

@@ -12,7 +12,7 @@ function getPlanPrice(plan, billing) {
     return {
       headline: "Custom",
       suffix: "",
-      note: plan.basis || "Sales-led plan",
+      note: plan.basis || "Our experts will tailor a plan to your needs.",
       lookupKey: null,
     };
   }
@@ -94,12 +94,12 @@ function PricingCard({
           Recommended
         </div>
       )}
-      <div className={highlighted ? "pt-8" : ""}>
+      <div className={`flex flex-col ${highlighted ? "pt-8" : ""}`}>
         <h3 className="text-2xl font-black text-ink">{plan.name}</h3>
-        <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{plan.description || plan.basis}</p>
-        <div className="mt-5">
+        <p className="mt-2 min-h-[72px] text-sm leading-6 text-zinc-600">{plan.description || plan.basis}</p>
+        <div className="mt-5 min-h-[24px]">
           {(price.badge || price.compareAt) && (
-            <div className="mb-2 flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {price.badge && (
                 <Chip
                   size="sm"
@@ -115,13 +115,15 @@ function PricingCard({
               {price.compareAt && <span className="text-xs font-bold text-zinc-500 line-through">{price.compareAt}</span>}
             </div>
           )}
-          <div className="flex items-end gap-1">
-            <span className="text-4xl font-black text-ink">{price.headline}</span>
-            {price.suffix && <span className="pb-1 text-sm font-bold text-zinc-700">{price.suffix}</span>}
-          </div>
-          {price.note && <p className="mt-1 text-xs font-semibold text-zinc-600">{price.note}</p>}
+        </div>
+        <div className="mt-2 flex items-end gap-1">
+          <span className="text-4xl font-black text-ink">{price.headline}</span>
+          {price.suffix && <span className="pb-1 text-sm font-bold text-zinc-700">{price.suffix}</span>}
+        </div>
+        <div className="mt-1 min-h-[40px]">
+          {price.note && <p className="text-xs font-semibold text-zinc-600">{price.note}</p>}
           {price.annualHint && (
-            <p className="mt-2 text-xs font-bold text-emerald-600">{price.annualHint}</p>
+            <p className="mt-1 text-xs font-bold text-emerald-600">{price.annualHint}</p>
           )}
           {plan.founding && billing === "monthly" && (
             <p className="mt-1 text-xs text-zinc-500">Founding rate: {formatMoney(plan.founding)}/mo for first 12 months.</p>
@@ -181,14 +183,16 @@ export default function ProductPricingBlock({
   contactHref = "/contact",
   fallbackHref,
   calculatorHref = null,
+  defaultBilling,
 }) {
   const hasAnnual = plans.some((plan) => plan.annual);
-  const [billing, setBilling] = useState(hasAnnual ? "annual" : "monthly");
+  const [billing, setBilling] = useState(defaultBilling || (hasAnnual ? "annual" : "monthly"));
 
   useEffect(() => {
+    if (defaultBilling) return; // skip URL override when explicitly set
     const params = new URLSearchParams(window.location.search);
     if (params.get("billing") === "monthly") setBilling("monthly");
-  }, []);
+  }, [defaultBilling]);
 
   return (
     <section id={id} className="scroll-mt-24 border-t border-zinc-100 py-20">

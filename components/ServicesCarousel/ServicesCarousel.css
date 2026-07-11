@@ -1,0 +1,77 @@
+/* ============================================================
+   ServicesCarousel — shared component styles
+   Scoped with .sc- prefix to avoid collisions
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap");
+
+.sc-wrap {
+  --sc-yellow-500: #FEE546;
+  --sc-ink-1000: #0A0A0A;
+  --sc-ink-900:  #111111;
+  --sc-ink-600:  #3D3D3D;
+  --sc-warm-50:  #FAFAF7;
+  --sc-warm-100: #F4F3EE;
+  --sc-warm-200: #E9E7DF;
+  --sc-warm-300: #D7D4C8;
+  --sc-warm-400: #B6B2A2;
+  --sc-warm-500: #8C887A;
+  --sc-warm-600: #65615A;
+  --sc-fg-1:       var(--sc-ink-900);
+  --sc-fg-2:       var(--sc-ink-600);
+  --sc-fg-3:       var(--sc-warm-500);
+  --sc-border:     var(--sc-warm-200);
+  --sc-border-strong: var(--sc-warm-300);
+  --sc-success:    #1F8A5B;
+  --sc-success-bg: #E4F4EC;
+  --sc-font-sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --sc-font-display: "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --sc-ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+
+  padding: 88px 0 44px;
+  overflow: hidden;
+  font-family: var(--sc-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sc-container { max-width: 1240px; margin: 0 auto; padding: 0 48px; }
+
+.sc-title { font-family: var(--sc-font-display); font-weight: 800; font-size: clamp(34px,4.4vw,56px); letter-spacing: -.03em; line-height: 1.02; margin: 0; color: var(--sc-fg-1); }
+.sc-sub { font-size: 18px; color: var(--sc-fg-2); margin: 14px 0 0; }
+
+.sc-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 30px auto 0; max-width: 940px; }
+.sc-tab { border: none; background: transparent; font: inherit; font-size: 15px; font-weight: 600; color: var(--sc-fg-2); padding: 9px 16px; border-radius: 999px; cursor: pointer; transition: background 140ms, color 140ms; white-space: nowrap; }
+.sc-tab:hover { color: var(--sc-fg-1); background: var(--sc-warm-100); }
+.sc-tab.on { background: var(--sc-ink-900); color: #fff; }
+
+.sc-viewport { margin-top: 40px; }
+.sc-track { display: flex; gap: 28px; transition: transform .55s var(--sc-ease-out); will-change: transform; }
+
+.sc-card { flex: 0 0 min(66vw, 1060px); aspect-ratio: 16 / 9; position: relative; border-radius: 22px; overflow: hidden; cursor: pointer; opacity: .4; transform: scale(.94); transition: opacity .45s var(--sc-ease-out), transform .45s var(--sc-ease-out); }
+.sc-card.on { opacity: 1; transform: scale(1); cursor: default; }
+
+.sc-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(10,10,10,.66) 0%, rgba(10,10,10,.34) 40%, rgba(10,10,10,0) 66%); padding: 46px 52px; }
+.sc-card-text { max-width: 430px; }
+.sc-card-title { font-family: var(--sc-font-display); font-weight: 800; font-size: clamp(26px,2.6vw,40px); letter-spacing: -.02em; line-height: 1.04; color: #fff; margin: 0; }
+.sc-card-desc { font-size: 16px; line-height: 1.5; color: rgba(255,255,255,.86); margin: 12px 0 0; }
+
+.sc-tag { position: absolute; top: 22px; right: 24px; white-space: nowrap; background: var(--sc-yellow-500); color: var(--sc-ink-1000); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 6px 11px; border-radius: 999px; }
+
+.sc-mock { position: absolute; right: 44px; bottom: 44px; width: 314px; background: #fff; border-radius: 18px; box-shadow: 0 26px 64px rgba(0,0,0,.32); padding: 18px; opacity: 0; transform: translateY(12px); transition: opacity .5s var(--sc-ease-out), transform .5s var(--sc-ease-out); z-index: 3; }
+.sc-card.on .sc-mock { opacity: 1; transform: none; }
+
+.sc-arrows { display: flex; gap: 10px; flex-shrink: 0; }
+.sc-arrows button { width: 46px; height: 46px; border-radius: 999px; border: 1px solid var(--sc-border-strong); background: #fff; color: var(--sc-ink-900); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background 130ms, border-color 130ms; }
+.sc-arrows button:hover { background: var(--sc-warm-100); border-color: var(--sc-warm-400); }
+
+/* --- Responsive --- */
+@media (max-width: 960px) {
+  .sc-card { flex-basis: 84vw; aspect-ratio: 4 / 5; }
+  .sc-overlay { padding: 28px 26px; background: linear-gradient(180deg, rgba(10,10,10,.55) 0%, rgba(10,10,10,.15) 40%, rgba(10,10,10,.55) 100%); }
+  .sc-tabs { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+  .sc-tabs::-webkit-scrollbar { display: none; }
+  .sc-mock { right: 16px; bottom: 16px; width: 208px; padding: 13px; }
+}
+@media (max-width: 680px) {
+  .sc-container { padding: 0 24px; }
+}
