@@ -46,7 +46,7 @@ const catalog = {
           "Our AI website builder. Describe what you want and Create drafts a real, brand-aware site in the Studio IDE - then refine it by prompt or in code. Hosting is included the moment you publish.",
         anchor: "As low as $29/mo with annual plan · free to start",
         cta: "See Plans",
-        href: "/products/create#plans",
+        href: "/websites/website-builder#plans",
         primary: true,
       },
       {

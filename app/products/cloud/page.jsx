@@ -193,7 +193,7 @@ export default function CloudPage() {
             migration.
           </p>
           <Link
-            href="/products/create"
+            href="/websites/website-builder"
             className="inline-flex items-center text-sm font-bold text-ink hover:underline"
           >
             Learn about Create &rarr;

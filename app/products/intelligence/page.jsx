@@ -293,7 +293,7 @@ export default function IntelligencePage() {
             Intelligence that compounds.
           </h2>
           <Link
-            href="/products/create"
+            href="/websites/website-builder"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Start building

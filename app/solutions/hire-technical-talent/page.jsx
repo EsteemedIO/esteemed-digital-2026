@@ -30,7 +30,7 @@ export default function HireTechnicalTalentPage() {
             Unlike traditional staffing agencies, Esteemed combines human expertise with AI-powered matching through <Link href="/products/intelligence" className="text-blue-600 hover:underline">Esteemed Intelligence</Link>. Our platform analyzes your requirements, team dynamics, and project scope to recommend the best-fit candidates from our network. The result is faster placements, better matches, and lower turnover.
           </p>
           <p>
-            Whether you need a fractional CTO, a contract development team, or a permanent hire, Esteemed provides the flexibility to scale your workforce up or down as your business demands. Pair talent with <Link href="/products/create" className="text-blue-600 hover:underline">Esteemed Create</Link> and <Link href="/products/cloud" className="text-blue-600 hover:underline">Cloud</Link> for a complete build-and-staff solution.
+            Whether you need a fractional CTO, a contract development team, or a permanent hire, Esteemed provides the flexibility to scale your workforce up or down as your business demands. Pair talent with <Link href="/websites/website-builder" className="text-blue-600 hover:underline">Esteemed Create</Link> and <Link href="/products/cloud" className="text-blue-600 hover:underline">Cloud</Link> for a complete build-and-staff solution.
           </p>
         </div>
       </section>

@@ -228,7 +228,7 @@ export default function PlansPage() {
                             </Button>
                             <Button
                               as={Link}
-                              href={group.key === "create" ? "/products/create" : "/products/cloud"}
+                              href={group.key === "create" ? "/websites/website-builder" : "/products/cloud"}
                               radius="sm"
                               variant="bordered"
                               className="border-es-border font-semibold text-es-fg-1"

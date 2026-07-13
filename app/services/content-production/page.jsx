@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PenTool, ArrowRight } from "lucide-react";
+import StickyAnchorNav from "@/components/StickyAnchorNav";
 
 export const metadata = {
   title: "Content Production | Esteemed",
@@ -10,6 +11,7 @@ export const metadata = {
 export default function ContentProductionPage() {
   return (
     <div className="min-h-screen">
+      <StickyAnchorNav />
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <PenTool className="mx-auto mb-6 h-14 w-14 text-ink" strokeWidth={1.5} />

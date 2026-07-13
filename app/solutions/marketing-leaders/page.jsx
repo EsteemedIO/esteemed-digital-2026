@@ -24,7 +24,7 @@ export default function MarketingLeadersPage() {
       <section className="py-16 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6 space-y-6 text-zinc-600 leading-relaxed">
           <p>
-            Marketing leaders face constant pressure to ship campaigns quickly, maintain brand consistency across digital properties, and justify ROI on every dollar spent. Esteemed gives you the tools and talent to move faster without sacrificing quality. With <Link href="/products/create" className="text-blue-600 hover:underline">Esteemed Create</Link>, your team can spin up landing pages, microsites, and campaign pages in minutes -- no engineering tickets required.
+            Marketing leaders face constant pressure to ship campaigns quickly, maintain brand consistency across digital properties, and justify ROI on every dollar spent. Esteemed gives you the tools and talent to move faster without sacrificing quality. With <Link href="/websites/website-builder" className="text-blue-600 hover:underline">Esteemed Create</Link>, your team can spin up landing pages, microsites, and campaign pages in minutes -- no engineering tickets required.
           </p>
           <p>
             When you need specialized help -- SEO strategy, content production, UX design, or analytics setup -- <Link href="/products/colleagues" className="text-blue-600 hover:underline">Esteemed Colleagues</Link> connects you with vetted marketing professionals who can hit the ground running. Stop waiting weeks for agency proposals; get the right person working on your project within days.

@@ -24,7 +24,7 @@ const features = [
     title: "Create",
     description:
       "Build and deploy your first product in minutes with AI-powered site and app generation. Validate ideas before writing a line of code.",
-    href: "/products/create",
+    href: "/websites/website-builder",
   },
   {
     icon: Users,

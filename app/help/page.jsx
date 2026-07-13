@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 const sections = [
-  { title: "Esteemed Create", href: "/products/create", desc: "Learn how to build websites and apps with AI-powered Create." },
+  { title: "Esteemed Create", href: "/websites/website-builder", desc: "Learn how to build websites and apps with AI-powered Create." },
   { title: "Esteemed Cloud", href: "/products/cloud", desc: "Hosting, deployment, domains, and infrastructure management." },
   { title: "Esteemed Agents", href: "/products/agents", desc: "Set up and manage AI agents trained on your business." },
   { title: "Esteemed Intelligence", href: "/products/intelligence", desc: "The shared AI layer powering all Esteemed products." },

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import StickyAnchorNav from "@/components/StickyAnchorNav";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
 import { supportPricingPlans } from "@/lib/product-page-pricing";
@@ -23,6 +24,7 @@ const pricingPlans = supportPricingPlans();
 export default function SupportPage() {
   return (
     <div className="min-h-screen">
+      <StickyAnchorNav />
       {/* Hero */}
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">

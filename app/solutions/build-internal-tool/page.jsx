@@ -24,7 +24,7 @@ export default function BuildInternalToolPage() {
       <section className="py-16 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6 space-y-6 text-zinc-600 leading-relaxed">
           <p>
-            Every organization has workflows that off-the-shelf software does not quite cover. With <Link href="/products/create" className="text-blue-600 hover:underline">Esteemed Create</Link>, you can rapidly prototype internal dashboards, admin panels, and workflow tools using natural language. Describe what you need, and AI generates a working application you can iterate on immediately.
+            Every organization has workflows that off-the-shelf software does not quite cover. With <Link href="/websites/website-builder" className="text-blue-600 hover:underline">Esteemed Create</Link>, you can rapidly prototype internal dashboards, admin panels, and workflow tools using natural language. Describe what you need, and AI generates a working application you can iterate on immediately.
           </p>
           <p>
             When your internal tool needs integrations with existing systems, complex business logic, or enterprise-grade security, <Link href="/products/colleagues" className="text-blue-600 hover:underline">Esteemed Colleagues</Link> gives you access to 35,000+ vetted developers, architects, and DevOps engineers who can build it right. Pair that with <Link href="/products/cloud" className="text-blue-600 hover:underline">Esteemed Cloud</Link> for secure, managed hosting, and you have a full-stack solution without the full-stack overhead.

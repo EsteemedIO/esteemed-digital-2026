@@ -33,7 +33,7 @@ const websitePaths = [
     price: "$39/mo",
     note: "AI-assisted website creation with hosting included at publish.",
     lookupKey: "create_core_monthly",
-    href: "/products/create",
+    href: "/websites/website-builder",
     bullets: ["Custom domain + SSL", "Studio IDE and prompt editing", "Colleagues marketplace access"],
     cta: "Buy Now",
     chip: "Start Here",

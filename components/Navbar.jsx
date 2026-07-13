@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Squeeze as Hamburger } from "hamburger-react";
 import { ChevronDownIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Wrench, LifeBuoy, Users, Lightbulb, PenTool, Megaphone, Eye, Briefcase, Rocket, Building2, GraduationCap, Heart, Landmark, Stethoscope, Cpu, BookOpen, Calendar, MessageCircle, Award, Handshake, HardHat, DollarSign } from "lucide-react";
 import ProductIcon from "@/components/ProductIcon";
+import { productIconPaths } from "@/lib/pricing-catalog";
 
 const websitesGroup = [
-  { key: "create", name: "AI Website Builder", href: "/products/create", desc: "Build and edit websites with AI, then publish to Cloud." },
+  { key: "create", name: "AI Website Builder", href: "/websites/website-builder", desc: "Build and edit websites with AI, then publish to Cloud." },
   { key: "cloud", name: "Website Hosting", href: "/products/cloud", desc: "Managed hosting for WordPress, Drupal, and modern JavaScript." },
   { key: "ecommerce", name: "Ecommerce", href: "/services/ecommerce", desc: "Stores, checkout flows, subscriptions, and payment setup." },
   { key: "blogs", name: "Blogs", href: "/services/blogs", desc: "Blog setup, content structure, publishing, and optimization." },
@@ -21,7 +23,6 @@ const businessToolsGroup = [
   { key: "acquire", name: "Customer Relationship Management", href: "/products/acquire", desc: "Pipeline, outreach, and relationship management." },
   { key: "hire", name: "Applicant Tracking", href: "/products/hire", desc: "Recruiting workflows, candidates, jobs, and hiring teams." },
   { key: "intelligence", name: "Business Intelligence + Memory", href: "/products/intelligence", desc: "Shared memory, context, and domain intelligence." },
-  { key: "hcmgpt", name: "Human Capital Intelligence", href: "https://hcmgpt.com", external: true, desc: "AI for HR, workforce, talent, and people operations." },
   { key: "agents", name: "AI Agents", href: "/products/agents", desc: "Role-based agents for marketing, sales, support, and recruiting." },
 ];
 
@@ -92,7 +93,7 @@ const mobileSections = [
     subgroups: [
       { heading: "Websites", items: websitesGroup },
       { heading: "Business Tools", items: businessToolsGroup },
-      { heading: "Services", items: servicesGroup },
+      { heading: "Hire an Expert", items: servicesGroup },
     ],
   },
   {
@@ -113,6 +114,61 @@ const mobileSections = [
   },
 ];
 
+/* Lucide icon fallbacks for items without a product SVG */
+const lucideIcons = {
+  "hire-expert": Wrench,
+  "web-support": LifeBuoy,
+  "talent-management": Users,
+  "content-strategy": Lightbulb,
+  "content-production": PenTool,
+  "sem": Megaphone,
+  "ai-visibility": Eye,
+  "launch-marketing": Rocket,
+  "build-internal": Briefcase,
+  "hire-talent": Users,
+  "modernize-legacy": Wrench,
+  "marketing-leaders": Megaphone,
+  "founders": Rocket,
+  "it-directors": Cpu,
+  "hr-teams": Users,
+  "startups": Rocket,
+  "small-business": Briefcase,
+  "mid-market": Building2,
+  "enterprise": Building2,
+  "nonprofits": Heart,
+  "higher-ed": GraduationCap,
+  "consumer-hospitality": Heart,
+  "construction": HardHat,
+  "financial-services": DollarSign,
+  "gov-edu-nonprofit": Landmark,
+  "healthcare": Stethoscope,
+  "professional-services": Handshake,
+  "tech-media": Cpu,
+  "resource-center": BookOpen,
+  "career-catalyst": BookOpen,
+  "newsroom": Megaphone,
+  "documentation": BookOpen,
+  "events": Calendar,
+  "discord": MessageCircle,
+  "agency-program": Award,
+  "partner": Handshake,
+};
+
+function MobileIcon({ itemKey }) {
+  if (productIconPaths[itemKey]) {
+    return <ProductIcon product={itemKey} className="h-9 w-9 flex-shrink-0" />;
+  }
+  const LucideIcon = lucideIcons[itemKey];
+  if (LucideIcon) {
+    return (
+      <span className="inline-flex items-center justify-center h-9 w-9 rounded-lg bg-zinc-100 flex-shrink-0">
+        <LucideIcon className="h-5 w-5 text-[#282828]" />
+      </span>
+    );
+  }
+  return null;
+}
+
 /* Blue circle arrow — matches live site: w-5 h-5 bg-blue-200 rounded-full */
 function BlueArrow() {
   return (
@@ -123,16 +179,11 @@ function BlueArrow() {
 }
 
 /* Section heading — matches live: !font-bold flex gap-2 mb-2 pb-2 border-b items-center text-sm md:text-lg */
-function SectionHeading({ children, href }) {
-  const Tag = href ? Link : "div";
+function SectionHeading({ children }) {
   return (
-    <Tag
-      {...(href ? { href } : {})}
-      className="font-bold flex gap-2 mb-2 pb-2 border-b border-zinc-200 items-center text-sm md:text-lg text-ink mt-0 hover:underline"
-    >
+    <div className="font-bold flex gap-2 mb-2 pb-2 border-b border-zinc-200 items-center text-sm md:text-lg text-ink mt-0">
       {children}
-      <BlueArrow />
-    </Tag>
+    </div>
   );
 }
 
@@ -193,10 +244,15 @@ export default function Navbar() {
       <header ref={navRef} className="sticky top-0 z-50 bg-white border-b border-zinc-200" onMouseLeave={() => setOpenMenu(null)}>
         {/* Nav container widened for the product-heavy mega menu. */}
         <nav className="mx-auto px-6 flex items-center justify-between h-16" style={{ maxWidth: "1800px" }}>
-          {/* Logo */}
-          <Link href="/" className="flex items-center flex-shrink-0">
-            <img src="/esteemed-logo.svg" alt="Esteemed" className="w-32 md:w-40 h-auto" fetchPriority="high" />
-          </Link>
+          {/* Mobile hamburger (left of logo) + Logo */}
+          <div className="flex items-center gap-1 flex-shrink-0">
+            <div className="md:hidden bg-white relative z-10">
+              <Hamburger toggled={mobileOpen} toggle={setMobileOpen} size={22} color="#282828" rounded />
+            </div>
+            <Link href="/" className="flex items-center">
+              <img src="/esteemed-logo.svg" alt="Esteemed" className="w-32 md:w-40 h-auto" fetchPriority="high" />
+            </Link>
+          </div>
 
           {/* Desktop nav — centered */}
           <div className="hidden md:flex items-center gap-1">
@@ -257,24 +313,14 @@ export default function Navbar() {
                 >
                   Login
                 </button>
-                <button
-                  onClick={() => signIn("keycloak")}
-                  className="md:hidden text-sm font-semibold text-ink hover:underline"
-                >
-                  Log In
-                </button>
                 <a
                   href="/signup"
-                  className="inline-flex items-center px-3 md:px-4 rounded-full border-2 border-accent bg-accent text-ink text-sm font-semibold hover:bg-accent-hover hover:border-accent-hover transition-colors leading-none"
-                  style={{ paddingTop: 6, paddingBottom: 6 }}
+                  className="hidden md:inline-flex items-center px-4 py-1.5 rounded-full border-2 border-accent bg-accent text-ink text-sm font-semibold hover:bg-accent-hover hover:border-accent-hover transition-colors"
                 >
                   Get Started
                 </a>
               </>
             )}
-            <div className="md:hidden bg-white relative z-10">
-              <Hamburger toggled={mobileOpen} toggle={setMobileOpen} size={22} color="#282828" rounded />
-            </div>
           </div>
         </nav>
 
@@ -297,13 +343,13 @@ export default function Navbar() {
                   ))}
                 </div>
                 <div>
-                  <SectionHeading href="/services/hire-an-expert">Hire an Expert</SectionHeading>
+                  <SectionHeading>Hire an Expert</SectionHeading>
                   {servicesGroup.map((item) => (
                     <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu} external={item.external}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div className="space-y-3 mt-8">
-                  <FeaturedCard href="/products/create" onClick={closeMenu}>Try Esteemed Create</FeaturedCard>
+                  <FeaturedCard href="/websites/website-builder" onClick={closeMenu}>Try Esteemed Create</FeaturedCard>
                   <FeaturedCard href="/products" onClick={closeMenu}>Products by Name</FeaturedCard>
                   <FeaturedCard href="/services/support" onClick={closeMenu}>Get Support</FeaturedCard>
                 </div>
@@ -380,11 +426,11 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       <div
-        className={`fixed top-16 right-0 bottom-0 w-full max-w-sm bg-white z-50 transform transition-transform duration-300 md:hidden overflow-y-auto ${
-          mobileOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-16 left-0 bottom-0 w-full max-w-sm bg-white z-50 transform transition-transform duration-300 md:hidden flex flex-col ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <nav>
+        <nav className="flex-1 overflow-y-auto">
           {mobileSections.map((section) => (
             <div key={section.label} className="border-b border-zinc-200">
               <button
@@ -394,18 +440,18 @@ export default function Navbar() {
                 <span className="text-[16px] font-bold text-[#282828]">{section.label}</span>
                 <ChevronDownIcon className={`w-5 h-5 text-[#282828] stroke-[2.5] transition-transform ${expandedSection === section.label ? "rotate-180" : ""}`} />
               </button>
-              <div className={`overflow-hidden transition-all duration-300 ${expandedSection === section.label ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"}`}>
+              <div className={`overflow-hidden transition-all duration-300 ${expandedSection === section.label ? "max-h-[3000px] opacity-100" : "max-h-0 opacity-0"}`}>
                 <div className="px-5 pb-4">
                   {section.subgroups.map((group) => (
                     <div key={group.heading} className="mb-4 last:mb-0">
                       <p className="text-[13px] font-bold uppercase tracking-[1.5px] text-[#282828] opacity-50 mb-2 mt-2">{group.heading}</p>
                       {group.items.map((item) => (
-                        <Link key={item.key} href={item.href} onClick={closeMobile} className="group flex items-center justify-between py-2 px-3 -mx-3 rounded-lg hover:bg-accent-hover transition-colors">
-                          <div>
-                            <span className="text-[14px] font-medium text-[#282828]">{item.name}</span>
-                            {item.desc && <span className="block text-xs text-[#444] mt-0.5">{item.desc}</span>}
+                        <Link key={item.key} href={item.href} onClick={closeMobile} className="group flex items-start gap-3 py-3 px-3 -mx-3 rounded-lg hover:bg-accent-hover transition-colors">
+                          <MobileIcon itemKey={item.key} />
+                          <div className="min-w-0 flex-1">
+                            <span className="text-[14px] font-semibold text-[#282828]">{item.name}</span>
+                            {item.desc && <span className="block text-xs text-[#444] mt-0.5 leading-relaxed">{item.desc}</span>}
                           </div>
-                          <ArrowRightIcon className="w-5 h-5 text-[#282828] stroke-[2.5] opacity-0 group-hover:opacity-100 transition-opacity ml-4 flex-shrink-0" />
                         </Link>
                       ))}
                     </div>
@@ -418,11 +464,42 @@ export default function Navbar() {
             Pricing
           </Link>
         </nav>
-        <div className="p-5 space-y-3">
-          <FeaturedCard href="/products/create" onClick={closeMobile}>Try Esteemed Create</FeaturedCard>
-          <FeaturedCard href="/products" onClick={closeMobile}>Products by Name</FeaturedCard>
-          <FeaturedCard href="/services/support" onClick={closeMobile}>Get Support</FeaturedCard>
-        </div>
+
+        {/* Bottom bar — Login + Get Started */}
+        {!session && (
+          <div className="border-t border-zinc-200 px-5 py-4 flex items-center gap-4">
+            <button
+              onClick={() => { closeMobile(); signIn("keycloak"); }}
+              className="text-sm font-semibold text-ink hover:underline"
+            >
+              Login
+            </button>
+            <a
+              href="/signup"
+              onClick={closeMobile}
+              className="flex-1 text-center px-4 py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            >
+              Get Started
+            </a>
+          </div>
+        )}
+        {session && (
+          <div className="border-t border-zinc-200 px-5 py-4 flex items-center gap-4">
+            <button
+              onClick={() => { closeMobile(); signOut({ callbackUrl: "/" }); }}
+              className="text-sm font-semibold text-ink hover:underline"
+            >
+              Log out
+            </button>
+            <Link
+              href="/dashboard"
+              onClick={closeMobile}
+              className="flex-1 text-center px-4 py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            >
+              Dashboard
+            </Link>
+          </div>
+        )}
       </div>
     </>
   );

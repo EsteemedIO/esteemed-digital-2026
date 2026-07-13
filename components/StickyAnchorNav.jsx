@@ -20,12 +20,9 @@ export default function StickyAnchorNav() {
     <div className="sticky top-[64px] z-40 bg-white border-b border-zinc-200 shadow-sm">
       <nav className="max-w-6xl mx-auto px-6 overflow-x-auto scrollbar-hide">
         <div className="flex items-center gap-1 min-w-max py-0">
-          <Link
-            href="/services/hire-an-expert"
-            className="text-sm font-bold text-ink whitespace-nowrap pr-4 mr-2 border-r border-zinc-200 py-3"
-          >
+          <span className="text-sm font-bold text-ink whitespace-nowrap pr-4 mr-2 border-r border-zinc-200 py-3">
             Hire an Expert
-          </Link>
+          </span>
           {serviceLinks.map((link) => (
             <Link
               key={link.href}

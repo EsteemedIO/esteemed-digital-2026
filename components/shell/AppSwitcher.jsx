@@ -128,7 +128,7 @@ function CloudTileIcon() {
 const apps = [
   { key: "acquire", name: "Acquire", sublabel: "CRM", icon: AcquireTileIcon, href: "/products/acquire" },
   { key: "hire", name: "Hire", sublabel: "ATS", icon: HireTileIcon, href: "/products/hire" },
-  { key: "create", name: "Create", sublabel: "Sites \u00b7 apps", icon: CreateTileIcon, href: "/products/create" },
+  { key: "create", name: "Create", sublabel: "Sites \u00b7 apps", icon: CreateTileIcon, href: "/websites/website-builder" },
   { key: "intelligence", name: "Intelligence", sublabel: "Memory \u00b7 reasoning", icon: IntelligenceTileIcon, href: "/products/intelligence" },
   { key: "agents", name: "Agents", sublabel: "Intelligent Agents", icon: AgentsTileIcon, href: "/products/agents" },
   { key: "connect", name: "Connect", sublabel: "Retrieval", icon: ConnectTileIcon, href: "/products/connect" },

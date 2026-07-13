@@ -15,7 +15,7 @@ const items = [
     description:
       "Describe what you want in plain English and get a working site in minutes. Edit by conversation, preview instantly, publish in one click.",
     iconProduct: "create",
-    href: "/products/create",
+    href: "/websites/website-builder",
   },
   {
     name: "Cloud",
@@ -146,7 +146,7 @@ export default function ProductsPage() {
             Ready to build something Esteemed?
           </h2>
           <Link
-            href="/products/create"
+            href="/websites/website-builder"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Start building free

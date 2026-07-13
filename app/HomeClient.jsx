@@ -16,7 +16,7 @@ const products = [
   {
     name: "Esteemed Create",
     description: "Build websites and apps by talking to AI. Edit by conversation, publish in one click.",
-    href: "/products/create",
+    href: "/websites/website-builder",
     icon: Sparkles,
   },
   {
@@ -314,7 +314,7 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link
-              href="/products/create"
+              href="/websites/website-builder"
               className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-accent text-ink text-[20px] font-bold hover:bg-accent-hover transition-colors"
             >
               Try Create &rarr;
@@ -342,7 +342,7 @@ export default function Home() {
               heading: "Describe.",
               description: "Tell Create what you need. Using AI it drafts a real, brand-aware site in seconds — copy, layout, photography and all.",
               cta: "Try a prompt →",
-              ctaHref: "/products/create",
+              ctaHref: "/websites/website-builder",
               visual: <PromptToSite />,
               bgColor: "ink",
             },
@@ -351,7 +351,7 @@ export default function Home() {
               heading: "Refine.",
               description: "Tailor your site by chatting with the agent — no templates to fight.",
               cta: "See the editor →",
-              ctaHref: "/products/create",
+              ctaHref: "/websites/website-builder",
               visual: <DragAndDrop />,
               bgColor: "grey",
             },

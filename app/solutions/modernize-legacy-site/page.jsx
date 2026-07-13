@@ -24,7 +24,7 @@ export default function ModernizeLegacySitePage() {
       <section className="py-16 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6 space-y-6 text-zinc-600 leading-relaxed">
           <p>
-            Legacy websites built on outdated CMS platforms, custom PHP, or aging frameworks are expensive to maintain, slow to update, and vulnerable to security issues. Esteemed offers a complete modernization path: use <Link href="/products/create" className="text-blue-600 hover:underline">Esteemed Create</Link> to rebuild your site with AI assistance, then deploy to <Link href="/products/cloud" className="text-blue-600 hover:underline">Esteemed Cloud</Link> for modern hosting with built-in security and performance optimization.
+            Legacy websites built on outdated CMS platforms, custom PHP, or aging frameworks are expensive to maintain, slow to update, and vulnerable to security issues. Esteemed offers a complete modernization path: use <Link href="/websites/website-builder" className="text-blue-600 hover:underline">Esteemed Create</Link> to rebuild your site with AI assistance, then deploy to <Link href="/products/cloud" className="text-blue-600 hover:underline">Esteemed Cloud</Link> for modern hosting with built-in security and performance optimization.
           </p>
           <p>
             For complex migrations involving custom integrations, data migration, or multi-site architectures, <Link href="/products/colleagues" className="text-blue-600 hover:underline">Esteemed Colleagues</Link> provides experienced developers who specialize in platform migrations. Whether you are moving from Drupal, WordPress, or a custom-built system, our network includes specialists who have done it hundreds of times.
