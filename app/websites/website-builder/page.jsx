@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
+import BuilderCards from "./BuilderCards";
 import { createPricingPlans } from "@/lib/product-page-pricing";
 import {
   MessageSquare,
@@ -106,6 +107,9 @@ export default function WebsiteBuilderPage() {
           </p>
         </div>
       </section>
+
+      {/* Builder visuals — cascading cards */}
+      <BuilderCards />
 
       {/* How it works */}
       <section className="py-20 border-t border-zinc-100">
