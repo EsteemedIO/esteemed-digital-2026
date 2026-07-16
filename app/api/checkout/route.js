@@ -182,6 +182,10 @@ export async function GET(request) {
     body.set("allow_promotion_codes", "true");
     body.set("metadata[lookup_keys]", items.map((item) => item.lookupKey).join(","));
 
+    if (hasRecurring) {
+      body.set("subscription_data[metadata][lookup_keys]", items.map((item) => item.lookupKey).join(","));
+    }
+
     items.forEach((item, index) => {
       body.set(`line_items[${index}][price]`, prices.get(item.lookupKey).id);
       body.set(`line_items[${index}][quantity]`, String(item.quantity));
