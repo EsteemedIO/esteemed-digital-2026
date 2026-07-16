@@ -131,14 +131,7 @@ function PricingCard({
         </div>
       </div>
 
-      <Link
-        href={href}
-        className="mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
-      >
-        {plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : ctaLabel || "Buy Now"}
-      </Link>
-
-      <ul className="mt-6 space-y-3">
+      <ul className="mt-6 flex-1 space-y-3">
         {(plan.features || []).map((feature) => {
           const featureText = typeof feature === "string" ? feature : feature.text;
           const featureLabel = typeof feature === "string" ? null : feature.label;
@@ -167,6 +160,13 @@ function PricingCard({
           );
         })}
       </ul>
+
+      <Link
+        href={href}
+        className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
+      >
+        {plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : ctaLabel || "Buy Now"}
+      </Link>
     </article>
   );
 }

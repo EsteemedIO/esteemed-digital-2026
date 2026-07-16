@@ -16,8 +16,8 @@ export default function TalentManagementPage() {
       <StickyAnchorNav />
 
       <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E4DBF0" }}>
-          <div>
+        <div className="mx-auto rounded-3xl px-6 md:pl-8 md:pr-14 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E4DBF0" }}>
+          <div className="md:order-2">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Talent Management
             </p>
@@ -48,15 +48,23 @@ export default function TalentManagementPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <HeroImageComposite
+          <div className="md:order-1"><HeroImageComposite
             src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-02/career-coaching-2.jpg.webp?itok=N4r8sLVV"
             alt="Talent management"
             variant="talent"
           />
+          </div>
         </div>
       </section>
 
-      <HireExpertFAQ />
+      <HireExpertFAQ items={[
+        { q: "What talent management services do you offer?", a: "Recruiting, candidate sourcing and screening, onboarding, workforce operations, and ongoing HR support — from contract roles to permanent hires." },
+        { q: "How large is your talent network?", a: "We source from a vetted network of 35,000+ professionals across technology, design, marketing, operations, and more." },
+        { q: "How quickly can you fill a role?", a: "Most contract placements are matched within 1–2 weeks. Permanent hires depend on the role but typically 3–6 weeks." },
+        { q: "Do you handle onboarding?", a: "Yes. We manage the full onboarding process including documentation, access setup, and first-week coordination." },
+        { q: "What types of engagement do you support?", a: "Contract, contract-to-hire, retainer, project-based, or permanent placement — whatever fits your business." },
+        { q: "Is there a fee if a placement doesn't work out?", a: "We stand behind our placements. Details on guarantees and replacement terms are covered during your consultation." },
+      ]} />
 
       <section className="bg-ink py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">

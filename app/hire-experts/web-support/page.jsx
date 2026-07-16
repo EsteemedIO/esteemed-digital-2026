@@ -31,8 +31,8 @@ export default function SupportPage() {
       <StickyAnchorNav />
       {/* Hero */}
       <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#DCEDE0" }}>
-          <div>
+        <div className="mx-auto rounded-3xl px-6 md:pl-8 md:pr-14 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#DCEDE0" }}>
+          <div className="md:order-2">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Web Support Plans
             </p>
@@ -63,11 +63,12 @@ export default function SupportPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <HeroImageComposite
+          <div className="md:order-1"><HeroImageComposite
             src="https://esteemed.io/sites/default/files/styles/global_webp/public/2024-11/hero-pers-1.png.webp?itok=qSVYTgE6"
             alt="Web support"
             variant="support"
           />
+          </div>
         </div>
       </section>
 
@@ -176,7 +177,14 @@ export default function SupportPage() {
         </div>
       </section>
 
-      <HireExpertFAQ />
+      <HireExpertFAQ items={[
+        { q: "What does a support plan include?", a: "Monthly hours with our expert team for bug fixes, content updates, performance improvements, security patches, and technical guidance." },
+        { q: "Can I use support hours on a site you didn't build?", a: "Absolutely. Support plans work on any website or app — WordPress, Shopify, Drupal, custom builds, or legacy platforms." },
+        { q: "How do I submit a request?", a: "Send requests via email, chat, or your dashboard. We triage and scope the work, then get started — usually within one business day." },
+        { q: "Do unused hours roll over?", a: "Hours don't roll over month to month, but you can adjust your plan at any time to match your needs." },
+        { q: "Is there a long-term contract?", a: "No. Support plans run month-to-month. Cancel or change your plan anytime." },
+        { q: "What if I need more hours than my plan includes?", a: "Additional hours are available at your plan's rate. We'll always scope extra work before it begins — no surprise bills." },
+      ]} />
 
       {/* Bottom CTA */}
       <section className="bg-ink py-20">

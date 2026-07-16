@@ -16,8 +16,8 @@ export default function ContentProductionPage() {
       <StickyAnchorNav />
 
       <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#FFF8D6" }}>
-          <div>
+        <div className="mx-auto rounded-3xl px-6 md:pl-8 md:pr-14 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#FFF8D6" }}>
+          <div className="md:order-2">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Content Production
             </p>
@@ -48,15 +48,23 @@ export default function ContentProductionPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <HeroImageComposite
+          <div className="md:order-1"><HeroImageComposite
             src="https://esteemed.io/sites/default/files/styles/global_webp/public/2024-12/man-in-virtual-office.png.webp?itok=00vbLWjw"
             alt="Content production"
             variant="content"
           />
+          </div>
         </div>
       </section>
 
-      <HireExpertFAQ />
+      <HireExpertFAQ items={[
+        { q: "What kind of content do you produce?", a: "Blog posts, landing pages, email campaigns, social media content, case studies, whitepapers, and launch copy — whatever your business needs." },
+        { q: "How does AI-assisted production work?", a: "Our writers use AI to draft faster, then edit and refine every piece by hand. You get the speed of AI with the quality of a human editor." },
+        { q: "Can you match our brand voice?", a: "Yes. We study your existing content, brand guidelines, and audience to deliver on-brand copy every time." },
+        { q: "What's the typical turnaround?", a: "Blog posts and landing pages are usually delivered within 5–7 business days. Larger projects are scoped with clear milestones." },
+        { q: "Do I get revisions?", a: "Every project includes a revision round. We work with your feedback until you're happy with the result." },
+        { q: "How do I get started?", a: "Call (360) 701-7353 or schedule a free consultation. We'll scope the work and give you a clear quote before anything begins." },
+      ]} />
 
       <section className="bg-ink py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">

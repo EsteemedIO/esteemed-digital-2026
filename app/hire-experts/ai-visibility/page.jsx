@@ -16,8 +16,8 @@ export default function AIVisibilityPage() {
       <StickyAnchorNav />
 
       <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#DCEDE0" }}>
-          <div>
+        <div className="mx-auto rounded-3xl px-6 md:pl-8 md:pr-14 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#DCEDE0" }}>
+          <div className="md:order-2">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               AI Visibility
             </p>
@@ -48,15 +48,23 @@ export default function AIVisibilityPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <HeroImageComposite
+          <div className="md:order-1"><HeroImageComposite
             src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-02/woman-working-airport.jpg.webp?itok=mIzdt2yL"
             alt="AI visibility"
             variant="ai"
           />
+          </div>
         </div>
       </section>
 
-      <HireExpertFAQ />
+      <HireExpertFAQ items={[
+        { q: "What is AI visibility?", a: "AI visibility ensures your business shows up when people search using AI assistants like ChatGPT, Gemini, Perplexity, and AI-powered search features in Google and Bing." },
+        { q: "How is this different from traditional SEO?", a: "Traditional SEO optimizes for search engine rankings. AI visibility optimizes for how AI models understand, cite, and recommend your business in conversational responses." },
+        { q: "What do you actually do?", a: "We audit your digital presence for AI readability, implement structured data and schema markup, optimize content for machine understanding, and monitor your AI search presence." },
+        { q: "How do I know if it's working?", a: "We track your brand's appearance in AI-generated responses and provide regular reports on discoverability improvements." },
+        { q: "Is this relevant for my business?", a: "If your customers use search — and increasingly AI search — to find services like yours, then yes. AI visibility is becoming essential for every business with an online presence." },
+        { q: "How do I get started?", a: "Call (360) 701-7353 for a free consultation. We'll audit your current AI visibility and recommend next steps." },
+      ]} />
 
       <section className="bg-ink py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">

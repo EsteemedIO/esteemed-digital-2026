@@ -16,8 +16,8 @@ export default function SearchEngineMarketingPage() {
       <StickyAnchorNav />
 
       <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E0E9F2" }}>
-          <div>
+        <div className="mx-auto rounded-3xl px-6 md:pl-8 md:pr-14 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E0E9F2" }}>
+          <div className="md:order-2">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Search Engine Marketing
             </p>
@@ -48,15 +48,23 @@ export default function SearchEngineMarketingPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <HeroImageComposite
+          <div className="md:order-1"><HeroImageComposite
             src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-02/jobseeker.jpg.webp?itok=J_ACSAFw"
             alt="Search engine marketing"
             variant="marketing"
           />
+          </div>
         </div>
       </section>
 
-      <HireExpertFAQ />
+      <HireExpertFAQ items={[
+        { q: "What SEM services do you offer?", a: "Google Ads setup, campaign management, keyword research, bid optimization, landing page design, A/B testing, and transparent performance reporting." },
+        { q: "How much should I budget for ads?", a: "Ad spend depends on your industry and goals. We'll recommend a budget during your free consultation and help you maximize return on every dollar." },
+        { q: "How soon will I see results?", a: "Most campaigns start generating traffic within days. Optimization for conversions typically shows meaningful improvement within 4–6 weeks." },
+        { q: "Do you manage the ads or just set them up?", a: "We manage everything — ongoing optimization, bid adjustments, negative keywords, and reporting. You focus on your business." },
+        { q: "Can you build landing pages for my campaigns?", a: "Yes. We design and build conversion-optimized landing pages as part of your SEM engagement." },
+        { q: "How do I track what's working?", a: "You get transparent, regular reporting with clear metrics — clicks, conversions, cost per acquisition, and ROI." },
+      ]} />
 
       <section className="bg-ink py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">

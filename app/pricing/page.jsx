@@ -14,6 +14,7 @@ import {
   RefreshCw,
   Server,
   ShieldCheck,
+  ShoppingCart,
   Sparkles,
   Users,
   WandSparkles,
@@ -23,6 +24,7 @@ import ProductIcon from "@/components/ProductIcon";
 const categories = [
   { id: "websites", label: "Websites", icon: "window", sub: "Get a website - build it yourself, or have us build it for you." },
   { id: "hosting", label: "Hosting", icon: "cloud", sub: "Fast, managed hosting on Esteemed Cloud. SSL and AI contact form included - and it never doubles at renewal." },
+  { id: "ecommerce", label: "Ecommerce", icon: "cart", sub: "Open source commerce on WooCommerce, Drupal Commerce, or Esteemed Commerce powered by Medusa. 0% platform fees." },
   { id: "content", label: "Content Management", icon: "pen", sub: "Run your content on Esteemed - our AI-native CMS, or your own platform managed by us." },
   { id: "hiring", label: "Hiring & Outreach", icon: "briefcase", sub: "AI-native CRM and ATS, priced per actual user - not company headcount. The AI tier is published, not gated behind a sales call." },
   { id: "ai", label: "AI Add-ons", icon: "sparkles", sub: "Deepen any plan with retrieval, memory, and agents. Attach to anything you already run." },
@@ -113,6 +115,46 @@ const catalog = {
     ],
     note:
       "Esteemed Create includes hosting at publish - Create customers don't separately buy Cloud. Standalone Hosting is for bring-your-own or non-Create sites.",
+  },
+  ecommerce: {
+    cards: [
+      {
+        icon: "cart",
+        name: "WooCommerce",
+        badge: "Most popular",
+        pills: ["WordPress", "Open source"],
+        blurb:
+          "The world's most popular ecommerce platform, built on WordPress. Thousands of extensions, full data ownership, and a massive developer ecosystem. Custom implementation by our experts.",
+        anchor: "Custom implementation · 0% platform fee",
+        cta: "See Plans",
+        href: "/websites/ecommerce#plans",
+        primary: true,
+      },
+      {
+        icon: "cart",
+        name: "Drupal Commerce",
+        badge: "Enterprise",
+        pills: ["Drupal", "Open source"],
+        blurb:
+          "Enterprise-grade commerce for organizations that need complex catalogs, multi-language, multi-currency, and deeply customized checkout flows. Built on Drupal by our specialists.",
+        anchor: "Custom implementation · 0% platform fee",
+        cta: "See Plans",
+        href: "/websites/ecommerce#plans",
+      },
+      {
+        icon: "cart",
+        name: "Esteemed Commerce",
+        badge: "From $29/mo",
+        pills: ["Medusa", "Headless", "Node.js"],
+        blurb:
+          "Our implementation of Medusa — the open source headless commerce engine. API-first, fully decoupled, and designed for modern storefronts. Pricing mirrors Medusa Cloud with 0% GMV fee.",
+        anchor: "From $29/mo · 0% platform fee",
+        cta: "See Plans",
+        href: "/websites/ecommerce#plans",
+      },
+    ],
+    note:
+      "All platforms are open source with 0% GMV platform fees. Esteemed Commerce plans mirror Medusa Cloud pricing. WooCommerce and Drupal Commerce are scoped as custom implementations.",
   },
   hiring: {
     cards: [
@@ -352,6 +394,7 @@ const fallbackIcons = {
   server: Server,
   users: Users,
   support: Headphones,
+  cart: ShoppingCart,
 };
 
 const officialIcons = new Set(["acquire", "hire", "create", "curate", "connect", "intelligence", "assist", "support", "cloud"]);

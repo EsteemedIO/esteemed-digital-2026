@@ -85,8 +85,8 @@ export default function WebsiteDesignPage() {
 
       {/* Hero — split layout */}
       <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E0E9F2" }}>
-          <div>
+        <div className="mx-auto rounded-3xl px-6 md:pl-8 md:pr-14 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E0E9F2" }}>
+          <div className="md:order-2">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Website Design Services
             </p>
@@ -117,12 +117,13 @@ export default function WebsiteDesignPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <HeroImageComposite
+          <div className="md:order-1"><HeroImageComposite
             src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/team-women.jpg.webp?itok=UlmXLT1n"
             alt="Esteemed design experts collaborating"
             variant="design"
             objectPosition="center top"
           />
+          </div>
         </div>
       </section>
 
@@ -298,7 +299,15 @@ export default function WebsiteDesignPage() {
       </section>
 
       {/* FAQ */}
-      <HireExpertFAQ />
+      <HireExpertFAQ items={[
+        { q: "How much does a custom website cost?", a: "Website Design Services start at $499 for a 4-page site. Larger projects are scoped and quoted during your free consultation — no surprises." },
+        { q: "How long does it take to build a website?", a: "Most standard websites go live within 2–4 weeks of your kickoff consultation, depending on content and feedback turnaround." },
+        { q: "Do I need to provide content and images?", a: "We can work with what you have or create everything from scratch — copy, photography, and branding. We'll discuss options during your consultation." },
+        { q: "Will my website be mobile-friendly?", a: "Every website we build is fully responsive and tested across desktop, tablet, and mobile devices." },
+        { q: "Can I update the website myself after launch?", a: "Yes. We build on platforms you can manage yourself, and we offer support plans if you'd rather have our team handle updates." },
+        { q: "Do you offer hosting?", a: "Yes. Esteemed Cloud hosting is included with paid plans — SSL, daily backups, monitoring, and a global CDN. No separate hosting provider needed." },
+        { q: "What if I already have a website?", a: "We can rebuild it from scratch on our platform, migrate it, or simply host and maintain your current site as-is." },
+      ]} />
 
       {/* Offer band — dark CTA */}
       <section className="px-6">

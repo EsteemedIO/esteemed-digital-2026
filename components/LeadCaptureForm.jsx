@@ -5,17 +5,14 @@ import { useRouter } from "next/navigation";
 import { Button, Input, Select, SelectItem, Textarea } from "@heroui/react";
 
 const interestOptions = [
-  { key: "create", label: "Create" },
-  { key: "cloud-hosting", label: "Cloud hosting" },
-  { key: "curate", label: "Curate" },
-  { key: "acquire", label: "Acquire" },
-  { key: "hire", label: "Hire" },
-  { key: "intelligence", label: "Intelligence" },
-  { key: "agents", label: "Agents" },
-  { key: "colleagues", label: "Colleagues" },
-  { key: "support", label: "Support" },
-  { key: "website-design", label: "Website design" },
-  { key: "local-consult", label: "Local consult" },
+  { key: "hosting", label: "Hosting" },
+  { key: "ecommerce", label: "Ecommerce" },
+  { key: "website-design", label: "Website Design" },
+  { key: "hire-experts", label: "Hire Experts" },
+  { key: "ai-intelligence", label: "AI / Business Intelligence" },
+  { key: "cms", label: "CMS" },
+  { key: "crm", label: "CRM" },
+  { key: "ats", label: "ATS" },
 ];
 
 const interestLabels = Object.fromEntries(interestOptions.map((option) => [option.key, option.label]));
@@ -24,7 +21,7 @@ const variants = {
   contact: {
     formId: "contact",
     source: "contact-form",
-    title: "Get in touch.",
+    title: "Talk to us.",
     description: "Tell us about your project or ask us anything. A real person responds within one business day.",
     submitLabel: "Send",
     defaultInterests: [],
@@ -57,6 +54,7 @@ const selectClassNames = {
   label: "text-sm font-bold text-zinc-700",
   trigger: "min-h-14 rounded-xl border border-zinc-200 bg-white px-4 shadow-none data-[hover=true]:border-zinc-400 data-[focus=true]:border-zinc-500",
   value: "text-base font-semibold text-ink",
+  selectorIcon: "text-zinc-400 w-5 h-5",
   popoverContent: "z-[100] rounded-xl border border-zinc-200 bg-white shadow-xl",
   listbox: "p-2",
 };
@@ -77,10 +75,14 @@ export default function LeadCaptureForm({
   compact = false,
   context = {},
   onSubmittedPath = "",
+  preselectedInterests = [],
 }) {
   const router = useRouter();
   const config = variants[variant] || variants.contact;
-  const initialInterests = useMemo(() => new Set(config.defaultInterests || []), [config.defaultInterests]);
+  const initialInterests = useMemo(() => {
+    const defaults = config.defaultInterests || [];
+    return new Set([...defaults, ...preselectedInterests]);
+  }, [config.defaultInterests, preselectedInterests]);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -247,6 +249,7 @@ export default function LeadCaptureForm({
           placeholder="Select one or more"
           selectionMode="multiple"
           variant="bordered"
+          disableSelectorIconRotation={false}
           selectedKeys={interests}
           onSelectionChange={(keys) => {
             setInterests(keys === "all" ? new Set(interestOptions.map((option) => option.key)) : new Set(keys));

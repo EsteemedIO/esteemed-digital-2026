@@ -12,7 +12,7 @@ import { productIconPaths } from "@/lib/pricing-catalog";
 const websitesGroup = [
   { key: "create", name: "AI Website Builder", href: "/websites/website-builder", desc: "Build and edit websites with AI, then publish to Cloud." },
   { key: "cloud", name: "Website Hosting", href: "/websites/hosting", desc: "Managed hosting for WordPress, Drupal, and modern JavaScript." },
-  { key: "ecommerce", name: "Ecommerce", href: "/websites/ecommerce", desc: "Stores, checkout flows, subscriptions, and payment setup." },
+  { key: "ecommerce", name: "Ecommerce", href: "/websites/ecommerce", desc: "Open source commerce on WooCommerce, Drupal Commerce, or Medusa." },
 ];
 
 const businessToolsGroup = [
@@ -76,7 +76,7 @@ const resourceItems = [
 
 const communityItems = [
   { key: "events", name: "Events", href: "/resources/events", desc: "Webinars, demos, workshops, and community sessions." },
-  { key: "discord", name: "Discord", href: "https://discord.gg/esteemed", external: true, desc: "Join the Esteemed community and product conversations." },
+  { key: "discord", name: "Discord", href: "https://discord.gg/Zz89rBrbXV", external: true, desc: "Join the Esteemed community and product conversations." },
 ];
 
 const resourceFeatured = [
@@ -185,13 +185,18 @@ function SectionHeading({ children }) {
 }
 
 /* Menu link */
-function MegaMenuLink({ href, children, desc, onClick, external, icon }) {
+function MegaMenuLink({ href, children, desc, onClick, external, icon, iconSrc }) {
   const props = external ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
   const Tag = external ? "a" : Link;
   return (
     <Tag {...props} onClick={onClick} className="group flex items-start justify-between py-3 px-3 -mx-3 rounded-lg border border-transparent hover:border-[#282828] transition-all">
       <div className="flex min-w-0 items-start gap-4">
-        {icon && <ProductIcon product={icon} className="mt-0.5 h-10 w-10 flex-shrink-0" />}
+        {iconSrc ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={iconSrc} alt="" className="mt-0.5 h-10 w-10 flex-shrink-0 rounded-lg bg-ink p-1.5" style={{ filter: "brightness(0) invert(1)" }} />
+        ) : icon ? (
+          <ProductIcon product={icon} className="mt-0.5 h-10 w-10 flex-shrink-0" />
+        ) : null}
         <div className="min-w-0">
           <span className="block text-[1rem] font-semibold leading-5 text-[#282828] group-hover:font-bold">
             {children}
@@ -330,7 +335,7 @@ export default function Navbar() {
                 <div>
                   <SectionHeading>Websites</SectionHeading>
                   {websitesGroup.map((item) => (
-                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu} external={item.external} icon={item.key}>{item.name}</MegaMenuLink>
+                    <MegaMenuLink key={item.key} href={item.href} desc={item.desc} onClick={closeMenu} external={item.external} icon={item.iconSrc ? undefined : item.key} iconSrc={item.iconSrc}>{item.name}</MegaMenuLink>
                   ))}
                 </div>
                 <div>

@@ -16,8 +16,8 @@ export default function ContentStrategyPage() {
       <StickyAnchorNav />
 
       <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E4DBF0" }}>
-          <div>
+        <div className="mx-auto rounded-3xl px-6 md:pl-8 md:pr-14 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E4DBF0" }}>
+          <div className="md:order-2">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Content Strategy
             </p>
@@ -48,15 +48,23 @@ export default function ContentStrategyPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <HeroImageComposite
+          <div className="md:order-1"><HeroImageComposite
             src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-02/woman-career-sessions.jpg.webp?itok=C4t3Gs55"
             alt="Content strategy session"
             variant="content"
           />
+          </div>
         </div>
       </section>
 
-      <HireExpertFAQ />
+      <HireExpertFAQ items={[
+        { q: "What's included in a content strategy engagement?", a: "Audience research, messaging frameworks, editorial calendars, content audits, and a conversion-focused content plan tailored to your business goals." },
+        { q: "How is this different from content production?", a: "Strategy defines what to say, to whom, and when. Production creates the actual assets. Many clients start with strategy, then move to production — or do both together." },
+        { q: "How long does a content strategy project take?", a: "A typical engagement runs 3–6 weeks depending on scope. We deliver a complete, actionable plan you can execute in-house or with our production team." },
+        { q: "Do you help with SEO as part of content strategy?", a: "Yes. Keyword research, topic clustering, and search intent mapping are core parts of every content strategy we build." },
+        { q: "Can you work with our existing brand guidelines?", a: "Absolutely. We build on your existing brand voice, style guides, and positioning — or help you define them if you're starting fresh." },
+        { q: "What does it cost?", a: "Every engagement is scoped during a free consultation. We'll give you a clear quote before any work begins." },
+      ]} />
 
       <section className="bg-ink py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">

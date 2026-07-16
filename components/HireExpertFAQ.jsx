@@ -56,7 +56,8 @@ function FAQItem({ faq }) {
   );
 }
 
-export default function HireExpertFAQ() {
+export default function HireExpertFAQ({ items }) {
+  const list = items || faqs;
   return (
     <section className="py-20 border-t border-zinc-100">
       <div className="max-w-3xl mx-auto px-6">
@@ -64,7 +65,7 @@ export default function HireExpertFAQ() {
           Frequently asked questions
         </h2>
         <div>
-          {faqs.map((faq) => (
+          {list.map((faq) => (
             <FAQItem key={faq.q} faq={faq} />
           ))}
         </div>

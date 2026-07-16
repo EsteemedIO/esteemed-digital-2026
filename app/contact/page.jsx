@@ -7,12 +7,15 @@ import LeadCaptureForm, { getLeadFormVariant } from "@/components/LeadCaptureFor
 function ContactContent() {
   const searchParams = useSearchParams();
   const variant = getLeadFormVariant(searchParams.get("intent"));
+  const interest = searchParams.get("interest");
+  const preselected = interest ? [interest] : [];
 
   return (
     <>
       <section className="py-24 md:py-28">
         <LeadCaptureForm
           variant={variant}
+          preselectedInterests={preselected}
           context={{
             page: "/contact",
             intent: searchParams.get("intent") || "contact",
