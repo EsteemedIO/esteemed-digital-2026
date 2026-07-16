@@ -30,7 +30,7 @@ export default function HRTeamsPage() {
             Beyond sourcing, Esteemed streamlines the entire hiring workflow -- from job posting and candidate screening to onboarding and payroll for contingent workers. Our platform handles the compliance, contracts, and payments so your team can focus on culture fit and strategic workforce planning.
           </p>
           <p>
-            Whether you need to fill a single role or staff an entire project team, Esteemed scales with your needs. Contract, contract-to-hire, or direct placement -- we support every engagement model. And with <Link href="/services/support" className="text-blue-600 hover:underline">Esteemed Support</Link>, you get a dedicated team to help manage the relationship from start to finish.
+            Whether you need to fill a single role or staff an entire project team, Esteemed scales with your needs. Contract, contract-to-hire, or direct placement -- we support every engagement model. And with <Link href="/hire-experts/web-support" className="text-blue-600 hover:underline">Esteemed Support</Link>, you get a dedicated team to help manage the relationship from start to finish.
           </p>
         </div>
       </section>

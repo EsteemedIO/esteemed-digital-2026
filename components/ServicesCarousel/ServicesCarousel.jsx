@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { Pause, Play } from "lucide-react";
 import "./ServicesCarousel.css";
 
 function Icon({ name, size = 20, stroke = 1.75 }) {
@@ -169,12 +170,14 @@ function Mock({ type }) {
   return null;
 }
 
-export default function ServicesCarousel({ capabilities, title, subtitle }) {
+export default function ServicesCarousel({ capabilities, title, subtitle, autoplayInterval = 5000 }) {
   const N = capabilities.length;
   const items = [...capabilities, ...capabilities, ...capabilities];
   const [pos, setPos] = useState(N);
   const [tx, setTx] = useState(0);
   const [anim, setAnim] = useState(true);
+  const [paused, setPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
   const wrapRef = useRef(null);
   const trackRef = useRef(null);
   const active = ((pos % N) + N) % N;
@@ -195,8 +198,27 @@ export default function ServicesCarousel({ capabilities, title, subtitle }) {
     return () => { window.removeEventListener("resize", recalc); clearTimeout(id); };
   }, [recalc]);
 
-  const go = (d) => { setAnim(true); setPos(p => p + d); };
-  const toTab = (i) => { setAnim(true); setPos(p => p - (((p % N) + N) % N) + i); };
+  // Autoplay
+  useEffect(() => {
+    if (paused) return;
+    setProgress(0);
+    const step = 50;
+    const interval = setInterval(() => {
+      setProgress((p) => {
+        const next = p + (step / autoplayInterval) * 100;
+        if (next >= 100) {
+          setAnim(true);
+          setPos((prev) => prev + 1);
+          return 0;
+        }
+        return next;
+      });
+    }, step);
+    return () => clearInterval(interval);
+  }, [paused, active, autoplayInterval]);
+
+  const go = (d) => { setAnim(true); setPos(p => p + d); setProgress(0); };
+  const toTab = (i) => { setAnim(true); setPos(p => p - (((p % N) + N) % N) + i); setProgress(0); };
   const onEnd = () => {
     if (pos < N || pos >= 2 * N) { setAnim(false); setPos(N + active); }
   };
@@ -206,11 +228,6 @@ export default function ServicesCarousel({ capabilities, title, subtitle }) {
       <div className="sc-container" style={{ textAlign: "center" }}>
         <h2 className="sc-title">{title || "Everything your site needs to grow."}</h2>
         <p className="sc-sub">{subtitle || "Built-in tools that come with your Cloud site."}</p>
-        <div className="sc-tabs">
-          {capabilities.map((c, i) => (
-            <button key={i} className={`sc-tab${i === active ? " on" : ""}`} onClick={() => toTab(i)}>{c.title}</button>
-          ))}
-        </div>
       </div>
       <div className="sc-viewport" ref={wrapRef}>
         <div className="sc-track" ref={trackRef} onTransitionEnd={onEnd} style={{ transform: `translateX(${tx}px)`, transition: anim ? undefined : "none" }}>
@@ -230,11 +247,41 @@ export default function ServicesCarousel({ capabilities, title, subtitle }) {
           ))}
         </div>
       </div>
-      <div className="sc-container" style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
-        <div className="sc-arrows">
-          <button onClick={() => go(-1)} aria-label="Previous"><Icon name="arrowLeft" size={20} stroke={2} /></button>
-          <button onClick={() => go(1)} aria-label="Next"><Icon name="arrow" size={20} stroke={2} /></button>
+      <div className="sc-container" style={{ display: "flex", justifyContent: "center", alignItems: "end", gap: 10, marginTop: 32 }}>
+        <div style={{ display: "flex", gap: 16 }}>
+          {capabilities.map((c, i) => (
+            <button
+              key={i}
+              onClick={() => toTab(i)}
+              aria-label={`Go to ${c.title}`}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, cursor: "pointer", background: "none", border: "none", padding: 0 }}
+            >
+              <span style={{ fontSize: 12, fontWeight: 600, color: i === active ? "#1A1A1A" : "rgba(26,26,26,0.4)", transition: "color 0.2s" }}>
+                {c.title}
+              </span>
+              <div style={{ width: 80, height: 3, borderRadius: 3, background: "rgba(26,26,26,0.12)", overflow: "hidden" }}>
+                <div style={{
+                  height: "100%", borderRadius: 3, background: "#1A1A1A",
+                  width: i === active ? `${progress}%` : i < active ? "100%" : "0%",
+                  transition: "width 50ms linear",
+                }} />
+              </div>
+            </button>
+          ))}
         </div>
+        <button
+          onClick={() => setPaused((p) => !p)}
+          aria-label={paused ? "Play" : "Pause"}
+          className="group/pause"
+          style={{ width: 28, height: 28, borderRadius: 999, border: "none", background: "rgba(26,26,26,0.1)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: -2, transition: "background 0.2s" }}
+          onMouseEnter={(e) => e.currentTarget.style.background = "#FFFFFF"}
+          onMouseLeave={(e) => e.currentTarget.style.background = "rgba(26,26,26,0.1)"}
+        >
+          {paused
+            ? <Play className="h-3 w-3" style={{ color: "rgba(26,26,26,0.4)" }} />
+            : <Pause className="h-3 w-3" style={{ color: "rgba(26,26,26,0.4)" }} />
+          }
+        </button>
       </div>
     </section>
   );

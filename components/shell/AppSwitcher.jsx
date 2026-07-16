@@ -133,8 +133,8 @@ const apps = [
   { key: "agents", name: "Agents", sublabel: "Intelligent Agents", icon: AgentsTileIcon, href: "/products/agents" },
   { key: "connect", name: "Connect", sublabel: "Retrieval", icon: ConnectTileIcon, href: "/products/connect" },
   { key: "curate", name: "Curate", sublabel: "CMS \u00b7 DAM", icon: CurateTileIcon, href: "/products/curate" },
-  { key: "support", name: "Support", sublabel: "Expert Assistance", icon: SupportTileIcon, href: "/services/support" },
-  { key: "cloud", name: "Cloud", sublabel: "Integrated Hosting", icon: CloudTileIcon, href: "/products/cloud" },
+  { key: "support", name: "Support", sublabel: "Expert Assistance", icon: SupportTileIcon, href: "/hire-experts/web-support" },
+  { key: "cloud", name: "Cloud", sublabel: "Integrated Hosting", icon: CloudTileIcon, href: "/websites/hosting" },
 ];
 
 /* ------------------------------------------------------------------ */

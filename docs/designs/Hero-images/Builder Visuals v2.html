@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Esteemed — Builder Visuals v2 (Hi-Fi Pastel)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  html, body { margin: 0; padding: 0; background: #F4F4F2; font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif; color: #282828; }
+  * { box-sizing: border-box; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="visuals-v2.jsx"></script>
+<script type="text/babel" src="prompt-animated.jsx"></script>
+<script type="text/babel" src="hero-blocks.jsx"></script>
+
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard, PromptToSiteAnimated, HeroBlock, HeroBlockB } = window;
+
+const CARD_W = 1000;
+const CARD_H = 460;
+
+/* Pastel card tones — paler than v1, in the spirit of GoDaddy + Alpaca-with-more-white */
+const CardV2 = ({ tone, label, body, cta, visual }) => {
+  const tones = {
+    butter: { bg: '#FFF4B8', text: '#282828', sub: 'rgba(40,40,40,0.65)', btnBg: '#282828', btnFg: '#FFFFFF' },
+    sky:    { bg: '#E0E9F2', text: '#282828', sub: 'rgba(40,40,40,0.65)', btnBg: '#282828', btnFg: '#FFFFFF' },
+    lilac:  { bg: '#E4DBF0', text: '#282828', sub: 'rgba(40,40,40,0.65)', btnBg: '#282828', btnFg: '#FFFFFF' },
+    mint:   { bg: '#DCEDE0', text: '#282828', sub: 'rgba(40,40,40,0.65)', btnBg: '#282828', btnFg: '#FFFFFF' },
+    blush:  { bg: '#F8DAD0', text: '#282828', sub: 'rgba(40,40,40,0.65)', btnBg: '#282828', btnFg: '#FFFFFF' },
+  };
+  const t = tones[tone] || tones.butter;
+  return (
+    <div style={{
+      width: CARD_W, height: CARD_H,
+      background: t.bg,
+      borderRadius: 18,
+      overflow: 'hidden',
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      boxShadow: '0 24px 50px -20px rgba(26,26,26,0.18)',
+    }}>
+      <div style={{
+        padding: '52px 56px',
+        display: 'flex', flexDirection: 'column',
+        justifyContent: 'space-between',
+        color: t.text,
+      }}>
+        <div style={{
+          fontSize: 13, letterSpacing: 2, fontWeight: 600,
+          color: t.sub, textTransform: 'uppercase',
+        }}>{label}</div>
+        <div>
+          <h2 style={{
+            fontSize: 56, fontWeight: 700, letterSpacing: -1.5,
+            margin: '0 0 18px', lineHeight: 1.05,
+          }}>{body.title}</h2>
+          <p style={{
+            margin: '0 0 26px', fontSize: 16, lineHeight: 1.5,
+            color: t.sub, maxWidth: 380,
+          }}>{body.copy}</p>
+          {cta && (
+            <button style={{
+              border: 'none', cursor: 'pointer',
+              background: t.btnBg, color: t.btnFg,
+              padding: '12px 22px', borderRadius: 24,
+              fontSize: 14, fontWeight: 600,
+              fontFamily: 'inherit',
+            }}>{cta}</button>
+          )}
+        </div>
+      </div>
+      <div style={{ position: 'relative' }}>{visual}</div>
+    </div>
+  );
+};
+
+function App() {
+  return (
+    <DesignCanvas title="Esteemed — Builder Visuals v2" subtitle="Hi-fi · pastel palette · realistic site mocks (sibling to v1, not a replacement)">
+      <DCSection id="cards-v2" title="Hi-fi pastel cards">
+        <DCArtboard id="v2-1" label="01 — Create (Butter pastel)" width={CARD_W} height={CARD_H}>
+          <CardV2
+            tone="butter"
+            label="Create"
+            body={{
+              title: 'Describe.',
+              copy: 'Tell our AI what you need. It drafts a real, brand-aware site in seconds — copy, layout, photography and all.',
+            }}
+            cta="Try a prompt →"
+            visual={<PromptToSiteV2 />}
+          />
+        </DCArtboard>
+
+        <DCArtboard id="v2-2" label="02 — Customize (Sky pastel)" width={CARD_W} height={CARD_H}>
+          <CardV2
+            tone="sky"
+            label="Customize"
+            body={{
+              title: 'Refine.',
+              copy: 'Tailor your site by chatting with the agent — no templates to fight.',
+            }}
+            cta="See the editor →"
+            visual={<DragAndDropV2 />}
+          />
+        </DCArtboard>
+
+        <DCArtboard id="v2-3" label="03 — Manage (Lilac pastel)" width={CARD_W} height={CARD_H}>
+          <CardV2
+            tone="lilac"
+            label="Manage"
+            body={{
+              title: 'Ship.',
+              copy: 'You focus on the business, count on us for responsive design, hosting, daily backups, fast everywhere, all included.',
+            }}
+            cta="Watch it work →"
+            visual={<CascadingAgentV2 />}
+          />
+        </DCArtboard>
+
+        <DCArtboard id="v2-4" label="04 — Grow (Mint pastel)" width={CARD_W} height={CARD_H}>
+          <CardV2
+            tone="mint"
+            label="Grow"
+            body={{
+              title: 'Supported by humans.',
+              copy: 'You create it. Real experts from our 35,000-strong network help you grow it.',
+            }}
+            cta="Meet the network →"
+            visual={<MultiDeviceV2 />}
+          />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="heroes" title="Hero blocks (light grey)">
+        <DCArtboard id="hero-a" label="Hero — Esteemed Create (copy left · builder right)" width={1200} height={560}>
+          <HeroBlock />
+        </DCArtboard>
+        <DCArtboard id="hero-b" label="Hero — Online Store Builder (mock left · copy right)" width={1200} height={560}>
+          <HeroBlockB />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="standalone-v2" title="Standalone visuals (no card chrome)">
+        <DCArtboard id="s2-1" label="Prompt to site (animated)" width={500} height={CARD_H}>
+          <PromptToSiteAnimated />
+        </DCArtboard>
+        <DCArtboard id="s2-2" label="Drag-and-drop" width={500} height={CARD_H}>
+          <DragAndDropV2 />
+        </DCArtboard>
+        <DCArtboard id="s2-3" label="Agent at work" width={500} height={CARD_H}>
+          <CascadingAgentV2 />
+        </DCArtboard>
+        <DCArtboard id="s2-4" label="Multi-device" width={500} height={CARD_H}>
+          <MultiDeviceV2 />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="palette" title="Pastel palette swatches">
+        <DCArtboard id="pal" label="Pastel tones" width={1000} height={200}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', height: '100%', background: '#FFFFFF' }}>
+            {[
+              { name: 'Butter',  hex: '#FFF4B8' },
+              { name: 'Sky',     hex: '#E0E9F2' },
+              { name: 'Lilac',   hex: '#E4DBF0' },
+              { name: 'Mint',    hex: '#DCEDE0' },
+              { name: 'Blush',   hex: '#F8DAD0' },
+            ].map((s) => (
+              <div key={s.hex} style={{ background: s.hex, padding: 24, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                <div style={{ fontSize: 18, fontWeight: 700, letterSpacing: -0.5 }}>{s.name}</div>
+                <div style={{ fontSize: 12, fontFamily: 'ui-monospace, monospace', color: 'rgba(26,26,26,0.55)' }}>{s.hex}</div>
+              </div>
+            ))}
+          </div>
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

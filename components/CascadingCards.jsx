@@ -4,13 +4,13 @@ import { useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 
 const bgMap = {
-  butter: { bg: "#FEE546", text: "#282828" },
+  butter: { bg: "#FFF8D6", text: "#282828" },
   sky: { bg: "#E0E9F2", text: "#282828" },
   lilac: { bg: "#E4DBF0", text: "#282828" },
   mint: { bg: "#DCEDE0", text: "#282828" },
   ink: { bg: "#282828", text: "#FFFFFF" },
   grey: { bg: "#E6E7E8", text: "#282828" },
-  accent: { bg: "#FEE546", text: "#282828" },
+  accent: { bg: "#FFF8D6", text: "#282828" },
 };
 
 const ctaMap = {

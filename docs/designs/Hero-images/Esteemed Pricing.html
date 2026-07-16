@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Esteemed — Plans &amp; Pricing</title>
+  <link rel="icon" href="pricing/assets/icon-yellow-star.svg"/>
+  <link rel="stylesheet" href="pricing/esteemed-tokens.css"/>
+  <link rel="stylesheet" href="pricing/esteemed-shared.css"/>
+  <style>
+    html, body { margin: 0; padding: 0; background: var(--es-warm-50); }
+    .container { max-width: 1800px; margin: 0 auto; padding: 0 48px; }
+    .btn[disabled] { opacity: .5; cursor: not-allowed; }
+    .es-link { cursor: pointer; }
+
+    /* ---- Left rail (Alpaca style) ---- */
+    .rail { width: 248px; flex-shrink: 0; }
+    .rail-inner { position: sticky; top: 92px; }
+    .rail-nav { display: flex; flex-direction: column; gap: 2px; }
+    .rail-item {
+      display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+      border: none; cursor: pointer; border-radius: 10px; padding: 11px 12px;
+      background: transparent; color: var(--es-fg-2); font-size: 15px; font-weight: 500;
+      font-family: inherit; transition: background 130ms var(--es-ease-out), color 130ms;
+    }
+    .rail-item .rail-ico { color: var(--es-warm-500); display: inline-flex; transition: color 130ms; }
+    .rail-item .rail-label { flex: 1; }
+    .rail-item .rail-chev { color: var(--es-warm-400); display: inline-flex; opacity: 0; transform: translateX(-4px); transition: opacity 130ms, transform 130ms; }
+    .rail-item:hover .rail-chev { opacity: .6; transform: none; }
+    .rail-item.on .rail-chev { opacity: 1; transform: none; color: var(--es-ink-900); }
+    .rail-item:hover { background: var(--es-warm-100); }
+    .rail-item.on { background: var(--es-warm-100); color: var(--es-fg-1); font-weight: 700; }
+    .rail-item.on .rail-ico { color: var(--es-ink-900); }
+    .rail-help { margin-top: 22px; padding: 18px; background: var(--es-warm-100); border: 1px solid var(--es-border); border-radius: var(--es-radius-lg); }
+    .lead-card:hover { border-color: var(--es-border-strong); }
+
+    /* ---- Card grid (3-up, with wide featured span) ---- */
+    .cardgrid2 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+    .lead-card.wide { grid-column: span 2; }
+    @media (max-width: 1080px) {
+      .cardgrid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .lead-card.wide { grid-column: 1 / -1; }
+    }
+
+    /* ---- Responsive: rail -> horizontal tab strip ---- */
+    @media (max-width: 900px) {
+      .pane { flex-direction: column; gap: 24px !important; }
+      .rail { width: 100% !important; position: sticky; top: 72px; z-index: 20; background: var(--es-warm-50); margin: 0 -32px; padding: 8px 32px; border-bottom: 1px solid var(--es-border); }
+      .rail-inner { position: static; }
+      .rail-inner .es-eyebrow, .rail-help { display: none; }
+      .rail-nav { flex-direction: row; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+      .rail-nav::-webkit-scrollbar { display: none; }
+      .rail-item { width: auto; flex-shrink: 0; border: 1px solid var(--es-border); border-radius: 999px; padding: 9px 14px; background: #fff; }
+      .rail-item .rail-chev { display: none; }
+      .rail-item.on { background: var(--es-ink-900); color: #fff; }
+      .rail-item.on .rail-ico { color: var(--es-yellow-500); }
+    }
+    @media (max-width: 620px) {
+      .nav-links { display: none !important; }
+    }
+    @media (max-width: 760px) {
+      .cardgrid2 { grid-template-columns: 1fr !important; }
+      .lead-card.wide { flex-direction: column !important; }
+      .lead-card.wide .wide-right { order: -1; min-height: 220px; background-position: center top !important; }
+    }
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="pricing/pricing-data.jsx"></script>
+  <script type="text/babel" src="pricing/pricing-app.jsx"></script>
+</body>
+</html>

@@ -5,7 +5,7 @@ const columns = [
     title: "Products",
     links: [
       { name: "Create", href: "/websites/website-builder" },
-      { name: "Cloud", href: "/products/cloud" },
+      { name: "Cloud", href: "/websites/hosting" },
       { name: "Curate", href: "/products/curate" },
       { name: "Agents", href: "/products/agents" },
       { name: "Intelligence", href: "/products/intelligence" },
@@ -18,7 +18,7 @@ const columns = [
     title: "Services",
     links: [
       { name: "Colleagues", href: "/products/colleagues" },
-      { name: "Support", href: "/services/support" },
+      { name: "Support", href: "/hire-experts/web-support" },
     ],
   },
   {

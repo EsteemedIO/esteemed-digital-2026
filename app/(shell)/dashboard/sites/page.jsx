@@ -357,7 +357,7 @@ export default function SitesPage() {
                 >
                   New Site
                 </Button>
-                <Button as={Link} href="/products/cloud#plans" radius="sm" variant="bordered" className="border-es-border font-semibold text-es-fg-1">
+                <Button as={Link} href="/websites/hosting#plans" radius="sm" variant="bordered" className="border-es-border font-semibold text-es-fg-1">
                   Cloud Plans
                 </Button>
               </div>

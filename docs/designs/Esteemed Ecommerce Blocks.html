@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Esteemed — Ecommerce Page Blocks</title>
+<meta name="design_doc_mode" content="canvas" />
+<style>
+  html, body { margin: 0; background: #FAF7F2; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
+  .ec-frame { position: absolute; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(22,40,30,0.35); }
+  .ec-label { position: absolute; font-size: 13px; font-weight: 600; color: #6b6b63; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="ec-label" style="left: 40px; top: 24px;">Sell with Esteemed (banner) — 1200×480</div>
+  <div class="ec-frame" id="ec-sell" style="left: 40px; top: 52px; width: 1200px; height: 480px;"></div>
+
+  <div class="ec-label" style="left: 40px; top: 596px;">The most flexible ecommerce platform — 1200×560</div>
+  <div class="ec-frame" id="ec-flex" style="left: 40px; top: 624px; width: 1200px; height: 560px;"></div>
+
+  <div class="ec-label" style="left: 40px; top: 1248px;">The brands you love, love Esteemed — 1200×560</div>
+  <div class="ec-frame" id="ec-brands" style="left: 40px; top: 1276px; width: 1200px; height: 560px;"></div>
+
+  <script type="text/babel" src="ecommerce-blocks.jsx"></script>
+  <script type="text/babel">
+    const { SellBanner, FlexiblePlatform, BrandsRail } = window;
+    ReactDOM.createRoot(document.getElementById('ec-sell')).render(<SellBanner />);
+    ReactDOM.createRoot(document.getElementById('ec-flex')).render(<FlexiblePlatform />);
+    ReactDOM.createRoot(document.getElementById('ec-brands')).render(<BrandsRail />);
+  </script>
+</body>
+</html>

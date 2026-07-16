@@ -1,8 +1,8 @@
 import Link from "next/link";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
-import ProductIcon from "@/components/ProductIcon";
 import BuilderCards from "./BuilderCards";
 import { createPricingPlans } from "@/lib/product-page-pricing";
+import PromptToSiteAnimated from "@/components/builder-visuals/PromptToSiteAnimated";
 import {
   MessageSquare,
   Eye,
@@ -48,24 +48,24 @@ export default function WebsiteBuilderPage() {
   return (
     <div className="min-h-screen">
       {/* Hero — split layout */}
-      <section className="bg-white">
-        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+      <section style={{ padding: "20px 20px 30px" }}>
+        <div className="mx-auto bg-zinc-100 rounded-3xl pl-8 md:pl-14 pr-8 py-8 grid md:grid-cols-2 gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, maxHeight: 640 }}>
           <div>
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
-              AI Website Builder
+              Esteemed Website Builder
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ink leading-tight mb-6">
               Build your website
               <br />
-              <span className="text-zinc-400">by talking to AI.</span>
+              by talking to AI.
             </h1>
             <p className="text-lg text-zinc-600 leading-relaxed mb-8 max-w-lg">
-              Describe what you want in plain English. Esteemed Create builds a
-              complete, working site — then publish instantly to Cloud.
+              Describe what you want in plain English. <strong>Esteemed Create</strong> builds a
+              complete, working site in minutes — then publish instantly to our secure, scalable cloud.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
-                href="/signup?redirect=create"
+                href="/websites/website-builder/start"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
               >
                 Try Create free
@@ -79,32 +79,9 @@ export default function WebsiteBuilderPage() {
               </a>
             </div>
           </div>
-          <div className="relative">
-            <div className="rounded-2xl overflow-hidden shadow-2xl">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/team-women.jpg.webp?itok=UlmXLT1n"
-                alt="Esteemed Create AI website builder"
-                className="w-full h-auto object-cover"
-                loading="eager"
-              />
-            </div>
+          <div className="relative rounded-2xl overflow-hidden w-full" style={{ height: 480 }}>
+            <PromptToSiteAnimated />
           </div>
-        </div>
-      </section>
-
-      {/* Meet Esteemed Create */}
-      <section className="bg-ink py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <ProductIcon product="create" className="mx-auto mb-6 h-14 w-14" />
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Meet Esteemed Create
-          </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            Chat with AI to design, build, and iterate on real websites. No
-            templates, no code required — just describe what you need and watch
-            it come to life.
-          </p>
         </div>
       </section>
 
@@ -112,7 +89,7 @@ export default function WebsiteBuilderPage() {
       <BuilderCards />
 
       {/* How it works */}
-      <section className="py-20 border-t border-zinc-100">
+      <section className="py-20 bg-zinc-50">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-ink mb-10 text-center">
             How it works
@@ -149,9 +126,11 @@ export default function WebsiteBuilderPage() {
           description="AI-powered building with Studio IDE. Credits power prompts, refinements, and rebuilds; paid plans include hosting at publish."
           productKey="create"
           plans={pricingPlans}
-          ctaLabel="Get started"
-          fallbackHref="/signup?redirect=create"
-          freeHref="/signup?redirect=create"
+          ctaLabel="Buy Now"
+          fallbackHref="/websites/website-builder/start"
+          freeHref="/websites/website-builder/start"
+          defaultBilling="monthly"
+          maxWidth={1800}
         />
       </div>
 
@@ -199,7 +178,7 @@ export default function WebsiteBuilderPage() {
                 network. No separate hosting provider to configure.
               </p>
               <Link
-                href="/products/cloud"
+                href="/websites/hosting"
                 className="inline-flex items-center text-sm font-bold text-ink hover:underline"
               >
                 Learn about Cloud &rarr;
@@ -270,10 +249,10 @@ export default function WebsiteBuilderPage() {
                 ))}
               </ul>
               <Link
-                href="/services/hire-an-expert"
+                href="/hire-experts/website-design"
                 className="inline-flex items-center gap-2 text-sm font-bold text-ink hover:underline"
               >
-                Hire an Expert <ArrowRight className="w-4 h-4" />
+                Talk to an Expert <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -326,7 +305,7 @@ export default function WebsiteBuilderPage() {
             Start building in 30 seconds.
           </h2>
           <Link
-            href="/signup?redirect=create"
+            href="/websites/website-builder/start"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Try Create &rarr;

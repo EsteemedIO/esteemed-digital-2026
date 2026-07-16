@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Sparkles, Cloud, Bot, Brain, Users, Headphones, ClipboardCheck, Target, MessageSquare, Check } from "lucide-react";
 import ChatHero from "@/components/ChatHero";
+import HeroCarousel from "@/components/HeroCarousel";
 import CascadingCards from "@/components/CascadingCards";
 import ParallaxFrost from "@/components/ParallaxFrost";
 import PromptToSite from "@/components/builder-visuals/PromptToSite";
@@ -22,7 +23,7 @@ const products = [
   {
     name: "Esteemed Cloud",
     description: "Hosting that scales with you. Built for what you build.",
-    href: "/products/cloud",
+    href: "/websites/hosting",
     icon: Cloud,
   },
   {
@@ -46,7 +47,7 @@ const products = [
   {
     name: "Esteemed Support",
     description: "Get expert human help with what you build or existing apps.",
-    href: "/services/support",
+    href: "/hire-experts/web-support",
     icon: Headphones,
   },
   {
@@ -258,8 +259,41 @@ export default function Home() {
 
   return (
     <>
-      {/* Section 1: Chat Hero */}
-      <ChatHero />
+      {/* Section 1: Hero Carousel */}
+      <HeroCarousel
+        slides={[
+          {
+            label: "Website Builder",
+            eyebrow: "Esteemed Website Builder",
+            title: "Build your website by talking to AI.",
+            body: "Describe what you want in plain English. Esteemed Create builds a complete, working site in minutes — then publish instantly to our secure, scalable cloud.",
+            cta: "Try Create free",
+            href: "/websites/website-builder/start",
+            video: "/videos/homepage-hero.mp4",
+          },
+          {
+            label: "Hire Experts",
+            eyebrow: "Esteemed Colleagues",
+            title: "AI builds it. Experts grow it.",
+            body: "Need design polish, custom code, or strategy? We match you with vetted professionals from our 35,000-strong network — on demand.",
+            cta: "Hire an Expert",
+            href: "/products/colleagues",
+            video: "/videos/homepage-colleagues.mp4",
+          },
+          {
+            label: "Managed Hosting",
+            eyebrow: "Esteemed Cloud",
+            title: "Hosting that scales with your business.",
+            body: "Managed hosting for Next.js, WordPress, and Drupal. Pricing is always straightforward, with expert support available for businesses of all sizes.",
+            bodyBold: "Get a free website build with any annual plan.",
+            cta: "Claim your Free Website",
+            href: "/websites/hosting?billing=monthly#managed-hosting",
+            cta2: "Talk to Us",
+            href2: "/contact",
+            bg: "#282828",
+          },
+        ]}
+      />
 
       <ClientLogoBand />
 
@@ -360,7 +394,7 @@ export default function Home() {
               heading: "Ship.",
               description: "You focus on the business, count on us for responsive design, hosting, daily backups, fast everywhere, all included.",
               cta: "Watch it work →",
-              ctaHref: "/products/cloud",
+              ctaHref: "/websites/hosting",
               visual: <CascadingAgent />,
               bgColor: "ink",
             },
@@ -368,7 +402,7 @@ export default function Home() {
               label: "GROW",
               heading: "Supported by humans.",
               description: "You create it. Real experts from our 35,000-strong network help you grow and support what you build.",
-              cta: "Meet the network →",
+              cta: "Hire an expert →",
               ctaHref: "/products/colleagues",
               visual: <MultiDevice />,
               bgColor: "grey",
@@ -382,7 +416,7 @@ export default function Home() {
                 href="/products/colleagues"
                 className="font-bold text-ink underline underline-offset-4 hover:no-underline"
               >
-                Post a Job &rarr;
+                Post a Job ↗
               </Link>
             </p>
           </div>

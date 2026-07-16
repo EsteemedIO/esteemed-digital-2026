@@ -24,13 +24,13 @@ export default function FoundersPage() {
       <section className="py-16 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6 space-y-6 text-zinc-600 leading-relaxed">
           <p>
-            As a founder, you need to move fast and stay lean. <Link href="/websites/website-builder" className="text-blue-600 hover:underline">Esteemed Create</Link> lets you build your first product or website in minutes using AI, so you can validate ideas before writing a single line of code. Deploy instantly on <Link href="/products/cloud" className="text-blue-600 hover:underline">Esteemed Cloud</Link> and start collecting feedback from day one.
+            As a founder, you need to move fast and stay lean. <Link href="/websites/website-builder" className="text-blue-600 hover:underline">Esteemed Create</Link> lets you build your first product or website in minutes using AI, so you can validate ideas before writing a single line of code. Deploy instantly on <Link href="/websites/hosting" className="text-blue-600 hover:underline">Esteemed Cloud</Link> and start collecting feedback from day one.
           </p>
           <p>
             When it is time to hire your first developer, designer, or CTO, <Link href="/products/colleagues" className="text-blue-600 hover:underline">Esteemed Colleagues</Link> gives you access to 35,000+ vetted professionals -- fractional or full-time, depending on your stage and budget. Our recruiting infrastructure has been running since 2015, so you get better matches than posting on a job board and hoping for the best.
           </p>
           <p>
-            Need ongoing technical guidance without the cost of a full-time CTO? Esteemed offers fractional leadership and <Link href="/services/support" className="text-blue-600 hover:underline">Support</Link> services that grow with you. From MVP to Series A and beyond, we have been helping founders build since 2011.
+            Need ongoing technical guidance without the cost of a full-time CTO? Esteemed offers fractional leadership and <Link href="/hire-experts/web-support" className="text-blue-600 hover:underline">Support</Link> services that grow with you. From MVP to Series A and beyond, we have been helping founders build since 2011.
           </p>
         </div>
       </section>

@@ -69,7 +69,7 @@ const catalog = {
         cta: "Learn More",
         href: "/contact",
         fine: "Want more?",
-        fineLink: "Hire an Expert",
+        fineLink: "Website Design",
         fineGoto: "experts",
       },
     ],
@@ -85,7 +85,7 @@ const catalog = {
           "Modern hosting for JavaScript, Node, React, WordPress, and Drupal. Bring an existing site or publish from Esteemed Create onto managed cloud infrastructure.",
         anchor: "As low as $8.25/mo with annual plan",
         cta: "Learn More",
-        href: "/products/cloud#plans",
+        href: "/websites/hosting#plans",
         primary: true,
       },
       {
@@ -97,7 +97,7 @@ const catalog = {
           "Self-managed hosting for teams that want control over their app or CMS. Includes SSL, monitoring, backups, and predictable pricing that never doubles at renewal.",
         anchor: "From $9.99/mo · 4 plans",
         cta: "See Plans",
-        href: "/products/cloud#plans",
+        href: "/websites/hosting#plans",
       },
       {
         icon: "server",
@@ -108,7 +108,7 @@ const catalog = {
           "Done-for-you hosting with a free site rebuild and dedicated monthly support hours, on a simple 12-month term. We keep your site fast, patched, and online.",
         anchor: "From $149/mo",
         cta: "See Plans",
-        href: "/products/cloud#managed-hosting",
+        href: "/websites/hosting#managed-hosting",
       },
     ],
     note:
@@ -320,7 +320,7 @@ const catalog = {
           "Monthly blocks of managed support hours - security patching, feature updates, and hands-on help. Pair with Managed CMS or any plan you run with us.",
         anchor: "$85/hr · monthly support blocks",
         cta: "Learn More",
-        href: "/services/support#plans",
+        href: "/hire-experts/web-support#plans",
         primary: true,
       },
       {
@@ -552,7 +552,6 @@ export default function PricingPage() {
 
       <section className="bg-[#1B1E25] text-white">
         <div className="mx-auto flex max-w-[1800px] flex-wrap items-center gap-3 px-6 py-4">
-          <Star className="h-[15px] w-[15px]" fill="#FEE546" />
           <p className="m-0 text-sm leading-[1.5] text-white/85">
             <strong className="text-white">Every offering is a separate purchase - none requires another.</strong>{" "}
             Host without migrating. Hire without the website. Take only what you need.

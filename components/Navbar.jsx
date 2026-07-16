@@ -11,30 +11,27 @@ import { productIconPaths } from "@/lib/pricing-catalog";
 
 const websitesGroup = [
   { key: "create", name: "AI Website Builder", href: "/websites/website-builder", desc: "Build and edit websites with AI, then publish to Cloud." },
-  { key: "cloud", name: "Website Hosting", href: "/products/cloud", desc: "Managed hosting for WordPress, Drupal, and modern JavaScript." },
-  { key: "ecommerce", name: "Ecommerce", href: "/services/ecommerce", desc: "Stores, checkout flows, subscriptions, and payment setup." },
-  { key: "blogs", name: "Blogs", href: "/services/blogs", desc: "Blog setup, content structure, publishing, and optimization." },
-  { key: "seo", name: "SEO", href: "/services/seo", desc: "Technical SEO, local search, and content visibility." },
+  { key: "cloud", name: "Website Hosting", href: "/websites/hosting", desc: "Managed hosting for WordPress, Drupal, and modern JavaScript." },
+  { key: "ecommerce", name: "Ecommerce", href: "/websites/ecommerce", desc: "Stores, checkout flows, subscriptions, and payment setup." },
 ];
 
 const businessToolsGroup = [
-  { key: "business-email", name: "Business Email", href: "/services/business-email", desc: "Professional email, domains, and account setup." },
-  { key: "curate", name: "Content Management", href: "/products/curate", desc: "AI-native CMS and RAG-ready knowledge management." },
-  { key: "acquire", name: "Customer Relationship Management", href: "/products/acquire", desc: "Pipeline, outreach, and relationship management." },
-  { key: "hire", name: "Applicant Tracking", href: "/products/hire", desc: "Recruiting workflows, candidates, jobs, and hiring teams." },
-  { key: "intelligence", name: "Business Intelligence + Memory", href: "/products/intelligence", desc: "Shared memory, context, and domain intelligence." },
-  { key: "agents", name: "AI Agents", href: "/products/agents", desc: "Role-based agents for marketing, sales, support, and recruiting." },
+  { key: "business-email", name: "Business Email", href: "/business-tools/business-email", desc: "Professional email, domains, and account setup." },
+  { key: "curate", name: "Content Management", href: "/business-tools/content-management", desc: "AI-native CMS and RAG-ready knowledge management." },
+  { key: "acquire", name: "Customer Relationship Management", href: "/business-tools/crm", desc: "Pipeline, outreach, and relationship management." },
+  { key: "hire", name: "Applicant Tracking", href: "/business-tools/applicant-tracking", desc: "Recruiting workflows, candidates, jobs, and hiring teams." },
+  { key: "intelligence", name: "Business Intelligence + Memory", href: "/business-tools/business-intelligence", desc: "Shared memory, context, and domain intelligence." },
+  { key: "agents", name: "AI Agents", href: "/business-tools/ai-agents", desc: "Role-based agents for marketing, sales, support, and recruiting." },
 ];
 
 const servicesGroup = [
-  { key: "website-design", name: "Website Design", href: "/services/website-design", desc: "Custom sites, rebuilds, landing pages, and launch support." },
-  { key: "hire-expert", name: "Hire an Expert", href: "/services/hire-an-expert", desc: "On-demand help from builders, designers, and operators." },
-  { key: "web-support", name: "Web Support Plans", href: "/services/support", desc: "Monthly support blocks for site fixes and improvements." },
-  { key: "talent-management", name: "Talent Management", href: "/services/talent-management", desc: "Recruiting, onboarding, workforce, and HR operations." },
-  { key: "content-strategy", name: "Content Strategy", href: "/services/content-strategy", desc: "Messaging, editorial planning, and conversion paths." },
-  { key: "content-production", name: "Content Production", href: "/services/content-production", desc: "Copy, campaigns, pages, blogs, and launch content." },
-  { key: "sem", name: "Search Engine Marketing", href: "/services/search-engine-marketing", desc: "Paid search setup, landing pages, and campaign support." },
-  { key: "ai-visibility", name: "AI Visibility", href: "/services/ai-visibility", desc: "Make your business easier for AI search to understand." },
+  { key: "website-design", name: "Website Design", href: "/hire-experts/website-design", desc: "Custom sites, rebuilds, landing pages, and launch support." },
+  { key: "web-support", name: "Web Support Plans", href: "/hire-experts/web-support", desc: "Monthly support blocks for site fixes and improvements." },
+  { key: "talent-management", name: "Talent Management", href: "/hire-experts/talent-management", desc: "Recruiting, onboarding, workforce, and HR operations." },
+  { key: "content-strategy", name: "Content Strategy", href: "/hire-experts/content-strategy", desc: "Messaging, editorial planning, and conversion paths." },
+  { key: "content-production", name: "Content Production", href: "/hire-experts/content-production", desc: "Copy, campaigns, pages, blogs, and launch content." },
+  { key: "sem", name: "Search Engine Marketing", href: "/hire-experts/search-engine-marketing", desc: "Paid search setup, landing pages, and campaign support." },
+  { key: "ai-visibility", name: "AI Visibility", href: "/hire-experts/ai-visibility", desc: "Make your business easier for AI search to understand." },
 ];
 
 const solutionsUseCases = [
@@ -349,9 +346,9 @@ export default function Navbar() {
                   ))}
                 </div>
                 <div className="space-y-3 mt-8">
-                  <FeaturedCard href="/websites/website-builder" onClick={closeMenu}>Try Esteemed Create</FeaturedCard>
+                  <FeaturedCard href="/hire-experts" onClick={closeMenu}>Hire an Expert</FeaturedCard>
                   <FeaturedCard href="/products" onClick={closeMenu}>Products by Name</FeaturedCard>
-                  <FeaturedCard href="/services/support" onClick={closeMenu}>Get Support</FeaturedCard>
+                  <FeaturedCard href="/hire-experts/web-support" onClick={closeMenu}>Get Support</FeaturedCard>
                 </div>
               </div>
             </div>

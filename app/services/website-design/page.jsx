@@ -1,3 +1,4 @@
+import PlatformGrid from "@/components/PlatformGrid";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -186,6 +187,8 @@ export default function WebsiteDesignPage() {
 
       {/* What We Build — carousel with bg-image cards */}
       <ProjectCarousel />
+
+      <PlatformGrid />
 
       {/* How It Works — stepped with rule lines */}
       <section id="how-it-works" className="bg-zinc-50 py-20 border-t border-zinc-200">

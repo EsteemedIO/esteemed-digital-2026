@@ -7,11 +7,11 @@ export const metadata = {
 
 const sections = [
   { title: "Esteemed Create", href: "/websites/website-builder", desc: "Learn how to build websites and apps with AI-powered Create." },
-  { title: "Esteemed Cloud", href: "/products/cloud", desc: "Hosting, deployment, domains, and infrastructure management." },
+  { title: "Esteemed Cloud", href: "/websites/hosting", desc: "Hosting, deployment, domains, and infrastructure management." },
   { title: "Esteemed Agents", href: "/products/agents", desc: "Set up and manage AI agents trained on your business." },
   { title: "Esteemed Intelligence", href: "/products/intelligence", desc: "The shared AI layer powering all Esteemed products." },
   { title: "Esteemed Colleagues", href: "/products/colleagues", desc: "How to search, hire, and manage talent from the Colleagues network." },
-  { title: "Esteemed Support", href: "/services/support", desc: "Get expert human help for your apps and projects." },
+  { title: "Esteemed Support", href: "/hire-experts/web-support", desc: "Get expert human help for your apps and projects." },
 ];
 
 export default function HelpPage() {

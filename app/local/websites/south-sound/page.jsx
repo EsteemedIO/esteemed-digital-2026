@@ -24,7 +24,7 @@ const M = {
   sub: "Expert websites and ongoing WebOps support, built by your neighbors in Olympia, Tumwater and Lacey since 2011. Start with a free rebuild \u2014 no fee, ever.",
   ctaPrimary: "Claim your free rebuild",
   ctaSecondary: "Book a local consult",
-  rebuildHref: "/products/cloud?billing=monthly#free-rebuild",
+  rebuildHref: "/websites/hosting?billing=monthly#free-rebuild",
   consultHref: "/contact?intent=consult&market=south-sound",
   stats: [
     { n: "15 yrs", l: "Serving South Sound businesses" },

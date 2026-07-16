@@ -45,7 +45,7 @@ const websitePaths = [
     price: "$14.99/mo",
     note: "Fast self-managed hosting for JavaScript, WordPress, and Drupal sites.",
     lookupKey: "cloud_plus_monthly",
-    href: "/products/cloud",
+    href: "/websites/hosting",
     bullets: ["Node + React ready", "Staging and CDN", "SSL, backups, monitoring"],
     cta: "Buy Now",
     chip: "Popular",
@@ -57,7 +57,7 @@ const websitePaths = [
     price: "$249/mo",
     note: "Done-for-you managed hosting with monthly expert support.",
     lookupKey: "managed_growth_monthly",
-    href: "/products/cloud",
+    href: "/websites/hosting",
     bullets: ["12-page Create rebuild included", "5 support hours/month", "$100/page overage beyond allowance"],
     cta: "Buy Now",
     chip: "Managed",
@@ -177,7 +177,7 @@ export default function DashboardPage() {
             </Button>
             <Button
               as={Link}
-              href="/products/cloud"
+              href="/websites/hosting"
               className="bg-[#111111] px-5 font-semibold text-white hover:scale-[1.02] hover:bg-[#111111]"
               radius="sm"
               variant="solid"

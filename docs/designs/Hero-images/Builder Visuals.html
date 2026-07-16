@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Esteemed — Builder Visuals</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  html, body { margin: 0; padding: 0; background: #F4F4F2; font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif; color: #0F1115; }
+  * { box-sizing: border-box; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="visuals.jsx"></script>
+
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard } = window;
+
+/* Card shells that mirror the existing Match/Work/Grow cards from the screenshots:
+   left half = label + copy, right half = visual.
+   Card width 1000, height 460 to match site proportions. */
+
+const CARD_W = 1000;
+const CARD_H = 460;
+
+const Card = ({ tone, label, body, cta, visual }) => {
+  const tones = {
+    yellow: { bg: '#FEE546', text: '#0F1115', sub: 'rgba(15,17,21,0.7)', btnBg: '#0F1115', btnFg: '#FFFFFF' },
+    indigo: { bg: '#6366F1', text: '#FFFFFF', sub: 'rgba(255,255,255,0.85)', btnBg: '#FFFFFF', btnFg: '#0F1115' },
+    gray:   { bg: '#EDEDEA', text: '#0F1115', sub: 'rgba(15,17,21,0.65)', btnBg: '#0F1115', btnFg: '#FFFFFF' },
+    dark:   { bg: '#1B1E25', text: '#FFFFFF', sub: 'rgba(255,255,255,0.75)', btnBg: '#FFE15A', btnFg: '#0F1115' },
+    paper:  { bg: '#FAFAF8', text: '#0F1115', sub: 'rgba(15,17,21,0.65)', btnBg: '#0F1115', btnFg: '#FFFFFF' },
+  };
+  const t = tones[tone] || tones.gray;
+  return (
+    <div style={{
+      width: CARD_W, height: CARD_H,
+      background: t.bg,
+      borderRadius: 18,
+      overflow: 'hidden',
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      boxShadow: '0 24px 50px -20px rgba(15,17,21,0.18)',
+    }}>
+      <div style={{
+        padding: '52px 56px',
+        display: 'flex', flexDirection: 'column',
+        justifyContent: 'space-between',
+        color: t.text,
+      }}>
+        <div style={{
+          fontSize: 13, letterSpacing: 2, fontWeight: 600,
+          color: t.sub, textTransform: 'uppercase',
+        }}>{label}</div>
+        <div>
+          <h2 style={{
+            fontSize: 56, fontWeight: 700, letterSpacing: -1.5,
+            margin: '0 0 18px', lineHeight: 1.05,
+          }}>{body.title}</h2>
+          <p style={{
+            margin: '0 0 26px', fontSize: 16, lineHeight: 1.5,
+            color: t.sub, maxWidth: 380,
+          }}>{body.copy}</p>
+          {cta && (
+            <button style={{
+              border: 'none', cursor: 'pointer',
+              background: t.btnBg, color: t.btnFg,
+              padding: '12px 22px', borderRadius: 24,
+              fontSize: 14, fontWeight: 600,
+              fontFamily: 'inherit',
+            }}>{cta}</button>
+          )}
+        </div>
+      </div>
+      <div style={{ position: 'relative' }}>
+        {visual}
+      </div>
+    </div>
+  );
+};
+
+function App() {
+  return (
+    <DesignCanvas title="Esteemed — Website builder visuals" subtitle="4 directions for the right-side imagery on the cascading cards">
+      <DCSection id="cards" title="Cascading card visuals">
+        <DCArtboard id="v1" label="01 — Prompt to site (Build / Yellow)" width={CARD_W} height={CARD_H}>
+          <Card
+            tone="yellow"
+            label="Build"
+            body={{
+              title: 'Describe.',
+              copy: 'Tell our AI what you need. It drafts a real, brand-aware site in seconds — copy, layout, and all.',
+            }}
+            cta="Try a prompt →"
+            visual={<PromptToSite />}
+          />
+        </DCArtboard>
+
+        <DCArtboard id="v2" label="02 — Drag-and-drop (Work)" width={CARD_W} height={CARD_H}>
+          <Card
+            tone="gray"
+            label="Customize"
+            body={{
+              title: 'Refine.',
+              copy: 'Drag, drop, edit anything inline. Hundreds of sections snap into place — no templates to fight.',
+            }}
+            cta="See the editor →"
+            visual={<DragAndDrop />}
+          />
+        </DCArtboard>
+
+        <DCArtboard id="v3" label="03 — Agent at work (Grow)" width={CARD_W} height={CARD_H}>
+          <Card
+            tone="dark"
+            label="Automate"
+            body={{
+              title: 'Ship.',
+              copy: 'AI agents handle SEO, images, forms, and publishing while you focus on the business.',
+            }}
+            cta="Watch it work →"
+            visual={<CascadingAgent />}
+          />
+        </DCArtboard>
+
+        <DCArtboard id="v4" label="04 — Multi-device preview" width={CARD_W} height={CARD_H}>
+          <Card
+            tone="paper"
+            label="Responsive"
+            body={{
+              title: 'Everywhere.',
+              copy: 'One site, every screen. Preview desktop, tablet, and mobile side-by-side as you build.',
+            }}
+            cta="Preview live →"
+            visual={<MultiDevice />}
+          />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="standalone" title="Standalone visuals (no card chrome)">
+        <DCArtboard id="s1" label="Prompt to site" width={500} height={CARD_H}>
+          <PromptToSite />
+        </DCArtboard>
+        <DCArtboard id="s2" label="Drag-and-drop" width={500} height={CARD_H}>
+          <DragAndDrop />
+        </DCArtboard>
+        <DCArtboard id="s3" label="Agent at work" width={500} height={CARD_H}>
+          <CascadingAgent />
+        </DCArtboard>
+        <DCArtboard id="s4" label="Multi-device" width={500} height={CARD_H}>
+          <MultiDevice />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

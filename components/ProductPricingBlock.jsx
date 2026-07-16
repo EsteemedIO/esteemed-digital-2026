@@ -184,6 +184,7 @@ export default function ProductPricingBlock({
   fallbackHref,
   calculatorHref = null,
   defaultBilling,
+  maxWidth,
 }) {
   const hasAnnual = plans.some((plan) => plan.annual);
   const [billing, setBilling] = useState(defaultBilling || (hasAnnual ? "annual" : "monthly"));
@@ -196,7 +197,7 @@ export default function ProductPricingBlock({
 
   return (
     <section id={id} className="scroll-mt-24 border-t border-zinc-100 py-20">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto px-6" style={{ maxWidth: maxWidth || "80rem" }}>
         <div className="mb-10 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
           <div className="flex gap-4">
             <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-white">
@@ -235,17 +236,21 @@ export default function ProductPricingBlock({
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {plans.map((plan) => (
-            <PricingCard
+          {plans.map((plan, i) => (
+            <div
               key={plan.key}
-              plan={plan}
-              productKey={productKey}
-              billing={billing}
-              ctaLabel={ctaLabel}
-              freeHref={freeHref}
-              contactHref={contactHref}
-              fallbackHref={fallbackHref}
-            />
+              className={plans.length === 5 && i === 4 ? "xl:col-start-4" : ""}
+            >
+              <PricingCard
+                plan={plan}
+                productKey={productKey}
+                billing={billing}
+                ctaLabel={ctaLabel}
+                freeHref={freeHref}
+                contactHref={contactHref}
+                fallbackHref={fallbackHref}
+              />
+            </div>
           ))}
         </div>
       </div>

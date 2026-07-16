@@ -24,7 +24,7 @@ export default function LaunchMarketingSitePage() {
       <section className="py-16 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6 space-y-6 text-zinc-600 leading-relaxed">
           <p>
-            Marketing teams need to move fast. With <Link href="/websites/website-builder" className="text-blue-600 hover:underline">Esteemed Create</Link>, you can generate a professional, responsive marketing site in minutes using AI. Describe your brand, your audience, and your goals, and Create builds the pages, copy, and layout for you. Then publish instantly on <Link href="/products/cloud" className="text-blue-600 hover:underline">Esteemed Cloud</Link> with built-in hosting, SSL, and CDN.
+            Marketing teams need to move fast. With <Link href="/websites/website-builder" className="text-blue-600 hover:underline">Esteemed Create</Link>, you can generate a professional, responsive marketing site in minutes using AI. Describe your brand, your audience, and your goals, and Create builds the pages, copy, and layout for you. Then publish instantly on <Link href="/websites/hosting" className="text-blue-600 hover:underline">Esteemed Cloud</Link> with built-in hosting, SSL, and CDN.
           </p>
           <p>
             But launching is just the beginning. When you need custom design, SEO optimization, conversion rate improvements, or content strategy, the <Link href="/products/colleagues" className="text-blue-600 hover:underline">Esteemed Colleagues</Link> network connects you with vetted professionals who can take your site to the next level. No agency retainers, no lengthy procurement processes -- just the right expert, on demand.

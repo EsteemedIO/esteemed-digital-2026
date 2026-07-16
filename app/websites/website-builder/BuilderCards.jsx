@@ -1,6 +1,7 @@
 "use client";
 
 import CascadingCards from "@/components/CascadingCards";
+import ProductIcon from "@/components/ProductIcon";
 import {
   PromptToSite,
   DragAndDrop,
@@ -16,7 +17,7 @@ const cards = [
     description:
       "Tell our AI what you need. It drafts a real, brand-aware site in seconds — copy, layout, and all.",
     cta: "Try a prompt →",
-    ctaHref: "/signup?redirect=create",
+    ctaHref: "/websites/website-builder/start",
     visual: <PromptToSite />,
   },
   {
@@ -26,7 +27,7 @@ const cards = [
     description:
       "Drag, drop, edit anything inline. Hundreds of sections snap into place — no templates to fight.",
     cta: "See the editor →",
-    ctaHref: "/signup?redirect=create",
+    ctaHref: "/websites/website-builder/start",
     visual: <DragAndDrop />,
   },
   {
@@ -36,7 +37,7 @@ const cards = [
     description:
       "AI agents handle SEO, images, forms, and publishing while you focus on the business.",
     cta: "Watch it work →",
-    ctaHref: "/signup?redirect=create",
+    ctaHref: "/websites/website-builder/start",
     visual: <CascadingAgent />,
   },
   {
@@ -46,7 +47,7 @@ const cards = [
     description:
       "One site, every screen. Preview desktop, tablet, and mobile side-by-side as you build.",
     cta: "Preview live →",
-    ctaHref: "/signup?redirect=create",
+    ctaHref: "/websites/website-builder/start",
     visual: <MultiDevice />,
   },
 ];
@@ -55,11 +56,14 @@ export default function BuilderCards() {
   return (
     <section className="py-20 px-6">
       <div className="max-w-4xl mx-auto text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
-          Build, customize, ship, preview
+        <ProductIcon product="create" className="mx-auto mb-6 h-14 w-14" />
+        <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
+          Meet Esteemed Create
         </h2>
-        <p className="text-lg text-zinc-600 leading-relaxed">
-          Four steps from idea to live website — powered by AI.
+        <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+          Chat with AI to design, build, and iterate on real websites. No
+          templates, no code required — just describe what you need and watch
+          it come to life.
         </p>
       </div>
       <CascadingCards cards={cards} />

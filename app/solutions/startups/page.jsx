@@ -45,7 +45,7 @@ const features = [
     title: "Cloud",
     description:
       "Managed hosting that scales with you — no DevOps overhead. Start small and grow without re-platforming.",
-    href: "/products/cloud",
+    href: "/websites/hosting",
   },
 ];
 

@@ -1,14 +1,14 @@
 import Link from "next/link";
-import { Users } from "lucide-react";
+import { Users, Wrench, LifeBuoy, Lightbulb, PenTool, Megaphone, Eye } from "lucide-react";
 import ProductIcon from "@/components/ProductIcon";
 
 export const metadata = {
-  title: "Products | Esteemed",
+  title: "Products & Services | Esteemed",
   description:
-    "Esteemed products by name — Create, Cloud, Curate, Acquire, Hire, Intelligence, Agents, HCMGPT, and Colleagues.",
+    "Esteemed products and services by name — Create, Cloud, Curate, Acquire, Hire, Intelligence, Agents, Connect, Support, HCMGPT, and Colleagues.",
 };
 
-const items = [
+const products = [
   {
     name: "Create",
     tagline: "Build websites and apps by talking to AI.",
@@ -23,7 +23,7 @@ const items = [
     description:
       "Managed hosting with SSL, daily backups, monitoring, and a global edge network. Your site stays fast, secure, and always on.",
     iconProduct: "cloud",
-    href: "/products/cloud",
+    href: "/websites/hosting",
   },
   {
     name: "Curate",
@@ -66,6 +66,22 @@ const items = [
     href: "/products/agents",
   },
   {
+    name: "Connect",
+    tagline: "Integrations and data connectivity.",
+    description:
+      "Connect your tools, data sources, and third-party services into a unified platform layer.",
+    iconProduct: "connect",
+    href: "/products/connect",
+  },
+  {
+    name: "Support",
+    tagline: "Monthly support from real experts.",
+    description:
+      "Managed support packages with dedicated hours for site fixes, improvements, and technical help.",
+    iconProduct: "support",
+    href: "/products/support",
+  },
+  {
     name: "HCMGPT",
     tagline: "Domain-specific AI for human capital management.",
     description:
@@ -84,6 +100,98 @@ const items = [
   },
 ];
 
+const services = [
+  {
+    name: "Website Design",
+    tagline: "Custom sites, rebuilds, landing pages, and launch support.",
+    icon: PenTool,
+    href: "/hire-experts/website-design",
+  },
+  {
+    name: "Web Support Plans",
+    tagline: "Monthly support blocks for site fixes and improvements.",
+    icon: LifeBuoy,
+    href: "/hire-experts/web-support",
+  },
+  {
+    name: "Ecommerce",
+    tagline: "Stores, checkout flows, subscriptions, and payment setup.",
+    icon: Wrench,
+    href: "/websites/ecommerce",
+  },
+  {
+    name: "Business Email",
+    tagline: "Professional email, domains, and account setup.",
+    icon: Megaphone,
+    href: "/services/business-email",
+  },
+  {
+    name: "Talent Management",
+    tagline: "Recruiting, onboarding, workforce, and HR operations.",
+    icon: Users,
+    href: "/hire-experts/talent-management",
+  },
+  {
+    name: "Content Strategy",
+    tagline: "Messaging, editorial planning, and conversion paths.",
+    icon: Lightbulb,
+    href: "/hire-experts/content-strategy",
+  },
+  {
+    name: "Content Production",
+    tagline: "Copy, campaigns, pages, blogs, and launch content.",
+    icon: PenTool,
+    href: "/hire-experts/content-production",
+  },
+  {
+    name: "Search Engine Marketing",
+    tagline: "Paid search setup, landing pages, and campaign support.",
+    icon: Megaphone,
+    href: "/hire-experts/search-engine-marketing",
+  },
+  {
+    name: "AI Visibility",
+    tagline: "Make your business easier for AI search to understand.",
+    icon: Eye,
+    href: "/hire-experts/ai-visibility",
+  },
+];
+
+function ProductCard({ item }) {
+  const Tag = item.external ? "a" : Link;
+  const tagProps = item.external
+    ? { href: item.href, target: "_blank", rel: "noopener noreferrer" }
+    : { href: item.href };
+
+  return (
+    <Tag
+      {...tagProps}
+      className="group flex flex-col rounded-2xl border border-zinc-200 bg-white p-8 hover:shadow-lg hover:border-accent transition-all"
+    >
+      <div className="mb-4">
+        {item.iconProduct ? (
+          <ProductIcon product={item.iconProduct} className="h-10 w-10" />
+        ) : (
+          <span className="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-zinc-100">
+            <item.icon className="w-5 h-5 text-ink" strokeWidth={1.5} />
+          </span>
+        )}
+      </div>
+      <h3 className="text-xl font-bold text-ink mb-1">
+        {item.name}
+        {item.external && <span className="ml-1">↗</span>}
+      </h3>
+      <p className="text-sm font-medium text-zinc-500 mb-3">{item.tagline}</p>
+      {item.description && (
+        <p className="text-sm text-zinc-600 leading-relaxed">{item.description}</p>
+      )}
+      <span className="inline-block mt-auto pt-4 text-sm font-bold text-ink group-hover:underline">
+        Learn more &rarr;
+      </span>
+    </Tag>
+  );
+}
+
 export default function ProductsPage() {
   return (
     <div className="min-h-screen">
@@ -99,43 +207,26 @@ export default function ProductsPage() {
         </div>
       </section>
 
+      {/* Products */}
       <section className="pb-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {items.map((item) => {
-              const Tag = item.external ? "a" : Link;
-              const tagProps = item.external
-                ? { href: item.href, target: "_blank", rel: "noopener noreferrer" }
-                : { href: item.href };
-              return (
-                <Tag
-                  key={item.name}
-                  {...tagProps}
-                  className="group rounded-2xl border border-zinc-200 p-8 hover:shadow-lg hover:border-accent transition-all"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    {item.iconProduct ? (
-                      <ProductIcon product={item.iconProduct} className="h-8 w-8" />
-                    ) : (
-                      <item.icon className="w-8 h-8 text-ink" strokeWidth={1.5} />
-                    )}
-                  </div>
-                  <h2 className="text-xl font-bold text-ink mb-1">
-                    {item.name}
-                    {item.external && <span className="ml-1">↗</span>}
-                  </h2>
-                  <p className="text-sm font-medium text-zinc-500 mb-3">
-                    {item.tagline}
-                  </p>
-                  <p className="text-sm text-zinc-600 leading-relaxed">
-                    {item.description}
-                  </p>
-                  <span className="inline-block mt-4 text-sm font-medium text-ink group-hover:underline">
-                    Learn more &rarr;
-                  </span>
-                </Tag>
-              );
-            })}
+        <div className="mx-auto px-6" style={{ maxWidth: 1800 }}>
+          <h2 className="text-2xl font-bold text-ink mb-8">Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {products.map((item) => (
+              <ProductCard key={item.name} item={item} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="pb-20">
+        <div className="mx-auto px-6" style={{ maxWidth: 1800 }}>
+          <h2 className="text-2xl font-bold text-ink mb-8">Services</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {services.map((item) => (
+              <ProductCard key={item.name} item={item} />
+            ))}
           </div>
         </div>
       </section>
