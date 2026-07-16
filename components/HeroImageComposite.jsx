@@ -138,7 +138,7 @@ export default function HeroImageComposite({ src, alt, variant = "design", objec
   }, [chips, pairCount]);
 
   return (
-    <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full" style={{ height: 480, minHeight: 400 }}>
+    <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full aspect-[4/3] sm:aspect-auto sm:h-[420px] lg:h-[480px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
@@ -150,7 +150,7 @@ export default function HeroImageComposite({ src, alt, variant = "design", objec
 
       {/* Stat badge with animated bars */}
       <div
-        className="absolute z-10 bg-white rounded-2xl flex flex-col items-center justify-center gap-1.5"
+        className="absolute z-10 bg-white rounded-2xl hidden sm:flex flex-col items-center justify-center gap-1.5"
         style={{
           left: 16, bottom: 16, width: 100, height: 100,
           boxShadow: "0 16px 32px -12px rgba(26,26,26,0.3)",
@@ -166,7 +166,7 @@ export default function HeroImageComposite({ src, alt, variant = "design", objec
       </div>
 
       {/* Status chips — top right, 2 at a time */}
-      <div className="absolute z-10 bottom-3 right-3 flex flex-col gap-2">
+      <div className="absolute z-10 bottom-3 right-3 hidden sm:flex flex-col gap-2">
         {pair.map((chip, i) => {
           const ChipIcon = chip.icon;
           const visible = i === 0 || showSecond;

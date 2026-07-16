@@ -85,11 +85,11 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
           {slide.body}
           {slide.bodyBold && <>{" "}<strong className="text-white">{slide.bodyBold}</strong></>}
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
           {slide.cta && slide.href && (
             <Link
               href={slide.href}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
             >
               {slide.cta}
             </Link>
@@ -97,7 +97,7 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
           {slide.cta2 && slide.href2 && (
             <Link
               href={slide.href2}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-white text-white text-sm font-bold hover:bg-white/10 transition-colors"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-white text-white text-sm font-bold hover:bg-white/10 transition-colors"
             >
               {slide.cta2}
             </Link>
@@ -106,41 +106,39 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
       </div>
 
       {/* Progress bars + pause */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-end gap-2.5">
-        <div className="flex gap-4">
-          {slides.map((s, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              aria-label={`Go to slide ${i + 1}`}
-              className="group flex flex-col items-center gap-2 cursor-pointer"
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+        {slides.map((s, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className="group flex flex-col items-center gap-1.5 cursor-pointer"
+          >
+            <span
+              className="hidden md:block text-xs font-semibold whitespace-nowrap transition-colors"
+              style={{ color: i === current ? "#FFFFFF" : "rgba(255,255,255,0.45)" }}
             >
-              <span
-                className="text-xs font-semibold transition-colors"
-                style={{ color: i === current ? "#FFFFFF" : "rgba(255,255,255,0.45)" }}
-              >
-                {s.label || s.eyebrow}
-              </span>
-              <div className="relative w-20 sm:w-24 h-1 rounded-full overflow-hidden bg-white/30">
-                <div
-                  className="absolute inset-y-0 left-0 rounded-full bg-white transition-[width] duration-[50ms] ease-linear"
-                  style={{
-                    width:
-                      i === current
-                        ? `${progress}%`
-                        : i < current
-                          ? "100%"
-                          : "0%",
-                  }}
-                />
-              </div>
-            </button>
-          ))}
-        </div>
+              {s.label || s.eyebrow}
+            </span>
+            <div className="relative w-14 sm:w-20 md:w-24 h-1 rounded-full overflow-hidden bg-white/30">
+              <div
+                className="absolute inset-y-0 left-0 rounded-full bg-white transition-[width] duration-[50ms] ease-linear"
+                style={{
+                  width:
+                    i === current
+                      ? `${progress}%`
+                      : i < current
+                        ? "100%"
+                        : "0%",
+                }}
+              />
+            </div>
+          </button>
+        ))}
         <button
           onClick={() => setPaused((p) => !p)}
           aria-label={paused ? "Play" : "Pause"}
-          className="w-7 h-7 rounded-full bg-white/20 hover:bg-white flex items-center justify-center transition-colors group/pause"
+          className="w-7 h-7 rounded-full bg-white/20 hover:bg-white flex items-center justify-center transition-colors group/pause flex-shrink-0"
         >
           {paused ? (
             <Play className="h-3 w-3 text-white/45 group-hover/pause:text-ink transition-colors" />

@@ -209,7 +209,7 @@ export default function CloudPage() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ height: 420 }}>
+            <div className="rounded-2xl overflow-hidden shadow-2xl h-[280px] sm:h-[350px] md:h-[420px]">
               <PromptToSiteAnimated />
             </div>
           </div>

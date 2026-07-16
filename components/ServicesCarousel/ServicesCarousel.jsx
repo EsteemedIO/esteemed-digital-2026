@@ -256,7 +256,7 @@ export default function ServicesCarousel({ capabilities, title, subtitle, autopl
               aria-label={`Go to ${c.title}`}
               style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, cursor: "pointer", background: "none", border: "none", padding: 0 }}
             >
-              <span style={{ fontSize: 12, fontWeight: 600, color: i === active ? "#1A1A1A" : "rgba(26,26,26,0.4)", transition: "color 0.2s" }}>
+              <span className="hidden sm:block" style={{ fontSize: 12, fontWeight: 600, color: i === active ? "#1A1A1A" : "rgba(26,26,26,0.4)", transition: "color 0.2s" }}>
                 {c.title}
               </span>
               <div style={{ width: 80, height: 3, borderRadius: 3, background: "rgba(26,26,26,0.12)", overflow: "hidden" }}>

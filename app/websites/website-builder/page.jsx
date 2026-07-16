@@ -49,7 +49,7 @@ export default function WebsiteBuilderPage() {
     <div className="min-h-screen">
       {/* Hero — split layout */}
       <section style={{ padding: "20px 20px 30px" }}>
-        <div className="mx-auto bg-zinc-100 rounded-3xl pl-8 md:pl-14 pr-8 py-8 grid md:grid-cols-2 gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, maxHeight: 640 }}>
+        <div className="mx-auto bg-zinc-100 rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800 }}>
           <div>
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
               Esteemed Website Builder
@@ -79,7 +79,7 @@ export default function WebsiteBuilderPage() {
               </a>
             </div>
           </div>
-          <div className="relative rounded-2xl overflow-hidden w-full" style={{ height: 480 }}>
+          <div className="relative rounded-2xl overflow-hidden w-full h-[300px] md:h-[420px] lg:h-[480px]">
             <PromptToSiteAnimated />
           </div>
         </div>

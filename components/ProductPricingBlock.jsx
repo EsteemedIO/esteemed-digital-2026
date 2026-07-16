@@ -235,12 +235,9 @@ export default function ProductPricingBlock({
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className={`grid gap-6 md:grid-cols-2 ${plans.length === 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
           {plans.map((plan, i) => (
-            <div
-              key={plan.key}
-              className={plans.length === 5 && i === 4 ? "xl:col-start-4" : ""}
-            >
+            <div key={plan.key}>
               <PricingCard
                 plan={plan}
                 productKey={productKey}

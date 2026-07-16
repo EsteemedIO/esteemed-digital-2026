@@ -85,7 +85,7 @@ export default function WebsiteDesignPage() {
 
       {/* Hero — split layout */}
       <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl pl-8 md:pl-14 pr-8 py-8 grid md:grid-cols-2 gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, maxHeight: 640, background: "#E0E9F2" }}>
+        <div className="mx-auto rounded-3xl px-6 md:pl-14 md:pr-8 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E0E9F2" }}>
           <div>
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Website Design Services
@@ -111,7 +111,7 @@ export default function WebsiteDesignPage() {
             </ul>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-ink text-sm font-bold border-2 border-ink hover:bg-ink hover:text-white transition-colors"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-ink text-sm font-bold border-2 border-ink hover:bg-ink hover:text-white transition-colors"
             >
               Talk to an Expert
               <ArrowRight className="w-4 h-4" />
@@ -320,7 +320,7 @@ export default function WebsiteDesignPage() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-ink text-sm font-bold border-2 border-ink hover:bg-ink hover:text-white transition-colors"
+                  className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
                 >
                   Get a free consultation
                   <ArrowRight className="w-4 h-4" />
