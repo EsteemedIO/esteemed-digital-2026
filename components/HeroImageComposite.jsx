@@ -98,6 +98,54 @@ const chipSets = {
     { icon: Zap, text: "3 interviews booked", color: "#7C5BC9" },
     { icon: Send, text: "Offer accepted", color: "#3CC97A" },
   ],
+  "usecase-launch": [
+    { icon: Zap, text: "Site generated", color: "#7C5BC9" },
+    { icon: CheckCircle2, text: "Domain connected", color: "#3CC97A" },
+    { icon: Send, text: "Campaign live", color: "#3CC97A" },
+    { icon: TrendingUp, text: "Leads up 240%", color: "#3CC97A" },
+  ],
+  "usecase-build": [
+    { icon: Zap, text: "App scaffolded", color: "#7C5BC9" },
+    { icon: CheckCircle2, text: "Data connected", color: "#3CC97A" },
+    { icon: Send, text: "Deployed to Cloud", color: "#3CC97A" },
+    { icon: Users, text: "42 active users", color: "#3CC97A" },
+  ],
+  "usecase-hire": [
+    { icon: Users, text: "12 candidates matched", color: "#3CC97A" },
+    { icon: Zap, text: "AI shortlist ready", color: "#7C5BC9" },
+    { icon: CheckCircle2, text: "Interview scheduled", color: "#3CC97A" },
+    { icon: Send, text: "Offer accepted", color: "#3CC97A" },
+  ],
+  "usecase-modernize": [
+    { icon: Eye, text: "Site audited", color: "#7C5BC9" },
+    { icon: Zap, text: "Migration started", color: "#7C5BC9" },
+    { icon: CheckCircle2, text: "301s mapped", color: "#3CC97A" },
+    { icon: TrendingUp, text: "Load time −68%", color: "#3CC97A" },
+  ],
+  "role-marketing": [
+    { icon: Send, text: "Landing page live", color: "#3CC97A" },
+    { icon: Zap, text: "AI copy generated", color: "#7C5BC9" },
+    { icon: TrendingUp, text: "CTR up 47%", color: "#3CC97A" },
+    { icon: CheckCircle2, text: "Campaign approved", color: "#3CC97A" },
+  ],
+  "role-founder": [
+    { icon: Zap, text: "MVP deployed", color: "#7C5BC9" },
+    { icon: Users, text: "First hire onboarded", color: "#3CC97A" },
+    { icon: TrendingUp, text: "MRR $12K", color: "#3CC97A" },
+    { icon: CheckCircle2, text: "Seed round closed", color: "#3CC97A" },
+  ],
+  "role-it": [
+    { icon: CheckCircle2, text: "Migration complete", color: "#3CC97A" },
+    { icon: Zap, text: "Uptime 99.98%", color: "#7C5BC9" },
+    { icon: Users, text: "3 engineers added", color: "#3CC97A" },
+    { icon: Eye, text: "Audit passed", color: "#3CC97A" },
+  ],
+  "role-hr": [
+    { icon: Users, text: "8 roles filled", color: "#3CC97A" },
+    { icon: Zap, text: "AI match 94%", color: "#7C5BC9" },
+    { icon: Clock, text: "Time-to-fill 9 days", color: "#3CC97A" },
+    { icon: CheckCircle2, text: "Onboarding started", color: "#3CC97A" },
+  ],
 };
 
 const statConfig = {
@@ -107,6 +155,14 @@ const statConfig = {
   marketing: { value: "3.2X", label: "ROAS average", icon: TrendingUp },
   ai: { value: "92%", label: "AI discovery", icon: Eye },
   talent: { value: "35K+", label: "Expert network", icon: Users },
+  "usecase-launch": { value: "5min", label: "Idea to live", icon: Zap },
+  "usecase-build": { value: "10X", label: "Faster than dev", icon: Zap },
+  "usecase-hire": { value: "35K+", label: "Expert network", icon: Users },
+  "usecase-modernize": { value: "68%", label: "Faster loads", icon: TrendingUp },
+  "role-marketing": { value: "3X", label: "Faster to ship", icon: TrendingUp },
+  "role-founder": { value: "48hr", label: "MVP turnaround", icon: Clock },
+  "role-it": { value: "99.9%", label: "Uptime SLA", icon: BarChart3 },
+  "role-hr": { value: "9day", label: "Avg time to fill", icon: Clock },
 };
 
 export default function HeroImageComposite({ src, alt, variant = "design", objectPosition = "center" }) {
@@ -200,16 +256,10 @@ export default function HeroImageComposite({ src, alt, variant = "design", objec
         .hero-bar {
           animation: heroBarGrow 2s ease-in-out infinite;
         }
-        @keyframes heroPulseDot {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-        .hero-pulse-dot {
-          animation: heroPulseDot 1.2s ease-in-out infinite;
-        }
+        .hero-pulse-dot { }
         @keyframes heroChipEnter {
-          from { opacity: 0; transform: translateX(20px); }
-          to { opacity: 1; transform: translateX(0); }
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         .hero-chip-enter {
           animation: heroChipEnter 0.4s ease-out;

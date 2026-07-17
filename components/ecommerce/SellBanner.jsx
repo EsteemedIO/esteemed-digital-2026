@@ -111,30 +111,34 @@ export default function SellBanner() {
           <FashionStore />
         </EBrowser>
 
-        {/* Floating commerce chips */}
+        {/* Commerce chips — fly in from bottom, stay put */}
         <div className="absolute z-[3] bottom-4 right-4 flex flex-col gap-2">
-          <div className="sell-float-a bg-white rounded-xl flex items-center gap-2" style={{ padding: "7px 12px", boxShadow: "0 10px 20px -8px rgba(0,0,0,0.4)", fontSize: 11, fontWeight: 600, color: "#1A1A1A" }}>
+          <div className="sell-flyin bg-white rounded-xl flex items-center gap-2" style={{ padding: "7px 12px", boxShadow: "0 10px 20px -8px rgba(0,0,0,0.4)", fontSize: 11, fontWeight: 600, color: "#1A1A1A", animationDelay: "0.3s" }}>
             <span style={{ width: 7, height: 7, borderRadius: 7, background: "#3CC97A" }} />
             🛒 Added to cart · Ceramic Mug
           </div>
-          <div className="sell-float-b bg-white rounded-xl flex items-center gap-2" style={{ padding: "7px 12px", boxShadow: "0 10px 20px -8px rgba(0,0,0,0.4)", fontSize: 11, fontWeight: 600, color: "#1A1A1A" }}>
+          <div className="sell-flyin bg-white rounded-xl flex items-center gap-2" style={{ padding: "7px 12px", boxShadow: "0 10px 20px -8px rgba(0,0,0,0.4)", fontSize: 11, fontWeight: 600, color: "#1A1A1A", animationDelay: "0.6s" }}>
             <span style={{ width: 7, height: 7, borderRadius: 7, background: "#3CC97A" }} />
             💳 Order confirmed · $127.00
           </div>
         </div>
 
         {/* Stats badge */}
-        <div className="sell-float-a absolute z-[3] bg-white rounded-2xl flex flex-col items-center justify-center gap-1" style={{ left: 12, top: 12, width: 90, height: 90, boxShadow: "0 16px 32px -12px rgba(0,0,0,0.4)" }}>
+        <div className="sell-flyin absolute z-[3] bg-white rounded-2xl flex flex-col items-center justify-center gap-1" style={{ left: 12, top: 56, width: 90, height: 90, boxShadow: "0 16px 32px -12px rgba(0,0,0,0.4)", animationDelay: "0.9s" }}>
           <div style={{ fontSize: 22, fontWeight: 800, color: "#1A1A1A", lineHeight: 1 }}>0%</div>
           <div style={{ fontSize: 7, fontWeight: 700, color: "rgba(26,26,26,0.5)", letterSpacing: 0.5, textTransform: "uppercase", textAlign: "center" }}>Platform fee</div>
         </div>
       </div>
 
       <style>{`
-        @keyframes sellFloatA { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        .sell-float-a { animation: sellFloatA 3s ease-in-out infinite; }
-        @keyframes sellFloatB { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        .sell-float-b { animation: sellFloatB 3.4s ease-in-out infinite reverse; }
+        @keyframes sellFlyin {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .sell-flyin {
+          animation: sellFlyin 0.5s ease-out forwards;
+          opacity: 0;
+        }
       `}</style>
     </>
   );

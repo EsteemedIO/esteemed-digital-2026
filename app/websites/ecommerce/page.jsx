@@ -52,9 +52,9 @@ const platforms = [
   {
     key: "esteemed",
     name: "Esteemed Commerce",
-    tagline: "Headless commerce, powered by Medusa.",
-    desc: "Our implementation of Medusa — the open source headless commerce engine built on Node.js. Fully decoupled, API-first, and designed for modern storefronts that need speed and flexibility.",
-    color: "#1A1A1A",
+    tagline: "Node/Next.js, powered by Medusa hosted on our cloud.",
+    desc: "Headless, API-first, built for teams that want to extend rather than configure. Your store runs on standard Medusa — take it with you if you go. Esteemed Intelligence and CRM integrate easily as add-ons and decouple the same way.",
+    color: "#2563EB",
     logo: (
       <div className="w-12 h-12 rounded-lg bg-ink flex items-center justify-center p-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
