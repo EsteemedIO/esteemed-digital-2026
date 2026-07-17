@@ -54,7 +54,7 @@ const platforms = [
     name: "Esteemed Commerce",
     tagline: "Node/Next.js, powered by Medusa hosted on our cloud.",
     desc: "Headless, API-first, built for teams that want to extend rather than configure. Your store runs on standard Medusa — take it with you if you go. Esteemed Intelligence and CRM integrate easily as add-ons and decouple the same way.",
-    color: "#2563EB",
+    color: "#0678BE",
     logo: (
       <div className="w-12 h-12 rounded-lg bg-ink flex items-center justify-center p-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -86,7 +86,7 @@ export default function EcommercePage() {
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               Choose the platform that fits your business
             </h2>
-            <p className="text-lg text-zinc-600 leading-relaxed mx-auto" style={{ maxWidth: 680 }}>
+            <p className="text-lg text-zinc-600 leading-relaxed mx-auto" style={{ maxWidth: 780 }}>
               We believe in open source with no vendor lock-in and ultimate flexibility. Our ecommerce solutions are used by the biggest brands in the world and supported by top experts.
             </p>
           </div>
