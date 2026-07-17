@@ -15,6 +15,8 @@ export const dynamic = "force-dynamic";
 const STRIPE_API_BASE = "https://api.stripe.com/v1";
 
 const COMMERCE_LOOKUP_PREFIXES = ["commerce_"];
+const WOO_LOOKUP_PREFIXES = ["woo_"];
+const DRUPAL_LOOKUP_PREFIXES = ["drupal_"];
 const CLOUD_LOOKUP_PREFIXES = ["cloud_", "managed_"];
 const CURATE_LOOKUP_PREFIXES = ["curate_"];
 
@@ -22,6 +24,8 @@ function classifyLookupKeys(keys) {
   const types = new Set();
   for (const key of keys) {
     if (COMMERCE_LOOKUP_PREFIXES.some((p) => key.startsWith(p))) types.add("commerce");
+    if (WOO_LOOKUP_PREFIXES.some((p) => key.startsWith(p))) types.add("woocommerce");
+    if (DRUPAL_LOOKUP_PREFIXES.some((p) => key.startsWith(p))) types.add("drupal");
     if (CLOUD_LOOKUP_PREFIXES.some((p) => key.startsWith(p))) types.add("cloud");
     if (CURATE_LOOKUP_PREFIXES.some((p) => key.startsWith(p))) types.add("curate");
   }
@@ -34,6 +38,91 @@ function extractTier(lookupKeys) {
     if (match) return match[1];
   }
   return "develop";
+}
+
+function extractTierByPrefix(lookupKeys, prefix) {
+  for (const key of lookupKeys) {
+    const re = new RegExp(`^${prefix}(\\w+?)_(monthly|annual)$`);
+    const match = key.match(re);
+    if (match) return match[1];
+  }
+  return "starter";
+}
+
+async function provisionCMS({ session, tier, lookupKeys, platform, framework, image }) {
+  const cloudConsoleUrl = process.env.CREATE_CLOUD_CONSOLE_URL;
+  const customerEmail = session.customer_details?.email || session.customer_email || "";
+  const customerName = session.customer_details?.name || "";
+  const appId = `${platform}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  const tenantSlug = customerEmail
+    ? customerEmail.split("@")[0].replace(/[^a-z0-9]/gi, "").slice(0, 20).toLowerCase()
+    : appId.slice(0, 20);
+
+  const payload = {
+    product: platform,
+    appId,
+    tier,
+    tenantSlug,
+    email: customerEmail,
+    name: customerName,
+    framework,
+    image,
+    stripeSessionId: session.id,
+    stripeCustomerId: session.customer,
+    stripeSubscriptionId: session.subscription,
+    lookupKeys,
+  };
+
+  console.log(`[${platform}-provision] Provisioning:`, JSON.stringify(payload));
+
+  // Call the commerce provisioner with platform-specific params
+  const provisionerUrl = process.env.COMMERCE_PROVISIONER_URL;
+  if (provisionerUrl) {
+    try {
+      const provisionerToken = process.env.COMMERCE_PROVISIONER_TOKEN;
+      const resp = await fetch(provisionerUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(provisionerToken ? { Authorization: `Bearer ${provisionerToken}` } : {}),
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        console.error(`[${platform}-provision] Provisioner error:`, result);
+        return { ok: false, error: result.error || "Provisioner rejected" };
+      }
+
+      // Register in cloud_apps
+      if (cloudConsoleUrl) {
+        try {
+          await fetch(new URL(`/api/cloud/apps/${appId}/register`, cloudConsoleUrl), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              environment: "production",
+              deployUrl: result.deployUrl || `https://${tenantSlug}.${platform}.esteemed.io`,
+              provider: "digitalocean",
+              region: result.region || "nyc3",
+              framework,
+              source: platform,
+            }),
+          });
+        } catch (e) {
+          console.error(`[${platform}-provision] Cloud registration failed:`, e.message);
+        }
+      }
+
+      return { ok: true, appId, tenantSlug, ...result };
+    } catch (err) {
+      console.error(`[${platform}-provision] Provisioner unreachable:`, err.message);
+      return { ok: false, error: "Provisioner unreachable" };
+    }
+  }
+
+  console.warn(`[${platform}-provision] No provisioner configured. Logged for manual provisioning.`);
+  return { ok: true, appId, tenantSlug, status: "pending-provisioner" };
 }
 
 async function verifyWebhookSignature(rawBody, signatureHeader, secret) {
@@ -209,7 +298,28 @@ export async function POST(request) {
     results.commerce = await provisionCommerce({ session, tier, lookupKeys });
   }
 
-  // Future: auto-provision cloud, curate, etc.
+  // Auto-provision WooCommerce
+  if (productTypes.has("woocommerce")) {
+    const tier = extractTierByPrefix(lookupKeys, "woo_");
+    results.woocommerce = await provisionCMS({
+      session, tier, lookupKeys,
+      platform: "wordpress",
+      framework: "wordpress",
+      image: process.env.WOO_IMAGE || "wordpress:latest",
+    });
+  }
+
+  // Auto-provision Drupal Commerce
+  if (productTypes.has("drupal")) {
+    const tier = extractTierByPrefix(lookupKeys, "drupal_");
+    results.drupal = await provisionCMS({
+      session, tier, lookupKeys,
+      platform: "drupal",
+      framework: "drupal",
+      image: process.env.DRUPAL_IMAGE || "drupal:latest",
+    });
+  }
+
   if (productTypes.has("cloud")) {
     console.log("[stripe-webhook] Cloud subscription activated — manual provisioning for now");
     results.cloud = { status: "logged" };

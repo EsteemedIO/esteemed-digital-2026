@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Esteemed — Business Email, powered by Google Workspace</title>
+  <link rel="icon" href="pricing/assets/icon-yellow-star.svg"/>
+  <link rel="stylesheet" href="pricing/esteemed-tokens.css"/>
+  <link rel="stylesheet" href="pricing/esteemed-shared.css"/>
+  <style>
+    html, body { margin: 0; padding: 0; background: var(--es-warm-50); }
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 48px; }
+    a { color: var(--es-fg-1); }
+    a:hover { color: var(--es-ink-900); }
+
+    .prog-tag { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; background: var(--es-ink-900); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 7px 13px 7px 11px; border-radius: 999px; }
+
+    /* black buttons roll to white + 2px black outline; yellow rolls to light yellow (shared default) */
+    .btn-primary { border: 2px solid transparent; }
+    .btn-secondary { border: 2px solid var(--es-ink-900); }
+    .btn-secondary:hover { background: #fff; color: var(--es-ink-900); border-color: var(--es-ink-900); }
+    .btn-ghost:hover { background: var(--es-yellow-200); border-color: var(--es-yellow-200); color: var(--es-ink-1000); }
+
+    /* button variants on yellow */
+    .btn-onYellow { background: var(--es-ink-900); color: #fff; border: 2px solid var(--es-ink-900); }
+    .btn-onYellow:hover { background: #fff; color: var(--es-ink-900); border-color: var(--es-ink-900); }
+    .btn-onYellowGhost { background: transparent; color: var(--es-ink-900); border: 1.5px solid rgba(0,0,0,.3); }
+    .btn-onYellowGhost:hover { border-color: var(--es-ink-900); background: rgba(0,0,0,.05); }
+
+    /* ---------- Hero ---------- */
+    .em-hero { background: var(--es-warm-50); overflow: hidden; border-bottom: 1px solid var(--es-border); }
+    .em-hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 56px; align-items: center; padding: 64px 48px 72px; }
+    .em-h1 { font-family: var(--es-font-display); font-weight: 800; font-size: clamp(38px,4.6vw,62px); letter-spacing: -.035em; line-height: 1.0; margin: 16px 0 0; text-wrap: balance; }
+    .em-em { color: var(--es-ink-900); }
+    .em-sub { font-size: 18px; line-height: 1.55; color: var(--es-fg-2); margin: 20px 0 0; max-width: 520px; }
+    .em-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .em-pw { display: inline-flex; align-items: center; gap: 7px; margin-top: 24px; font-size: 14px; font-weight: 600; color: var(--es-fg-2); }
+    .em-pw svg { display: block; }
+    .em-pw-name { color: var(--es-fg-1); font-weight: 700; }
+    .em-pw-div { color: var(--es-warm-400); }
+
+    /* hero art — photographic panel */
+    .em-hero-art { position: relative; }
+    .em-photo { width: 100%; aspect-ratio: 4 / 3.4; border-radius: 24px; box-shadow: var(--es-shadow-lg); background-image: linear-gradient(160deg, rgba(20,25,35,.05), rgba(20,25,35,.18)), url('https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/pair-working.jpg.webp?itok=9JhHeV4q'); background-size: cover; background-position: center; }
+    .em-photo-card { position: absolute; left: -18px; bottom: 30px; display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--es-border); border-radius: 16px; padding: 14px 18px 14px 15px; box-shadow: var(--es-shadow-md); opacity: 0; animation: emCardIn .7s var(--es-ease-out) .35s forwards; }
+    @keyframes emCardIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { .em-photo-card { opacity: 1; animation: none; } }
+    .em-pc-addr { font-size: 15px; font-weight: 700; color: var(--es-fg-1); }
+    .em-pc-meta { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--es-fg-3); margin-top: 2px; }
+    .em-pc-dot { width: 8px; height: 8px; border-radius: 999px; background: #1F8A4C; }
+
+    /* apps strip */
+    .em-apps { background: #E8EEF6; border-top: 1px solid var(--es-border); border-bottom: 1px solid var(--es-border); padding: 34px 0; }
+    .em-apps-lead { text-align: center; font-size: 14px; color: var(--es-fg-2); }
+    .em-apps-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 20px; }
+    .em-app-chip { display: inline-flex; align-items: center; gap: 11px; background: #fff; border: 1px solid var(--es-border); border-radius: 14px; padding: 11px 20px 11px 12px; font-size: 15px; font-weight: 600; color: var(--es-fg-1); box-shadow: var(--es-shadow-xs); }
+    .em-app-ico { width: 34px; height: 34px; border-radius: 9px; background: var(--es-warm-50); display: flex; align-items: center; justify-content: center; }
+
+    /* features */
+    .em-feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px 36px; margin-top: 52px; }
+    .em-feat-ico { width: 46px; height: 46px; border-radius: 13px; border: 1px solid var(--es-border-strong); background: #fff; display: flex; align-items: center; justify-content: center; color: var(--es-ink-900); }
+    .em-feat-accent { width: 28px; height: 3px; border-radius: 2px; background: var(--es-yellow-500); margin: 20px 0 0; }
+    .em-feat-title { font-family: var(--es-font-display); font-weight: 800; font-size: 19px; letter-spacing: -.01em; color: var(--es-fg-1); margin: 13px 0 0; }
+    .em-feat-body { font-size: 14.5px; line-height: 1.55; color: var(--es-fg-2); margin: 9px 0 0; }
+
+    /* plans */
+    .em-plans-sec { padding: 84px 0 24px; }
+    .em-plan-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
+    .em-plan { position: relative; background: #fff; border: 1px solid var(--es-border); border-radius: var(--es-radius-lg); padding: 30px 28px; display: flex; flex-direction: column; }
+    .em-plan.best { border-color: var(--es-ink-900); box-shadow: var(--es-shadow-md); }
+    .em-plan-badge { position: absolute; top: -12px; left: 28px; background: var(--es-yellow-500); color: var(--es-ink-1000); font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; }
+    .em-plan-name { font-family: var(--es-font-display); font-weight: 800; font-size: 20px; letter-spacing: -.01em; color: var(--es-fg-1); }
+    .em-plan-price { font-family: var(--es-font-display); font-weight: 800; font-size: 46px; letter-spacing: -.03em; color: var(--es-ink-900); margin: 12px 0 0; line-height: 1; }
+    .em-plan-cur { font-size: 24px; vertical-align: 22px; margin-right: 2px; }
+    .em-plan-per { font-family: var(--es-font-sans); font-size: 14px; font-weight: 600; color: var(--es-fg-3); letter-spacing: 0; }
+    .em-plan-store { display: inline-flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 13.5px; font-weight: 600; color: var(--es-fg-2); }
+    .em-plan-store svg { color: var(--es-yellow-700); }
+    .em-plan-points { list-style: none; margin: 24px 0 0; padding: 24px 0 0; border-top: 1px solid var(--es-border); display: flex; flex-direction: column; gap: 13px; }
+    .em-plan-points li { display: flex; gap: 10px; font-size: 14px; line-height: 1.4; color: var(--es-fg-2); }
+    .em-pt-ck { color: var(--es-ink-900); flex-shrink: 0; margin-top: 1px; }
+    .em-plans-foot { text-align: center; font-size: 13.5px; color: var(--es-fg-3); margin-top: 34px; }
+    .em-plans-foot a { font-weight: 700; color: var(--es-ink-900); text-decoration: underline; }
+
+    /* how it works — process rules (shared vocab) */
+    .step-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 48px; }
+    .step-rule { height: 2px; background: var(--es-ink-900); }
+    .step-num { font-family: var(--es-font-display); font-weight: 800; font-size: 34px; letter-spacing: -.03em; color: var(--es-ink-900); margin: 16px 0 0; line-height: 1; }
+    .step-title { font-family: var(--es-font-display); font-weight: 800; font-size: 19px; color: var(--es-fg-1); margin: 8px 0 0; }
+    .step-body { font-size: 14.5px; line-height: 1.55; color: var(--es-fg-2); margin: 8px 0 0; }
+
+    .final-cta-full { background: var(--es-yellow-500); padding: 92px 0; }
+
+    @media (max-width: 960px) {
+      .em-hero-grid { grid-template-columns: 1fr; gap: 44px; }
+      .em-feat-grid { grid-template-columns: repeat(2,1fr); }
+      .em-plan-grid { grid-template-columns: 1fr; }
+      .step-grid { grid-template-columns: repeat(2,1fr); }
+      .faq-wrap { grid-template-columns: 1fr !important; gap: 12px !important; }
+      .nav-links { display: none !important; }
+    }
+    @media (max-width: 680px) {
+      .container { padding: 0 24px; }
+      .em-hero-grid { padding: 44px 24px 56px; }
+      .em-feat-grid, .step-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="email/email-app.jsx"></script>
+</body>
+</html>

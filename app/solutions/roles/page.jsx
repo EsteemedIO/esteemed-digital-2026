@@ -1,57 +1,138 @@
 import Link from "next/link";
+import { Megaphone, Rocket, Cpu, Users } from "lucide-react";
 
 export const metadata = {
-  title: "Solutions by Role",
-  description: "Explore how Esteemed serves marketing leaders, founders, IT directors, and HR teams with tailored solutions.",
+  title: "Solutions by Role | Esteemed",
+  description:
+    "Explore how Esteemed serves marketing leaders, founders, IT directors, and HR teams with tailored tools and talent.",
 };
 
 const roles = [
-  { name: "Marketing Leaders", href: "/solutions/marketing-leaders", desc: "Launch sites faster, hire creative talent on demand, and automate with AI." },
-  { name: "Founders", href: "/solutions/founders", desc: "Launch MVPs, build your tech team, and scale without overhead." },
-  { name: "IT Directors", href: "/solutions/it-directors", desc: "Modernize infrastructure, augment teams, and deploy AI securely." },
-  { name: "HR Teams", href: "/solutions/hr-teams", desc: "Source vetted technical talent and streamline hiring workflows." },
+  {
+    icon: Megaphone,
+    name: "Marketing Leaders",
+    href: "/solutions/marketing-leaders",
+    desc: "Launch pages and campaigns faster, hire creative talent on demand, and automate with AI agents trained on your brand.",
+    highlights: ["AI Website Builder", "Content Production", "AI Agents"],
+  },
+  {
+    icon: Rocket,
+    name: "Founders",
+    href: "/solutions/founders",
+    desc: "Build your MVP, assemble your tech team, and scale your stack without the overhead of a full engineering org.",
+    highlights: ["Create", "Colleagues", "Cloud"],
+  },
+  {
+    icon: Cpu,
+    name: "IT Directors",
+    href: "/solutions/it-directors",
+    desc: "Modernize infrastructure, augment teams on demand, and deploy AI tools with enterprise-grade security.",
+    highlights: ["Cloud Hosting", "Intelligence", "Support"],
+  },
+  {
+    icon: Users,
+    name: "HR Teams",
+    href: "/solutions/hr-teams",
+    desc: "Source vetted technical talent, streamline hiring workflows, and manage your contingent workforce at scale.",
+    highlights: ["Colleagues", "Hire ATS", "Intelligence"],
+  },
 ];
 
 export default function RolesPage() {
   return (
-    <div className="min-h-screen">
+    <main className="bg-paper text-ink">
       {/* Hero */}
-      <section className="py-28">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Solutions by Role
-          </h1>
-          <p className="text-xl text-zinc-600 max-w-2xl mx-auto">
-            Whatever your role, Esteemed has tools and talent tailored to your needs.
+      <section className="relative overflow-hidden bg-paper">
+        <div className="mx-auto max-w-7xl px-6 pb-16 pt-28 md:pt-36 text-center">
+          <p className="text-sm font-semibold uppercase tracking-widest text-ink/50 mb-4">
+            By Role
+          </p>
+          <h1 className="heading-2 mb-6">Built for How You Work</h1>
+          <p className="subtitle mx-auto max-w-2xl text-ink/70">
+            Whatever your role, Esteemed combines AI tools with expert talent to
+            help you move faster and deliver more.
           </p>
         </div>
       </section>
 
-      <section className="py-16 border-t border-zinc-100">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {roles.map((role) => (
-              <Link key={role.name} href={role.href} className="rounded-2xl border border-zinc-200 p-6 hover:border-zinc-400 transition-colors">
-                <h3 className="text-lg font-semibold text-ink mb-2">{role.name}</h3>
-                <p className="text-sm text-zinc-500">{role.desc}</p>
-              </Link>
-            ))}
+      {/* Role Cards */}
+      <section className="bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="grid gap-8 sm:grid-cols-2">
+            {roles.map((role) => {
+              const Icon = role.icon;
+              return (
+                <Link
+                  key={role.name}
+                  href={role.href}
+                  className="group rounded-2xl border border-neutral-200 bg-paper p-8 transition hover:shadow-lg hover:border-ink/30"
+                >
+                  <span className="icon-badge icon-badge-lg mb-5">
+                    <Icon />
+                  </span>
+                  <h3 className="mb-2 text-xl font-bold">{role.name}</h3>
+                  <p className="text-ink/70 mb-4">{role.desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {role.highlights.map((h) => (
+                      <span
+                        key={h}
+                        className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-ink/60"
+                      >
+                        {h}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section className="bg-ink py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Not sure where to start?</h2>
-          <p className="text-zinc-400 mb-8">Talk to our team and we will match you with the right solution.</p>
+      {/* Cross-sell */}
+      <section className="bg-paper">
+        <div className="mx-auto max-w-7xl px-6 py-20 text-center">
+          <h2 className="heading-2 mb-4">One Platform, Every Team</h2>
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-ink/60">
+            Marketing, engineering, HR, and leadership all work from the same
+            Esteemed platform. Share intelligence, coordinate hiring, and launch
+            projects together.
+          </p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <Link
+              href="/pricing"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3 font-semibold text-ink transition hover:bg-accent-hover"
+            >
+              View Plans
+            </Link>
+            <Link
+              href="/solutions/use-cases"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-8 py-3 font-semibold text-ink transition hover:bg-ink/5"
+            >
+              Browse Use Cases
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-ink">
+        <div className="mx-auto max-w-3xl px-6 py-20 text-center">
+          <h2 className="mb-6 text-3xl font-bold text-paper md:text-4xl">
+            Not sure where to start?
+          </h2>
+          <p className="mb-8 text-lg text-paper/70">
+            Talk to our team and we will match you with the right solution for
+            your role.
+          </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="inline-block rounded-full bg-accent px-10 py-4 font-semibold text-ink transition hover:bg-accent-hover"
           >
             Contact Us
           </Link>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

@@ -46,7 +46,10 @@ export default function SolutionsPage() {
       {/* Use Cases */}
       <section className="py-16 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-8">Use Cases</h2>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold text-ink">Use Cases</h2>
+            <Link href="/solutions/use-cases" className="text-sm font-semibold text-ink/60 hover:text-ink transition-colors">View all &rarr;</Link>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {useCases.map((item) => (
               <Link key={item.name} href={item.href} className="rounded-2xl border border-zinc-200 p-6 hover:border-zinc-400 transition-colors">
@@ -60,7 +63,10 @@ export default function SolutionsPage() {
       {/* Roles */}
       <section className="py-16 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-8">By Role</h2>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold text-ink">By Role</h2>
+            <Link href="/solutions/roles" className="text-sm font-semibold text-ink/60 hover:text-ink transition-colors">View all &rarr;</Link>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {roles.map((item) => (
               <Link key={item.name} href={item.href} className="rounded-2xl border border-zinc-200 p-6 hover:border-zinc-400 transition-colors">
@@ -74,7 +80,10 @@ export default function SolutionsPage() {
       {/* Segments */}
       <section className="py-16 border-t border-zinc-100">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-8">By Segment</h2>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold text-ink">By Segment</h2>
+            <Link href="/solutions/segments" className="text-sm font-semibold text-ink/60 hover:text-ink transition-colors">View all &rarr;</Link>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {segments.map((item) => (
               <Link key={item.name} href={item.href} className="rounded-2xl border border-zinc-200 p-6 hover:border-zinc-400 transition-colors">
