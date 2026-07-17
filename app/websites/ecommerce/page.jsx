@@ -83,8 +83,8 @@ export default function EcommercePage() {
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
               Open Source Commerce
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
-              Choose the platform<br />that fits your business
+            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4" style={{ textWrap: "balance", maxWidth: 520, margin: "0 auto 16px" }}>
+              Choose the platform that fits your business
             </h2>
             <p className="text-lg text-zinc-600 leading-relaxed max-w-2xl mx-auto">
               We believe in open source with no vendor lock-in and ultimate flexibility. Our ecommerce solutions are used by the biggest brands in the world and supported by top experts.
@@ -137,7 +137,7 @@ export default function EcommercePage() {
         <ProductPricingBlock
           eyebrow="Esteemed Commerce plans"
           title="Infrastructure pricing, not transaction fees"
-          description="Unlimited products, orders, and customers on every plan. 0% GMV — you never pay a cut of your sales. You scale by infrastructure (compute, storage, bandwidth), not by how much you sell. Auto-provisioned on Esteemed Cloud."
+          description="The open-source Medusa framework is free — you only pay for managed infrastructure. Zero platform fees, zero GMV surcharges. Exceed your base allocation? Pay only for what you use: ~$0.16/compute hr, ~$0.125/GB transfer, ~$0.50/GB-mo storage. Additional environments ~$20/mo, extra seats ~$30/mo."
           productKey="commerce"
           plans={commercePlans}
           ctaLabel="Buy Now"

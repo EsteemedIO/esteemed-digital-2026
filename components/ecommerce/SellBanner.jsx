@@ -173,10 +173,10 @@ export default function SellBanner() {
           Esteemed Commerce
         </p>
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-          The most flexible ecommerce platform
+          Own your store.<br />Not the other way around.
         </h2>
         <p className="text-lg text-white/80 leading-relaxed mb-8 max-w-lg">
-          Full control of your checkout, your data, your costs. Choose any payments, any features, any host. Sell online and in-person, locally or globally — your platform adapts to you.
+          Choose from top open-source commerce platforms with expert support to help you grow. You own your code, your data, and your customers — with zero platform fees and no per-transaction surcharges. Pay only for the infrastructure you use.
         </p>
         <div className="flex flex-wrap gap-4">
           <a
