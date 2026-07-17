@@ -53,12 +53,19 @@ function generateAppSpec({ appId, tenantSlug, tier, registry, image }) {
     services: [
       {
         name: "medusa-backend",
-        image: {
-          registry_type: "DOCR",
-          registry: registry,
-          repository: image.split(":")[0],
-          tag: image.split(":")[1] || "latest",
-        },
+        image: registry === "dockerhub"
+          ? {
+              registry_type: "DOCKER_HUB",
+              registry: image.split("/")[0] || "medusajs",
+              repository: image.split("/").slice(1).join("/").split(":")[0] || "medusa",
+              tag: image.split(":")[1] || "latest",
+            }
+          : {
+              registry_type: "DOCR",
+              registry: registry,
+              repository: image.split(":")[0],
+              tag: image.split(":")[1] || "latest",
+            },
         instance_size_slug: specs.instanceSize,
         instance_count: specs.instanceCount,
         http_port: 9000,
