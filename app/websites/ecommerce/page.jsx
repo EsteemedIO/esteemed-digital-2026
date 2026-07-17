@@ -22,6 +22,7 @@ const features = [
 
 const platforms = [
   {
+    key: "woocommerce",
     name: "WooCommerce",
     tagline: "The world's most popular ecommerce platform.",
     desc: "Built on WordPress, WooCommerce powers over 30% of all online stores. Thousands of extensions, full ownership of your data, and a massive ecosystem of developers and themes.",
@@ -35,6 +36,7 @@ const platforms = [
     features: ["30%+ of all online stores", "Thousands of plugins", "Full data ownership", "Massive developer ecosystem"],
   },
   {
+    key: "drupal",
     name: "Drupal Commerce",
     tagline: "Enterprise-grade commerce flexibility.",
     desc: "Drupal Commerce is the open source commerce framework for organizations that need complex catalogs, multi-language, multi-currency, and deeply customized checkout flows.",
@@ -48,6 +50,7 @@ const platforms = [
     features: ["Complex catalogs & pricing", "Multi-language & currency", "Custom checkout flows", "Enterprise scalability"],
   },
   {
+    key: "esteemed",
     name: "Esteemed Commerce",
     tagline: "Headless commerce, powered by Medusa.",
     desc: "Our implementation of Medusa — the open source headless commerce engine built on Node.js. Fully decoupled, API-first, and designed for modern storefronts that need speed and flexibility.",
@@ -80,12 +83,11 @@ export default function EcommercePage() {
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
               Open Source Commerce
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4" style={{ textWrap: "balance", maxWidth: 520, margin: "0 auto 16px" }}>
+            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               Choose the platform that fits your business
             </h2>
-            <p className="text-lg text-zinc-600 leading-relaxed mx-auto" style={{ maxWidth: 580 }}>
-              We believe in open source with no vendor lock-in and ultimate flexibility.<br className="hidden md:inline" />
-              Our ecommerce solutions are used by the biggest brands in the world and supported by top experts.
+            <p className="text-lg text-zinc-600 leading-relaxed mx-auto" style={{ maxWidth: 680 }}>
+              We believe in open source with no vendor lock-in and ultimate flexibility. Our ecommerce solutions are used by the biggest brands in the world and supported by top experts.
             </p>
           </div>
 
@@ -111,13 +113,15 @@ export default function EcommercePage() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href="/contact"
-                  className="mt-auto pt-6 w-full text-center inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-ink text-white text-sm font-bold hover:bg-zinc-800 transition-colors"
-                >
-                  Get Started
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+                <div className="mt-auto pt-6">
+                  <Link
+                    href={`/websites/ecommerce/start?platform=${p.key}`}
+                    className="w-full text-center inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-ink text-white text-sm font-bold hover:bg-zinc-800 transition-colors"
+                  >
+                    Get Started
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

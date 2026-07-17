@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Megaphone, Rocket, Cpu, Users } from "lucide-react";
+import { Megaphone, Rocket, Cpu, Users, ArrowRight } from "lucide-react";
 
 export const metadata = {
   title: "Solutions by Role | Esteemed",
@@ -45,13 +45,13 @@ export default function RolesPage() {
       <section className="hero-block-outer">
         <div className="hero-block bg-zinc-100 px-6 py-16 md:py-20 text-center">
           <div className="max-w-2xl mx-auto">
-            <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
+            <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               By Role
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ink leading-tight mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink leading-tight mb-4">
               Built for how you work
             </h1>
-            <p className="text-lg text-zinc-600 leading-relaxed">
+            <p className="text-base text-zinc-600 leading-relaxed max-w-lg mx-auto">
               Whatever your role, Esteemed combines AI tools with expert talent to
               help you move faster and deliver more.
             </p>
@@ -60,8 +60,8 @@ export default function RolesPage() {
       </section>
 
       {/* Role Cards */}
-      <section className="py-20 bg-zinc-50">
-        <div className="max-w-5xl mx-auto px-6">
+      <section className="bg-zinc-50 py-20">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {roles.map((role) => {
               const Icon = role.icon;
@@ -69,11 +69,11 @@ export default function RolesPage() {
                 <Link
                   key={role.name}
                   href={role.href}
-                  className="group rounded-2xl border border-zinc-200 bg-white p-8 hover:border-zinc-400 transition-colors"
+                  className="group bg-white rounded-xl border border-zinc-200 p-8 hover:border-zinc-400 transition-colors"
                 >
                   <Icon className="w-8 h-8 text-ink mb-4" strokeWidth={1.5} />
-                  <h3 className="text-xl font-bold text-ink mb-2">{role.name}</h3>
-                  <p className="text-sm text-zinc-600 leading-relaxed mb-4">
+                  <h3 className="text-lg font-bold text-ink mb-2">{role.name}</h3>
+                  <p className="text-zinc-600 text-sm leading-relaxed mb-4">
                     {role.desc}
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -95,28 +95,32 @@ export default function RolesPage() {
 
       {/* Cross-sell */}
       <section className="py-20 border-t border-zinc-100">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-ink mb-4">
-            One platform, every team
-          </h2>
-          <p className="text-lg text-zinc-600 leading-relaxed mb-8 max-w-2xl mx-auto">
-            Marketing, engineering, HR, and leadership all work from the same
-            Esteemed platform. Share intelligence, coordinate hiring, and launch
-            projects together.
-          </p>
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Link
-              href="/pricing"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
-            >
-              View Plans
-            </Link>
-            <Link
-              href="/solutions/use-cases"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-zinc-50 transition-colors"
-            >
-              Browse Use Cases
-            </Link>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-ink mb-6">
+                One platform, every team
+              </h2>
+              <p className="text-lg text-zinc-600 leading-relaxed">
+                Marketing, engineering, HR, and leadership all work from the same
+                Esteemed platform. Share intelligence, coordinate hiring, and launch
+                projects together.
+              </p>
+            </div>
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <Link
+                href="/pricing"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+              >
+                View Plans
+              </Link>
+              <Link
+                href="/solutions/use-cases"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-zinc-50 transition-colors"
+              >
+                Browse Use Cases
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -127,15 +131,12 @@ export default function RolesPage() {
           <h2 className="text-3xl font-bold text-white mb-6">
             Not sure where to start?
           </h2>
-          <p className="text-zinc-400 mb-8">
-            Talk to our team and we will match you with the right solution for
-            your role.
-          </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
-            Contact Us
+            Talk to an Expert
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

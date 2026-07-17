@@ -1,6 +1,8 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSession, signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, Loader2, ArrowRight } from "lucide-react";
 import { checkoutHref } from "@/lib/pricing-catalog";
@@ -41,8 +43,17 @@ function GoogleMark() {
   );
 }
 
-export default function EcommerceStartPage() {
+const platformLabels = {
+  woocommerce: "WooCommerce",
+  drupal: "Drupal Commerce",
+  esteemed: "Esteemed Commerce",
+};
+
+function EcommerceStartContent() {
   const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
+  const platform = searchParams.get("platform") || "";
+  const platformName = platformLabels[platform] || "";
 
   if (status === "loading") {
     return (
@@ -59,7 +70,7 @@ export default function EcommerceStartPage() {
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
-              Esteemed Commerce
+              {platformName || "Esteemed Commerce"}
             </p>
             <h1 className="text-4xl md:text-5xl font-bold text-ink mb-4">
               Choose your plan
@@ -183,5 +194,13 @@ export default function EcommerceStartPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function EcommerceStartPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-[calc(100vh-64px)] items-center justify-center"><Loader2 className="h-6 w-6 animate-spin text-zinc-400" /></div>}>
+      <EcommerceStartContent />
+    </Suspense>
   );
 }

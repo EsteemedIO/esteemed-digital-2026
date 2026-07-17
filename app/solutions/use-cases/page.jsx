@@ -48,22 +48,19 @@ const useCases = [
 
 const steps = [
   {
-    icon: MessageSquare,
+    number: "01",
     title: "Describe your goal",
-    description:
-      "Tell us what you are building, who it is for, and what success looks like.",
+    desc: "Tell us what you are building, who it is for, and what success looks like.",
   },
   {
-    icon: Bot,
+    number: "02",
     title: "AI generates a starting point",
-    description:
-      "Esteemed Create builds your site, tool, or workflow in minutes using AI.",
+    desc: "Esteemed Create builds your site, tool, or workflow in minutes using AI.",
   },
   {
-    icon: Users,
+    number: "03",
     title: "Experts help you grow",
-    description:
-      "Connect with vetted professionals through Colleagues for design, strategy, and ongoing support.",
+    desc: "Connect with vetted professionals through Colleagues for design, strategy, and ongoing support.",
   },
 ];
 
@@ -74,13 +71,13 @@ export default function UseCasesPage() {
       <section className="hero-block-outer">
         <div className="hero-block bg-zinc-100 px-6 py-16 md:py-20 text-center">
           <div className="max-w-2xl mx-auto">
-            <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
+            <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Use Cases
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ink leading-tight mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink leading-tight mb-4">
               What are you building?
             </h1>
-            <p className="text-lg text-zinc-600 leading-relaxed">
+            <p className="text-base text-zinc-600 leading-relaxed max-w-lg mx-auto">
               Whether you need to ship a marketing site this week or modernize a
               decade-old platform, Esteemed has the tools and talent to get it done.
             </p>
@@ -89,8 +86,8 @@ export default function UseCasesPage() {
       </section>
 
       {/* Use Case Cards */}
-      <section className="py-20 bg-zinc-50">
-        <div className="max-w-5xl mx-auto px-6">
+      <section className="bg-zinc-50 py-20">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {useCases.map((uc) => {
               const Icon = uc.icon;
@@ -98,11 +95,11 @@ export default function UseCasesPage() {
                 <Link
                   key={uc.name}
                   href={uc.href}
-                  className="group rounded-2xl border border-zinc-200 bg-white p-8 hover:border-zinc-400 transition-colors"
+                  className="group bg-white rounded-xl border border-zinc-200 p-8 hover:border-zinc-400 transition-colors"
                 >
                   <Icon className="w-8 h-8 text-ink mb-4" strokeWidth={1.5} />
-                  <h3 className="text-xl font-bold text-ink mb-2">{uc.name}</h3>
-                  <p className="text-sm text-zinc-600 leading-relaxed mb-4">
+                  <h3 className="text-lg font-bold text-ink mb-2">{uc.name}</h3>
+                  <p className="text-zinc-600 text-sm leading-relaxed mb-4">
                     {uc.desc}
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -123,29 +120,29 @@ export default function UseCasesPage() {
       </section>
 
       {/* How it works */}
-      <section className="py-20 border-t border-zinc-100">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-10 text-center">
-            How it works
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {steps.map((step, i) => (
-              <div
-                key={step.title}
-                className="rounded-2xl border border-zinc-200 p-8 text-center"
-              >
-                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-accent text-ink text-sm font-bold mx-auto mb-4">
-                  {i + 1}
-                </span>
-                <step.icon
-                  className="w-8 h-8 text-ink mx-auto mb-4"
-                  strokeWidth={1.5}
-                />
-                <h3 className="text-xl font-bold text-ink mb-2">
+      <section className="bg-zinc-50 py-20 border-t border-zinc-200">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-3xl mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
+              How it works
+            </h2>
+            <p className="text-lg text-zinc-600 leading-relaxed">
+              Every use case follows the same pattern: AI builds the first
+              version, humans refine and scale it.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-8">
+            {steps.map((step) => (
+              <div key={step.number}>
+                <div className="h-0.5 bg-ink mb-4" />
+                <div className="text-3xl font-extrabold tracking-tight text-ink mb-2">
+                  {step.number}
+                </div>
+                <h3 className="text-lg font-extrabold text-ink mb-2">
                   {step.title}
                 </h3>
                 <p className="text-sm text-zinc-600 leading-relaxed">
-                  {step.description}
+                  {step.desc}
                 </p>
               </div>
             ))}
@@ -159,14 +156,12 @@ export default function UseCasesPage() {
           <h2 className="text-3xl font-bold text-white mb-6">
             Not sure where to start?
           </h2>
-          <p className="text-zinc-400 mb-8">
-            Talk to our team and we will help you find the right approach.
-          </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
-            Contact Us
+            Talk to an Expert
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
