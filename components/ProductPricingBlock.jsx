@@ -94,33 +94,31 @@ function PricingCard({
           Recommended
         </div>
       )}
-      <div className="flex flex-col px-6 pt-6">
+      <div className="flex flex-1 flex-col p-6">
         <h3 className="text-2xl font-black text-ink">{plan.name}</h3>
-        <p className="mt-2 min-h-[72px] text-sm leading-6 text-zinc-600">{plan.description || plan.basis}</p>
-        <div className="mt-5 min-h-[24px]">
-          {(price.badge || price.compareAt) && (
-            <div className="flex flex-wrap items-center gap-2">
-              {price.badge && (
-                <Chip
-                  size="sm"
-                  radius="sm"
-                  classNames={{
-                    base: "bg-accent text-ink",
-                    content: "px-1 text-xs font-black",
-                  }}
-                >
-                  {price.badge}
-                </Chip>
-              )}
-              {price.compareAt && <span className="text-xs font-bold text-zinc-500 line-through">{price.compareAt}</span>}
-            </div>
-          )}
-        </div>
-        <div className="mt-2 flex items-end gap-1">
+        <p className="mt-2 text-sm leading-6 text-zinc-600">{plan.description || plan.basis}</p>
+        {(price.badge || price.compareAt) && (
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            {price.badge && (
+              <Chip
+                size="sm"
+                radius="sm"
+                classNames={{
+                  base: "bg-accent text-ink",
+                  content: "px-1 text-xs font-black",
+                }}
+              >
+                {price.badge}
+              </Chip>
+            )}
+            {price.compareAt && <span className="text-xs font-bold text-zinc-500 line-through">{price.compareAt}</span>}
+          </div>
+        )}
+        <div className="mt-3 flex items-end gap-1">
           <span className="text-4xl font-black text-ink">{price.headline}</span>
           {price.suffix && <span className="pb-1 text-sm font-bold text-zinc-700">{price.suffix}</span>}
         </div>
-        <div className="mt-1 min-h-[40px]">
+        <div className="mt-1">
           {price.note && <p className="text-xs font-semibold text-zinc-600">{price.note}</p>}
           {price.annualHint && (
             <p className="mt-1 text-xs font-bold text-emerald-600">{price.annualHint}</p>
@@ -129,9 +127,8 @@ function PricingCard({
             <p className="mt-1 text-xs text-zinc-500">Founding rate: {formatMoney(plan.founding)}/mo for first 12 months.</p>
           )}
         </div>
-      </div>
 
-      <ul className="mt-6 flex-1 space-y-3 px-6">
+      <ul className="mt-6 flex-1 space-y-3">
         {(plan.features || []).map((feature) => {
           const featureText = typeof feature === "string" ? feature : feature.text;
           const featureLabel = typeof feature === "string" ? null : feature.label;
@@ -163,10 +160,11 @@ function PricingCard({
 
       <Link
         href={href}
-        className="mx-6 mb-6 mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
+        className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
       >
         {plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : ctaLabel || "Buy Now"}
       </Link>
+      </div>
     </article>
   );
 }
