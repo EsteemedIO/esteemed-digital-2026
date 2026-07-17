@@ -1,9 +1,11 @@
 import { expect, test } from "@playwright/test";
 import {
+  DEFAULT_PLATFORM_IMAGES,
   generateAppSpec,
   isInternalProvisionRequest,
   parseDockerImage,
   stableProvisioningId,
+  validateCmsStorageConfig,
 } from "../lib/commerce-provisioning.js";
 import { verifyWebhookSignature } from "../lib/stripe-webhook.js";
 
@@ -79,6 +81,72 @@ test("generates platform-specific App Platform specs", () => {
   expect(drupal.services[0].name).toBe("drupal");
   expect(drupal.services[0].http_port).toBe(80);
   expect(drupal.databases[0].engine).toBe("PG");
+});
+
+test("generates CMS specs with ecommerce-ready default images and persistent file storage envs", () => {
+  const cmsStorage = {
+    bucket: "esteemed-commerce-files",
+    region: "nyc3",
+    endpoint: "https://nyc3.digitaloceanspaces.com",
+    accessKeyId: "access-key",
+    secretAccessKey: "secret-key",
+    prefix: "wordpress/test",
+  };
+
+  const wordpress = generateAppSpec({
+    appId: "wordpress-test",
+    tenantSlug: "test",
+    tier: "starter",
+    registry: "dockerhub",
+    image: DEFAULT_PLATFORM_IMAGES.wordpress,
+    platform: "wordpress",
+    cmsStorage,
+  });
+  expect(wordpress.services[0].image.repository).toBe("woocommerce");
+  expect(wordpress.services[0].envs).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ key: "CMS_FILES_S3_BUCKET", value: "esteemed-commerce-files" }),
+      expect.objectContaining({ key: "CMS_FILES_S3_PREFIX", value: "wordpress/test" }),
+      expect.objectContaining({ key: "CMS_FILES_S3_SECRET_ACCESS_KEY", type: "SECRET" }),
+      expect.objectContaining({ key: "WORDPRESS_ADMIN_PASSWORD", type: "SECRET" }),
+    ]),
+  );
+
+  const drupal = generateAppSpec({
+    appId: "drupal-test",
+    tenantSlug: "test",
+    tier: "starter",
+    registry: "dockerhub",
+    image: DEFAULT_PLATFORM_IMAGES.drupal,
+    platform: "drupal",
+    cmsStorage: { ...cmsStorage, prefix: "drupal/test" },
+  });
+  expect(drupal.services[0].image.repository).toBe("drupal-commerce");
+  expect(drupal.services[0].envs).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ key: "CMS_FILES_S3_BUCKET", value: "esteemed-commerce-files" }),
+      expect.objectContaining({ key: "CMS_FILES_S3_PREFIX", value: "drupal/test" }),
+      expect.objectContaining({ key: "CMS_FILES_S3_SECRET_ACCESS_KEY", type: "SECRET" }),
+      expect.objectContaining({ key: "DRUPAL_ADMIN_PASSWORD", type: "SECRET" }),
+    ]),
+  );
+});
+
+test("requires complete CMS storage config for managed CMS provisioning", () => {
+  expect(validateCmsStorageConfig({})).toEqual([
+    "CMS_FILES_S3_BUCKET",
+    "CMS_FILES_S3_REGION",
+    "CMS_FILES_S3_ENDPOINT",
+    "CMS_FILES_S3_ACCESS_KEY_ID",
+    "CMS_FILES_S3_SECRET_ACCESS_KEY",
+  ]);
+  expect(validateCmsStorageConfig({
+    bucket: "files",
+    region: "nyc3",
+    endpoint: "https://nyc3.digitaloceanspaces.com",
+    accessKeyId: "key",
+    secretAccessKey: "secret",
+  })).toEqual([]);
 });
 
 test("accepts both internal auth headers for provisioner calls", () => {

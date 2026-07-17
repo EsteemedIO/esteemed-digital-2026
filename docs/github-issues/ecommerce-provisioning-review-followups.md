@@ -193,9 +193,9 @@ Expected fix:
 - [x] Webhook processing is idempotent for Stripe event/session/subscription retries.
 - [x] Internal provisioning auth works between the Stripe webhook and `/api/commerce/provision`.
 - [x] Generated DigitalOcean App Platform specs are valid for Medusa, WooCommerce, and Drupal Commerce.
-- [ ] WooCommerce provisioning creates a working WooCommerce site, not plain WordPress.
-- [ ] Drupal Commerce provisioning creates a working Drupal Commerce site, not plain Drupal.
-- [ ] WordPress/Drupal files and installed extensions have a persistence/backup strategy.
+- [x] WooCommerce provisioning creates a working WooCommerce site, not plain WordPress.
+- [x] Drupal Commerce provisioning creates a working Drupal Commerce site, not plain Drupal.
+- [x] WordPress/Drupal files and installed extensions have a persistence/backup strategy.
 - [x] Stripe webhook signature verification rejects missing/invalid signatures when a webhook secret is configured.
 - [x] Provisioning failures have a durable retry path or return an error that triggers Stripe retry.
 - [x] Pricing/checkout UI accurately reflects which commerce products are self-serve versus custom.
@@ -222,10 +222,22 @@ Implemented:
 - WordPress/WooCommerce and Drupal/Drupal Commerce no longer fall back to plain upstream CMS images. They require explicit ecommerce-ready images (`WOO_IMAGE`, `DRUPAL_IMAGE`) or a request-provided image.
 - Added focused Playwright tests in `tests/commerce-provisioning.spec.js`.
 
-Still open:
+### 2026-07-17 follow-up
 
-- Build or provide ecommerce-ready WooCommerce and Drupal Commerce images/bootstrap flows.
-- Add persistence/backup strategy for WordPress/Drupal files and installed extensions.
+Implemented:
+
+- Added `ops/commerce-images/woocommerce`, a WooCommerce-ready WordPress image with WP-CLI, WooCommerce, WP Offload Media Lite, and startup activation/bootstrap.
+- Added `ops/commerce-images/drupal-commerce`, a Drupal Commerce-ready image with Commerce modules, S3FS, Drush, and startup module/bootstrap handling.
+- Provisioning now defaults WooCommerce to `esteemed/woocommerce:latest` and Drupal Commerce to `esteemed/drupal-commerce:latest`.
+- Provisioning now requires object storage settings for WordPress/Drupal (`CMS_FILES_S3_*`) so customer uploads and CMS-managed files are backed by durable storage instead of ephemeral container filesystems.
+- Generated specs pass CMS file storage envs into the app service and mark access keys/passwords as secret envs.
+- `.env.example` and `.env.local.example` document the image and object-storage settings.
+- Focused tests now cover ecommerce-ready default images and required CMS storage config.
+
+Operational follow-through:
+
+- Build and push `esteemed/woocommerce:latest` and `esteemed/drupal-commerce:latest`, or set `WOO_IMAGE` / `DRUPAL_IMAGE` to the pushed registry paths.
+- Provide production `CMS_FILES_S3_*` values before enabling self-serve WooCommerce or Drupal Commerce checkout.
 - Full production build has been rerun successfully on the clean committed tree.
 
 ## Verification already run
@@ -244,7 +256,7 @@ npx playwright test tests/commerce-provisioning.spec.js
 
 Current full build result: pass.
 
-Focused coverage was added for Stripe webhook signature behavior, idempotent provisioning IDs, provisioner auth compatibility, Docker image parsing, and generated DigitalOcean App Platform specs.
+Focused coverage was added for Stripe webhook signature behavior, idempotent provisioning IDs, provisioner auth compatibility, Docker image parsing, generated DigitalOcean App Platform specs, ecommerce-ready CMS image defaults, and CMS storage requirements.
 
 ## Suggested labels
 

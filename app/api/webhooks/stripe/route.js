@@ -9,7 +9,7 @@
  */
 
 import { NextResponse } from "next/server";
-import { stableProvisioningId, tenantSlugFromEmail } from "@/lib/commerce-provisioning";
+import { DEFAULT_PLATFORM_IMAGES, stableProvisioningId, tenantSlugFromEmail } from "@/lib/commerce-provisioning";
 import { verifyWebhookSignature } from "@/lib/stripe-webhook";
 
 const COMMERCE_LOOKUP_PREFIXES = ["commerce_"];
@@ -289,7 +289,7 @@ export async function POST(request) {
       session, tier, lookupKeys,
       platform: "wordpress",
       framework: "wordpress",
-      image: process.env.WOO_IMAGE,
+      image: process.env.WOO_IMAGE || DEFAULT_PLATFORM_IMAGES.wordpress,
     });
   }
 
@@ -300,7 +300,7 @@ export async function POST(request) {
       session, tier, lookupKeys,
       platform: "drupal",
       framework: "drupal",
-      image: process.env.DRUPAL_IMAGE,
+      image: process.env.DRUPAL_IMAGE || DEFAULT_PLATFORM_IMAGES.drupal,
     });
   }
 

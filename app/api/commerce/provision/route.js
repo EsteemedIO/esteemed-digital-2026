@@ -15,6 +15,9 @@
  * - DO_API_TOKEN — DigitalOcean API token
  * - DOCR_REGISTRY — Container registry name (e.g., "esteemed")
  * - COMMERCE_MEDUSA_IMAGE — Image tag (e.g., "esteemed/medusa-starter:latest")
+ * - WOO_IMAGE — WooCommerce-ready image tag (defaults to esteemed/woocommerce:latest)
+ * - DRUPAL_IMAGE — Drupal Commerce-ready image tag (defaults to esteemed/drupal-commerce:latest)
+ * - CMS_FILES_S3_* — object storage settings for WordPress/Drupal files
  * - CREATE_CLOUD_CONSOLE_URL — Cloud console base URL for app registration
  */
 
@@ -22,10 +25,12 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import {
   COMMERCE_PLATFORMS,
+  DEFAULT_PLATFORM_IMAGES,
   generateAppSpec,
   isInternalProvisionRequest,
   platformDefaults,
   stableProvisioningId,
+  validateCmsStorageConfig,
 } from "@/lib/commerce-provisioning";
 
 const DO_API = "https://api.digitalocean.com/v2";
@@ -64,14 +69,6 @@ export async function POST(request) {
   }
 
   const doToken = process.env.DO_API_TOKEN;
-  if (!doToken) {
-    console.warn("[commerce-provision] DO_API_TOKEN not configured");
-    return NextResponse.json({
-      ok: true,
-      status: "pending-provisioner",
-      message: "DigitalOcean API token not configured. Instance logged for manual provisioning.",
-    });
-  }
 
   let body;
   try {
@@ -88,6 +85,7 @@ export async function POST(request) {
     platform = "commerce",
     framework: requestedFramework,
     image: requestedImage,
+    cmsStorage: requestedCmsStorage,
     stripeSessionId,
     stripeSubscriptionId,
   } = body;
@@ -112,26 +110,49 @@ export async function POST(request) {
 
   const registry = process.env.DOCR_REGISTRY || "dockerhub";
   const defaultImages = {
-    commerce: process.env.COMMERCE_MEDUSA_IMAGE || "medusajs/medusa:latest",
-    wordpress: process.env.WOO_IMAGE,
-    drupal: process.env.DRUPAL_IMAGE,
+    commerce: process.env.COMMERCE_MEDUSA_IMAGE || DEFAULT_PLATFORM_IMAGES.commerce,
+    wordpress: process.env.WOO_IMAGE || DEFAULT_PLATFORM_IMAGES.wordpress,
+    drupal: process.env.DRUPAL_IMAGE || DEFAULT_PLATFORM_IMAGES.drupal,
   };
   const image = requestedImage || defaultImages[platform] || defaultImages.commerce;
-  if ((platform === "wordpress" || platform === "drupal") && !requestedImage && !defaultImages[platform]) {
-    const productName = platform === "wordpress" ? "WooCommerce" : "Drupal Commerce";
-    return NextResponse.json(
-      {
-        ok: false,
-        status: "not-configured",
-        error: `${productName} provisioning requires a custom ecommerce-ready image.`,
-      },
-      { status: 501 },
-    );
+
+  const cmsStorage = {
+    bucket: requestedCmsStorage?.bucket || process.env.CMS_FILES_S3_BUCKET,
+    region: requestedCmsStorage?.region || process.env.CMS_FILES_S3_REGION,
+    endpoint: requestedCmsStorage?.endpoint || process.env.CMS_FILES_S3_ENDPOINT,
+    accessKeyId: requestedCmsStorage?.accessKeyId || process.env.CMS_FILES_S3_ACCESS_KEY_ID,
+    secretAccessKey: requestedCmsStorage?.secretAccessKey || process.env.CMS_FILES_S3_SECRET_ACCESS_KEY,
+    prefix: requestedCmsStorage?.prefix || `${platform}/${tenantSlug}`,
+  };
+
+  if (platform === "wordpress" || platform === "drupal") {
+    const missing = validateCmsStorageConfig(cmsStorage);
+    if (missing.length > 0) {
+      const productName = platform === "wordpress" ? "WooCommerce" : "Drupal Commerce";
+      return NextResponse.json(
+        {
+          ok: false,
+          status: "not-configured",
+          error: `${productName} provisioning requires object storage for persistent files.`,
+          missing,
+        },
+        { status: 501 },
+      );
+    }
+  }
+
+  if (!doToken) {
+    console.warn("[commerce-provision] DO_API_TOKEN not configured");
+    return NextResponse.json({
+      ok: true,
+      status: "pending-provisioner",
+      message: "DigitalOcean API token not configured. Instance logged for manual provisioning.",
+    });
   }
 
   try {
     // Generate DO App Platform spec
-    const spec = generateAppSpec({ appId, tenantSlug, tier, registry, image, platform });
+    const spec = generateAppSpec({ appId, tenantSlug, tier, registry, image, platform, cmsStorage });
 
     console.log(`[${platform}-provision] Creating DO app:`, spec.name);
 
