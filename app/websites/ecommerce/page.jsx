@@ -67,7 +67,7 @@ export default function EcommercePage() {
     <div className="min-h-screen">
       {/* Sell with Esteemed — hero banner */}
       <section className="hero-block-outer">
-        <div className="hero-block" style={{ height: 480 }}>
+        <div className="hero-block hero-block-split bg-[#16281E]">
           <SellBanner />
         </div>
       </section>
