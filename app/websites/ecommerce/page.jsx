@@ -135,7 +135,7 @@ export default function EcommercePage() {
         <ProductPricingBlock
           eyebrow="Esteemed Commerce plans"
           title="Infrastructure pricing, not transaction fees"
-          description="The open-source Medusa framework is free — you only pay for managed infrastructure. Zero platform fees, zero GMV surcharges. Exceed your base allocation? Pay only for what you use: ~$0.16/compute hr, ~$0.125/GB transfer, ~$0.50/GB-mo storage. Additional environments ~$20/mo, extra seats ~$30/mo."
+          description="All platforms are open source — you only pay for managed infrastructure. Zero platform fees, zero GMV surcharges. Exceed your base allocation? Pay only for what you use: ~$0.16/compute hr, ~$0.125/GB transfer, ~$0.50/GB-mo storage. Additional environments ~$20/mo, extra seats ~$30/mo."
           productKey="commerce"
           plans={commercePlans}
           ctaLabel="Buy Now"

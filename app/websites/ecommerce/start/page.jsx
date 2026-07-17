@@ -125,7 +125,7 @@ export default function EcommerceStartPage() {
             Launch your store today.
           </h1>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-zinc-600">
-            Sign in to choose a plan and auto-provision your Medusa commerce instance on Esteemed Cloud. No transaction fees, ever.
+            Sign up and choose from WooCommerce, Drupal Commerce, or Esteemed Commerce hosted on our cloud.
           </p>
           <ul className="mt-8 space-y-4">
             {[
