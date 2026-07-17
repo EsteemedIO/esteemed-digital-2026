@@ -226,6 +226,10 @@ Implemented:
 
 Implemented:
 
+- Added `ops/commerce-images/medusa-nextjs-starter`, a storefront image built from the official Medusa Next.js starter repository.
+- Medusa provisioning now creates two services: `medusa-backend` and `medusa-storefront`.
+- The storefront service uses `COMMERCE_MEDUSA_STOREFRONT_IMAGE` / `esteemed/medusa-nextjs-starter:latest`, listens on port `8000`, and receives `NEXT_PUBLIC_MEDUSA_BACKEND_URL`.
+- The backend keeps Medusa API/admin routes (`/store`, `/admin`, `/auth`, `/health`) while the Next.js storefront owns `/`.
 - Added `ops/commerce-images/woocommerce`, a WooCommerce-ready WordPress image with WP-CLI, WooCommerce, WP Offload Media Lite, and startup activation/bootstrap.
 - Added `ops/commerce-images/drupal-commerce`, a Drupal Commerce-ready image with Commerce modules, S3FS, Drush, and startup module/bootstrap handling.
 - Provisioning now defaults WooCommerce to `esteemed/woocommerce:latest` and Drupal Commerce to `esteemed/drupal-commerce:latest`.
@@ -236,7 +240,7 @@ Implemented:
 
 Operational follow-through:
 
-- Build and push `esteemed/woocommerce:latest` and `esteemed/drupal-commerce:latest`, or set `WOO_IMAGE` / `DRUPAL_IMAGE` to the pushed registry paths.
+- Build and push `esteemed/medusa-nextjs-starter:latest`, `esteemed/woocommerce:latest`, and `esteemed/drupal-commerce:latest`, or set the corresponding image env vars to pushed registry paths.
 - Provide production `CMS_FILES_S3_*` values before enabling self-serve WooCommerce or Drupal Commerce checkout.
 - Full production build has been rerun successfully on the clean committed tree.
 

@@ -47,8 +47,27 @@ test("generates platform-specific App Platform specs", () => {
     image: "medusajs/medusa:latest",
     platform: "commerce",
   });
-  expect(medusa.services[0].name).toBe("medusa-backend");
+  expect(medusa.services.map((service) => service.name)).toEqual(["medusa-backend", "medusa-storefront"]);
   expect(medusa.services[0].http_port).toBe(9000);
+  expect(medusa.services[0].routes).toEqual([
+    { path: "/store" },
+    { path: "/admin" },
+    { path: "/auth" },
+    { path: "/health" },
+  ]);
+  expect(medusa.services[1].http_port).toBe(8000);
+  expect(medusa.services[1].image).toEqual({
+    registry_type: "DOCKER_HUB",
+    registry: "esteemed",
+    repository: "medusa-nextjs-starter",
+    tag: "latest",
+  });
+  expect(medusa.services[1].envs).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ key: "NEXT_PUBLIC_MEDUSA_BACKEND_URL", value: "https://test.commerce.esteemed.io" }),
+      expect.objectContaining({ key: "ESTEEMED_PLATFORM", value: "medusa-nextjs-starter" }),
+    ]),
+  );
   expect(medusa.databases.map((db) => db.engine)).toEqual(["PG", "REDIS"]);
 
   const wordpress = generateAppSpec({

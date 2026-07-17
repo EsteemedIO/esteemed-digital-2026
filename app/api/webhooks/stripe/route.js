@@ -161,6 +161,8 @@ async function provisionCommerce({ session, tier, lookupKeys }) {
     tenantSlug,
     email: customerEmail,
     name: customerName,
+    image: process.env.COMMERCE_MEDUSA_IMAGE || DEFAULT_PLATFORM_IMAGES.commerce,
+    storefrontImage: process.env.COMMERCE_MEDUSA_STOREFRONT_IMAGE || DEFAULT_PLATFORM_IMAGES.commerceStorefront,
     stripeSessionId: session.id,
     stripeCustomerId: session.customer,
     stripeSubscriptionId: session.subscription,

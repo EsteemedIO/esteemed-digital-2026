@@ -15,6 +15,7 @@
  * - DO_API_TOKEN — DigitalOcean API token
  * - DOCR_REGISTRY — Container registry name (e.g., "esteemed")
  * - COMMERCE_MEDUSA_IMAGE — Image tag (e.g., "esteemed/medusa-starter:latest")
+ * - COMMERCE_MEDUSA_STOREFRONT_IMAGE — Next.js starter storefront image tag
  * - WOO_IMAGE — WooCommerce-ready image tag (defaults to esteemed/woocommerce:latest)
  * - DRUPAL_IMAGE — Drupal Commerce-ready image tag (defaults to esteemed/drupal-commerce:latest)
  * - CMS_FILES_S3_* — object storage settings for WordPress/Drupal files
@@ -85,6 +86,7 @@ export async function POST(request) {
     platform = "commerce",
     framework: requestedFramework,
     image: requestedImage,
+    storefrontImage: requestedStorefrontImage,
     cmsStorage: requestedCmsStorage,
     stripeSessionId,
     stripeSubscriptionId,
@@ -111,10 +113,12 @@ export async function POST(request) {
   const registry = process.env.DOCR_REGISTRY || "dockerhub";
   const defaultImages = {
     commerce: process.env.COMMERCE_MEDUSA_IMAGE || DEFAULT_PLATFORM_IMAGES.commerce,
+    commerceStorefront: process.env.COMMERCE_MEDUSA_STOREFRONT_IMAGE || DEFAULT_PLATFORM_IMAGES.commerceStorefront,
     wordpress: process.env.WOO_IMAGE || DEFAULT_PLATFORM_IMAGES.wordpress,
     drupal: process.env.DRUPAL_IMAGE || DEFAULT_PLATFORM_IMAGES.drupal,
   };
   const image = requestedImage || defaultImages[platform] || defaultImages.commerce;
+  const storefrontImage = requestedStorefrontImage || defaultImages.commerceStorefront;
 
   const cmsStorage = {
     bucket: requestedCmsStorage?.bucket || process.env.CMS_FILES_S3_BUCKET,
@@ -152,7 +156,7 @@ export async function POST(request) {
 
   try {
     // Generate DO App Platform spec
-    const spec = generateAppSpec({ appId, tenantSlug, tier, registry, image, platform, cmsStorage });
+    const spec = generateAppSpec({ appId, tenantSlug, tier, registry, image, storefrontImage, platform, cmsStorage });
 
     console.log(`[${platform}-provision] Creating DO app:`, spec.name);
 
