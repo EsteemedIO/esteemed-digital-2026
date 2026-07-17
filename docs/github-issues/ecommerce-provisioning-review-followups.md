@@ -226,7 +226,7 @@ Still open:
 
 - Build or provide ecommerce-ready WooCommerce and Drupal Commerce images/bootstrap flows.
 - Add persistence/backup strategy for WordPress/Drupal files and installed extensions.
-- Re-run full production build after unrelated static prerender failures are resolved.
+- Full production build has been rerun successfully on the clean committed tree.
 
 ## Verification already run
 
@@ -242,7 +242,7 @@ After implementation, focused commerce tests pass:
 npx playwright test tests/commerce-provisioning.spec.js
 ```
 
-Current full build result: blocked by unrelated static prerender failures on existing pages (`/_not-found`, `/resources`, `/solutions/build-internal-tool`, `/websites/ecommerce`, `/websites/hosting`, `/websites/website-builder`). The failures occur after compilation/type checking and do not reference the commerce provisioning modules.
+Current full build result: pass.
 
 Focused coverage was added for Stripe webhook signature behavior, idempotent provisioning IDs, provisioner auth compatibility, Docker image parsing, and generated DigitalOcean App Platform specs.
 
