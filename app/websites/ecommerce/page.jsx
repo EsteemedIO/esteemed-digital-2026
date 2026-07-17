@@ -53,7 +53,7 @@ const platforms = [
     key: "esteemed",
     name: "Esteemed Commerce",
     tagline: "Node/Next.js, powered by Medusa hosted on our cloud.",
-    desc: "Headless, API-first, built for teams that want to extend rather than configure. Your store runs on standard Medusa — take it with you if you go. Esteemed Intelligence and CRM integrate easily as add-ons and decouple the same way.",
+    desc: "Headless, API-first, built for teams that want to extend rather than configure. Your store runs on standard Medusa — take your store with you if you go.",
     color: "#0678BE",
     logo: (
       <div className="w-12 h-12 rounded-lg bg-ink flex items-center justify-center p-2">
