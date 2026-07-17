@@ -6,31 +6,29 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, Loader2, ArrowRight } from "lucide-react";
 import { checkoutHref } from "@/lib/pricing-catalog";
+import {
+  commercePricingPlans,
+  drupalCommercePricingPlans,
+  wooCommercePricingPlans,
+} from "@/lib/product-page-pricing";
 
-const plans = [
-  {
-    key: "develop",
-    name: "Develop",
-    price: "$29",
-    desc: "Build and test your store. Fixed compute, 5 GB storage.",
-    lookupKey: "commerce_develop_monthly",
+const platformPlans = {
+  woocommerce: {
+    product: "woocommerce",
+    label: "WooCommerce",
+    plans: wooCommercePricingPlans().filter((plan) => plan.monthly !== null),
   },
-  {
-    key: "launch",
-    name: "Launch",
-    price: "$99",
-    desc: "Go live with autoscaling, custom domains, and backups.",
-    lookupKey: "commerce_launch_monthly",
-    recommended: true,
+  drupal: {
+    product: "drupal",
+    label: "Drupal Commerce",
+    plans: drupalCommercePricingPlans().filter((plan) => plan.monthly !== null),
   },
-  {
-    key: "scale",
-    name: "Scale",
-    price: "$299",
-    desc: "Dedicated workers, priority support, 3 Cloud seats.",
-    lookupKey: "commerce_scale_monthly",
+  esteemed: {
+    product: "commerce",
+    label: "Esteemed Commerce",
+    plans: commercePricingPlans().filter((plan) => plan.monthly !== null),
   },
-];
+};
 
 function GoogleMark() {
   return (
@@ -49,11 +47,16 @@ const platformLabels = {
   esteemed: "Esteemed Commerce",
 };
 
+function formatPlanPrice(plan) {
+  return `$${plan.monthly}`;
+}
+
 function EcommerceStartContent() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
-  const platform = searchParams.get("platform") || "";
-  const platformName = platformLabels[platform] || "";
+  const platform = searchParams.get("platform") || "esteemed";
+  const platformConfig = platformPlans[platform] || platformPlans.esteemed;
+  const platformName = platformLabels[platform] || platformConfig.label;
 
   if (status === "loading") {
     return (
@@ -70,7 +73,7 @@ function EcommerceStartContent() {
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
-              {platformName || "Esteemed Commerce"}
+              {platformName}
             </p>
             <h1 className="text-4xl md:text-5xl font-bold text-ink mb-4">
               Choose your plan
@@ -81,7 +84,7 @@ function EcommerceStartContent() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {plans.map((plan) => (
+            {platformConfig.plans.map((plan) => (
               <div
                 key={plan.key}
                 className={`relative rounded-2xl bg-white p-8 flex flex-col ${plan.recommended ? "ring-4 ring-accent/25 border-accent border" : "border border-zinc-200"}`}
@@ -94,15 +97,15 @@ function EcommerceStartContent() {
                 <div className={plan.recommended ? "pt-6" : ""}>
                   <h3 className="text-xl font-bold text-ink">{plan.name}</h3>
                   <div className="mt-2 flex items-end gap-1">
-                    <span className="text-4xl font-black text-ink">{plan.price}</span>
+                    <span className="text-4xl font-black text-ink">{formatPlanPrice(plan)}</span>
                     <span className="text-sm font-bold text-zinc-500 pb-1">/mo</span>
                   </div>
-                  <p className="mt-3 text-sm text-zinc-600 leading-relaxed">{plan.desc}</p>
+                  <p className="mt-3 text-sm text-zinc-600 leading-relaxed">{plan.description}</p>
                 </div>
                 <a
                   href={checkoutHref({
                     lookupKey: plan.lookupKey,
-                    successPath: `/thanks?product=commerce&tier=${plan.key}`,
+                    successPath: `/thanks?product=${platformConfig.product}&tier=${plan.key}`,
                     cancelPath: "/websites/ecommerce",
                   })}
                   className={`mt-6 w-full text-center inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-colors ${plan.recommended ? "bg-ink text-white hover:bg-zinc-800" : "bg-zinc-100 text-ink hover:bg-zinc-200"}`}
