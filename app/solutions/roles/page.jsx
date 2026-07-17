@@ -40,43 +40,47 @@ const roles = [
 
 export default function RolesPage() {
   return (
-    <main className="bg-paper text-ink">
+    <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-paper">
-        <div className="mx-auto max-w-7xl px-6 pb-16 pt-28 md:pt-36 text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-ink/50 mb-4">
-            By Role
-          </p>
-          <h1 className="heading-2 mb-6">Built for How You Work</h1>
-          <p className="subtitle mx-auto max-w-2xl text-ink/70">
-            Whatever your role, Esteemed combines AI tools with expert talent to
-            help you move faster and deliver more.
-          </p>
+      <section className="hero-block-outer">
+        <div className="hero-block bg-zinc-100 px-6 py-16 md:py-20 text-center">
+          <div className="max-w-2xl mx-auto">
+            <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
+              By Role
+            </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ink leading-tight mb-6">
+              Built for how you work
+            </h1>
+            <p className="text-lg text-zinc-600 leading-relaxed">
+              Whatever your role, Esteemed combines AI tools with expert talent to
+              help you move faster and deliver more.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Role Cards */}
-      <section className="bg-neutral-50">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <div className="grid gap-8 sm:grid-cols-2">
+      <section className="py-20 bg-zinc-50">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {roles.map((role) => {
               const Icon = role.icon;
               return (
                 <Link
                   key={role.name}
                   href={role.href}
-                  className="group rounded-2xl border border-neutral-200 bg-paper p-8 transition hover:shadow-lg hover:border-ink/30"
+                  className="group rounded-2xl border border-zinc-200 bg-white p-8 hover:border-zinc-400 transition-colors"
                 >
-                  <span className="icon-badge icon-badge-lg mb-5">
-                    <Icon />
-                  </span>
-                  <h3 className="mb-2 text-xl font-bold">{role.name}</h3>
-                  <p className="text-ink/70 mb-4">{role.desc}</p>
+                  <Icon className="w-8 h-8 text-ink mb-4" strokeWidth={1.5} />
+                  <h3 className="text-xl font-bold text-ink mb-2">{role.name}</h3>
+                  <p className="text-sm text-zinc-600 leading-relaxed mb-4">
+                    {role.desc}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {role.highlights.map((h) => (
                       <span
                         key={h}
-                        className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-ink/60"
+                        className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-500"
                       >
                         {h}
                       </span>
@@ -90,10 +94,12 @@ export default function RolesPage() {
       </section>
 
       {/* Cross-sell */}
-      <section className="bg-paper">
-        <div className="mx-auto max-w-7xl px-6 py-20 text-center">
-          <h2 className="heading-2 mb-4">One Platform, Every Team</h2>
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-ink/60">
+      <section className="py-20 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-ink mb-4">
+            One platform, every team
+          </h2>
+          <p className="text-lg text-zinc-600 leading-relaxed mb-8 max-w-2xl mx-auto">
             Marketing, engineering, HR, and leadership all work from the same
             Esteemed platform. Share intelligence, coordinate hiring, and launch
             projects together.
@@ -101,13 +107,13 @@ export default function RolesPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/pricing"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3 font-semibold text-ink transition hover:bg-accent-hover"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
             >
               View Plans
             </Link>
             <Link
               href="/solutions/use-cases"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-8 py-3 font-semibold text-ink transition hover:bg-ink/5"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-zinc-50 transition-colors"
             >
               Browse Use Cases
             </Link>
@@ -116,23 +122,23 @@ export default function RolesPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-ink">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center">
-          <h2 className="mb-6 text-3xl font-bold text-paper md:text-4xl">
+      <section className="bg-ink py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
             Not sure where to start?
           </h2>
-          <p className="mb-8 text-lg text-paper/70">
+          <p className="text-zinc-400 mb-8">
             Talk to our team and we will match you with the right solution for
             your role.
           </p>
           <Link
             href="/contact"
-            className="inline-block rounded-full bg-accent px-10 py-4 font-semibold text-ink transition hover:bg-accent-hover"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Contact Us
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

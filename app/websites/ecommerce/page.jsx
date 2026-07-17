@@ -66,11 +66,8 @@ export default function EcommercePage() {
   return (
     <div className="min-h-screen">
       {/* Sell with Esteemed — hero banner */}
-      <section style={{ padding: "20px 20px 30px" }}>
-        <div
-          className="mx-auto overflow-hidden"
-          style={{ maxWidth: 1800, height: 480 }}
-        >
+      <section className="hero-block-outer">
+        <div className="hero-block" style={{ height: 480 }}>
           <SellBanner />
         </div>
       </section>
@@ -86,8 +83,9 @@ export default function EcommercePage() {
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4" style={{ textWrap: "balance", maxWidth: 520, margin: "0 auto 16px" }}>
               Choose the platform that fits your business
             </h2>
-            <p className="text-lg text-zinc-600 leading-relaxed max-w-2xl mx-auto">
-              We believe in open source with no vendor lock-in and ultimate flexibility. Our ecommerce solutions are used by the biggest brands in the world and supported by top experts.
+            <p className="text-lg text-zinc-600 leading-relaxed mx-auto" style={{ maxWidth: 580 }}>
+              We believe in open source with no vendor lock-in and ultimate flexibility.<br className="hidden md:inline" />
+              Our ecommerce solutions are used by the biggest brands in the world and supported by top experts.
             </p>
           </div>
 

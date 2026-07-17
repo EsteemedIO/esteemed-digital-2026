@@ -7,7 +7,8 @@ import {
   ArrowRightLeft,
   Users,
   Headphones,
-  Check,
+  CheckCircle,
+  ArrowRight,
 } from "lucide-react";
 
 export const metadata = {
@@ -21,7 +22,7 @@ const features = [
     icon: RefreshCw,
     title: "AI-Assisted Migration",
     description:
-      "Esteemed Create analyzes your existing site and generates a modern rebuild, preserving content and structure while upgrading the technology.",
+      "Esteemed Create analyzes your existing site and generates a modern rebuild, preserving content and structure.",
   },
   {
     icon: Zap,
@@ -66,68 +67,73 @@ const migrationPaths = [
 
 export default function ModernizeLegacySitePage() {
   return (
-    <main className="bg-paper text-ink">
+    <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-paper">
-        <div className="mx-auto flex max-w-7xl flex-col-reverse items-center gap-12 px-6 pb-16 pt-28 md:flex-row md:pt-36 lg:gap-20">
-          <div className="flex-1 space-y-6 text-center md:text-left">
-            <p className="text-sm font-semibold uppercase tracking-widest text-ink/50">
+      <section className="hero-block-outer">
+        <div className="hero-block hero-block-split bg-zinc-100">
+          <div>
+            <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
               Use Case
             </p>
-            <h1 className="heading-3">Modernize a Legacy Site</h1>
-            <p className="subtitle max-w-xl text-ink/70">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ink leading-tight mb-6">
+              Modernize a legacy site
+            </h1>
+            <p className="text-lg text-zinc-600 leading-relaxed mb-8 max-w-lg">
               Migrate your legacy website to a modern, performant stack -- with
               AI assistance and expert developers by your side.
             </p>
-            <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex flex-wrap gap-4">
               <Link
                 href="/migrate"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3 font-semibold text-ink transition hover:bg-accent-hover"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
               >
                 Try Migration Tool
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/hire-experts/website-design"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-8 py-3 font-semibold text-ink transition hover:bg-ink/5"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-zinc-50 transition-colors"
               >
                 Hire Migration Experts
               </Link>
             </div>
           </div>
-          <div className="relative flex-1">
+          <div className="hero-visual">
             <Image
               src="/images/segments/bg-man.webp"
               alt="Developer modernizing a legacy application"
-              width={640}
-              height={480}
-              className="rounded-2xl object-cover"
+              fill
+              className="object-cover"
               priority
             />
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="bg-neutral-50">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <h2 className="heading-2 mb-4">A Complete Migration Path</h2>
-          <p className="mx-auto mb-14 max-w-2xl text-center text-lg text-ink/60">
-            From assessment to launch, Esteemed handles every phase of your site
-            modernization.
-          </p>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Features */}
+      <section className="py-20 bg-zinc-50">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-ink mb-10 text-center">
+            A complete migration path
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((f) => {
               const Icon = f.icon;
               return (
                 <div
                   key={f.title}
-                  className="rounded-2xl border border-neutral-200 bg-paper p-8 transition hover:shadow-lg"
+                  className="rounded-2xl border border-zinc-200 p-8"
                 >
-                  <span className="icon-badge icon-badge-lg mb-4">
-                    <Icon />
-                  </span>
-                  <h3 className="mb-2 text-lg font-bold">{f.title}</h3>
-                  <p className="text-ink/70">{f.description}</p>
+                  <Icon
+                    className="w-8 h-8 text-ink mb-4"
+                    strokeWidth={1.5}
+                  />
+                  <h3 className="text-xl font-bold text-ink mb-2">
+                    {f.title}
+                  </h3>
+                  <p className="text-sm text-zinc-600 leading-relaxed">
+                    {f.description}
+                  </p>
                 </div>
               );
             })}
@@ -135,55 +141,56 @@ export default function ModernizeLegacySitePage() {
         </div>
       </section>
 
-      {/* Migration Paths */}
-      <section className="bg-paper">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 px-6 py-20 md:flex-row lg:gap-20">
-          <div className="relative flex-1">
-            <Image
-              src="/images/segments/colleagues-feature.webp"
-              alt="Migration planning session"
-              width={560}
-              height={400}
-              className="rounded-2xl object-cover"
-            />
-          </div>
-          <div className="flex-1 space-y-8">
-            <h2 className="heading-3">Common Migration Paths</h2>
-            <p className="text-lg text-ink/70">
-              We have migrated hundreds of sites across every major platform.
-              Whatever your starting point, we have a proven path forward.
-            </p>
-            <ul className="space-y-4">
-              {migrationPaths.map((path) => (
-                <li key={path} className="flex items-start gap-3">
-                  <span className="icon-badge icon-badge-md mt-0.5">
-                    <Check className="h-3.5 w-3.5" />
-                  </span>
-                  <span className="text-ink/80">{path}</span>
-                </li>
-              ))}
-            </ul>
+      {/* Migration paths */}
+      <section className="py-20 border-t border-zinc-100">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="relative rounded-xl overflow-hidden" style={{ aspectRatio: "4/3" }}>
+              <Image
+                src="/images/segments/colleagues-feature.webp"
+                alt="Migration planning session"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold text-ink mb-6">
+                Common migration paths
+              </h2>
+              <p className="text-zinc-600 leading-relaxed mb-6">
+                We have migrated hundreds of sites across every major platform.
+                Whatever your starting point, we have a proven path forward.
+              </p>
+              <ul className="space-y-4">
+                {migrationPaths.map((path) => (
+                  <li key={path} className="flex items-start gap-3">
+                    <CheckCircle
+                      className="w-5 h-5 text-ink flex-shrink-0 mt-0.5"
+                      strokeWidth={2}
+                    />
+                    <span className="text-zinc-700">{path}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-ink">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center">
-          <h2 className="mb-6 text-3xl font-bold text-paper md:text-4xl">
+      <section className="bg-ink py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
             Ready to modernize?
           </h2>
-          <p className="mb-8 text-lg text-paper/70">
-            Try our migration tool or talk to an expert about your project.
-          </p>
           <Link
             href="/migrate"
-            className="inline-block rounded-full bg-accent px-10 py-4 font-semibold text-ink transition hover:bg-accent-hover"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
-            Start Migration
+            Start Migration &rarr;
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

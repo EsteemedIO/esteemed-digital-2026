@@ -15,8 +15,8 @@ export default function TalentManagementPage() {
     <div className="min-h-screen">
       <StickyAnchorNav />
 
-      <section className="px-6 py-10 md:py-16">
-        <div className="mx-auto rounded-3xl px-6 md:pl-8 md:pr-14 py-8 grid md:grid-cols-2 gap-8 md:gap-10 items-center overflow-hidden" style={{ maxWidth: 1800, background: "#E4DBF0" }}>
+      <section className="hero-block-outer">
+        <div className="hero-block hero-block-split" style={{ background: "#E4DBF0" }}>
           <div className="md:order-2">
             <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
               Talent Management

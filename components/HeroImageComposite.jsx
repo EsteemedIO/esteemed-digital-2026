@@ -138,7 +138,7 @@ export default function HeroImageComposite({ src, alt, variant = "design", objec
   }, [chips, pairCount]);
 
   return (
-    <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full aspect-[4/3] sm:aspect-auto sm:h-[420px] lg:h-[480px]">
+    <div className="hero-visual shadow-2xl">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}

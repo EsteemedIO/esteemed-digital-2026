@@ -9,16 +9,16 @@
  */
 
 import { NextResponse } from "next/server";
-
-export const dynamic = "force-dynamic";
-
-const STRIPE_API_BASE = "https://api.stripe.com/v1";
+import { stableProvisioningId, tenantSlugFromEmail } from "@/lib/commerce-provisioning";
+import { verifyWebhookSignature } from "@/lib/stripe-webhook";
 
 const COMMERCE_LOOKUP_PREFIXES = ["commerce_"];
 const WOO_LOOKUP_PREFIXES = ["woo_"];
 const DRUPAL_LOOKUP_PREFIXES = ["drupal_"];
 const CLOUD_LOOKUP_PREFIXES = ["cloud_", "managed_"];
 const CURATE_LOOKUP_PREFIXES = ["curate_"];
+
+export const dynamic = "force-dynamic";
 
 function classifyLookupKeys(keys) {
   const types = new Set();
@@ -53,10 +53,14 @@ async function provisionCMS({ session, tier, lookupKeys, platform, framework, im
   const cloudConsoleUrl = process.env.CREATE_CLOUD_CONSOLE_URL;
   const customerEmail = session.customer_details?.email || session.customer_email || "";
   const customerName = session.customer_details?.name || "";
-  const appId = `${platform}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-  const tenantSlug = customerEmail
-    ? customerEmail.split("@")[0].replace(/[^a-z0-9]/gi, "").slice(0, 20).toLowerCase()
-    : appId.slice(0, 20);
+  const appId = stableProvisioningId({
+    platform,
+    sessionId: session.id,
+    subscriptionId: session.subscription,
+    customerId: session.customer,
+    tier,
+  });
+  const tenantSlug = tenantSlugFromEmail(customerEmail, appId.slice(0, 20));
 
   const payload = {
     product: platform,
@@ -85,6 +89,7 @@ async function provisionCMS({ session, tier, lookupKeys, platform, framework, im
         headers: {
           "Content-Type": "application/json",
           ...(provisionerToken ? { Authorization: `Bearer ${provisionerToken}` } : {}),
+          ...(provisionerToken ? { "x-internal-token": provisionerToken } : {}),
         },
         body: JSON.stringify(payload),
       });
@@ -125,36 +130,6 @@ async function provisionCMS({ session, tier, lookupKeys, platform, framework, im
   return { ok: true, appId, tenantSlug, status: "pending-provisioner" };
 }
 
-async function verifyWebhookSignature(rawBody, signatureHeader, secret) {
-  // Stripe signature verification using Web Crypto API
-  const parts = Object.fromEntries(
-    signatureHeader.split(",").map((p) => {
-      const [k, v] = p.split("=");
-      return [k, v];
-    })
-  );
-
-  const timestamp = parts.t;
-  const expectedSig = parts.v1;
-  if (!timestamp || !expectedSig) return false;
-
-  const payload = `${timestamp}.${rawBody}`;
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(payload));
-  const hex = Array.from(new Uint8Array(signature))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-
-  return hex === expectedSig;
-}
-
 async function provisionCommerce({ session, tier, lookupKeys }) {
   const provisionerUrl = process.env.COMMERCE_PROVISIONER_URL;
   const cloudConsoleUrl = process.env.CREATE_CLOUD_CONSOLE_URL;
@@ -170,10 +145,14 @@ async function provisionCommerce({ session, tier, lookupKeys }) {
     session.metadata?.name ||
     "";
 
-  const appId = `commerce-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-  const tenantSlug = customerEmail
-    ? customerEmail.split("@")[0].replace(/[^a-z0-9]/gi, "").slice(0, 20).toLowerCase()
-    : appId.slice(0, 20);
+  const appId = stableProvisioningId({
+    platform: "commerce",
+    sessionId: session.id,
+    subscriptionId: session.subscription,
+    customerId: session.customer,
+    tier,
+  });
+  const tenantSlug = tenantSlugFromEmail(customerEmail, appId.slice(0, 20));
 
   const payload = {
     product: "commerce",
@@ -199,6 +178,7 @@ async function provisionCommerce({ session, tier, lookupKeys }) {
         headers: {
           "Content-Type": "application/json",
           ...(provisionerToken ? { Authorization: `Bearer ${provisionerToken}` } : {}),
+          ...(provisionerToken ? { "x-internal-token": provisionerToken } : {}),
         },
         body: JSON.stringify(payload),
       });
@@ -258,7 +238,11 @@ export async function POST(request) {
   const signatureHeader = request.headers.get("stripe-signature");
 
   // Verify signature if webhook secret is configured
-  if (webhookSecret && signatureHeader) {
+  if (webhookSecret) {
+    if (!signatureHeader) {
+      console.error("[stripe-webhook] Missing Stripe signature");
+      return NextResponse.json({ error: "Missing signature" }, { status: 400 });
+    }
     const valid = await verifyWebhookSignature(rawBody, signatureHeader, webhookSecret);
     if (!valid) {
       console.error("[stripe-webhook] Signature verification failed");
@@ -305,7 +289,7 @@ export async function POST(request) {
       session, tier, lookupKeys,
       platform: "wordpress",
       framework: "wordpress",
-      image: process.env.WOO_IMAGE || "wordpress:latest",
+      image: process.env.WOO_IMAGE,
     });
   }
 
@@ -316,7 +300,7 @@ export async function POST(request) {
       session, tier, lookupKeys,
       platform: "drupal",
       framework: "drupal",
-      image: process.env.DRUPAL_IMAGE || "drupal:latest",
+      image: process.env.DRUPAL_IMAGE,
     });
   }
 
@@ -328,6 +312,14 @@ export async function POST(request) {
   if (productTypes.has("curate")) {
     console.log("[stripe-webhook] Curate subscription activated — uses separate provisioner");
     results.curate = { status: "logged" };
+  }
+
+  const failures = Object.entries(results).filter(([, result]) => result?.ok === false);
+  if (failures.length > 0) {
+    return NextResponse.json(
+      { received: false, retry: true, results },
+      { status: 502 },
+    );
   }
 
   return NextResponse.json({ received: true, results });

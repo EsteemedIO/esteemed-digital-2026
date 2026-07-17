@@ -53,6 +53,91 @@
   .icon-badge-md svg { width: 0.875rem; height: 0.875rem; }
   .icon-badge-lg { width: 2.5rem; height: 2.5rem; }
   .icon-badge-lg svg { width: 1.25rem; height: 1.25rem; }
+
+  /* ── Hero block: rounded rectangle container ── */
+  .hero-block-outer {
+    padding: 20px 20px 30px;
+  }
+  .hero-block {
+    max-width: 1800px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1.5rem; /* rounded-3xl */
+    overflow: hidden;
+  }
+  .hero-block-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .hero-block-split {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      padding: 2rem 2rem 2rem 3.5rem;
+    }
+  }
+
+  /* ── Content container: matches navbar width ── */
+  .content-container {
+    max-width: 1800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .content-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  /* ── Section spacing ── */
+  .section-gap { padding-top: 5rem; padding-bottom: 5rem; }
+  .section-gap-sm { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+
+  /* ── Hero image/visual container ── */
+  .hero-visual {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+  @media (min-width: 640px) {
+    .hero-visual { aspect-ratio: auto; height: 420px; }
+  }
+  @media (min-width: 1024px) {
+    .hero-visual { height: 480px; }
+  }
+
+  /* ── Hero eyebrow ── */
+  .hero-eyebrow {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  /* ── Hero title ── */
+  .hero-title {
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.875rem, 5vw, 3.75rem);
+  }
+
+  /* ── Hero body ── */
+  .hero-body {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    max-width: 32rem;
+  }
 }
 
 .scrollbar-hide::-webkit-scrollbar { display: none; }

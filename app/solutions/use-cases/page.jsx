@@ -1,6 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Rocket, Wrench, Users, RefreshCw } from "lucide-react";
+import {
+  Rocket,
+  Wrench,
+  Users,
+  RefreshCw,
+  MessageSquare,
+  Bot,
+  ArrowRight,
+} from "lucide-react";
 
 export const metadata = {
   title: "Solutions by Use Case | Esteemed",
@@ -39,46 +46,70 @@ const useCases = [
   },
 ];
 
+const steps = [
+  {
+    icon: MessageSquare,
+    title: "Describe your goal",
+    description:
+      "Tell us what you are building, who it is for, and what success looks like.",
+  },
+  {
+    icon: Bot,
+    title: "AI generates a starting point",
+    description:
+      "Esteemed Create builds your site, tool, or workflow in minutes using AI.",
+  },
+  {
+    icon: Users,
+    title: "Experts help you grow",
+    description:
+      "Connect with vetted professionals through Colleagues for design, strategy, and ongoing support.",
+  },
+];
+
 export default function UseCasesPage() {
   return (
-    <main className="bg-paper text-ink">
+    <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-paper">
-        <div className="mx-auto max-w-7xl px-6 pb-16 pt-28 md:pt-36 text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-ink/50 mb-4">
-            Use Cases
-          </p>
-          <h1 className="heading-2 mb-6">What Are You Building?</h1>
-          <p className="subtitle mx-auto max-w-2xl text-ink/70">
-            Whether you need to ship a marketing site this week or modernize a
-            decade-old platform, Esteemed has the tools and talent to get it
-            done.
-          </p>
+      <section className="hero-block-outer">
+        <div className="hero-block bg-zinc-100 px-6 py-16 md:py-20 text-center">
+          <div className="max-w-2xl mx-auto">
+            <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">
+              Use Cases
+            </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ink leading-tight mb-6">
+              What are you building?
+            </h1>
+            <p className="text-lg text-zinc-600 leading-relaxed">
+              Whether you need to ship a marketing site this week or modernize a
+              decade-old platform, Esteemed has the tools and talent to get it done.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Use Case Cards */}
-      <section className="bg-neutral-50">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <div className="grid gap-8 sm:grid-cols-2">
+      <section className="py-20 bg-zinc-50">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {useCases.map((uc) => {
               const Icon = uc.icon;
               return (
                 <Link
                   key={uc.name}
                   href={uc.href}
-                  className="group rounded-2xl border border-neutral-200 bg-paper p-8 transition hover:shadow-lg hover:border-ink/30"
+                  className="group rounded-2xl border border-zinc-200 bg-white p-8 hover:border-zinc-400 transition-colors"
                 >
-                  <span className="icon-badge icon-badge-lg mb-5">
-                    <Icon />
-                  </span>
-                  <h3 className="mb-2 text-xl font-bold">{uc.name}</h3>
-                  <p className="text-ink/70 mb-4">{uc.desc}</p>
+                  <Icon className="w-8 h-8 text-ink mb-4" strokeWidth={1.5} />
+                  <h3 className="text-xl font-bold text-ink mb-2">{uc.name}</h3>
+                  <p className="text-sm text-zinc-600 leading-relaxed mb-4">
+                    {uc.desc}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {uc.products.map((p) => (
                       <span
                         key={p}
-                        className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-ink/60"
+                        className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-500"
                       >
                         {p}
                       </span>
@@ -91,38 +122,31 @@ export default function UseCasesPage() {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="bg-paper">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <h2 className="heading-2 mb-4">How It Works</h2>
-          <p className="mx-auto mb-14 max-w-2xl text-center text-lg text-ink/60">
-            Every use case follows the same pattern: AI builds the first
-            version, humans refine and scale it.
-          </p>
-          <div className="grid gap-8 sm:grid-cols-3">
-            {[
-              {
-                step: "01",
-                title: "Describe your goal",
-                desc: "Tell us what you are building, who it is for, and what success looks like.",
-              },
-              {
-                step: "02",
-                title: "AI generates a starting point",
-                desc: "Esteemed Create builds your site, tool, or workflow in minutes using AI.",
-              },
-              {
-                step: "03",
-                title: "Experts help you grow",
-                desc: "Connect with vetted professionals through Colleagues for design, strategy, and ongoing support.",
-              },
-            ].map((s) => (
-              <div key={s.step} className="text-center">
-                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-ink font-bold text-lg mb-4">
-                  {s.step}
+      {/* How it works */}
+      <section className="py-20 border-t border-zinc-100">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-ink mb-10 text-center">
+            How it works
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {steps.map((step, i) => (
+              <div
+                key={step.title}
+                className="rounded-2xl border border-zinc-200 p-8 text-center"
+              >
+                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-accent text-ink text-sm font-bold mx-auto mb-4">
+                  {i + 1}
                 </span>
-                <h3 className="text-lg font-bold mb-2">{s.title}</h3>
-                <p className="text-ink/70">{s.desc}</p>
+                <step.icon
+                  className="w-8 h-8 text-ink mx-auto mb-4"
+                  strokeWidth={1.5}
+                />
+                <h3 className="text-xl font-bold text-ink mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-zinc-600 leading-relaxed">
+                  {step.description}
+                </p>
               </div>
             ))}
           </div>
@@ -130,22 +154,22 @@ export default function UseCasesPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-ink">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center">
-          <h2 className="mb-6 text-3xl font-bold text-paper md:text-4xl">
+      <section className="bg-ink py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
             Not sure where to start?
           </h2>
-          <p className="mb-8 text-lg text-paper/70">
+          <p className="text-zinc-400 mb-8">
             Talk to our team and we will help you find the right approach.
           </p>
           <Link
             href="/contact"
-            className="inline-block rounded-full bg-accent px-10 py-4 font-semibold text-ink transition hover:bg-accent-hover"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Contact Us
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

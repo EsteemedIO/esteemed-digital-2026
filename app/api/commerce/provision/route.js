@@ -20,108 +20,15 @@
 
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import {
+  COMMERCE_PLATFORMS,
+  generateAppSpec,
+  isInternalProvisionRequest,
+  platformDefaults,
+  stableProvisioningId,
+} from "@/lib/commerce-provisioning";
 
 const DO_API = "https://api.digitalocean.com/v2";
-
-const TIER_SPECS = {
-  // Esteemed Commerce (Medusa)
-  develop: { instanceSize: "basic-xxs", instanceCount: 1, dbSize: "db-s-1vcpu-1gb", region: "nyc3" },
-  launch:  { instanceSize: "basic-xs",  instanceCount: 2, dbSize: "db-s-1vcpu-2gb", region: "nyc3" },
-  scale:   { instanceSize: "basic-s",   instanceCount: 3, dbSize: "db-s-2vcpu-4gb", region: "nyc3" },
-  // WooCommerce / Drupal tiers
-  starter: { instanceSize: "basic-xxs", instanceCount: 1, dbSize: "db-s-1vcpu-1gb", region: "nyc3" },
-  growth:  { instanceSize: "basic-xs",  instanceCount: 1, dbSize: "db-s-1vcpu-2gb", region: "nyc3" },
-  // "scale" already defined above — reused for WP/Drupal Scale tier
-};
-
-function generateAppSpec({ appId, tenantSlug, tier, registry, image, platform = "commerce" }) {
-  const specs = TIER_SPECS[tier] || TIER_SPECS.develop;
-  const appName = `${platform}-${tenantSlug}`;
-  const domain = `${tenantSlug}.${platform === "commerce" ? "commerce" : platform}.esteemed.io`;
-  const isWordpress = platform === "wordpress";
-  const isDrupal = platform === "drupal";
-  const isMedusa = !isWordpress && !isDrupal;
-
-  return {
-    name: appName,
-    region: specs.region,
-    services: [
-      {
-        name: "medusa-backend",
-        image: registry === "dockerhub"
-          ? {
-              registry_type: "DOCKER_HUB",
-              registry: image.split("/")[0] || "medusajs",
-              repository: image.split("/").slice(1).join("/").split(":")[0] || "medusa",
-              tag: image.split(":")[1] || "latest",
-            }
-          : {
-              registry_type: "DOCR",
-              registry: registry,
-              repository: image.split(":")[0],
-              tag: image.split(":")[1] || "latest",
-            },
-        instance_size_slug: specs.instanceSize,
-        instance_count: specs.instanceCount,
-        http_port: 9000,
-        envs: [
-          ...(isMedusa ? [
-            { key: "NODE_ENV", value: "production" },
-            { key: "MEDUSA_ADMIN_ONBOARDING_TYPE", value: "default" },
-            { key: "STORE_CORS", value: `https://${domain}` },
-            { key: "ADMIN_CORS", value: `https://${domain}` },
-            { key: "AUTH_CORS", value: `https://${domain}` },
-            { key: "REDIS_URL", value: "${redis.REDIS_URL}" },
-            { key: "DATABASE_URL", value: "${db.DATABASE_URL}" },
-            { key: "COOKIE_SECRET", value: crypto.randomUUID() },
-            { key: "JWT_SECRET", value: crypto.randomUUID() },
-          ] : isWordpress ? [
-            { key: "WORDPRESS_DB_HOST", value: "${db.HOSTNAME}:${db.PORT}" },
-            { key: "WORDPRESS_DB_USER", value: "${db.USERNAME}" },
-            { key: "WORDPRESS_DB_PASSWORD", value: "${db.PASSWORD}" },
-            { key: "WORDPRESS_DB_NAME", value: "${db.DATABASE}" },
-            { key: "WORDPRESS_TABLE_PREFIX", value: "wp_" },
-          ] : [
-            { key: "DRUPAL_DB_DRIVER", value: "pgsql" },
-            { key: "DRUPAL_DB_HOST", value: "${db.HOSTNAME}" },
-            { key: "DRUPAL_DB_PORT", value: "${db.PORT}" },
-            { key: "DRUPAL_DB_USER", value: "${db.USERNAME}" },
-            { key: "DRUPAL_DB_PASS", value: "${db.PASSWORD}" },
-            { key: "DRUPAL_DB_NAME", value: "${db.DATABASE}" },
-          ]),
-          { key: "ESTEEMED_APP_ID", value: appId },
-          { key: "ESTEEMED_TENANT", value: tenantSlug },
-          { key: "ESTEEMED_TIER", value: tier },
-          { key: "ESTEEMED_PLATFORM", value: platform },
-        ],
-        routes: [{ path: "/" }],
-        health_check: {
-          http_path: isMedusa ? "/health" : "/",
-          initial_delay_seconds: isMedusa ? 30 : 60,
-          period_seconds: 15,
-        },
-      },
-    ],
-    databases: [
-      {
-        name: "db",
-        engine: isWordpress ? "MYSQL" : "PG",
-        version: isWordpress ? "8" : "16",
-        size: specs.dbSize,
-        num_nodes: 1,
-        production: !["develop", "starter"].includes(tier),
-      },
-      ...(isMedusa ? [{
-        name: "redis",
-        engine: "REDIS",
-        version: "7",
-        size: "db-s-1vcpu-1gb",
-        num_nodes: 1,
-        production: false,
-      }] : []),
-    ],
-  };
-}
 
 async function doRequest(method, path, body, token) {
   const resp = await fetch(`${DO_API}${path}`, {
@@ -139,11 +46,15 @@ async function doRequest(method, path, body, token) {
   return data;
 }
 
+async function findExistingAppByName(name, token) {
+  const result = await doRequest("GET", "/apps?per_page=200", null, token);
+  return (result.apps || []).find((app) => app?.spec?.name === name || app?.name === name) || null;
+}
+
 export async function POST(request) {
   // Auth: either internal webhook call (no auth needed if from webhook handler)
   // or authenticated user request
-  const internalToken = request.headers.get("x-internal-token");
-  const isInternal = internalToken === process.env.COMMERCE_PROVISIONER_TOKEN;
+  const isInternal = isInternalProvisionRequest(request.headers, process.env.COMMERCE_PROVISIONER_TOKEN);
 
   if (!isInternal) {
     const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
@@ -181,7 +92,19 @@ export async function POST(request) {
     stripeSubscriptionId,
   } = body;
 
-  const appId = requestedAppId || `${platform}-${Date.now()}`;
+  if (!COMMERCE_PLATFORMS.has(platform)) {
+    return NextResponse.json({ error: "Unsupported commerce platform" }, { status: 400 });
+  }
+
+  const framework = requestedFramework || platformDefaults(platform).framework;
+  const appId =
+    requestedAppId ||
+    stableProvisioningId({
+      platform,
+      sessionId: stripeSessionId,
+      subscriptionId: stripeSubscriptionId,
+      tier,
+    });
 
   if (!tenantSlug) {
     return NextResponse.json({ error: "tenantSlug is required" }, { status: 400 });
@@ -190,17 +113,43 @@ export async function POST(request) {
   const registry = process.env.DOCR_REGISTRY || "dockerhub";
   const defaultImages = {
     commerce: process.env.COMMERCE_MEDUSA_IMAGE || "medusajs/medusa:latest",
-    wordpress: process.env.WOO_IMAGE || "wordpress:latest",
-    drupal: process.env.DRUPAL_IMAGE || "drupal:latest",
+    wordpress: process.env.WOO_IMAGE,
+    drupal: process.env.DRUPAL_IMAGE,
   };
   const image = requestedImage || defaultImages[platform] || defaultImages.commerce;
-  const framework = requestedFramework || platform;
+  if ((platform === "wordpress" || platform === "drupal") && !requestedImage && !defaultImages[platform]) {
+    const productName = platform === "wordpress" ? "WooCommerce" : "Drupal Commerce";
+    return NextResponse.json(
+      {
+        ok: false,
+        status: "not-configured",
+        error: `${productName} provisioning requires a custom ecommerce-ready image.`,
+      },
+      { status: 501 },
+    );
+  }
 
   try {
     // Generate DO App Platform spec
     const spec = generateAppSpec({ appId, tenantSlug, tier, registry, image, platform });
 
     console.log(`[${platform}-provision] Creating DO app:`, spec.name);
+
+    const existingApp = await findExistingAppByName(spec.name, doToken);
+    if (existingApp) {
+      console.log(`[${platform}-provision] Existing DO app found:`, existingApp.id);
+      return NextResponse.json({
+        ok: true,
+        status: "provisioning",
+        existing: true,
+        appId,
+        tenantSlug,
+        doAppId: existingApp.id,
+        deployUrl: existingApp.live_url || existingApp.default_ingress || "",
+        region: spec.region,
+        tier,
+      });
+    }
 
     // Create the app on DigitalOcean App Platform
     const result = await doRequest("POST", "/apps", { spec }, doToken);

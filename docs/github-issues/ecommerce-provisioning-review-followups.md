@@ -190,16 +190,43 @@ Expected fix:
 
 ## Acceptance criteria
 
-- [ ] Webhook processing is idempotent for Stripe event/session/subscription retries.
-- [ ] Internal provisioning auth works between the Stripe webhook and `/api/commerce/provision`.
-- [ ] Generated DigitalOcean App Platform specs are valid for Medusa, WooCommerce, and Drupal Commerce.
+- [x] Webhook processing is idempotent for Stripe event/session/subscription retries.
+- [x] Internal provisioning auth works between the Stripe webhook and `/api/commerce/provision`.
+- [x] Generated DigitalOcean App Platform specs are valid for Medusa, WooCommerce, and Drupal Commerce.
 - [ ] WooCommerce provisioning creates a working WooCommerce site, not plain WordPress.
 - [ ] Drupal Commerce provisioning creates a working Drupal Commerce site, not plain Drupal.
 - [ ] WordPress/Drupal files and installed extensions have a persistence/backup strategy.
-- [ ] Stripe webhook signature verification rejects missing/invalid signatures when a webhook secret is configured.
-- [ ] Provisioning failures have a durable retry path or return an error that triggers Stripe retry.
-- [ ] Pricing/checkout UI accurately reflects which commerce products are self-serve versus custom.
-- [ ] Tests cover webhook signature behavior, idempotency, internal auth, and generated app specs.
+- [x] Stripe webhook signature verification rejects missing/invalid signatures when a webhook secret is configured.
+- [x] Provisioning failures have a durable retry path or return an error that triggers Stripe retry.
+- [x] Pricing/checkout UI accurately reflects which commerce products are self-serve versus custom.
+- [x] Tests cover webhook signature behavior, idempotency, internal auth, and generated app specs.
+
+## Progress updates
+
+### 2026-07-17
+
+Implemented:
+
+- Stable provisioning ids based on Stripe subscription/session/customer data.
+- Existing DigitalOcean app lookup by generated app name before creating a new app.
+- Internal provision route auth accepts both `Authorization: Bearer ...` and `x-internal-token`.
+- Webhook calls now send both auth headers for compatibility.
+- Stripe webhook signature verification now rejects missing signatures when `STRIPE_WEBHOOK_SECRET` is configured, validates timestamp tolerance, and uses constant-time comparison.
+- Webhook returns `502` when provisioning returns `{ ok: false }`, allowing Stripe retry instead of silently acknowledging failed provisioning.
+- DigitalOcean App Platform spec generation moved to `lib/commerce-provisioning.js`.
+- Docker Hub image parsing now handles official images such as `wordpress:latest` and `drupal:latest`.
+- Platform-specific service names and ports:
+  - Medusa: `medusa-backend`, port `9000`
+  - WordPress/WooCommerce: `wordpress`, port `80`
+  - Drupal/Drupal Commerce: `drupal`, port `80`
+- WordPress/WooCommerce and Drupal/Drupal Commerce no longer fall back to plain upstream CMS images. They require explicit ecommerce-ready images (`WOO_IMAGE`, `DRUPAL_IMAGE`) or a request-provided image.
+- Added focused Playwright tests in `tests/commerce-provisioning.spec.js`.
+
+Still open:
+
+- Build or provide ecommerce-ready WooCommerce and Drupal Commerce images/bootstrap flows.
+- Add persistence/backup strategy for WordPress/Drupal files and installed extensions.
+- Re-run full production build after unrelated static prerender failures are resolved.
 
 ## Verification already run
 
@@ -207,9 +234,17 @@ Expected fix:
 npm run build
 ```
 
-Result: pass.
+Initial result during review: pass.
 
-No route-level tests were found for Stripe webhooks, idempotency, auth, or generated DigitalOcean specs.
+After implementation, focused commerce tests pass:
+
+```sh
+npx playwright test tests/commerce-provisioning.spec.js
+```
+
+Current full build result: blocked by unrelated static prerender failures on existing pages (`/_not-found`, `/resources`, `/solutions/build-internal-tool`, `/websites/ecommerce`, `/websites/hosting`, `/websites/website-builder`). The failures occur after compilation/type checking and do not reference the commerce provisioning modules.
+
+Focused coverage was added for Stripe webhook signature behavior, idempotent provisioning IDs, provisioner auth compatibility, Docker image parsing, and generated DigitalOcean App Platform specs.
 
 ## Suggested labels
 
