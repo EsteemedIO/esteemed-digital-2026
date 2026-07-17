@@ -111,7 +111,7 @@
     .hero-visual { aspect-ratio: auto; height: 420px; }
   }
   @media (min-width: 768px) {
-    .hero-visual { border-radius: 1rem 0 0 1rem; overflow: hidden; }
+    .hero-visual { overflow: hidden; }
   }
   @media (min-width: 1024px) {
     .hero-visual { height: 480px; }

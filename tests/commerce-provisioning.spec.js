@@ -1,4 +1,10 @@
 import { expect, test } from "@playwright/test";
+import { checkoutHref } from "../lib/pricing-catalog.js";
+import {
+  commercePricingPlans,
+  drupalCommercePricingPlans,
+  wooCommercePricingPlans,
+} from "../lib/product-page-pricing.js";
 import {
   DEFAULT_PLATFORM_IMAGES,
   generateAppSpec,
@@ -8,6 +14,21 @@ import {
   validateCmsStorageConfig,
 } from "../lib/commerce-provisioning.js";
 import { verifyWebhookSignature } from "../lib/stripe-webhook.js";
+
+const setupPlatforms = {
+  woocommerce: {
+    product: "woocommerce",
+    plans: wooCommercePricingPlans().filter((plan) => plan.monthly !== null),
+  },
+  drupal: {
+    product: "drupal",
+    plans: drupalCommercePricingPlans().filter((plan) => plan.monthly !== null),
+  },
+  esteemed: {
+    product: "commerce",
+    plans: commercePricingPlans().filter((plan) => plan.monthly !== null),
+  },
+};
 
 async function stripeSignature(body, secret, timestamp) {
   const payload = `${timestamp}.${body}`;
@@ -149,6 +170,44 @@ test("generates CMS specs with ecommerce-ready default images and persistent fil
       expect.objectContaining({ key: "DRUPAL_ADMIN_PASSWORD", type: "SECRET" }),
     ]),
   );
+});
+
+test("generates platform-specific setup checkout links", () => {
+  const cases = [
+    {
+      platform: "woocommerce",
+      plan: "growth",
+      expectedLookupKey: "woo_growth_monthly",
+      expectedSuccessPath: "/thanks?product=woocommerce&tier=growth",
+    },
+    {
+      platform: "drupal",
+      plan: "growth",
+      expectedLookupKey: "drupal_growth_monthly",
+      expectedSuccessPath: "/thanks?product=drupal&tier=growth",
+    },
+    {
+      platform: "esteemed",
+      plan: "launch",
+      expectedLookupKey: "commerce_launch_monthly",
+      expectedSuccessPath: "/thanks?product=commerce&tier=launch",
+    },
+  ];
+
+  for (const scenario of cases) {
+    const platform = setupPlatforms[scenario.platform];
+    const plan = platform.plans.find((item) => item.key === scenario.plan);
+    const checkout = new URL(checkoutHref({
+      lookupKey: plan.lookupKey,
+      successPath: `/thanks?product=${platform.product}&tier=${plan.key}`,
+      cancelPath: "/websites/ecommerce",
+    }), "http://localhost");
+
+    expect(checkout.pathname).toBe("/api/checkout");
+    expect(checkout.searchParams.get("lookup_key")).toBe(scenario.expectedLookupKey);
+    expect(checkout.searchParams.get("success_path")).toBe(scenario.expectedSuccessPath);
+    expect(checkout.searchParams.get("cancel_path")).toBe("/websites/ecommerce");
+  }
 });
 
 test("requires complete CMS storage config for managed CMS provisioning", () => {

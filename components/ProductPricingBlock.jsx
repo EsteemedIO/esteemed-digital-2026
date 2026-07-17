@@ -88,13 +88,13 @@ function PricingCard({
   const href = planCtaHref({ plan, productKey, billing, freeHref, contactHref, fallbackHref });
 
   return (
-    <article className={`relative flex h-full flex-col rounded-lg border bg-white p-6 shadow-sm ${highlighted ? "border-accent ring-4 ring-accent/25" : "border-zinc-200"}`}>
+    <article className={`relative flex h-full flex-col rounded-lg border bg-white shadow-sm ${highlighted ? "border-accent ring-4 ring-accent/25 -mt-10" : "border-zinc-200"}`}>
       {highlighted && (
-        <div className="absolute inset-x-0 top-0 rounded-t-lg bg-accent px-6 py-3 text-xs font-black uppercase tracking-wide text-ink">
+        <div className="rounded-t-lg bg-accent px-6 py-3 text-xs font-black uppercase tracking-wide text-ink">
           Recommended
         </div>
       )}
-      <div className={`flex flex-col ${highlighted ? "pt-8" : ""}`}>
+      <div className="flex flex-col px-6 pt-6">
         <h3 className="text-2xl font-black text-ink">{plan.name}</h3>
         <p className="mt-2 min-h-[72px] text-sm leading-6 text-zinc-600">{plan.description || plan.basis}</p>
         <div className="mt-5 min-h-[24px]">
@@ -131,7 +131,7 @@ function PricingCard({
         </div>
       </div>
 
-      <ul className="mt-6 flex-1 space-y-3">
+      <ul className="mt-6 flex-1 space-y-3 px-6">
         {(plan.features || []).map((feature) => {
           const featureText = typeof feature === "string" ? feature : feature.text;
           const featureLabel = typeof feature === "string" ? null : feature.label;
@@ -163,7 +163,7 @@ function PricingCard({
 
       <Link
         href={href}
-        className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
+        className="mx-6 mb-6 mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
       >
         {plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : ctaLabel || "Buy Now"}
       </Link>
@@ -235,7 +235,7 @@ export default function ProductPricingBlock({
           </div>
         </div>
 
-        <div className={`grid gap-6 md:grid-cols-2 ${plans.length === 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
+        <div className={`grid gap-6 pt-10 md:grid-cols-2 ${plans.length === 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
           {plans.map((plan, i) => (
             <div key={plan.key}>
               <PricingCard
