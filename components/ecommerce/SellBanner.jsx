@@ -83,7 +83,7 @@ export default function SellBanner() {
           Esteemed Commerce
         </p>
         <h1 className="hero-title text-white">
-          Pick your platform. Own what you build.<br />We run the rest.
+          Pick your platform.<br />Own what you build.<br />We run the rest.
         </h1>
         <p className="hero-body text-white/80">
           WooCommerce, Drupal Commerce, or Esteemed Commerce. All built on open source — you own the code, the data, and your customers. We host, scale and support it as you grow. No revenue share.
