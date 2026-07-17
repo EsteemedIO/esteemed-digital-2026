@@ -124,7 +124,7 @@ export default function SellBanner() {
         </div>
 
         {/* Stats badge */}
-        <div className="sell-float-a absolute z-[3] bg-white rounded-2xl flex flex-col items-center justify-center gap-1" style={{ left: -50, top: "20%", width: 90, height: 90, boxShadow: "0 16px 32px -12px rgba(0,0,0,0.4)" }}>
+        <div className="sell-float-a absolute z-[3] bg-white rounded-2xl flex flex-col items-center justify-center gap-1" style={{ left: 12, top: 12, width: 90, height: 90, boxShadow: "0 16px 32px -12px rgba(0,0,0,0.4)" }}>
           <div style={{ fontSize: 22, fontWeight: 800, color: "#1A1A1A", lineHeight: 1 }}>0%</div>
           <div style={{ fontSize: 7, fontWeight: 700, color: "rgba(26,26,26,0.5)", letterSpacing: 0.5, textTransform: "uppercase", textAlign: "center" }}>Platform fee</div>
         </div>
