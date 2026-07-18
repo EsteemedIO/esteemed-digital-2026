@@ -118,7 +118,7 @@ export default function MarketingLeadersPage() {
               src="/images/segments/woman-working-coffee.webp"
               alt="Marketing leader planning campaigns with Esteemed tools"
               variant="role-marketing"
-              objectPosition="center top"
+              objectPosition="center 25%"
             />
           </div>
         </div>

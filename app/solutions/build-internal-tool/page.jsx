@@ -117,7 +117,7 @@ export default function BuildInternalToolPage() {
               src="/images/segments/engineer-monitoring.webp"
               alt="Engineer building an internal tool with Esteemed Create"
               variant="usecase-build"
-              objectPosition="center"
+              objectPosition="center 20%"
             />
           </div>
         </div>

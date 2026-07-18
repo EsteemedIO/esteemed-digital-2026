@@ -117,7 +117,7 @@ export default function ModernizeLegacySitePage() {
               src="/images/segments/bg-man.webp"
               alt="Developer planning a legacy site migration"
               variant="usecase-modernize"
-              objectPosition="center"
+              objectPosition="center 30%"
             />
           </div>
         </div>

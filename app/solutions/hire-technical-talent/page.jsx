@@ -117,7 +117,7 @@ export default function HireTechnicalTalentPage() {
               src="/images/segments/colleagues-exp.webp"
               alt="Technical professionals from the Esteemed Colleagues network"
               variant="usecase-hire"
-              objectPosition="center"
+              objectPosition="center top"
             />
           </div>
         </div>

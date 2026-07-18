@@ -117,7 +117,7 @@ export default function LaunchMarketingSitePage() {
               src="/images/segments/woman-working-coffee.webp"
               alt="Marketing professional launching a site with Esteemed Create"
               variant="usecase-launch"
-              objectPosition="center top"
+              objectPosition="center 25%"
             />
           </div>
         </div>
