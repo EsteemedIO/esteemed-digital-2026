@@ -1,14 +1,13 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Mail,
   Shield,
   Users,
-  Globe,
   Calendar,
   HardDrive,
   CheckCircle,
   Video,
+  Mail,
 } from "lucide-react";
 
 export const metadata = {
@@ -16,6 +15,81 @@ export const metadata = {
   description:
     "Professional business email powered by Google Workspace. Custom domains, 30 GB–5 TB storage, video meetings, and enterprise-grade security.",
 };
+
+/* Google product icon SVGs — official colors */
+function GmailIcon({ size = 34 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M20 4H4l8 7 8-7z" fill="#EA4335" />
+      <path d="M3 5.5V19a1 1 0 001 1h3V9.37l5 3.93 5-3.93V20h3a1 1 0 001-1V5.5L12 13 3 5.5z" fill="#4285F4" />
+      <path d="M3 5.5V19a1 1 0 001 1h3V9.37L3 5.5z" fill="#34A853" />
+      <path d="M21 5.5V19a1 1 0 01-1 1h-3V9.37l4-3.87z" fill="#FBBC05" />
+    </svg>
+  );
+}
+function MeetIcon({ size = 34 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="5" width="11" height="14" rx="2" fill="#00832D" />
+      <path d="M14 9l5-3.5v13L14 15V9z" fill="#00AC47" />
+      <path d="M14 9l5-3.5L21 7v10l-2 1.5-5-3.5V9z" fill="#FFBA00" />
+      <path d="M8 10v4l3 2V8l-3 2z" fill="#0066DA" />
+    </svg>
+  );
+}
+function CalendarIcon({ size = 34 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="4" width="18" height="17" rx="2" fill="#4285F4" />
+      <rect x="3" y="4" width="18" height="5" rx="2" fill="#1967D2" />
+      <rect x="6" y="11" width="3" height="3" rx="0.5" fill="#fff" />
+      <rect x="10.5" y="11" width="3" height="3" rx="0.5" fill="#fff" />
+      <rect x="15" y="11" width="3" height="3" rx="0.5" fill="#fff" />
+      <rect x="6" y="15.5" width="3" height="3" rx="0.5" fill="#fff" />
+      <rect x="10.5" y="15.5" width="3" height="3" rx="0.5" fill="#fff" />
+      <text x="11.5" y="8" textAnchor="middle" fill="#fff" fontSize="5" fontWeight="700" fontFamily="sans-serif">31</text>
+    </svg>
+  );
+}
+function DriveIcon({ size = 34 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M8 3h8l6 10H14L8 3z" fill="#FBBC05" />
+      <path d="M2 13l4 8h12l-4-8H2z" fill="#34A853" />
+      <path d="M8 3L2 13h12L8 3z" fill="#4285F4" />
+    </svg>
+  );
+}
+function DocsIcon({ size = 34 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="2" width="14" height="20" rx="2" fill="#4285F4" />
+      <rect x="8" y="7" width="8" height="1.5" rx="0.5" fill="#fff" />
+      <rect x="8" y="10" width="8" height="1.5" rx="0.5" fill="#fff" />
+      <rect x="8" y="13" width="5" height="1.5" rx="0.5" fill="#fff" />
+    </svg>
+  );
+}
+function SheetsIcon({ size = 34 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="2" width="14" height="20" rx="2" fill="#0F9D58" />
+      <rect x="8" y="7" width="8" height="10" rx="0.5" fill="#fff" />
+      <line x1="12" y1="7" x2="12" y2="17" stroke="#0F9D58" strokeWidth="0.8" />
+      <line x1="8" y1="10" x2="16" y2="10" stroke="#0F9D58" strokeWidth="0.8" />
+      <line x1="8" y1="13" x2="16" y2="13" stroke="#0F9D58" strokeWidth="0.8" />
+    </svg>
+  );
+}
+
+const googleApps = [
+  { name: "Gmail", Icon: GmailIcon },
+  { name: "Meet", Icon: MeetIcon },
+  { name: "Calendar", Icon: CalendarIcon },
+  { name: "Drive", Icon: DriveIcon },
+  { name: "Docs", Icon: DocsIcon },
+  { name: "Sheets", Icon: SheetsIcon },
+];
 
 const features = [
   { icon: Mail, title: "Custom email address", body: "you@yourbusiness.com — professional email on your domain, set up in minutes." },
@@ -31,8 +105,6 @@ const plans = [
     name: "Starter",
     price: 7,
     storage: "30 GB / user",
-    meet: "100 participants",
-    recommended: false,
     features: [
       "Custom business email",
       "100-participant video meetings",
@@ -45,7 +117,6 @@ const plans = [
     name: "Standard",
     price: 14,
     storage: "2 TB / user",
-    meet: "150 participants",
     recommended: true,
     features: [
       "Everything in Starter",
@@ -60,8 +131,6 @@ const plans = [
     name: "Plus",
     price: 22,
     storage: "5 TB / user",
-    meet: "500 participants",
-    recommended: false,
     features: [
       "Everything in Standard",
       "500-participant video meetings + attendance tracking",
@@ -80,17 +149,6 @@ const steps = [
   { num: "04", title: "You're live", body: "Start sending and receiving email from your custom domain — with Google's infrastructure behind it." },
 ];
 
-const apps = [
-  { name: "Gmail", icon: "✉️" },
-  { name: "Drive", icon: "📁" },
-  { name: "Meet", icon: "📹" },
-  { name: "Calendar", icon: "📅" },
-  { name: "Docs", icon: "📝" },
-  { name: "Sheets", icon: "📊" },
-  { name: "Slides", icon: "📊" },
-  { name: "Chat", icon: "💬" },
-];
-
 export default function BusinessEmailPage() {
   return (
     <div className="min-h-screen">
@@ -102,30 +160,31 @@ export default function BusinessEmailPage() {
               Business Email
             </p>
             <h1 className="hero-title text-ink">
-              Professional email<br />for your business.
+              Professional email<br />@yourbusiness.com
             </h1>
             <p className="hero-body text-zinc-600">
-              Custom email on your domain, powered by Google Workspace. Reliable, secure, and set up in minutes — with Drive, Calendar, Meet, and Docs included.
+              Get custom email at your own domain — plus Gmail, Meet, Calendar and Drive — set up by Esteemed on Google Workspace. Look credible, stay organized, and keep every message secure.
             </p>
-            <div className="flex items-center gap-2 mb-6 text-sm text-zinc-500">
-              <span className="font-semibold text-ink">Powered by</span>
-              <span className="text-zinc-400">|</span>
-              <span className="font-bold text-ink">Google Workspace</span>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 mb-6">
               <Link
                 href="#plans"
                 className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
               >
-                See plans
-                <ArrowRight className="w-4 h-4" />
+                Get started with Google Workspace
               </Link>
               <Link
-                href="/contact?interest=hosting"
-                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-zinc-100 transition-colors"
+                href="#plans"
+                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-zinc-800 transition-colors"
               >
-                Talk to us
+                See plans &amp; pricing
               </Link>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-zinc-500">Powered by</span>
+              <GmailIcon size={20} />
+              <span className="font-bold text-ink">Google Workspace</span>
+              <span className="text-zinc-400">·</span>
+              <span className="text-zinc-500">14-day free trial</span>
             </div>
           </div>
           <div className="hero-visual shadow-2xl">
@@ -139,17 +198,15 @@ export default function BusinessEmailPage() {
             </div>
             {/* Floating email card */}
             <div
-              className="absolute z-10 left-4 bottom-6 flex items-center gap-3 bg-white rounded-2xl border border-zinc-200 px-4 py-3 shadow-lg"
+              className="absolute z-10 right-4 bottom-6 flex items-center gap-3 bg-white rounded-2xl border border-zinc-200 px-4 py-3 shadow-lg"
               style={{ animation: "emCardIn 0.7s ease-out 0.35s forwards", opacity: 0 }}
             >
-              <div className="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center">
-                <Mail className="w-5 h-5 text-ink" />
-              </div>
+              <GmailIcon size={36} />
               <div>
-                <div className="text-sm font-bold text-ink">you@yourbusiness.com</div>
+                <div className="text-sm font-bold text-ink">hello@yourbusiness.com</div>
                 <div className="flex items-center gap-2 text-xs text-zinc-500 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-green-600" />
-                  Verified · Google Workspace
+                  Verified &amp; secured
                 </div>
               </div>
             </div>
@@ -164,16 +221,18 @@ export default function BusinessEmailPage() {
       {/* Apps strip */}
       <section className="bg-[#E8EEF6] border-y border-zinc-200 py-8">
         <div className="max-w-6xl mx-auto px-6">
-          <p className="text-center text-sm text-zinc-500 mb-5">
-            Everything your team needs, included with every plan
+          <p className="text-center text-sm text-zinc-600 mb-5">
+            Every plan includes the Google Workspace apps your team already knows
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            {apps.map((app) => (
+            {googleApps.map((app) => (
               <div
                 key={app.name}
                 className="inline-flex items-center gap-3 bg-white border border-zinc-200 rounded-xl px-5 py-3 text-sm font-semibold text-ink shadow-sm"
               >
-                <span className="text-xl">{app.icon}</span>
+                <div className="w-9 h-9 rounded-lg bg-zinc-50 flex items-center justify-center">
+                  <app.Icon size={24} />
+                </div>
                 {app.name}
               </div>
             ))}
