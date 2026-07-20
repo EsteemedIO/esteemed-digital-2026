@@ -1,8 +1,14 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
 import { intelligencePricingPlans } from "@/lib/product-page-pricing";
 import { Brain, Database, GitBranch, Shield, Code, Building2 } from "lucide-react";
+
+const IntelligenceGlobe = dynamic(() => import("@/components/intelligence/IntelligenceGlobe"), {
+  ssr: false,
+  loading: () => <div className="w-full h-full" />,
+});
 
 export const metadata = {
   title: "Intelligence",
@@ -74,34 +80,36 @@ export default function IntelligencePage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="py-28">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <ProductIcon product="intelligence" className="mx-auto mb-6 h-14 w-14" />
-          <p className="text-sm font-medium text-zinc-500 mb-4">
-            Products / Intelligence
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Esteemed Intelligence — the layer that powers everything
-          </h1>
-          <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
-            Memory. Reasoning. Coherence. A shared intelligence layer that gives
-            your website and agents persistent memory, cross-system reasoning,
-            and continuous learning. Not just AI — intelligence that proves
-            it&apos;s right.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="#plans"
-              className="px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
-            >
-              See plans
+      <section className="hero-block-outer">
+        <div className="hero-block hero-block-split bg-ink">
+          <div>
+            <p className="hero-eyebrow text-white/50">
+              Business Intelligence
+            </p>
+            <h1 className="hero-title text-white">
+              The intelligence layer that powers everything.
+            </h1>
+            <p className="hero-body text-white/70">
+              Memory. Reasoning. Coherence. A shared intelligence layer that gives your website and agents persistent memory, cross-system reasoning, and continuous learning.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="#plans"
+                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+              >
+                See plans
+              </Link>
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-white text-white text-sm font-bold hover:bg-white/10 transition-colors"
+              >
+                Talk to us
             </Link>
-            <Link
-              href="/contact"
-              className="px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-ink hover:text-paper transition-colors"
-            >
-              Talk to us
-            </Link>
+            </div>
+          </div>
+          {/* Globe animation */}
+          <div className="hidden md:block w-full" style={{ height: 480 }}>
+            <IntelligenceGlobe />
           </div>
         </div>
       </section>
