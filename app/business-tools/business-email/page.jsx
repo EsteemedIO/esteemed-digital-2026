@@ -309,7 +309,7 @@ export default function BusinessEmailPage() {
                 </ul>
 
                 <Link
-                  href="/contact?interest=hosting"
+                  href="https://referworkspace.app.goo.gl/5Sus" target="_blank" rel="noopener noreferrer"
                   className="mt-6 w-full text-center inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-ink text-white text-sm font-bold hover:bg-zinc-800 transition-colors"
                 >
                   Get started
@@ -320,7 +320,7 @@ export default function BusinessEmailPage() {
           </div>
 
           <p className="text-center text-sm text-zinc-500 mt-8">
-            Need more than 300 users? <Link href="/contact?interest=hosting" className="font-bold text-ink hover:underline">Talk to our team</Link> about Enterprise pricing.
+            Need more than 300 users? <Link href="https://referworkspace.app.goo.gl/5Sus" target="_blank" rel="noopener noreferrer" className="font-bold text-ink hover:underline">Talk to our team</Link> about Enterprise pricing.
           </p>
         </div>
       </section>
@@ -355,14 +355,14 @@ export default function BusinessEmailPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/contact?interest=hosting"
+              href="https://referworkspace.app.goo.gl/5Sus" target="_blank" rel="noopener noreferrer"
               className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-zinc-800 transition-colors"
             >
               Get started
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="/contact?interest=hosting"
+              href="https://referworkspace.app.goo.gl/5Sus" target="_blank" rel="noopener noreferrer"
               className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-ink/5 transition-colors"
             >
               Talk to us
