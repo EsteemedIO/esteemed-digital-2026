@@ -187,8 +187,8 @@ export default function BusinessEmailPage() {
               <span className="text-zinc-500">14-day free trial</span>
             </div>
           </div>
-          <div className="hero-visual shadow-2xl">
-            <div className="absolute inset-0 rounded-2xl overflow-hidden">
+          <div className="relative w-full aspect-[4/3] sm:aspect-auto sm:h-[420px] lg:h-[480px] overflow-hidden md:rounded-l-2xl md:rounded-r-none rounded-2xl shadow-2xl">
+            <div className="absolute inset-0 overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/pair-working.jpg.webp?itok=9JhHeV4q"
