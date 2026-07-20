@@ -139,7 +139,7 @@ export default function IntelligencePage() {
             <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
               Meet Esteemed Intelligence
             </h2>
-            <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-zinc-600 mx-auto leading-relaxed" style={{ maxWidth: 780 }}>
               A shared intelligence layer that gives your AI systems persistent memory, cross-system reasoning, and structural coherence — not just probability. Your AI proves it&apos;s right.
             </p>
           </div>
