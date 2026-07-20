@@ -2,8 +2,9 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
+import HireExpertFAQ from "@/components/HireExpertFAQ";
 import { intelligencePricingPlans } from "@/lib/product-page-pricing";
-import { Brain, Database, GitBranch, Shield, Code, Building2 } from "lucide-react";
+import { Brain, Database, GitBranch, Shield, Code, Building2, ArrowRight } from "lucide-react";
 
 const IntelligenceGlobe = dynamic(() => import("@/components/intelligence/IntelligenceGlobe"), {
   ssr: false,
@@ -114,19 +115,8 @@ export default function IntelligencePage() {
         </div>
       </section>
 
-      <div id="plans">
-        <ProductPricingBlock
-          eyebrow="Intelligence pricing"
-          title="Deep substrate add-on"
-          description="Esteemed Intelligence is a flat per-tenant add-on for persistent memory, reasoning, coherence, and custom domain intelligence."
-          productKey="intelligence"
-          plans={pricingPlans}
-          ctaLabel="Buy Now"
-        />
-      </div>
-
-      {/* Three Prongs */}
-      <section className="py-20 border-t border-zinc-100">
+      {/* Three Prongs — directly after hero */}
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {prongs.map((prong) => (
@@ -160,6 +150,19 @@ export default function IntelligencePage() {
           </div>
         </div>
       </section>
+
+      {/* Pricing */}
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Pricing"
+          title="Start Free, Scale Infinitely"
+          description="Every plan includes all 40 MCP tools and full REST API access. Scale memory, intelligence, and coherence as you grow."
+          productKey="intelligence"
+          plans={pricingPlans}
+          ctaLabel="Get Started"
+          defaultBilling="monthly"
+        />
+      </div>
 
       {/* The difference */}
       <section className="py-20 border-t border-zinc-100">
@@ -200,24 +203,8 @@ export default function IntelligencePage() {
         </div>
       </section>
 
-      {/* Use cases */}
-      <section className="py-20 border-t border-zinc-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-10">
-            What this means for your business
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {useCases.map((uc) => (
-              <div key={uc.title} className="p-6">
-                <h3 className="text-lg font-bold text-ink mb-2">{uc.title}</h3>
-                <p className="text-sm text-zinc-600 leading-relaxed">
-                  {uc.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* FAQ — converted from use cases */}
+      <HireExpertFAQ items={useCases.map((uc) => ({ q: uc.title, a: uc.desc }))} />
 
       {/* API / MCP access */}
       <section className="py-20 border-t border-zinc-100">
@@ -297,15 +284,30 @@ export default function IntelligencePage() {
       {/* Bottom CTA */}
       <section className="bg-ink py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
-            Intelligence that compounds.
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-2 leading-tight">
+            Connect Any AI System. <span className="text-accent">Share One Intelligence.</span>
           </h2>
-          <Link
-            href="/websites/website-builder"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
-          >
-            Start building
-          </Link>
+          <p className="text-white/60 mt-6 mb-10 max-w-2xl mx-auto leading-relaxed">
+            REST API or MCP. Give every system shared memory, reasoning, and coherence. Start with a 14-day free trial — no credit card required.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="#plans"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            >
+              Start 14-Day Trial
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="https://help.esteemed.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-white/30 text-white text-sm font-bold hover:bg-white/10 transition-colors"
+            >
+              Documentation
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
     </div>
