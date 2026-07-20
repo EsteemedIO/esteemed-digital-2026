@@ -21,7 +21,6 @@ const businessToolsGroup = [
   { key: "acquire", name: "Customer Relationship Management", href: "/business-tools/crm", desc: "Pipeline, outreach, and relationship management." },
   { key: "hire", name: "Applicant Tracking", href: "/business-tools/applicant-tracking", desc: "Recruiting workflows, candidates, jobs, and hiring teams." },
   { key: "intelligence", name: "Business Intelligence + Memory", href: "/business-tools/business-intelligence", desc: "Shared memory, context, and domain intelligence." },
-  { key: "agents", name: "AI Agents", href: "/business-tools/ai-agents", desc: "Role-based agents for marketing, sales, support, and recruiting." },
 ];
 
 const servicesGroup = [
