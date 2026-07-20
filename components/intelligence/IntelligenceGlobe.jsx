@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 const GLOBE_RADIUS = 1.8;
-const WIRE_COLOR = 0x282828;
-const WIRE_BRIGHT = 0x555555;
+const WIRE_COLOR = 0x888888;
+const WIRE_BRIGHT = 0xaaaaaa;
 const ACCENT = 0xfee546; // Esteemed yellow
 
 const CENTERS = [
@@ -162,7 +162,7 @@ export default function IntelligenceGlobe() {
       mid.normalize().multiplyScalar(GLOBE_RADIUS + dist * 0.4);
       const curve = new THREE.QuadraticBezierCurve3(a, mid, b);
 
-      world.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(64)), new THREE.LineBasicMaterial({ color: 0x282828, transparent: true, opacity: 0.15 })));
+      world.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(64)), new THREE.LineBasicMaterial({ color: 0x888888, transparent: true, opacity: 0.2 })));
 
       const trailGeo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(64));
       const trail = new THREE.Line(trailGeo, new THREE.LineBasicMaterial({ color: CENTERS[i].color, transparent: true, opacity: 0.6 }));
