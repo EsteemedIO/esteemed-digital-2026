@@ -56,22 +56,38 @@ const prongs = [
   },
 ];
 
-const useCases = [
+const faqs = [
   {
-    title: "Your website answers questions accurately",
-    desc: "Instead of generic chatbot responses, your site pulls from verified knowledge and proves its answers are consistent with your actual content.",
+    q: "How is Esteemed Intelligence different from just using an LLM?",
+    a: "LLMs generate text. Intelligence remembers, reasons, and verifies. It gives your AI systems persistent memory across sessions, cross-system reasoning so agents share context, and structural coherence proofs — not just probability scores. Your AI doesn't just sound right, it proves it's right.",
   },
   {
-    title: "Agents share context automatically",
-    desc: "Your Voice Agent knows what your Blog Agent wrote. Your Social Agent knows what customers asked. No manual syncing.",
+    q: "Do my agents automatically share what they learn?",
+    a: "Yes. Your Voice Agent knows what your Blog Agent wrote. Your Social Agent knows what customers asked. Intelligence is the shared layer — no manual syncing, no data silos between agents.",
   },
   {
-    title: "Your business knowledge compounds",
-    desc: "Every customer interaction, every content update, every agent conversation feeds back into a shared intelligence layer that gets smarter over time.",
+    q: "Will my website give more accurate answers?",
+    a: "Instead of generic chatbot responses, your site pulls from verified knowledge and proves its answers are consistent with your actual content. Customers get real answers, not hallucinations.",
   },
   {
-    title: "Errors are caught before they happen",
-    desc: "Drift analysis detects when agent responses start diverging from your brand voice or factual content — before customers notice.",
+    q: "How does the memory work — does it reset?",
+    a: "Never. Every customer interaction, every content update, every agent conversation feeds back into a shared intelligence layer that compounds over time. The longer you use it, the smarter it gets.",
+  },
+  {
+    q: "What happens if an agent starts giving wrong answers?",
+    a: "Drift analysis detects when agent responses diverge from your brand voice or factual content — before customers notice. You get alerted, and coherence gates can block bad outputs automatically.",
+  },
+  {
+    q: "Can I connect my own systems via API?",
+    a: "Yes. Full REST API and Model Context Protocol (MCP) endpoints give you programmatic access to memory, reasoning, and coherence verification. Use it to power custom agents, internal tools, or third-party integrations.",
+  },
+  {
+    q: "What does the free trial include?",
+    a: "Everything. All 40 MCP tools, full REST API access, 250K memory operations, and 3 connected agents for 14 days. No credit card required.",
+  },
+  {
+    q: "Can I run it on my own infrastructure?",
+    a: "Yes. The Enterprise tier includes on-premise or VPC deployment with custom SLAs, dedicated infrastructure, and white-glove onboarding. Contact us for details.",
   },
 ];
 
@@ -204,7 +220,7 @@ export default function IntelligencePage() {
       </section>
 
       {/* FAQ — converted from use cases */}
-      <HireExpertFAQ items={useCases.map((uc) => ({ q: uc.title, a: uc.desc }))} />
+      <HireExpertFAQ items={faqs} />
 
       {/* API / MCP access */}
       <section className="py-20 border-t border-zinc-100">
