@@ -134,6 +134,15 @@ export default function IntelligencePage() {
       {/* Three Prongs — directly after hero */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <ProductIcon product="intelligence" className="mx-auto mb-6 h-14 w-14" />
+            <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
+              Meet Esteemed Intelligence
+            </h2>
+            <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+              A shared intelligence layer that gives your AI systems persistent memory, cross-system reasoning, and structural coherence — not just probability. Your AI proves it&apos;s right.
+            </p>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {prongs.map((prong) => (
               <div
