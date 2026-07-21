@@ -76,7 +76,7 @@
     .hero-block-split {
       grid-template-columns: 1fr 1fr;
       gap: 2.5rem;
-      padding: 2rem 2rem 2rem 3.5rem;
+      padding: 2rem 2rem 2rem 2rem;
     }
   }
 
