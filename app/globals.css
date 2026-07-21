@@ -103,18 +103,15 @@
   .hero-visual {
     position: relative;
     border-radius: 1rem;
-    overflow: visible;
+    overflow: hidden;
     width: 100%;
     aspect-ratio: 4 / 3;
   }
   @media (min-width: 640px) {
-    .hero-visual { aspect-ratio: auto; height: 420px; }
-  }
-  @media (min-width: 768px) {
-    .hero-visual { overflow: hidden; }
+    .hero-visual { aspect-ratio: auto; height: 380px; }
   }
   @media (min-width: 1024px) {
-    .hero-visual { height: 480px; }
+    .hero-visual { height: 420px; }
   }
 
   /* ── Hero eyebrow ── */

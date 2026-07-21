@@ -233,7 +233,7 @@ export default function ProductPricingBlock({
           </div>
         </div>
 
-        <div className={`grid gap-6 pt-10 md:grid-cols-2 ${plans.length === 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
+        <div className={`grid gap-6 pt-10 items-end md:grid-cols-2 ${plans.length === 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
           {plans.map((plan, i) => (
             <div key={plan.key}>
               <PricingCard
