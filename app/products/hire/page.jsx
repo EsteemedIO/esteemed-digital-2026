@@ -163,17 +163,17 @@ export default function HirePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
             Ready to streamline your hiring?
           </h2>
-          <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
+          <p className="text-zinc-700 mb-8 max-w-xl mx-auto">
             Start with Hire. Source from Colleagues. Let Intelligence do the heavy lifting.
           </p>
           <Link
             href="/signup?redirect=create"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white font-bold hover:bg-accent-hover transition-colors"
           >
             Get started
             <ArrowRight className="w-4 h-4" />

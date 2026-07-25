@@ -3,6 +3,11 @@ import Link from 'next/link'
 import { getPost, listPosts } from '@/lib/curate'
 import LexicalRenderer from '@/components/LexicalRenderer'
 
+const FALLBACK_IMAGES = {
+  'the-unbound-knowledge-worker': 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  'introducing-esteemed-curate': 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200',
+}
+
 export async function generateStaticParams() {
   try {
     const data = await listPosts({ limit: 100 })
@@ -76,11 +81,12 @@ export default async function PostPage({ params }) {
       </section>
 
       {/* Featured image */}
-      {post.featuredImage?.url && (
+      {(post.featuredImage?.url || FALLBACK_IMAGES[post.slug]) && (
         <div className="max-w-3xl mx-auto px-6 pt-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={post.featuredImage.sizes?.card?.url ?? post.featuredImage.url}
-            alt={post.featuredImage.altText ?? post.title}
+            src={post.featuredImage?.sizes?.card?.url ?? post.featuredImage?.url ?? FALLBACK_IMAGES[post.slug]}
+            alt={post.featuredImage?.altText ?? post.title}
             className="w-full rounded-2xl object-cover max-h-96"
           />
         </div>
@@ -114,17 +120,17 @@ export default async function PostPage({ params }) {
       </section>
 
       {/* CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-3xl font-bold text-ink mb-4">
             Build your distributed team with Esteemed
           </h2>
-          <p className="text-zinc-400 mb-8">
+          <p className="text-zinc-700 mb-8">
             Access 35,000+ vetted tech professionals, on demand.
           </p>
           <Link
             href="/login"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Get Started
           </Link>

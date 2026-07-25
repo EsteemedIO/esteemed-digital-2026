@@ -4,7 +4,8 @@ import { Suspense } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { CheckCircle2, Loader2, ArrowRight } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
+import { Loader2, ArrowRight } from "lucide-react";
 import { checkoutHref } from "@/lib/pricing-catalog";
 import {
   commercePricingPlans,
@@ -149,7 +150,7 @@ function EcommerceStartContent() {
               "Deploy from GitHub, scale on demand",
             ].map((item) => (
               <li key={item} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink" strokeWidth={2} />
+                <TickRounded className="w-7 h-7" />
                 <span className="text-zinc-700">{item}</span>
               </li>
             ))}

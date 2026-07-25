@@ -307,18 +307,18 @@ export default function IntelligencePage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-2 leading-tight">
+          <h2 className="text-3xl md:text-5xl font-bold text-ink mb-2 leading-tight">
             Connect Any AI System. <span className="text-accent">Share One Intelligence.</span>
           </h2>
-          <p className="text-white/60 mt-6 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-ink/60 mt-6 mb-10 max-w-2xl mx-auto leading-relaxed">
             REST API or MCP. Give every system shared memory, reasoning, and coherence. Start with a 14-day free trial — no credit card required.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="#plans"
-              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
             >
               Start 14-Day Trial
               <ArrowRight className="w-4 h-4" />
@@ -327,7 +327,7 @@ export default function IntelligencePage() {
               href="https://help.esteemed.io"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-white/30 text-white text-sm font-bold hover:bg-white/10 transition-colors"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-ink/30 text-ink text-sm font-bold hover:bg-ink/10 transition-colors"
             >
               Documentation
               <ArrowRight className="w-4 h-4" />

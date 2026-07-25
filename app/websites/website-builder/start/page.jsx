@@ -1,7 +1,8 @@
 "use client";
 
 import { useSession, signIn } from "next-auth/react";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
+import { Loader2 } from "lucide-react";
 
 const CREATE_URL = "https://create.esteemed.io";
 
@@ -57,7 +58,7 @@ export default function StartPage() {
               "Publish to our secure, scalable cloud",
             ].map((item) => (
               <li key={item} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink" strokeWidth={2} />
+                <TickRounded className="w-7 h-7" />
                 <span className="text-zinc-700">{item}</span>
               </li>
             ))}

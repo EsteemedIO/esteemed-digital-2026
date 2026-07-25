@@ -95,13 +95,13 @@ export default function SolutionsPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Not sure where to start?</h2>
-          <p className="text-zinc-400 mb-8">Talk to our team and we will help you find the right solution.</p>
+          <h2 className="text-3xl font-bold text-ink mb-6">Not sure where to start?</h2>
+          <p className="text-zinc-700 mb-8">Talk to our team and we will help you find the right solution.</p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Contact Us
           </Link>

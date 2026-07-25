@@ -9,13 +9,13 @@ import {
   ArrowRight,
   Headphones,
   Check,
-  CheckCircle,
   PlusCircle,
   Globe,
   Shield,
   Cpu,
   Users,
 } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
 
 export const metadata = {
   title: "Web Support Plans | Esteemed",
@@ -50,7 +50,7 @@ export default function SupportPage() {
                 "No long-term contracts required",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm text-zinc-700">
-                  <CheckCircle className="w-4 h-4 text-ink flex-shrink-0" strokeWidth={2} />
+                  <TickRounded className="w-7 h-7" />
                   {item}
                 </li>
               ))}
@@ -187,14 +187,14 @@ export default function SupportPage() {
       ]} />
 
       {/* Bottom CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-ink mb-6">
             Get expert help today.
           </h2>
           <Link
             href="/contact"
-            className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Talk to an Expert
             <ArrowRight className="w-4 h-4" />

@@ -517,14 +517,14 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="heading-2 !text-white mb-6">
+          <h2 className="heading-2 !text-ink mb-6">
             Ready to build something Esteemed?
           </h2>
           <button
             onClick={scrollToTop}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-[20px] font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-[20px] font-bold hover:bg-accent-hover transition-colors"
           >
             Start &rarr;
           </button>

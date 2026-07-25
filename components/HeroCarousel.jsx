@@ -105,45 +105,37 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
         </div>
       </div>
 
-      {/* Progress bars + pause */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+      {/* Pill nav + pause */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
         {slides.map((s, i) => (
           <button
             key={i}
             onClick={() => goTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className="group flex flex-col items-center gap-1.5 cursor-pointer"
+            aria-label={`Go to slide: ${s.label || s.eyebrow}`}
+            className={`relative h-8 rounded-full px-6 text-sm font-bold transition-all overflow-hidden ${
+              i === current
+                ? "bg-white text-ink shadow-sm"
+                : "bg-white/30 text-ink hover:bg-white/50"
+            }`}
           >
-            <span
-              className="hidden md:block text-xs font-semibold whitespace-nowrap transition-colors"
-              style={{ color: i === current ? "#FFFFFF" : "rgba(255,255,255,0.45)" }}
-            >
-              {s.label || s.eyebrow}
-            </span>
-            <div className="relative w-14 sm:w-20 md:w-24 h-1 rounded-full overflow-hidden bg-white/30">
+            {i === current && (
               <div
-                className="absolute inset-y-0 left-0 rounded-full bg-white transition-[width] duration-[50ms] ease-linear"
-                style={{
-                  width:
-                    i === current
-                      ? `${progress}%`
-                      : i < current
-                        ? "100%"
-                        : "0%",
-                }}
+                className="absolute inset-y-0 left-0 bg-zinc-300 rounded-full transition-[width] duration-[50ms] ease-linear"
+                style={{ width: `${progress}%`, zIndex: 0 }}
               />
-            </div>
+            )}
+            <span className="relative z-10 whitespace-nowrap">{s.label || s.eyebrow}</span>
           </button>
         ))}
         <button
           onClick={() => setPaused((p) => !p)}
           aria-label={paused ? "Play" : "Pause"}
-          className="w-7 h-7 rounded-full bg-white/20 hover:bg-white flex items-center justify-center transition-colors group/pause flex-shrink-0"
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-white/30 text-ink hover:bg-white transition-colors flex-shrink-0"
         >
           {paused ? (
-            <Play className="h-3 w-3 text-white/45 group-hover/pause:text-ink transition-colors" />
+            <Play className="h-4 w-4" strokeWidth={2.5} />
           ) : (
-            <Pause className="h-3 w-3 text-white/45 group-hover/pause:text-ink transition-colors" />
+            <Pause className="h-4 w-4" strokeWidth={2.5} />
           )}
         </button>
       </div>

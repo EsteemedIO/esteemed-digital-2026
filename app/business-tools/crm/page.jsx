@@ -99,6 +99,7 @@ export default function AcquirePage() {
           plans={pricingPlans}
           ctaLabel="Buy Now"
           freeHref="/signup?product=acquire&tier=free"
+          defaultBilling="monthly"
         />
       </div>
 
@@ -223,17 +224,17 @@ export default function AcquirePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
             Win clients. Source talent. One CRM.
           </h2>
-          <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
+          <p className="text-zinc-700 mb-8 max-w-xl mx-auto">
             Acquire brings both sides of your business into one Intelligence-powered platform.
           </p>
           <Link
             href="/signup?redirect=create"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white font-bold hover:bg-accent-hover transition-colors"
           >
             Get started
             <ArrowRight className="w-4 h-4" />

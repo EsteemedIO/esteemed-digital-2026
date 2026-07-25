@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, CalendarDays, Phone, CheckCircle } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
+import { X, CalendarDays, Phone } from "lucide-react";
 
 export default function ContactModal({ open, onClose, plan }) {
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
@@ -67,7 +68,7 @@ export default function ContactModal({ open, onClose, plan }) {
                 },
               ].map((item) => (
                 <div key={item.title} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-ink flex-shrink-0 mt-0.5" strokeWidth={2} />
+                  <TickRounded className="w-7 h-7" />
                   <div>
                     <h4 className="font-bold text-ink text-sm">{item.title}</h4>
                     <p className="text-sm text-zinc-600 leading-relaxed mt-0.5">{item.desc}</p>
@@ -82,7 +83,7 @@ export default function ContactModal({ open, onClose, plan }) {
             {submitted ? (
               <div className="flex flex-col items-center justify-center h-full text-center py-12">
                 <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-6">
-                  <CheckCircle className="w-8 h-8 text-green-600" strokeWidth={2} />
+                  <TickRounded className="w-7 h-7" />
                 </div>
                 <h3 className="text-2xl font-bold text-ink mb-2">We'll be in touch!</h3>
                 <p className="text-zinc-600 max-w-sm">

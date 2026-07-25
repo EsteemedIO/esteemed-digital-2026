@@ -5,10 +5,10 @@ import {
   Users,
   Calendar,
   HardDrive,
-  CheckCircle,
   Video,
   Mail,
 } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
 
 export const metadata = {
   title: "Business Email | Esteemed",
@@ -302,7 +302,7 @@ export default function BusinessEmailPage() {
                 <ul className="mt-6 pt-6 border-t border-zinc-100 space-y-3 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex gap-3 text-sm text-zinc-700">
-                      <CheckCircle className="w-4 h-4 text-ink flex-shrink-0 mt-0.5" strokeWidth={2} />
+                      <TickRounded className="w-7 h-7" />
                       {f}
                     </li>
                   ))}

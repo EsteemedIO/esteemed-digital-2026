@@ -9,8 +9,8 @@ import {
   Globe,
   BarChart3,
   Headphones,
-  CheckCircle,
 } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
 
 export const metadata = {
   title: "Solutions for HR Teams | Esteemed",
@@ -100,7 +100,7 @@ export default function HRTeamsPage() {
                 "Global EOR in 130+ countries without foreign entities",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm text-zinc-700">
-                  <CheckCircle className="w-4 h-4 text-ink flex-shrink-0" strokeWidth={2} />
+                  <TickRounded className="w-7 h-7" />
                   {item}
                 </li>
               ))}
@@ -246,7 +246,7 @@ export default function HRTeamsPage() {
                   "Global EOR for international hiring in 130+ countries without entities",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-ink flex-shrink-0 mt-0.5" strokeWidth={2} />
+                    <TickRounded className="w-7 h-7" />
                     <span className="text-zinc-700">{item}</span>
                   </li>
                 ))}
@@ -326,7 +326,7 @@ export default function HRTeamsPage() {
                 ].map((b) => (
                   <li key={b} className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent text-ink flex items-center justify-center mt-0.5">
-                      <CheckCircle className="w-4 h-4" strokeWidth={2.5} />
+                      <TickRounded className="w-7 h-7" />
                     </span>
                     <span className="text-white font-medium text-sm leading-snug">{b}</span>
                   </li>

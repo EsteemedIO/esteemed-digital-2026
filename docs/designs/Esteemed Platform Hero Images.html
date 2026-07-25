@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Esteemed — Platform Hero Images</title>
+<meta name="design_doc_mode" content="canvas" />
+<style>
+  html, body { margin: 0; background: transparent; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
+  .pb-label { position: absolute; font-size: 13px; font-weight: 600; color: #6b6b63; }
+  .pb-frame { position: absolute; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="pb-label" style="left: 40px; top: 24px;">WordPress hosting — hero image (1160×620)</div>
+  <div class="pb-frame" id="pb-wp" style="left: 40px; top: 52px; width: 1160px; height: 620px;"></div>
+
+  <div class="pb-label" style="left: 40px; top: 720px;">Drupal hosting — hero image (1160×620)</div>
+  <div class="pb-frame" id="pb-drupal" style="left: 40px; top: 748px; width: 1160px; height: 620px;"></div>
+
+  <div class="pb-label" style="left: 40px; top: 1416px;">Next.js hosting — hero image (1160×620)</div>
+  <div class="pb-frame" id="pb-next" style="left: 40px; top: 1444px; width: 1160px; height: 620px;"></div>
+
+  <div class="pb-label" style="left: 40px; top: 2112px;">Virtual Private Servers — hero image (1160×620)</div>
+  <div class="pb-frame" id="pb-vps" style="left: 40px; top: 2140px; width: 1160px; height: 620px;"></div>
+
+  <script type="text/babel" src="platform-blocks.jsx"></script>
+  <script type="text/babel">
+    const { WordPressBlock, DrupalBlock, NextBlock, VpsBlock } = window;
+    ReactDOM.createRoot(document.getElementById('pb-wp')).render(<WordPressBlock />);
+    ReactDOM.createRoot(document.getElementById('pb-drupal')).render(<DrupalBlock />);
+    ReactDOM.createRoot(document.getElementById('pb-next')).render(<NextBlock />);
+    ReactDOM.createRoot(document.getElementById('pb-vps')).render(<VpsBlock />);
+  </script>
+</body>
+</html>

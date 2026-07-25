@@ -1,7 +1,8 @@
 import Link from "next/link";
 import HireExpertFAQ from "@/components/HireExpertFAQ";
 import HeroImageComposite from "@/components/HeroImageComposite";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
+import { ArrowRight } from "lucide-react";
 import StickyAnchorNav from "@/components/StickyAnchorNav";
 
 export const metadata = {
@@ -35,7 +36,7 @@ export default function SearchEngineMarketingPage() {
                 "Transparent reporting you can act on",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm text-zinc-700">
-                  <CheckCircle className="w-4 h-4 text-ink flex-shrink-0" strokeWidth={2} />
+                  <TickRounded className="w-7 h-7" />
                   {item}
                 </li>
               ))}
@@ -66,14 +67,14 @@ export default function SearchEngineMarketingPage() {
         { q: "How do I track what's working?", a: "You get transparent, regular reporting with clear metrics — clicks, conversions, cost per acquisition, and ROI." },
       ]} />
 
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-ink mb-6">
             Maximize every ad dollar.
           </h2>
           <Link
             href="/contact"
-            className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Talk to an Expert
             <ArrowRight className="w-4 h-4" />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
+import TickRounded from "@/components/TickRounded";
 import { appPricingPlans, suitePricingPlans } from "@/lib/product-page-pricing";
 import {
   ClipboardCheck,
@@ -56,35 +57,57 @@ const pricingPlans = [...appPricingPlans("hire"), ...suitePricingPlans()];
 export default function HirePage() {
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="py-28">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <ProductIcon product="hire" className="mx-auto mb-6 h-14 w-14" />
-          <p className="text-sm font-medium text-zinc-500 mb-4">
-            Products / Hire
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Esteemed Hire
-          </h1>
-          <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
-            Applicant tracking built for how you actually hire. Integrated with
-            Colleagues for sourcing, powered by Intelligence for ranking, and
-            designed for teams that move fast.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4 justify-center">
-            <Link
-              href="#plans"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-accent text-ink font-bold hover:bg-accent-hover transition-colors"
-            >
-              See plans
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/products/colleagues"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border-2 border-ink text-ink font-bold hover:bg-ink hover:text-white transition-colors"
-            >
-              See Colleagues
-            </Link>
+      {/* Hero — split layout */}
+      <section className="hero-block-outer">
+        <div className="hero-block hero-block-split" style={{ background: "#FFF8D6" }}>
+          <div className="md:order-2">
+            <ProductIcon product="hire" className="mb-4 h-12 w-12" />
+            <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">
+              Products / Hire
+            </p>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink leading-tight mb-4">
+              Esteemed Hire
+            </h1>
+            <p className="text-base text-zinc-600 leading-relaxed mb-6 max-w-lg">
+              Applicant tracking built for how you actually hire. Integrated with
+              Colleagues for sourcing, powered by Intelligence for ranking, and
+              designed for teams that move fast.
+            </p>
+            <ul className="space-y-1.5 mb-6 max-w-lg">
+              {[
+                "Source from 35,000+ vetted professionals",
+                "AI-powered candidate matching and ranking",
+                "Drag-and-drop pipeline management",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-2 text-sm text-zinc-700">
+                  <TickRounded className="w-7 h-7" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="#plans"
+                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+              >
+                See Plans
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/products/colleagues"
+                className="w-full sm:w-auto text-center inline-flex items-center justify-center px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-white hover:text-ink transition-colors"
+              >
+                See Colleagues
+              </Link>
+            </div>
+          </div>
+          <div className="md:order-1 relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-auto md:min-h-[380px] shadow-lg border border-zinc-200">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/products/hire-ats-screenshot.png"
+              alt="Esteemed Hire — applicant tracking system"
+              className="absolute inset-0 w-full h-full object-cover object-left-top rounded-2xl"
+            />
           </div>
         </div>
       </section>
@@ -98,6 +121,7 @@ export default function HirePage() {
           plans={pricingPlans}
           ctaLabel="Buy Now"
           freeHref="/signup?product=hire&tier=free"
+          defaultBilling="monthly"
         />
       </div>
 
@@ -163,17 +187,17 @@ export default function HirePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
             Ready to streamline your hiring?
           </h2>
-          <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
+          <p className="text-zinc-700 mb-8 max-w-xl mx-auto">
             Start with Hire. Source from Colleagues. Let Intelligence do the heavy lifting.
           </p>
           <Link
             href="/signup?redirect=create"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white font-bold hover:bg-accent-hover transition-colors"
           >
             Get started
             <ArrowRight className="w-4 h-4" />

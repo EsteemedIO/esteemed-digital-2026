@@ -88,7 +88,7 @@ function PricingCard({
   const href = planCtaHref({ plan, productKey, billing, freeHref, contactHref, fallbackHref });
 
   return (
-    <article className={`relative flex h-full flex-col rounded-lg border bg-white shadow-sm ${highlighted ? "border-accent ring-4 ring-accent/25 -mt-10" : "border-zinc-200"}`}>
+    <article className={`relative flex h-full flex-col rounded-lg border bg-white shadow-sm ${highlighted ? "border-accent ring-4 ring-accent/25" : "border-zinc-200"}`}>
       {highlighted && (
         <div className="rounded-t-lg bg-accent px-6 py-3 text-xs font-black uppercase tracking-wide text-ink">
           Recommended
@@ -233,9 +233,9 @@ export default function ProductPricingBlock({
           </div>
         </div>
 
-        <div className={`grid gap-6 pt-10 items-end md:grid-cols-2 ${plans.length === 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
+        <div className={`grid gap-6 pt-10 md:grid-cols-2 ${plans.length === 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
           {plans.map((plan, i) => (
-            <div key={plan.key}>
+            <div key={plan.key} className={plan.recommended ? "-mt-10" : ""}>
               <PricingCard
                 plan={plan}
                 productKey={productKey}

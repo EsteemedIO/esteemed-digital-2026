@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
+import { ArrowRight } from "lucide-react";
 import ContactModal from "./ContactModal";
 
 const plans = [
@@ -126,10 +127,7 @@ export default function ServicePlans() {
                 <ul className="space-y-3 mb-8 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5">
-                      <CheckCircle
-                        className="w-4 h-4 text-ink flex-shrink-0 mt-0.5"
-                        strokeWidth={2}
-                      />
+                      <TickRounded className="w-7 h-7" />
                       <span className="text-sm text-zinc-700">{f}</span>
                     </li>
                   ))}
@@ -143,7 +141,7 @@ export default function ServicePlans() {
                       : "bg-ink text-white hover:bg-zinc-800"
                   }`}
                 >
-                  Get started
+                  Buy Now
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

@@ -26,8 +26,8 @@ import {
   HardDrive,
   RefreshCw,
   Sparkles,
-  CheckCircle2,
 } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
 
 export const metadata = {
   title: "Connect",
@@ -138,10 +138,7 @@ export default function ConnectPage() {
                     key={f}
                     className="flex items-start gap-2 text-sm text-zinc-600"
                   >
-                    <CheckCircle2
-                      className="w-4 h-4 text-ink flex-shrink-0 mt-0.5"
-                      strokeWidth={2}
-                    />
+                    <TickRounded className="w-7 h-7" />
                     {f}
                   </li>
                 ))}
@@ -179,10 +176,7 @@ export default function ConnectPage() {
                     key={f}
                     className="flex items-start gap-2 text-sm text-zinc-600"
                   >
-                    <CheckCircle2
-                      className="w-4 h-4 text-ink flex-shrink-0 mt-0.5"
-                      strokeWidth={2}
-                    />
+                    <TickRounded className="w-7 h-7" />
                     {f}
                   </li>
                 ))}
@@ -256,21 +250,21 @@ export default function ConnectPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-ink mb-6">
             Your knowledge, connected.
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
             >
               Get Started
             </Link>
             <Link
               href="#plans"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-white text-white text-sm font-bold hover:bg-white hover:text-ink transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-white hover:text-ink transition-colors"
             >
               See Pricing
             </Link>

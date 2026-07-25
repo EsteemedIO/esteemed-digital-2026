@@ -104,13 +104,13 @@ export default function CuratePage() {
         </div>
       </section>
 
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <h2 className="mb-6 text-3xl font-bold text-white">Start with content. Expand into the platform.</h2>
-          <p className="mx-auto mb-8 max-w-2xl text-zinc-300">
+          <h2 className="mb-6 text-3xl font-bold text-ink">Start with content. Expand into the platform.</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-zinc-700">
             Curate is the first customer-visible provisioning flow for Esteemed Cloud, and the same pattern will support the broader app ecosystem.
           </p>
-          <Link href="/signup?product=curate" className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-4 text-sm font-bold text-ink transition-colors hover:bg-accent-hover">
+          <Link href="/signup?product=curate" className="inline-flex items-center gap-2 rounded-full bg-ink px-8 py-4 text-sm font-bold text-white transition-colors hover:bg-ink/90">
             Provision Curate
             <ArrowRight className="h-4 w-4" />
           </Link>

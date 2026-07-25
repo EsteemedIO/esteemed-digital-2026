@@ -3,7 +3,8 @@ import SellBanner from "@/components/ecommerce/SellBanner";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
 import { commercePricingPlans } from "@/lib/product-page-pricing";
-import { ArrowRight, CheckCircle, ShoppingCart, CreditCard, BarChart3, Globe, Code2 } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
+import { ArrowRight, ShoppingCart, CreditCard, BarChart3, Globe, Code2 } from "lucide-react";
 
 export const metadata = {
   title: "Ecommerce | Esteemed",
@@ -108,7 +109,7 @@ export default function EcommercePage() {
                 <ul className="space-y-2 flex-1">
                   {p.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm text-zinc-700">
-                      <CheckCircle className="w-4 h-4 text-ink flex-shrink-0" strokeWidth={2} />
+                      <TickRounded className="w-7 h-7" />
                       {f}
                     </li>
                   ))}
@@ -195,7 +196,7 @@ export default function EcommercePage() {
                   "Curate CMS — manage product content, blogs, and landing pages",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#FEE546" }} strokeWidth={2} />
+                    <TickRounded className="w-7 h-7" />
                     <span className="text-sm text-white/80">{item}</span>
                   </li>
                 ))}
@@ -256,7 +257,7 @@ export default function EcommercePage() {
                   "Expert implementation from our 35,000+ network",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-ink flex-shrink-0 mt-0.5" strokeWidth={2} />
+                    <TickRounded className="w-7 h-7" />
                     <span className="text-zinc-700">{item}</span>
                   </li>
                 ))}
@@ -284,25 +285,25 @@ export default function EcommercePage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-3xl font-bold text-ink mb-4">
             Ready to sell online?
           </h2>
-          <p className="text-zinc-400 mb-8 max-w-lg mx-auto">
+          <p className="text-zinc-700 mb-8 max-w-lg mx-auto">
             Talk to our team about the right commerce platform for your business — or start building with Esteemed Create.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
             >
               Talk to Us
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/websites/website-builder/start"
-              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-white text-white text-sm font-bold hover:bg-white/10 transition-colors"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-ink/10 transition-colors"
             >
               Try Create free
             </Link>

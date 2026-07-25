@@ -5,6 +5,7 @@ import ServicesCarousel from "@/components/ServicesCarousel/ServicesCarousel";
 import PlatformGrid from "@/components/PlatformGrid";
 import VideoHero from "@/components/VideoHero";
 import PromptToSiteAnimated from "@/components/builder-visuals/PromptToSiteAnimated";
+import SectionNav from "@/components/SectionNav";
 import { Cloud, Shield, HardDrive, Activity, ArrowRight, Check } from "lucide-react";
 import { cloudPricingPlans, managedHostingPricingPlans } from "@/lib/product-page-pricing";
 
@@ -72,6 +73,20 @@ const includes = [
 export default function CloudPage() {
   return (
     <div className="min-h-screen">
+      <SectionNav
+        sectionLabel="Hosting"
+        sectionHref="/websites/hosting"
+        links={[
+          { name: "WordPress Hosting", href: "/websites/hosting/wordpress-hosting" },
+          { name: "Drupal Hosting", href: "/websites/hosting/drupal-hosting" },
+          { name: "Next.js Hosting", href: "/websites/hosting/nextjs-hosting" },
+          { name: "Curate CMS", href: "/websites/hosting/curate-cms" },
+          { name: "Premium Support", href: "/websites/hosting/premium-support" },
+        ]}
+        ctaLabel="See Plans"
+        ctaHref="#plans"
+      />
+
       {/* Hero — video background with progress nav */}
       <VideoHero>
         <p className="text-sm font-medium text-white/70 mb-4">
@@ -244,14 +259,14 @@ export default function CloudPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-ink mb-6">
             Launch your site today.
           </h2>
           <Link
             href="#plans"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             See plans
           </Link>

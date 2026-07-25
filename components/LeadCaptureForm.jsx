@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import { Button, Input, Select, SelectItem, Textarea } from "@heroui/react";
 
 const interestOptions = [
-  { key: "hosting", label: "Hosting" },
+  { key: "web-hosting", label: "Web Hosting" },
+  { key: "wordpress-hosting", label: "WordPress Hosting" },
+  { key: "drupal-hosting", label: "Drupal Hosting" },
+  { key: "nextjs-hosting", label: "Next.js Hosting" },
+  { key: "vps-hosting", label: "Virtual Private Servers" },
   { key: "ecommerce", label: "Ecommerce" },
   { key: "website-design", label: "Website Design" },
   { key: "hire-experts", label: "Hire Experts" },
@@ -13,6 +17,7 @@ const interestOptions = [
   { key: "cms", label: "CMS" },
   { key: "crm", label: "CRM" },
   { key: "ats", label: "ATS" },
+  { key: "premium-support", label: "Premium Support" },
 ];
 
 const interestLabels = Object.fromEntries(interestOptions.map((option) => [option.key, option.label]));
@@ -36,7 +41,7 @@ const variants = {
     title: "Book a local consult.",
     description: "Tell us about your business and what you want to improve. We will follow up to schedule a phone, video, or local South Sound conversation.",
     submitLabel: "Submit",
-    defaultInterests: ["local-consult", "website-design", "cloud-hosting"],
+    defaultInterests: ["local-consult", "website-design", "web-hosting"],
     messageLabel: "What should we cover?",
     messagePlaceholder: "Current site, goals, timeline, budget, or anything you want us to know before we talk.",
     successTitle: "Consult request received.",
@@ -54,9 +59,13 @@ const selectClassNames = {
   label: "text-sm font-bold text-zinc-700",
   trigger: "min-h-14 rounded-xl border border-zinc-200 bg-white px-4 shadow-none data-[hover=true]:border-zinc-400 data-[focus=true]:border-zinc-500",
   value: "text-base font-semibold text-ink",
-  selectorIcon: "text-zinc-400 w-5 h-5",
+  selectorIcon: "text-zinc-500 w-5 h-5",
   popoverContent: "z-[100] rounded-xl border border-zinc-200 bg-white shadow-xl",
-  listbox: "p-2",
+  listbox: "p-1",
+};
+
+const selectItemClassNames = {
+  base: "rounded-lg px-3 py-2.5 text-sm text-zinc-700 data-[hover=true]:bg-zinc-100 data-[hover=true]:text-ink data-[selectable=true]:focus:bg-zinc-100 data-[selected=true]:font-bold data-[selected=true]:text-ink transition-colors",
 };
 
 const textareaClassNames = {
@@ -259,7 +268,7 @@ export default function LeadCaptureForm({
           classNames={selectClassNames}
         >
           {interestOptions.map((option) => (
-            <SelectItem key={option.key} textValue={option.label}>
+            <SelectItem key={option.key} textValue={option.label} classNames={selectItemClassNames}>
               {option.label}
             </SelectItem>
           ))}

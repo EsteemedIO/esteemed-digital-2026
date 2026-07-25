@@ -11,7 +11,7 @@ import { productIconPaths } from "@/lib/pricing-catalog";
 
 const websitesGroup = [
   { key: "create", name: "AI Website Builder", href: "/websites/website-builder", desc: "Build and edit websites with AI, then publish to Cloud." },
-  { key: "cloud", name: "Website Hosting", href: "/websites/hosting", desc: "Managed hosting for WordPress, Drupal, and modern JavaScript." },
+  { key: "cloud", name: "Web Hosting", href: "/hosting", desc: "Managed hosting for WordPress, Drupal, Next.js, and VPS." },
   { key: "ecommerce", name: "Ecommerce", href: "/websites/ecommerce", desc: "Open source commerce on WooCommerce, Drupal Commerce, or Medusa." },
 ];
 
@@ -67,8 +67,7 @@ const solutionsIndustries = [
 ];
 
 const resourceItems = [
-  { key: "resource-center", name: "Business Resource Center", href: "/resources", desc: "Guides for websites, AI, hiring, and growth." },
-  { key: "career-catalyst", name: "Career Catalyst Blog", href: "/blog/career-catalyst", desc: "Career advice, hiring insights, and workforce ideas." },
+  { key: "resource-center", name: "Business Resource Center", href: "/blog/business-resource-center", desc: "Guides for websites, AI, hiring, and growth." },
   { key: "newsroom", name: "Newsroom", href: "/newsroom", desc: "Company updates, announcements, and launch notes." },
   { key: "documentation", name: "Documentation", href: "https://help.esteemed.io", external: true, desc: "Help docs for products, account setup, and support." },
 ];

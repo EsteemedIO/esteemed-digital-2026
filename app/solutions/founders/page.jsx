@@ -1,5 +1,6 @@
 import HeroImageComposite from "@/components/HeroImageComposite";
 import HireExpertFAQ from "@/components/HireExpertFAQ";
+import TickRounded from "@/components/TickRounded";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,7 +10,6 @@ import {
   TrendingUp,
   Headphones,
   Rocket,
-  CheckCircle,
 } from "lucide-react";
 
 export const metadata = {
@@ -100,7 +100,7 @@ export default function FoundersPage() {
                 "Scale infrastructure and team as you raise funding",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm text-zinc-700">
-                  <CheckCircle className="w-4 h-4 text-ink flex-shrink-0" strokeWidth={2} />
+                  <TickRounded className="w-7 h-7" />
                   {item}
                 </li>
               ))}
@@ -231,7 +231,7 @@ export default function FoundersPage() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-ink mb-6">
-                Milestones we help founders hit
+                How we Help Founders
               </h2>
               <p className="text-lg text-zinc-600 leading-relaxed mb-8">
                 Whether you are validating an idea or scaling a funded startup, Esteemed supports the milestones that matter most.
@@ -246,7 +246,7 @@ export default function FoundersPage() {
                   "Access ongoing design, content, marketing, and development support",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-ink flex-shrink-0 mt-0.5" strokeWidth={2} />
+                    <TickRounded className="w-7 h-7" />
                     <span className="text-zinc-700">{item}</span>
                   </li>
                 ))}
@@ -325,7 +325,7 @@ export default function FoundersPage() {
                 ].map((b) => (
                   <li key={b} className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent text-ink flex items-center justify-center mt-0.5">
-                      <CheckCircle className="w-4 h-4" strokeWidth={2.5} />
+                      <TickRounded className="w-7 h-7" />
                     </span>
                     <span className="text-white font-medium text-sm leading-snug">{b}</span>
                   </li>

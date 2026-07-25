@@ -12,8 +12,8 @@ import {
   Bot,
   Users,
   ArrowRight,
-  CheckCircle,
 } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
 
 export const metadata = {
   title: "AI Website Builder | Esteemed",
@@ -240,10 +240,7 @@ export default function WebsiteBuilderPage() {
                   "Seamlessly pick up where Create left off",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle
-                      className="w-5 h-5 text-ink flex-shrink-0 mt-0.5"
-                      strokeWidth={2}
-                    />
+                    <TickRounded className="w-7 h-7" />
                     <span className="text-zinc-700">{item}</span>
                   </li>
                 ))}
@@ -299,14 +296,14 @@ export default function WebsiteBuilderPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-ink mb-6">
             Start building in 30 seconds.
           </h2>
           <Link
             href="/websites/website-builder/start"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Try Create &rarr;
           </Link>

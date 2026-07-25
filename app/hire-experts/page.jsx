@@ -58,16 +58,34 @@ export default function HireExpertsPage() {
     <div className="min-h-screen">
       <StickyAnchorNav />
 
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6">
-            Hire an Expert
-          </h1>
-          <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
-            On-demand help from builders, designers, and operators. Get expert
-            support for websites, content, marketing, and talent — matched to
-            your project, on your schedule.
-          </p>
+      <section className="hero-block-outer">
+        <div className="hero-block hero-block-split" style={{ background: "#1A1A1A" }}>
+          <div className="md:order-2 relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-auto md:min-h-[380px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/pexels-mikhail-nilov-6894014_0.jpg.webp?itok=z4WAyZ_q"
+              alt="Expert professional working"
+              className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+            />
+          </div>
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: "#FEE546" }}>
+              Hire an Expert
+            </p>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
+              On-demand help from builders, designers, and operators.
+            </h1>
+            <p className="text-base text-white/75 leading-relaxed mb-8 max-w-lg">
+              Get expert support for websites, content, marketing, and talent — matched to your project, on your schedule.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            >
+              Talk to Us
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -94,14 +112,14 @@ export default function HireExpertsPage() {
         </div>
       </section>
 
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-ink mb-6">
             Not sure what you need? Let&apos;s talk.
           </h2>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Talk to Us
           </Link>

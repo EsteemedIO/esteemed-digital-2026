@@ -1,7 +1,8 @@
 import Link from "next/link";
 import HireExpertFAQ from "@/components/HireExpertFAQ";
 import HeroImageComposite from "@/components/HeroImageComposite";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
+import { ArrowRight } from "lucide-react";
 import StickyAnchorNav from "@/components/StickyAnchorNav";
 
 export const metadata = {
@@ -35,7 +36,7 @@ export default function ContentStrategyPage() {
                 "Conversion paths that drive measurable results",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm text-zinc-700">
-                  <CheckCircle className="w-4 h-4 text-ink flex-shrink-0" strokeWidth={2} />
+                  <TickRounded className="w-7 h-7" />
                   {item}
                 </li>
               ))}
@@ -66,14 +67,14 @@ export default function ContentStrategyPage() {
         { q: "What does it cost?", a: "Every engagement is scoped during a free consultation. We'll give you a clear quote before any work begins." },
       ]} />
 
-      <section className="bg-ink py-20">
+      <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-ink mb-6">
             Content that moves the needle.
           </h2>
           <Link
             href="/contact"
-            className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
           >
             Talk to an Expert
             <ArrowRight className="w-4 h-4" />
