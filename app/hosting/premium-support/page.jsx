@@ -41,7 +41,7 @@ export default function PremiumSupportPage() {
               <img
                 src="/images/hosting/support.png"
                 alt="Support specialist working on laptop"
-                className="w-full h-[240px] md:h-auto object-cover"
+                className="w-full h-auto"
               />
             </div>
             {/* 5X stat card — bottom left, matches other pages */}

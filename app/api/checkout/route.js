@@ -132,13 +132,36 @@ async function stripeRequest(method, path, body, secretKey) {
   return result;
 }
 
+// Cache price lookups for 5 minutes to skip a round trip on repeat checkouts
+const priceCache = new Map();
+const CACHE_TTL = 5 * 60 * 1000;
+
 async function getPrices(items, secretKey) {
-  const params = new URLSearchParams();
-  items.forEach((item) => params.append("lookup_keys[]", item.lookupKey));
-  params.set("active", "true");
-  params.set("limit", String(Math.max(items.length, 1)));
-  const result = await stripeRequest("GET", `/prices?${params.toString()}`, null, secretKey);
-  return new Map((result.data || []).map((price) => [price.lookup_key, price]));
+  const now = Date.now();
+  const uncached = items.filter((item) => {
+    const entry = priceCache.get(item.lookupKey);
+    return !entry || now - entry.ts > CACHE_TTL;
+  });
+
+  if (uncached.length > 0) {
+    const params = new URLSearchParams();
+    uncached.forEach((item) => params.append("lookup_keys[]", item.lookupKey));
+    params.set("active", "true");
+    params.set("limit", String(Math.max(uncached.length, 1)));
+    const result = await stripeRequest("GET", `/prices?${params.toString()}`, null, secretKey);
+    for (const price of result.data || []) {
+      priceCache.set(price.lookup_key, { price, ts: now });
+    }
+  }
+
+  return new Map(
+    items
+      .map((item) => {
+        const entry = priceCache.get(item.lookupKey);
+        return entry ? [item.lookupKey, entry.price] : null;
+      })
+      .filter(Boolean)
+  );
 }
 
 export async function GET(request) {

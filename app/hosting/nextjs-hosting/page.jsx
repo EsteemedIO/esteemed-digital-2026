@@ -91,7 +91,7 @@ export default function NextJSHostingPage() {
               <img
                 src="/images/hosting/next-hero.png"
                 alt="Next.js site built with Esteemed AI"
-                className="w-full h-[240px] md:h-auto object-cover"
+                className="w-full h-auto"
               />
             </div>
             {/* 5X stat card — spills bottom-left */}

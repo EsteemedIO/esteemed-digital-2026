@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Chip, Tab, Tabs } from "@heroui/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import TickRounded from "@/components/TickRounded";
 import { checkoutHref, formatMoney } from "@/lib/pricing-catalog";
 import ProductIcon from "@/components/ProductIcon";
@@ -73,6 +73,48 @@ function planCtaHref({ plan, productKey, billing, freeHref, contactHref, fallbac
     successPath: `/thanks?product=${productKey || "product"}&tier=${plan.key}`,
     cancelPath: productKey ? `/products/${productKey}` : undefined,
   });
+}
+
+function CheckoutButton({ href, isCheckout, label, recommended }) {
+  const [loading, setLoading] = useState(false);
+
+  const baseClass = "mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-black transition-colors";
+  const colorClass = recommended
+    ? "bg-accent text-ink hover:bg-accent-hover"
+    : "bg-ink text-white hover:bg-zinc-800";
+
+  if (isCheckout) {
+    return (
+      <button
+        type="button"
+        disabled={loading}
+        onClick={() => {
+          setLoading(true);
+          window.location.href = href;
+        }}
+        className={`${baseClass} ${colorClass} ${loading ? "opacity-70 cursor-wait" : ""}`}
+      >
+        {loading ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Processing…
+          </>
+        ) : (
+          <>
+            {label}
+            <ArrowRight className="w-4 h-4" />
+          </>
+        )}
+      </button>
+    );
+  }
+
+  return (
+    <Link href={href} className={`${baseClass} ${colorClass}`}>
+      {label}
+      {label !== "Contact Sales" && <ArrowRight className="w-4 h-4" />}
+    </Link>
+  );
 }
 
 function PricingCard({
@@ -157,12 +199,12 @@ function PricingCard({
         })}
       </ul>
 
-      <Link
+      <CheckoutButton
         href={href}
-        className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-zinc-800"
-      >
-        {plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : ctaLabel || "Buy Now"}
-      </Link>
+        isCheckout={plan.monthly !== null && plan.monthly !== 0 && href.startsWith("/api/checkout")}
+        label={plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : ctaLabel || "Buy Now"}
+        recommended={plan.recommended}
+      />
       </div>
     </article>
   );

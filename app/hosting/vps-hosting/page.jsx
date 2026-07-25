@@ -41,7 +41,7 @@ export default function VPSHostingPage() {
               <img
                 src="/images/hosting/vps-hero.png"
                 alt="Esteemed Cloud VPS dashboard"
-                className="w-full h-[240px] md:h-auto object-cover"
+                className="w-full h-auto"
               />
             </div>
             {/* Stat card — spills bottom-left */}

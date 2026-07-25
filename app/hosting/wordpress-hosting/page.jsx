@@ -43,7 +43,7 @@ export default function WordPressHostingPage() {
               <img
                 src="/images/hosting/wordpress-hero.png"
                 alt="WordPress site built with Esteemed AI"
-                className="w-full h-[240px] md:h-auto object-cover"
+                className="w-full h-auto"
               />
             </div>
 

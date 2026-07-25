@@ -42,7 +42,7 @@ export default function DrupalHostingPage() {
               <img
                 src="/images/hosting/drupal-hero.png"
                 alt="Drupal site built with Esteemed AI"
-                className="w-full h-[240px] md:h-auto object-cover"
+                className="w-full h-auto"
               />
             </div>
             {/* 5X stat card — spills bottom-left */}
