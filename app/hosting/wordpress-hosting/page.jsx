@@ -38,12 +38,12 @@ export default function WordPressHostingPage() {
       <section className="hero-block-outer">
         <div className="hero-block hero-block-split" style={{ background: "#E0E9F2" }}>
           <div className="md:order-1 relative md:min-h-full">
-            <div className="relative overflow-hidden md:rounded-2xl md:shadow-xl md:mt-12 md:mr-12 md:mb-12">
+            <div className="relative overflow-hidden rounded-t-3xl md:rounded-2xl md:shadow-xl md:mt-12 md:mr-12 md:mb-12">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/hosting/wordpress-hero.png"
                 alt="WordPress site built with Esteemed AI"
-                className="w-full h-[240px] md:h-auto object-cover md:object-contain"
+                className="w-full h-[240px] md:h-auto object-cover"
               />
             </div>
 

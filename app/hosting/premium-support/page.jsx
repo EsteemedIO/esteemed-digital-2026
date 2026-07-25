@@ -36,12 +36,12 @@ export default function PremiumSupportPage() {
       <section className="hero-block-outer">
         <div className="hero-block hero-block-split" style={{ background: "#FFF8D6" }}>
           <div className="md:order-1 relative md:min-h-full">
-            <div className="relative overflow-hidden md:rounded-2xl md:shadow-xl md:mr-12 md:mb-12">
+            <div className="relative overflow-hidden rounded-t-3xl md:rounded-2xl md:shadow-xl md:mr-12 md:mb-12">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/hosting/support.png"
                 alt="Support specialist working on laptop"
-                className="w-full h-[240px] md:h-auto object-cover md:object-contain"
+                className="w-full h-[240px] md:h-auto object-cover"
               />
             </div>
             {/* 5X stat card — bottom left, matches other pages */}

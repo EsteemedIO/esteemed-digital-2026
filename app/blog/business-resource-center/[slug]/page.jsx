@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPost, listPosts } from '@/lib/curate'
+import { getAuthorForPost } from '@/lib/authors'
 import LexicalRenderer from '@/components/LexicalRenderer'
 
 const FALLBACK_IMAGES = {
@@ -46,6 +47,8 @@ export default async function PostPage({ params }) {
 
   if (!post) notFound()
 
+  const author = getAuthorForPost(slug)
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -66,17 +69,24 @@ export default async function PostPage({ params }) {
             <p className="text-xl text-zinc-500 leading-relaxed mb-6">{post.excerpt}</p>
           )}
           <div className="flex items-center gap-4 text-sm text-zinc-400">
-            {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
-            {post.tags?.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map(({ tag }) => (
-                  <span key={tag} className="px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-500 text-xs">
-                    {tag}
-                  </span>
-                ))}
+            {author && (
+              <div className="flex items-center gap-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={author.image} alt={author.name} className="w-10 h-10 rounded-full object-cover border border-zinc-200" />
+                <span className="font-semibold text-ink">{author.name}</span>
               </div>
             )}
+            {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
           </div>
+          {post.tags?.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-4">
+              {post.tags.map(({ tag }) => (
+                <span key={tag} className="px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-500 text-xs">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -98,6 +108,22 @@ export default async function PostPage({ params }) {
           <LexicalRenderer content={post.body} />
         </div>
       </section>
+
+      {/* Author bio */}
+      {author && (
+        <section className="border-t border-zinc-100 py-12">
+          <div className="max-w-3xl mx-auto px-6">
+            <div className="flex gap-5 items-start">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={author.image} alt={author.name} className="w-16 h-16 rounded-full object-cover border border-zinc-200 flex-shrink-0" />
+              <div>
+                <h3 className="text-lg font-bold text-ink mb-2">{author.name}</h3>
+                <p className="text-sm text-zinc-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: author.bio }} />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Footer nav */}
       <section className="border-t border-zinc-100 py-12">

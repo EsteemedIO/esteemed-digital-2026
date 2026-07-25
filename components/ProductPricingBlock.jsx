@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Chip, Tab, Tabs } from "@heroui/react";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import TickRounded from "@/components/TickRounded";
 import { checkoutHref, formatMoney } from "@/lib/pricing-catalog";
 import ProductIcon from "@/components/ProductIcon";
 
@@ -135,9 +136,7 @@ function PricingCard({
 
           return (
           <li key={featureText} className="flex gap-3 text-sm leading-5 text-zinc-700">
-            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border border-zinc-200">
-              <Check className="h-4 w-4 text-ink" />
-            </span>
+            <TickRounded className="w-6 h-6" />
             <span>
               {featureLabel && (
                 <Chip

@@ -36,12 +36,12 @@ export default function VPSHostingPage() {
       <section className="hero-block-outer">
         <div className="hero-block hero-block-split" style={{ background: "#1A1A1A" }}>
           <div className="md:order-1 relative md:min-h-full">
-            <div className="relative overflow-hidden md:rounded-2xl md:shadow-xl md:mt-12 md:mr-12 md:mb-12">
+            <div className="relative overflow-hidden rounded-t-3xl md:rounded-2xl md:shadow-xl md:mt-12 md:mr-12 md:mb-12">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/hosting/vps-hero.png"
                 alt="Esteemed Cloud VPS dashboard"
-                className="w-full h-[240px] md:h-auto object-cover md:object-contain"
+                className="w-full h-[240px] md:h-auto object-cover"
               />
             </div>
             {/* Stat card — spills bottom-left */}

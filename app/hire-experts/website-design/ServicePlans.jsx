@@ -135,7 +135,7 @@ export default function ServicePlans() {
 
                 <button
                   onClick={() => openModal(plan.name)}
-                  className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold transition-colors ${
+                  className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg text-sm font-bold transition-colors ${
                     plan.popular
                       ? "bg-accent text-ink hover:bg-accent-hover"
                       : "bg-ink text-white hover:bg-zinc-800"

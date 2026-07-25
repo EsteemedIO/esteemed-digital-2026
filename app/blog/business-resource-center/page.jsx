@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { listPosts } from '@/lib/curate'
+import { getAuthorForPost } from '@/lib/authors'
 
 export const metadata = {
   title: 'Business Resource Center | Esteemed',
@@ -76,7 +77,22 @@ function FeaturedPost({ post }) {
             <p className="text-base text-zinc-600 line-clamp-3 mb-6 leading-relaxed">{post.excerpt}</p>
           )}
           <div className="flex items-center justify-between">
-            <span className="text-sm text-zinc-400">{formatDate(post.publishedAt)}</span>
+            <div className="flex items-center gap-3">
+              {(() => {
+                const author = getAuthorForPost(post.slug)
+                if (!author) return <span className="text-sm text-zinc-400">{formatDate(post.publishedAt)}</span>
+                return (
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={author.image} alt={author.name} className="w-8 h-8 rounded-full object-cover" />
+                    <div>
+                      <span className="text-sm font-semibold text-ink block">{author.name}</span>
+                      <span className="text-xs text-zinc-400">{formatDate(post.publishedAt)}</span>
+                    </div>
+                  </>
+                )
+              })()}
+            </div>
             <span className="inline-flex items-center gap-1 text-sm font-bold text-ink group-hover:gap-2 transition-all">
               Read more <ArrowRight className="w-4 h-4" />
             </span>
@@ -108,7 +124,21 @@ function PostCard({ post }) {
         {post.excerpt && (
           <p className="text-sm text-zinc-500 line-clamp-2 mb-4">{post.excerpt}</p>
         )}
-        <span className="text-xs text-zinc-400 mt-auto">{formatDate(post.publishedAt)}</span>
+        <div className="flex items-center gap-2 mt-auto pt-2">
+          {(() => {
+            const author = getAuthorForPost(post.slug)
+            if (!author) return <span className="text-xs text-zinc-400">{formatDate(post.publishedAt)}</span>
+            return (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={author.image} alt={author.name} className="w-6 h-6 rounded-full object-cover" />
+                <span className="text-xs font-medium text-zinc-600">{author.name}</span>
+                <span className="text-xs text-zinc-300">·</span>
+                <span className="text-xs text-zinc-400">{formatDate(post.publishedAt)}</span>
+              </>
+            )
+          })()}
+        </div>
       </div>
     </Link>
   )
