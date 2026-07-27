@@ -217,7 +217,7 @@ export async function GET(request) {
     const session = await stripeRequest("POST", "/checkout/sessions", body, secretKey);
     return NextResponse.redirect(session.url, 303);
   } catch (error) {
-    console.error("[checkout]", error);
-    return NextResponse.json({ error: "Unable to start Stripe Checkout." }, { status: 502 });
+    console.error("[checkout]", error?.message || error);
+    return NextResponse.json({ error: `Unable to start Stripe Checkout: ${error?.message || "unknown error"}` }, { status: 502 });
   }
 }

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://esteemedapp.com/sitemap.xml',
+    sitemap: 'https://esteemed.io/sitemap.xml',
   };
 }
