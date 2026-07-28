@@ -16,6 +16,8 @@ import {
   ArrowRight,
   AtSign,
   CalendarDays,
+  ChevronDown,
+  ChevronRight,
   Cloud,
   CreditCard,
   ExternalLink,
@@ -504,6 +506,9 @@ function ProductsHomeContent() {
               title={section.title}
               subtitle={section.subtitle}
               startContent={<ProductAccordionTitle section={section} />}
+              indicator={({ isOpen }) =>
+                isOpen ? <ChevronDown size={20} /> : <ChevronRight size={20} />
+              }
             >
               <div className="mb-3 flex justify-end border-t border-zinc-100 pt-4">
                 <Button

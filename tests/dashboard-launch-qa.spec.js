@@ -33,6 +33,8 @@ test("products home site cards manage site detail pages", () => {
   const productsHome = readFileSync(join(process.cwd(), "app/products/page.jsx"), "utf8");
 
   expect(productsHome).toContain("Accordion");
+  expect(productsHome).toContain("indicator={({ isOpen })");
+  expect(productsHome).toContain("isOpen ? <ChevronDown");
   expect(productsHome).toContain("function ProductSiteCard");
   expect(productsHome).toContain("const href = `/dashboard/sites/${encodeURIComponent(site.id)}`");
   expect(productsHome).toContain("<Link href={href}");
