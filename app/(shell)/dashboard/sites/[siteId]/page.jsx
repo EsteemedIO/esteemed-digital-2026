@@ -9,11 +9,9 @@ import { Button, Chip } from "@heroui/react";
 import {
   ArrowRight,
   AtSign,
-  BarChart3,
   BriefcaseBusiness,
   CalendarDays,
   CheckCircle2,
-  Cloud,
   CreditCard,
   ExternalLink,
   Gift,
@@ -21,14 +19,9 @@ import {
   Headphones,
   Mail,
   Megaphone,
-  MessageSquare,
   RefreshCw,
   Rocket,
   Settings,
-  ShoppingBag,
-  Store,
-  Tag,
-  Users,
   Wrench,
 } from "lucide-react";
 import {
@@ -41,24 +34,6 @@ import {
   siteStatusLabel,
   siteStudioUrl,
 } from "@/components/dashboard/site-utils";
-
-const siteMenu = [
-  { label: "Dashboard", icon: BarChart3 },
-  { label: "Domain", icon: Globe },
-  { label: "Website", icon: Cloud },
-  { label: "Email", icon: Mail },
-  { label: "Commerce", icon: Store },
-  { label: "Appointments", icon: CalendarDays },
-  { label: "Marketing", icon: Megaphone },
-  { label: "Conversations", icon: MessageSquare },
-  { label: "Customers", icon: Users },
-  { label: "Deals", icon: Tag },
-  { label: "Marketplace", icon: ShoppingBag },
-];
-
-function encodeSiteId(siteId) {
-  return encodeURIComponent(siteId || "");
-}
 
 export default function SiteDetailPage() {
   const { siteId } = useParams();
@@ -153,21 +128,21 @@ export default function SiteDetailPage() {
       title: "Build brand awareness",
       description: "Create social posts, campaigns, and launch updates around this site.",
       cta: "Start Marketing",
-      href: "/dashboard/activate/marketing",
+      href: "/hire-experts/search-engine-marketing",
       icon: Megaphone,
     },
     {
       title: "Add commerce tools",
       description: "Prepare products, payments, checkout, and service add-ons when this site needs to sell.",
       cta: "Add Commerce",
-      href: "/dashboard/activate/commerce",
+      href: "/websites/ecommerce",
       icon: CreditCard,
     },
     {
       title: "Offer appointments",
       description: "Add booking flows for calls, consultations, and local services.",
       cta: "Set Up Booking",
-      href: "/dashboard/activate/appointments",
+      href: "/dashboard/support",
       icon: CalendarDays,
     },
     {
@@ -272,28 +247,9 @@ export default function SiteDetailPage() {
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[260px_minmax(0,1fr)_340px]">
-          <aside className="rounded-xl border border-zinc-200 bg-white p-3 xl:sticky xl:top-24 xl:self-start">
-            <nav className="space-y-1">
-              {siteMenu.map((item, index) => {
-                const Icon = item.icon;
-                const href = index === 0 ? `/dashboard/sites/${encodeSiteId(site.id)}` : `#${item.label.toLowerCase()}`;
-                return (
-                  <a
-                    key={item.label}
-                    href={href}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold ${index === 0 ? "bg-accent text-ink" : "text-zinc-600 hover:bg-zinc-50 hover:text-ink"}`}
-                  >
-                    <Icon size={18} />
-                    {item.label}
-                  </a>
-                );
-              })}
-            </nav>
-          </aside>
-
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
           <main className="space-y-6">
-            <section className="rounded-xl border border-zinc-200 bg-white p-5">
+            <section id="website" className="rounded-xl border border-zinc-200 bg-white p-5">
               <div className="mb-5 flex items-center justify-between gap-4">
                 <div>
                   <h2 className="text-xl font-semibold text-ink">Launch actions</h2>
@@ -351,6 +307,27 @@ export default function SiteDetailPage() {
                 })}
               </div>
             </section>
+
+            <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {[
+                { id: "email", title: "Email", text: "Professional email options for this site's domain.", href: "/business-tools/business-email", cta: "Create Email" },
+                { id: "commerce", title: "Commerce", text: "Stores, products, payment setup, and checkout flows.", href: "/websites/ecommerce", cta: "View Commerce" },
+                { id: "appointments", title: "Appointments", text: "Booking workflows for services, calls, and consultations.", href: "/dashboard/support", cta: "Request Setup" },
+                { id: "marketing", title: "Marketing", text: "Launch promotion, social content, and campaign support.", href: "/hire-experts/search-engine-marketing", cta: "Start Marketing" },
+                { id: "conversations", title: "Conversations", text: "Inbox and customer message workflows for this site.", href: "/products/acquire", cta: "View CRM" },
+                { id: "customers", title: "Customers", text: "Contacts, accounts, and follow-up workflows.", href: "/products/acquire", cta: "View Acquire" },
+                { id: "deals", title: "Deals", text: "Pipeline and revenue tracking tied to your customer workflow.", href: "/products/acquire", cta: "View Deals" },
+                { id: "marketplace", title: "Marketplace", text: "Find expert help and add-on services for this site.", href: "/dashboard/support", cta: "Get Support" },
+              ].map((item) => (
+                <article key={item.id} id={item.id} className="rounded-xl border border-zinc-200 bg-white p-5">
+                  <h2 className="text-lg font-semibold text-ink">{item.title}</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-500">{item.text}</p>
+                  <Button as={Link} href={item.href} radius="sm" variant="bordered" className="mt-4 border-zinc-200 font-semibold text-ink">
+                    {item.cta}
+                  </Button>
+                </article>
+              ))}
+            </section>
           </main>
 
           <aside className="space-y-4">
@@ -392,7 +369,7 @@ export default function SiteDetailPage() {
               <div className="mt-4 space-y-3">
                 {[
                   { label: "Manage Domain", href: "/dashboard/settings#domains", icon: Settings },
-                  { label: "Create Social Post", href: "/dashboard/activate/marketing", icon: Gift },
+                  { label: "Create Social Post", href: "/hire-experts/search-engine-marketing", icon: Gift },
                   { label: "Business Email", href: "/business-tools/business-email", icon: Mail },
                   { label: "Support Request", href: "/dashboard/support", icon: BriefcaseBusiness },
                 ].map((link) => {

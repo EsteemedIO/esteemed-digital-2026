@@ -62,7 +62,7 @@ const productAccordions = [
     key: "commerce",
     title: "Commerce & Payments",
     subtitle: "Storefronts, checkout, payments, subscriptions, and selling tools.",
-    manageHref: "/dashboard/activate/commerce",
+    manageHref: "/websites/ecommerce",
     manageLabel: "Manage All",
     icon: CreditCard,
   },
@@ -122,7 +122,7 @@ function ProductSiteCard({ site, index }) {
   ];
 
   return (
-    <article className="overflow-hidden rounded-xl border border-zinc-200 bg-white">
+    <Link href={href} className="block overflow-hidden rounded-xl border border-zinc-200 bg-white transition-colors hover:bg-zinc-50">
       <div className={`h-36 border-b border-zinc-200 ${imageClasses[index % imageClasses.length]}`}>
         <div className="flex h-full items-start justify-between p-4">
           <Chip
@@ -141,16 +141,8 @@ function ProductSiteCard({ site, index }) {
         <h3 className="truncate text-xl font-semibold text-ink">{site.name}</h3>
         <p className="mt-1 truncate text-sm text-zinc-500">{domain}</p>
         <p className="mt-2 text-sm text-zinc-500">{services}</p>
-        <div className="mt-5 flex flex-wrap gap-2">
-          <Button as={Link} href={href} radius="sm" className="bg-[#111111] font-semibold text-white hover:bg-[#111111]">
-            Manage
-          </Button>
-          <Button as={Link} href={`${href}#domain`} radius="sm" variant="bordered" className="border-zinc-200 font-semibold text-ink">
-            Domain
-          </Button>
-        </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -184,14 +176,14 @@ function defaultRowsForSection(section) {
         title: "Add commerce tools",
         detail: "Products, payments, checkout, and selling features for this workspace.",
         action: "Add Commerce",
-        href: "/dashboard/activate/commerce",
+        href: "/websites/ecommerce",
         icon: ShoppingBag,
       },
       {
         title: "Appointments",
         detail: "Booking flows for calls, consultations, and service businesses.",
         action: "Set Up Booking",
-        href: "/dashboard/activate/appointments",
+        href: "/dashboard/support",
         icon: CalendarDays,
       },
     ];
@@ -229,7 +221,7 @@ function defaultRowsForSection(section) {
         title: "Marketing",
         detail: "Create campaigns, social posts, and launch promotion.",
         action: "Start Marketing",
-        href: "/dashboard/activate/marketing",
+        href: "/hire-experts/search-engine-marketing",
         icon: Megaphone,
       },
     ];
@@ -312,7 +304,7 @@ function ProductsHomeContent() {
 
   const primarySite = sites[0];
   const normalizedQuery = query.trim().toLowerCase();
-  const visibleSites = normalizedQuery
+  const filteredSites = normalizedQuery
     ? sites.filter((site) => {
         const haystack = [
           site.name,
@@ -328,6 +320,7 @@ function ProductsHomeContent() {
         return haystack.includes(normalizedQuery);
       })
     : sites;
+  const visibleSites = filteredSites.slice(0, 6);
   const productSections = (() => {
     const domains = sites
       .map((site) => sitePrimaryDomain(site) || siteLiveUrl(site))
@@ -365,13 +358,13 @@ function ProductsHomeContent() {
       return {
         ...section,
         rows: [
-          {
-            title: primarySite.name || "Primary website",
-            detail: "Website dashboard, Studio, publishing, and Coming Soon page.",
+          ...sites.map((site) => ({
+            title: site.name || site.id,
+            detail: sitePrimaryDomain(site) || siteLiveUrl(site) || "Website dashboard, Studio, publishing, and Coming Soon page.",
             action: "Manage",
-            href: `/dashboard/sites/${encodeURIComponent(primarySite.id)}`,
+            href: `/dashboard/sites/${encodeURIComponent(site.id)}`,
             icon: Cloud,
-          },
+          })),
           {
             title: "Publish a Coming Soon page",
             detail: "Put a branded holding page live while the full site is built.",

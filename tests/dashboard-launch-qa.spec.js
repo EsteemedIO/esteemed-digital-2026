@@ -35,5 +35,6 @@ test("products home site cards manage site detail pages", () => {
   expect(productsHome).toContain("Accordion");
   expect(productsHome).toContain("function ProductSiteCard");
   expect(productsHome).toContain("const href = `/dashboard/sites/${encodeURIComponent(site.id)}`");
-  expect(productsHome).toContain("<Button as={Link} href={href}");
+  expect(productsHome).toContain("<Link href={href}");
+  expect(productsHome).toContain("action: \"Manage\"");
 });

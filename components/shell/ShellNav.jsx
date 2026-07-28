@@ -4,16 +4,22 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Package,
+  Home,
+  BarChart3,
+  CalendarDays,
+  Mail,
+  Megaphone,
+  MessageSquare,
   Globe,
-  Sparkles,
-  Settings,
-  HelpCircle,
   Plus,
   ExternalLink,
   Server,
   Headphones,
+  ShoppingBag,
+  Store,
+  Tag,
   Users,
+  Cloud,
 } from "lucide-react";
 import {
   Dropdown,
@@ -25,20 +31,29 @@ import {
 import NewItemModal from "@/components/shell/NewItemModal";
 
 const navItems = [
-  { label: "Products", href: "/products", icon: Package },
-  { label: "Sites", href: "/dashboard/sites", icon: Globe },
+  { label: "Home", href: "/products", icon: Home },
 ];
 
-const footerItems = [
-  { label: "Plans & features", href: "/dashboard/plans", icon: Sparkles },
-  { label: "Settings", href: "/dashboard/settings", icon: Settings },
-  { label: "Support", href: "/dashboard/support", icon: HelpCircle },
+const siteMenuItems = [
+  { label: "Dashboard", hash: "", icon: BarChart3 },
+  { label: "Domain", hash: "domain", icon: Globe },
+  { label: "Website", hash: "website", icon: Cloud },
+  { label: "Email", hash: "email", icon: Mail },
+  { label: "Commerce", hash: "commerce", icon: Store },
+  { label: "Appointments", hash: "appointments", icon: CalendarDays },
+  { label: "Marketing", hash: "marketing", icon: Megaphone },
+  { label: "Conversations", hash: "conversations", icon: MessageSquare },
+  { label: "Customers", hash: "customers", icon: Users },
+  { label: "Deals", hash: "deals", icon: Tag },
+  { label: "Marketplace", hash: "marketplace", icon: ShoppingBag },
 ];
 
 export default function ShellNav() {
   const pathname = usePathname();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
+  const siteDetailMatch = pathname.match(/^\/dashboard\/sites\/([^/]+)/);
+  const activeSitePath = siteDetailMatch ? `/dashboard/sites/${siteDetailMatch[1]}` : "";
 
   function isActive(href) {
     if (href === "/products") return pathname === "/products";
@@ -57,7 +72,7 @@ export default function ShellNav() {
         style={{
           width: 248,
           minWidth: 248,
-          background: "#FFFFFF",
+          background: "#F5F5F0",
           borderRight: "1px solid #D7D7D7",
         }}
       >
@@ -149,33 +164,32 @@ export default function ShellNav() {
               );
             })}
           </ul>
-        </nav>
 
-        {/* Footer nav */}
-        <div className="px-3 py-3 border-t" style={{ borderColor: "#D7D7D7" }}>
-          <ul className="space-y-0.5">
-            {footerItems.map((item) => {
-              const active = isActive(item.href);
-              const Icon = item.icon;
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors"
-                    style={{
-                      background: active ? "rgba(0,0,0,0.05)" : "transparent",
-                      fontWeight: active ? 600 : 400,
-                      color: active ? "rgba(0,0,0,0.85)" : "#565449",
-                    }}
-                  >
-                    <Icon size={18} strokeWidth={active ? 2.2 : 1.8} />
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+          {activeSitePath && (
+            <div className="mt-4 border-t border-zinc-300 pt-4">
+              <p className="px-3 pb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                Site
+              </p>
+              <ul className="space-y-0.5">
+                {siteMenuItems.map((item) => {
+                  const Icon = item.icon;
+                  const href = item.hash ? `${activeSitePath}#${item.hash}` : activeSitePath;
+                  return (
+                    <li key={item.label}>
+                      <Link
+                        href={href}
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[#565449] transition-colors hover:bg-white hover:text-ink"
+                      >
+                        <Icon size={18} strokeWidth={1.8} />
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
+        </nav>
       </aside>
 
       <NewItemModal
