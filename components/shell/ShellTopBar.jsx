@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import { usePathname } from "next/navigation";
 import { Search, Bell } from "lucide-react";
 import {
   Avatar,
@@ -10,7 +9,6 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@heroui/react";
-import AppSwitcher from "@/components/shell/AppSwitcher";
 
 function getInitials(name, email) {
   if (name) {
@@ -28,12 +26,9 @@ function getInitials(name, email) {
 
 export default function ShellTopBar() {
   const { data: session } = useSession();
-  const pathname = usePathname();
 
   const initials = getInitials(session?.user?.name, session?.user?.email);
   const displayName = session?.user?.name || session?.user?.email || "User";
-  const activationMatch = pathname.match(/^\/dashboard\/activate\/([^/]+)/);
-  const currentApp = activationMatch?.[1];
 
   return (
     <header
@@ -65,9 +60,6 @@ export default function ShellTopBar() {
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-
-      {/* App Switcher */}
-      <AppSwitcher currentApp={currentApp} />
 
       {/* Notifications */}
       <Dropdown placement="bottom-end">
