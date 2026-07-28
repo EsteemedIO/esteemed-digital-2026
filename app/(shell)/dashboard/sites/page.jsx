@@ -39,9 +39,9 @@ function statusClass(status) {
     return "bg-[#E8F8EA] text-[#126B24]";
   }
   if (status === "importing" || status === "deploying") {
-    return "bg-es-yellow-hover text-es-fg-1";
+    return "bg-accent-hover text-ink";
   }
-  return "bg-es-surface-alt text-es-fg-2";
+  return "bg-zinc-50 text-zinc-500";
 }
 
 function siteStatusLabel(status) {
@@ -59,9 +59,9 @@ function SiteCard({ site }) {
   const deployUrl = `${CREATE_BASE}/apps/studio/${site.id}?publish=1`;
 
   return (
-    <article className="flex min-h-[300px] flex-col rounded-es-lg border border-es-border bg-white p-5">
+    <article className="flex min-h-[300px] flex-col rounded-xl border border-zinc-200 bg-white p-5">
       <div className="mb-5 flex items-start justify-between gap-3">
-        <div className="flex h-12 w-12 items-center justify-center rounded-[8px] border border-es-border bg-es-yellow">
+        <div className="flex h-12 w-12 items-center justify-center rounded-[8px] border border-zinc-200 bg-accent">
           {site.source === "github" ? <GitBranch size={24} /> : <Cloud size={24} />}
         </div>
         <Chip
@@ -76,23 +76,23 @@ function SiteCard({ site }) {
         </Chip>
       </div>
 
-      <h2 className="text-es-xl font-es-semibold tracking-es-tight text-es-fg-1">{site.name}</h2>
-      <p className="mt-1 text-es-sm text-es-fg-2">{site.id}</p>
+      <h2 className="text-lg font-semibold tracking-tight text-ink">{site.name}</h2>
+      <p className="mt-1 text-sm text-zinc-500">{site.id}</p>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 text-es-sm">
-        <div className="rounded-es-sm bg-es-surface-alt p-3">
-          <p className="mb-1 text-es-xs font-es-semibold uppercase text-es-fg-3">Framework</p>
-          <p className="font-es-semibold text-es-fg-1">{site.framework || "React"}</p>
+      <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+        <div className="rounded-lg bg-zinc-50 p-3">
+          <p className="mb-1 text-xs font-semibold uppercase text-zinc-400">Framework</p>
+          <p className="font-semibold text-ink">{site.framework || "React"}</p>
         </div>
-        <div className="rounded-es-sm bg-es-surface-alt p-3">
-          <p className="mb-1 text-es-xs font-es-semibold uppercase text-es-fg-3">Updated</p>
-          <p className="font-es-semibold text-es-fg-1">{formatDate(site.updatedAt)}</p>
+        <div className="rounded-lg bg-zinc-50 p-3">
+          <p className="mb-1 text-xs font-semibold uppercase text-zinc-400">Updated</p>
+          <p className="font-semibold text-ink">{formatDate(site.updatedAt)}</p>
         </div>
       </div>
 
       {site.sourceUrl && (
-        <div className="mt-3 rounded-es-sm border border-es-border bg-white p-3 text-es-sm text-es-fg-2">
-          <div className="mb-1 flex items-center gap-2 font-es-semibold text-es-fg-1">
+        <div className="mt-3 rounded-lg border border-zinc-200 bg-white p-3 text-sm text-zinc-500">
+          <div className="mb-1 flex items-center gap-2 font-semibold text-ink">
             <GitBranch size={15} />
             {site.branch || "main"}
           </div>
@@ -107,7 +107,7 @@ function SiteCard({ site }) {
           target="_blank"
           rel="noopener noreferrer"
           radius="sm"
-          className="bg-es-yellow font-semibold text-es-fg-on-yellow hover:bg-es-yellow-hover"
+          className="bg-accent font-semibold text-ink hover:bg-accent-hover"
           endContent={<ExternalLink size={15} />}
         >
           Studio
@@ -120,7 +120,7 @@ function SiteCard({ site }) {
             rel="noopener noreferrer"
             radius="sm"
             variant="bordered"
-            className="border-es-border font-semibold text-es-fg-1"
+            className="border-zinc-200 font-semibold text-ink"
           >
             Visit
           </Button>
@@ -132,7 +132,7 @@ function SiteCard({ site }) {
             rel="noopener noreferrer"
             radius="sm"
             variant="bordered"
-            className="border-es-border font-semibold text-es-fg-1"
+            className="border-zinc-200 font-semibold text-ink"
           >
             Deploy
           </Button>
@@ -145,7 +145,7 @@ function SiteCard({ site }) {
             rel="noopener noreferrer"
             radius="sm"
             variant="light"
-            className="font-semibold text-es-fg-1"
+            className="font-semibold text-ink"
           >
             Preview
           </Button>
@@ -200,7 +200,7 @@ export default function SitesPage() {
   if (status === "loading") {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-es-border border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-zinc-200 border-t-transparent" />
       </div>
     );
   }
@@ -233,23 +233,23 @@ export default function SitesPage() {
 
   return (
     <div className="mx-auto max-w-[1440px]">
-      <section className="mb-6 rounded-es-lg border border-es-border bg-white p-6">
+      <section className="mb-6 rounded-xl border border-zinc-200 bg-white p-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
           <div>
             <Chip
               size="sm"
               variant="flat"
               classNames={{
-                base: "mb-4 bg-es-yellow-hover text-es-fg-1",
+                base: "mb-4 bg-accent/30 text-ink",
                 content: "font-semibold",
               }}
             >
               Cloud Sites
             </Chip>
-            <h1 className="text-es-3xl font-es-semibold tracking-es-tight text-es-fg-1">
+            <h1 className="text-3xl font-semibold tracking-tight text-ink">
               Manage Websites
             </h1>
-            <p className="mt-3 max-w-3xl text-es-base leading-es-relaxed text-es-fg-2">
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-500">
               Sites created in Esteemed Create and sites deployed through Esteemed Cloud appear here with their live URL, preview, framework, deployment state, and Studio access.
             </p>
           </div>
@@ -260,7 +260,7 @@ export default function SitesPage() {
               target="_blank"
               rel="noopener noreferrer"
               radius="sm"
-              className="bg-es-yellow px-5 font-semibold text-es-fg-on-yellow hover:bg-es-yellow-hover"
+              className="bg-accent px-5 font-semibold text-ink hover:bg-accent-hover"
               startContent={<Plus size={16} />}
             >
               New Site
@@ -270,7 +270,7 @@ export default function SitesPage() {
               isLoading={isLoading}
               radius="sm"
               variant="bordered"
-              className="border-es-border font-semibold text-es-fg-1"
+              className="border-zinc-200 font-semibold text-ink"
               startContent={!isLoading ? <RefreshCw size={16} /> : null}
             >
               Refresh
@@ -288,48 +288,48 @@ export default function SitesPage() {
         ].map((item) => {
           const Icon = item.icon;
           return (
-            <div key={item.label} className="rounded-es-lg border border-es-border bg-white p-5">
-              <Icon size={18} className="mb-3 text-es-fg-2" />
-              <p className="text-[32px] font-es-bold leading-none text-es-fg-1">{item.value}</p>
-              <p className="mt-2 text-es-sm font-es-semibold text-es-fg-2">{item.label}</p>
+            <div key={item.label} className="rounded-xl border border-zinc-200 bg-white p-5">
+              <Icon size={18} className="mb-3 text-zinc-500" />
+              <p className="text-[32px] font-bold leading-none text-ink">{item.value}</p>
+              <p className="mt-2 text-sm font-semibold text-zinc-500">{item.label}</p>
             </div>
           );
         })}
       </section>
 
       <section className="mb-8 grid grid-cols-1 gap-4 xl:grid-cols-[1fr_420px]">
-        <div className="rounded-es-lg border border-es-border bg-white p-5">
+        <div className="rounded-xl border border-zinc-200 bg-white p-5">
           <div className="mb-4 flex items-center justify-between gap-4">
             <div>
-              <h2 className="text-es-lg font-es-semibold text-es-fg-1">Site Inventory</h2>
-              <p className="text-es-sm text-es-fg-2">Pulled from the existing Create app inventory API.</p>
+              <h2 className="text-lg font-semibold text-ink">Site Inventory</h2>
+              <p className="text-sm text-zinc-500">Pulled from the existing Create app inventory API.</p>
             </div>
             <Button
               as={Link}
               href="/dashboard/plans"
               radius="sm"
               variant="light"
-              className="font-semibold text-es-fg-1"
+              className="font-semibold text-ink"
             >
               Plans
             </Button>
           </div>
 
           {error && (
-            <div className="mb-4 flex gap-3 rounded-es-sm border border-[#F4C7C3] bg-[#FFF4F2] p-4 text-es-sm text-[#8A1F11]">
+            <div className="mb-4 flex gap-3 rounded-lg border border-[#F4C7C3] bg-[#FFF4F2] p-4 text-sm text-[#8A1F11]">
               <AlertCircle size={18} className="shrink-0" />
               <div>
-                <p className="font-es-semibold">Create inventory is unavailable</p>
+                <p className="font-semibold">Create inventory is unavailable</p>
                 <p>{error}</p>
               </div>
             </div>
           )}
 
           {inventoryMessage && (
-            <div className="mb-4 flex gap-3 rounded-es-sm border border-es-border bg-es-yellow-hover p-4 text-es-sm text-es-fg-1">
+            <div className="mb-4 flex gap-3 rounded-lg border border-zinc-200 bg-accent-hover p-4 text-sm text-ink">
               <AlertCircle size={18} className="shrink-0" />
               <div>
-                <p className="font-es-semibold">Account site inventory is pending Create scoping</p>
+                <p className="font-semibold">Account site inventory is pending Create scoping</p>
                 <p>{inventoryMessage}</p>
               </div>
             </div>
@@ -337,13 +337,13 @@ export default function SitesPage() {
 
           {isLoading ? (
             <div className="flex min-h-[260px] items-center justify-center">
-              <div className="h-8 w-8 animate-spin rounded-full border-2 border-es-border border-t-transparent" />
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-zinc-200 border-t-transparent" />
             </div>
           ) : sites.length === 0 ? (
-            <div className="flex min-h-[260px] flex-col items-center justify-center rounded-es-lg border border-dashed border-es-border bg-es-surface-alt p-8 text-center">
-              <Server size={40} className="mb-4 text-es-fg-3" />
-              <h3 className="text-es-xl font-es-semibold text-es-fg-1">No sites yet</h3>
-              <p className="mt-2 max-w-md text-es-sm leading-es-relaxed text-es-fg-2">
+            <div className="flex min-h-[260px] flex-col items-center justify-center rounded-xl border border-dashed border-zinc-200 bg-zinc-50 p-8 text-center">
+              <Server size={40} className="mb-4 text-zinc-400" />
+              <h3 className="text-lg font-semibold text-ink">No sites yet</h3>
+              <p className="mt-2 max-w-md text-sm leading-relaxed text-zinc-500">
                 Build a new site in Create or import a GitHub repo. Published apps deployed to Esteemed Cloud will appear here.
               </p>
               <div className="mt-5 flex flex-wrap justify-center gap-3">
@@ -353,11 +353,11 @@ export default function SitesPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   radius="sm"
-                  className="bg-es-yellow font-semibold text-es-fg-on-yellow hover:bg-es-yellow-hover"
+                  className="bg-accent font-semibold text-ink hover:bg-accent-hover"
                 >
                   New Site
                 </Button>
-                <Button as={Link} href="/websites/hosting#plans" radius="sm" variant="bordered" className="border-es-border font-semibold text-es-fg-1">
+                <Button as={Link} href="/websites/hosting#plans" radius="sm" variant="bordered" className="border-zinc-200 font-semibold text-ink">
                   Cloud Plans
                 </Button>
               </div>
@@ -372,14 +372,14 @@ export default function SitesPage() {
         </div>
 
         <aside className="space-y-4">
-          <form onSubmit={submitImport} className="rounded-es-lg border border-es-border bg-white p-5">
+          <form onSubmit={submitImport} className="rounded-xl border border-zinc-200 bg-white p-5">
             <div className="mb-5 flex items-start gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-es-sm bg-es-yellow">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
                 <GitBranch size={20} />
               </div>
               <div>
-                <h2 className="text-es-lg font-es-semibold text-es-fg-1">Import Git Repo</h2>
-                <p className="text-es-sm leading-es-relaxed text-es-fg-2">
+                <h2 className="text-lg font-semibold text-ink">Import Git Repo</h2>
+                <p className="text-sm leading-relaxed text-zinc-500">
                   Register an existing GitHub site with Esteemed Cloud and start the Create import flow.
                 </p>
               </div>
@@ -415,25 +415,25 @@ export default function SitesPage() {
               >
                 Import Repo
               </Button>
-              {importStatus && <p className="text-es-sm text-es-fg-2">{importStatus}</p>}
+              {importStatus && <p className="text-sm text-zinc-500">{importStatus}</p>}
             </div>
           </form>
 
-          <div className="rounded-es-lg border border-es-border bg-white p-5">
-            <h2 className="text-es-lg font-es-semibold text-es-fg-1">Managed Hosting Allowance</h2>
+          <div className="rounded-xl border border-zinc-200 bg-white p-5">
+            <h2 className="text-lg font-semibold text-ink">Managed Hosting Allowance</h2>
             <div className="mt-4 space-y-3">
               {[
                 ["Essential", "5-page Create rebuild included"],
                 ["Growth", "12-page Create rebuild included"],
                 ["Business", "Full standard site included, soft cap around 30 pages"],
               ].map(([name, value]) => (
-                <div key={name} className="rounded-es-sm bg-es-surface-alt p-3">
-                  <p className="text-es-sm font-es-semibold text-es-fg-1">{name}</p>
-                  <p className="text-es-sm text-es-fg-2">{value}</p>
+                <div key={name} className="rounded-lg bg-zinc-50 p-3">
+                  <p className="text-sm font-semibold text-ink">{name}</p>
+                  <p className="text-sm text-zinc-500">{value}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-4 text-es-sm leading-es-relaxed text-es-fg-2">
+            <p className="mt-4 text-sm leading-relaxed text-zinc-500">
               Essential and Growth overage is billed as the live Stripe `hosting_page_overage` item at $100/page.
             </p>
           </div>
