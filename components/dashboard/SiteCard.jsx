@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { Button, Chip } from "@heroui/react";
-import { Cloud, ExternalLink, GitBranch } from "lucide-react";
+import { Cloud, GitBranch } from "lucide-react";
 import {
   formatSiteDate,
   siteLiveUrl,
   siteStatusClass,
   siteStatusLabel,
-  siteStudioUrl,
 } from "@/components/dashboard/site-utils";
 
 export default function SiteCard({ site, compact = false }) {
@@ -56,18 +55,6 @@ export default function SiteCard({ site, compact = false }) {
           className="bg-accent font-semibold text-ink hover:bg-accent-hover"
         >
           Manage
-        </Button>
-        <Button
-          as="a"
-          href={siteStudioUrl(site.id)}
-          target="_blank"
-          rel="noopener noreferrer"
-          radius="sm"
-          variant="bordered"
-          className="border-zinc-200 font-semibold text-ink"
-          endContent={<ExternalLink size={14} />}
-        >
-          Edit
         </Button>
         {liveUrl && (
           <Button

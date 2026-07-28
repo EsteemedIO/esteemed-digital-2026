@@ -89,7 +89,7 @@ export default function SitesPage() {
               Manage Websites
             </h1>
             <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-500">
-              Sites created in Esteemed Create and sites deployed through Esteemed Cloud appear here with their live URL, preview, framework, deployment state, and Studio access.
+              Sites created in Esteemed Create and sites deployed through Esteemed Cloud appear here with their live URL, framework, and deployment state.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
