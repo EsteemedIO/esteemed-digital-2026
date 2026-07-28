@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { Search, Bell } from "lucide-react";
+import { Search, Bell, ShoppingCart } from "lucide-react";
 import {
   Avatar,
   Dropdown,
@@ -9,6 +11,17 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@heroui/react";
+
+function readCartCount() {
+  if (typeof window === "undefined") return 0;
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem("esteemed_cart") || "[]");
+    const items = Array.isArray(parsed) ? parsed : parsed.items || [];
+    return items.reduce((total, item) => total + Math.max(1, Number(item.quantity) || 1), 0);
+  } catch {
+    return 0;
+  }
+}
 
 function getInitials(name, email) {
   if (name) {
@@ -26,9 +39,25 @@ function getInitials(name, email) {
 
 export default function ShellTopBar() {
   const { data: session } = useSession();
+  const [cartCount, setCartCount] = useState(0);
 
   const initials = getInitials(session?.user?.name, session?.user?.email);
   const displayName = session?.user?.name || session?.user?.email || "User";
+
+  useEffect(() => {
+    function syncCartCount() {
+      setCartCount(readCartCount());
+    }
+
+    syncCartCount();
+    window.addEventListener("storage", syncCartCount);
+    window.addEventListener("esteemed-cart-updated", syncCartCount);
+
+    return () => {
+      window.removeEventListener("storage", syncCartCount);
+      window.removeEventListener("esteemed-cart-updated", syncCartCount);
+    };
+  }, []);
 
   return (
     <header
@@ -82,6 +111,19 @@ export default function ShellTopBar() {
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
+
+      <Link
+        href="/dashboard/cart"
+        className="relative flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-black/5"
+        aria-label={`Cart${cartCount > 0 ? `, ${cartCount} pending item${cartCount === 1 ? "" : "s"}` : ""}`}
+      >
+        <ShoppingCart size={18} style={{ color: "#565449" }} />
+        {cartCount > 0 && (
+          <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold leading-none text-ink">
+            {cartCount > 9 ? "9+" : cartCount}
+          </span>
+        )}
+      </Link>
 
       {/* User avatar dropdown */}
       <Dropdown placement="bottom-end">

@@ -38,3 +38,13 @@ test("products home site cards manage site detail pages", () => {
   expect(productsHome).toContain("<Link href={href}");
   expect(productsHome).toContain("action: \"Manage\"");
 });
+
+test("dashboard cart surface and badge are wired", () => {
+  const topBar = readFileSync(join(process.cwd(), "components/shell/ShellTopBar.jsx"), "utf8");
+  const cartPage = readFileSync(join(process.cwd(), "app/(shell)/dashboard/cart/page.jsx"), "utf8");
+
+  expect(topBar).toContain("href=\"/dashboard/cart\"");
+  expect(topBar).toContain("esteemed_cart");
+  expect(cartPage).toContain("checkoutItemsHref");
+  expect(cartPage).toContain("Your cart is empty");
+});
