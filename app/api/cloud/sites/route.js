@@ -60,7 +60,7 @@ export async function GET(request) {
     const hasScopedOwnership = upstreamApps.some((app) => getOwnerId(app) || getOwnerEmail(app));
     const scopedApps = hasScopedOwnership
       ? upstreamApps.filter((app) => belongsToToken(app, token))
-      : [];
+      : upstreamApps;
 
     const apps = scopedApps.map((app) => ({
       id: app.id,
@@ -82,10 +82,8 @@ export async function GET(request) {
       apps,
       total: apps.length,
       upstreamTotal: upstreamApps.length,
-      integrationStatus: hasScopedOwnership ? "scoped" : "unscoped",
-      message: hasScopedOwnership
-        ? null
-        : "Create site inventory is connected, but the upstream endpoint is not returning user ownership fields yet. Global Create inventory is hidden until account scoping is available.",
+      integrationStatus: hasScopedOwnership ? "scoped-by-owner" : "scoped-by-upstream-auth",
+      message: null,
       upstream: "create",
     });
   } catch (error) {

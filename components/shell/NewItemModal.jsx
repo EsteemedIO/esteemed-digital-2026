@@ -2,8 +2,18 @@
 
 import { useState } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Tab, Tabs } from "@heroui/react";
-import { ArrowRight, Globe, Server, Headphones, Loader2 } from "lucide-react";
+import { Globe, Server, Headphones, Loader2 } from "lucide-react";
 import { checkoutHref } from "@/lib/pricing-catalog";
+import { cloudTiers, managedHostingTiers, supportTiers, vpsTiers } from "@/lib/data";
+
+function planFromTier(tier) {
+  return {
+    name: tier.name,
+    price: typeof tier.monthly === "number" ? `$${tier.monthly}/mo` : tier.price || "Custom",
+    desc: tier.description,
+    lookupKey: tier.lookupKey,
+  };
+}
 
 const PLANS = {
   website: {
@@ -12,42 +22,23 @@ const PLANS = {
     tabs: {
       "self-managed": {
         label: "Self-Managed",
-        plans: [
-          { name: "Cloud Basic", price: "$9.99/mo", desc: "1 site, 25 GB storage, SSL, CDN", lookupKey: "cloud_basic_monthly" },
-          { name: "Cloud Plus", price: "$14.99/mo", desc: "1 site, 50 GB, staging environment", lookupKey: "cloud_plus_monthly" },
-          { name: "Cloud Pro", price: "$19.99/mo", desc: "1 site, 100 GB, priority support", lookupKey: "cloud_pro_monthly" },
-          { name: "Cloud Multi", price: "$39.99/mo", desc: "Up to 5 sites, 200 GB", lookupKey: "cloud_multi_monthly" },
-        ],
+        plans: cloudTiers.map(planFromTier),
       },
       managed: {
         label: "Managed",
-        plans: [
-          { name: "Essential", price: "$149/mo", desc: "Done-for-you hosting, 5-page rebuild, 3 support hrs/mo", lookupKey: "managed_essential_monthly" },
-          { name: "Growth", price: "$249/mo", desc: "12-page rebuild, 6 support hrs/mo", lookupKey: "managed_growth_monthly" },
-          { name: "Business", price: "$499/mo", desc: "Full standard site, 10 support hrs/mo", lookupKey: "managed_business_monthly" },
-        ],
+        plans: managedHostingTiers.filter((tier) => tier.monthly !== null).map(planFromTier),
       },
     },
   },
   vps: {
     title: "New VPS",
     icon: Server,
-    plans: [
-      { name: "VPS Starter", price: "$19.99/mo", desc: "2 GB RAM, 1 vCPU, 50 GB NVMe SSD", lookupKey: "vps_starter_monthly" },
-      { name: "VPS Standard", price: "$39.99/mo", desc: "4 GB RAM, 2 vCPUs, 80 GB NVMe SSD", lookupKey: "vps_standard_monthly" },
-      { name: "VPS Performance", price: "$79.99/mo", desc: "8 GB RAM, 4 vCPUs, 160 GB NVMe SSD", lookupKey: "vps_performance_monthly" },
-      { name: "VPS Enterprise", price: "$159.99/mo", desc: "16 GB RAM, 8 vCPUs, 320 GB NVMe SSD", lookupKey: "vps_enterprise_monthly" },
-    ],
+    plans: vpsTiers.map(planFromTier),
   },
   support: {
     title: "Support Request",
     icon: Headphones,
-    plans: [
-      { name: "3 Hours", price: "$255/mo", desc: "3 hours/mo at $85/hr", lookupKey: "support_3hr_monthly" },
-      { name: "6 Hours", price: "$510/mo", desc: "6 hours/mo at $85/hr", lookupKey: "support_6hr_monthly" },
-      { name: "8 Hours", price: "$680/mo", desc: "8 hours/mo at $85/hr", lookupKey: "support_8hr_monthly" },
-      { name: "10 Hours", price: "$850/mo", desc: "10 hours/mo at $85/hr", lookupKey: "support_10hr_monthly" },
-    ],
+    plans: supportTiers.filter((tier) => tier.lookupKey).map(planFromTier),
   },
 };
 
