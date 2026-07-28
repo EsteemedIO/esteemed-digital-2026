@@ -4,156 +4,19 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { Button, Chip, Input } from "@heroui/react";
+import { Button, Chip } from "@heroui/react";
 import {
   AlertCircle,
   CheckCircle2,
-  Cloud,
   Code2,
-  ExternalLink,
-  GitBranch,
   Globe,
   Plus,
   RefreshCw,
   Rocket,
   Server,
 } from "lucide-react";
-
-const CREATE_BASE = "https://create.esteemed.io";
-
-function absoluteCreateUrl(url) {
-  if (!url) return "";
-  if (url.startsWith("http")) return url;
-  return `${CREATE_BASE}${url.startsWith("/") ? "" : "/"}${url}`;
-}
-
-function formatDate(value) {
-  if (!value) return "Not yet";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Not yet";
-  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(date);
-}
-
-function statusClass(status) {
-  if (status === "published" || status === "deployed" || status === "live") {
-    return "bg-[#E8F8EA] text-[#126B24]";
-  }
-  if (status === "importing" || status === "deploying") {
-    return "bg-accent-hover text-ink";
-  }
-  return "bg-zinc-50 text-zinc-500";
-}
-
-function siteStatusLabel(status) {
-  if (status === "published" || status === "deployed" || status === "live") return "Live";
-  if (status === "built") return "Built";
-  if (status === "importing") return "Importing";
-  if (status === "deploying") return "Deploying";
-  return status || "Draft";
-}
-
-function SiteCard({ site }) {
-  const liveUrl = absoluteCreateUrl(site.publishedUrl);
-  const previewUrl = absoluteCreateUrl(site.previewUrl);
-  const studioUrl = `${CREATE_BASE}/apps/studio/${site.id}`;
-  const deployUrl = `${CREATE_BASE}/apps/studio/${site.id}?publish=1`;
-
-  return (
-    <article className="flex min-h-[300px] flex-col rounded-xl border border-zinc-200 bg-white p-5">
-      <div className="mb-5 flex items-start justify-between gap-3">
-        <div className="flex h-12 w-12 items-center justify-center rounded-[8px] border border-zinc-200 bg-accent">
-          {site.source === "github" ? <GitBranch size={24} /> : <Cloud size={24} />}
-        </div>
-        <Chip
-          size="sm"
-          variant="flat"
-          classNames={{
-            base: statusClass(site.status),
-            content: "font-semibold",
-          }}
-        >
-          {siteStatusLabel(site.status)}
-        </Chip>
-      </div>
-
-      <h2 className="text-lg font-semibold tracking-tight text-ink">{site.name}</h2>
-      <p className="mt-1 text-sm text-zinc-500">{site.id}</p>
-
-      <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-        <div className="rounded-lg bg-zinc-50 p-3">
-          <p className="mb-1 text-xs font-semibold uppercase text-zinc-400">Framework</p>
-          <p className="font-semibold text-ink">{site.framework || "React"}</p>
-        </div>
-        <div className="rounded-lg bg-zinc-50 p-3">
-          <p className="mb-1 text-xs font-semibold uppercase text-zinc-400">Updated</p>
-          <p className="font-semibold text-ink">{formatDate(site.updatedAt)}</p>
-        </div>
-      </div>
-
-      {site.sourceUrl && (
-        <div className="mt-3 rounded-lg border border-zinc-200 bg-white p-3 text-sm text-zinc-500">
-          <div className="mb-1 flex items-center gap-2 font-semibold text-ink">
-            <GitBranch size={15} />
-            {site.branch || "main"}
-          </div>
-          <p className="truncate">{site.sourceUrl}</p>
-        </div>
-      )}
-
-      <div className="mt-auto flex flex-wrap gap-2 pt-5">
-        <Button
-          as="a"
-          href={studioUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          radius="sm"
-          className="bg-accent font-semibold text-ink hover:bg-accent-hover"
-          endContent={<ExternalLink size={15} />}
-        >
-          Studio
-        </Button>
-        {liveUrl ? (
-          <Button
-            as="a"
-            href={liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            radius="sm"
-            variant="bordered"
-            className="border-zinc-200 font-semibold text-ink"
-          >
-            Visit
-          </Button>
-        ) : (
-          <Button
-            as="a"
-            href={deployUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            radius="sm"
-            variant="bordered"
-            className="border-zinc-200 font-semibold text-ink"
-          >
-            Deploy
-          </Button>
-        )}
-        {previewUrl && (
-          <Button
-            as="a"
-            href={previewUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            radius="sm"
-            variant="light"
-            className="font-semibold text-ink"
-          >
-            Preview
-          </Button>
-        )}
-      </div>
-    </article>
-  );
-}
+import SiteCard from "@/components/dashboard/SiteCard";
+import { CREATE_BASE } from "@/components/dashboard/site-utils";
 
 export default function SitesPage() {
   const { status } = useSession();
@@ -161,9 +24,6 @@ export default function SitesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [inventoryMessage, setInventoryMessage] = useState("");
-  const [isImporting, setIsImporting] = useState(false);
-  const [importStatus, setImportStatus] = useState("");
-  const [form, setForm] = useState({ repoUrl: "", branch: "main", name: "" });
 
   async function loadSites() {
     setIsLoading(true);
@@ -209,27 +69,6 @@ export default function SitesPage() {
     redirect("/api/auth/signin");
   }
 
-  async function submitImport(event) {
-    event.preventDefault();
-    setIsImporting(true);
-    setImportStatus("");
-    try {
-      const response = await fetch("/api/cloud/import-github", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload.error || "Unable to import repo.");
-      setImportStatus("Import started. Refreshing site inventory.");
-      setForm({ repoUrl: "", branch: "main", name: "" });
-      await loadSites();
-    } catch (importError) {
-      setImportStatus(importError.message || "Unable to import repo.");
-    } finally {
-      setIsImporting(false);
-    }
-  }
 
   return (
     <div className="mx-auto max-w-[1440px]">
@@ -297,7 +136,7 @@ export default function SitesPage() {
         })}
       </section>
 
-      <section className="mb-8 grid grid-cols-1 gap-4 xl:grid-cols-[1fr_420px]">
+      <section className="mb-8">
         <div className="rounded-xl border border-zinc-200 bg-white p-5">
           <div className="mb-4 flex items-center justify-between gap-4">
             <div>
@@ -371,73 +210,6 @@ export default function SitesPage() {
           )}
         </div>
 
-        <aside className="space-y-4">
-          <form onSubmit={submitImport} className="rounded-xl border border-zinc-200 bg-white p-5">
-            <div className="mb-5 flex items-start gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
-                <GitBranch size={20} />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-ink">Import Git Repo</h2>
-                <p className="text-sm leading-relaxed text-zinc-500">
-                  Register an existing GitHub site with Esteemed Cloud and start the Create import flow.
-                </p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <Input
-                label="Repository URL"
-                placeholder="https://github.com/org/site"
-                value={form.repoUrl}
-                onValueChange={(repoUrl) => setForm((current) => ({ ...current, repoUrl }))}
-                radius="sm"
-              />
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <Input
-                  label="Branch"
-                  value={form.branch}
-                  onValueChange={(branch) => setForm((current) => ({ ...current, branch }))}
-                  radius="sm"
-                />
-                <Input
-                  label="Site name"
-                  placeholder="Optional"
-                  value={form.name}
-                  onValueChange={(name) => setForm((current) => ({ ...current, name }))}
-                  radius="sm"
-                />
-              </div>
-              <Button
-                type="submit"
-                isLoading={isImporting}
-                radius="sm"
-                className="w-full bg-[#111111] font-semibold text-white hover:scale-[1.02] hover:bg-[#111111]"
-              >
-                Import Repo
-              </Button>
-              {importStatus && <p className="text-sm text-zinc-500">{importStatus}</p>}
-            </div>
-          </form>
-
-          <div className="rounded-xl border border-zinc-200 bg-white p-5">
-            <h2 className="text-lg font-semibold text-ink">Managed Hosting Allowance</h2>
-            <div className="mt-4 space-y-3">
-              {[
-                ["Essential", "5-page Create rebuild included"],
-                ["Growth", "12-page Create rebuild included"],
-                ["Business", "Full standard site included, soft cap around 30 pages"],
-              ].map(([name, value]) => (
-                <div key={name} className="rounded-lg bg-zinc-50 p-3">
-                  <p className="text-sm font-semibold text-ink">{name}</p>
-                  <p className="text-sm text-zinc-500">{value}</p>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-sm leading-relaxed text-zinc-500">
-              Essential and Growth overage is billed as the live Stripe `hosting_page_overage` item at $100/page.
-            </p>
-          </div>
-        </aside>
       </section>
     </div>
   );

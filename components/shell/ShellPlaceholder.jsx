@@ -8,23 +8,23 @@ export default function ShellPlaceholder({
 }) {
   return (
     <div className="mx-auto max-w-5xl">
-      <div className="rounded-es-lg border border-es-border bg-es-surface p-es-6">
-        <div className="mb-es-5 inline-flex rounded-full border-2 border-es-pill-outline px-es-3 py-es-1 text-es-sm font-es-semibold text-es-fg-1">
+      <div className="rounded-xl border border-zinc-200 bg-white p-6">
+        <div className="mb-5 inline-flex rounded-full border-2 border-zinc-300 px-3 py-1 text-sm font-semibold text-ink">
           {status}
         </div>
-        <h1 className="text-es-3xl font-es-semibold tracking-es-tight text-es-fg-1">
+        <h1 className="text-3xl font-semibold tracking-tight text-ink">
           {title}
         </h1>
-        <p className="mt-es-3 max-w-3xl text-es-base leading-es-relaxed text-es-fg-2">
+        <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-500">
           {description}
         </p>
 
         {actions.length > 0 && (
-          <div className="mt-es-6 flex flex-wrap gap-es-3">
+          <div className="mt-6 flex flex-wrap gap-3">
             {actions.map((action) => {
               const className = action.primary
-                ? "inline-flex items-center justify-center rounded-es-sm bg-es-yellow px-es-4 py-es-2 text-es-sm font-es-medium text-es-fg-on-yellow transition-colors hover:bg-es-yellow-hover"
-                : "inline-flex items-center justify-center rounded-es-sm border border-es-border bg-es-surface px-es-4 py-es-2 text-es-sm font-es-medium text-es-fg-1 transition-colors hover:bg-es-surface-alt";
+                ? "inline-flex items-center justify-center rounded-lg bg-accent px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-accent-hover"
+                : "inline-flex items-center justify-center rounded-lg border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-zinc-50";
 
               if (action.external) {
                 return (

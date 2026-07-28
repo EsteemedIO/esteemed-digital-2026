@@ -73,6 +73,21 @@ export default function SettingsPage() {
           </Button>
         </div>
 
+        <div id="domains" className="rounded-xl border border-zinc-200 bg-white p-5">
+          <div className="mb-5 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
+              <Globe size={20} />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-ink">Domains</h2>
+              <p className="text-sm text-zinc-500">Registration, transfer, renewal, privacy, nameservers, and DNS handoff.</p>
+            </div>
+          </div>
+          <Button as={Link} href="/dashboard/plans" radius="sm" variant="bordered" className="border-zinc-200 font-semibold text-ink">
+            View domain options
+          </Button>
+        </div>
+
         <div className="rounded-xl border border-zinc-200 bg-white p-5">
           <div className="mb-5 flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">

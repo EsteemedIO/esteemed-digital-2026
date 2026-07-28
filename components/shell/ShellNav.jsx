@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Home,
+  Package,
   Globe,
   Sparkles,
   Settings,
@@ -25,7 +25,7 @@ import {
 import NewItemModal from "@/components/shell/NewItemModal";
 
 const navItems = [
-  { label: "Home", href: "/dashboard", icon: Home },
+  { label: "Products", href: "/products", icon: Package },
   { label: "Sites", href: "/dashboard/sites", icon: Globe },
 ];
 
@@ -41,7 +41,7 @@ export default function ShellNav() {
   const [modalType, setModalType] = useState(null);
 
   function isActive(href) {
-    if (href === "/dashboard") return pathname === "/dashboard";
+    if (href === "/products") return pathname === "/products";
     return pathname.startsWith(href);
   }
 
@@ -63,7 +63,7 @@ export default function ShellNav() {
       >
         {/* Brand */}
         <div className="px-5 py-5">
-          <Link href="/dashboard" className="flex items-center">
+          <Link href="/products" className="flex items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/esteemed-logo.svg" alt="Esteemed" className="h-7 w-auto" />
           </Link>

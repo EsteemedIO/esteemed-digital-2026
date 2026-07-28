@@ -28,3 +28,12 @@ test("dashboard routes do not render placeholder pages", () => {
     expect(source, `${routeFile} should not show In progress copy`).not.toMatch(/In progress|In Progress/);
   }
 });
+
+test("products home uses shared site cards that manage site detail pages", () => {
+  const productsHome = readFileSync(join(process.cwd(), "app/products/page.jsx"), "utf8");
+  const siteCard = readFileSync(join(process.cwd(), "components/dashboard/SiteCard.jsx"), "utf8");
+
+  expect(productsHome).toContain("Accordion");
+  expect(productsHome).toContain("<SiteCard key={site.id} site={site} />");
+  expect(siteCard).toContain("href={`/dashboard/sites/${encodeURIComponent(site.id)}`}");
+});

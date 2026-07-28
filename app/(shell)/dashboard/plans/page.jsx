@@ -63,7 +63,7 @@ function intervalNote(tier, interval) {
 
 function IconTile({ src, alt }) {
   return (
-    <div className="flex h-11 w-11 items-center justify-center rounded-[8px] border border-es-border bg-white">
+    <div className="flex h-11 w-11 items-center justify-center rounded-[8px] border border-zinc-200 bg-white">
       <Image src={src} alt={alt} width={32} height={32} className="h-8 w-8 object-contain" />
     </div>
   );
@@ -72,41 +72,41 @@ function IconTile({ src, alt }) {
 export default function PlansPage() {
   return (
     <div className="mx-auto max-w-[1440px]">
-      <section className="mb-6 rounded-es-lg border border-es-border bg-white p-6">
+      <section className="mb-6 rounded-xl border border-zinc-200 bg-white p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <Chip
               size="sm"
               variant="flat"
               classNames={{
-                base: "mb-4 bg-es-yellow-hover text-es-fg-1",
+                base: "mb-4 bg-accent-hover text-ink",
                 content: "font-semibold",
               }}
             >
               Account management
             </Chip>
-            <h1 className="text-es-3xl font-es-semibold tracking-es-tight text-es-fg-1">
+            <h1 className="text-3xl font-semibold tracking-tight text-ink">
               Plans & features
             </h1>
-            <p className="mt-3 max-w-3xl text-es-base leading-es-relaxed text-es-fg-2">
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-500">
               Choose the website plan to sell or activate first. Purchase uses Stripe lookup keys, so this page can support the launch flow before deeper subscription management is wired in.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:min-w-[520px]">
-            <div className="rounded-es-lg border border-es-border bg-es-surface-alt p-4">
-              <CreditCard size={18} className="mb-2 text-es-fg-1" />
-              <p className="text-es-sm font-es-semibold text-es-fg-1">Subscriptions</p>
-              <p className="text-es-xs text-es-fg-2">Stripe checkout ready</p>
+            <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-4">
+              <CreditCard size={18} className="mb-2 text-ink" />
+              <p className="text-sm font-semibold text-ink">Subscriptions</p>
+              <p className="text-xs text-zinc-500">Stripe checkout ready</p>
             </div>
-            <div className="rounded-es-lg border border-es-border bg-es-surface-alt p-4">
-              <FolderKanban size={18} className="mb-2 text-es-fg-1" />
-              <p className="text-es-sm font-es-semibold text-es-fg-1">Projects</p>
-              <p className="text-es-xs text-es-fg-2">Launch work tracked here</p>
+            <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-4">
+              <FolderKanban size={18} className="mb-2 text-ink" />
+              <p className="text-sm font-semibold text-ink">Projects</p>
+              <p className="text-xs text-zinc-500">Launch work tracked here</p>
             </div>
-            <div className="rounded-es-lg border border-es-border bg-es-surface-alt p-4">
-              <Settings size={18} className="mb-2 text-es-fg-1" />
-              <p className="text-es-sm font-es-semibold text-es-fg-1">Workspace</p>
-              <p className="text-es-xs text-es-fg-2">Profile and team next</p>
+            <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-4">
+              <Settings size={18} className="mb-2 text-ink" />
+              <p className="text-sm font-semibold text-ink">Workspace</p>
+              <p className="text-xs text-zinc-500">Profile and team next</p>
             </div>
           </div>
         </div>
@@ -117,7 +117,7 @@ export default function PlansPage() {
         radius="full"
         classNames={{
           base: "mb-5",
-          tabList: "bg-white border border-es-border p-1",
+          tabList: "bg-white border border-zinc-200 p-1",
           cursor: "bg-[#111111]",
           tab: "h-10 px-5",
           tabContent: "font-semibold group-data-[selected=true]:text-white",
@@ -132,11 +132,11 @@ export default function PlansPage() {
                     <div className="flex items-start gap-3">
                       <IconTile src={group.icon} alt="" />
                       <div>
-                        <h2 className="text-es-xl font-es-semibold tracking-es-tight text-es-fg-1">{group.label}</h2>
-                        <p className="text-es-sm text-es-fg-2">{group.description}</p>
+                        <h2 className="text-lg font-semibold tracking-tight text-ink">{group.label}</h2>
+                        <p className="text-sm text-zinc-500">{group.description}</p>
                       </div>
                     </div>
-                    <p className="max-w-xl text-es-sm text-es-fg-2">{group.highlight}</p>
+                    <p className="max-w-xl text-sm text-zinc-500">{group.highlight}</p>
                   </div>
 
                   <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 xl:grid-cols-4">
@@ -163,21 +163,21 @@ export default function PlansPage() {
                       return (
                         <article
                           key={tier.key}
-                          className={`flex min-h-[360px] flex-col rounded-es-lg border bg-white p-5 ${
-                            tier.recommended ? "border-es-yellow" : "border-es-border"
+                          className={`flex min-h-[360px] flex-col rounded-xl border bg-white p-5 ${
+                            tier.recommended ? "border-accent" : "border-zinc-200"
                           }`}
                         >
                           <div className="mb-4 flex items-start justify-between gap-3">
                             <div>
-                              <h3 className="text-es-lg font-es-semibold tracking-es-tight text-es-fg-1">{tier.name}</h3>
-                              <p className="mt-1 text-es-sm text-es-fg-2">{tier.description}</p>
+                              <h3 className="text-lg font-semibold tracking-tight text-ink">{tier.name}</h3>
+                              <p className="mt-1 text-sm text-zinc-500">{tier.description}</p>
                             </div>
                             {tier.recommended && (
                               <Chip
                                 size="sm"
                                 variant="flat"
                                 classNames={{
-                                  base: "bg-es-yellow-hover text-es-fg-1",
+                                  base: "bg-accent-hover text-ink",
                                   content: "font-semibold",
                                 }}
                               >
@@ -188,22 +188,22 @@ export default function PlansPage() {
 
                           <div className="mb-4">
                             <div className="flex items-end gap-1">
-                              <span className="text-[34px] font-es-bold leading-none tracking-es-tight text-es-fg-1">
+                              <span className="text-[34px] font-bold leading-none tracking-tight text-ink">
                                 {displayPrice(tier, interval)}
                               </span>
                               {price !== 0 && price !== null && (
-                                <span className="pb-1 text-es-sm font-es-semibold text-es-fg-2">
+                                <span className="pb-1 text-sm font-semibold text-zinc-500">
                                   {interval === "monthly" ? "/mo" : "/yr"}
                                 </span>
                               )}
                             </div>
-                            <p className="mt-1 text-es-xs text-es-fg-3">{intervalNote(tier, interval)}</p>
+                            <p className="mt-1 text-xs text-zinc-400">{intervalNote(tier, interval)}</p>
                           </div>
 
                           <ul className="space-y-2">
                             {features.slice(0, 6).map((feature) => (
-                              <li key={feature} className="flex gap-2 text-es-sm text-es-fg-2">
-                                <Check size={16} className="mt-0.5 shrink-0 text-es-fg-1" />
+                              <li key={feature} className="flex gap-2 text-sm text-zinc-500">
+                                <Check size={16} className="mt-0.5 shrink-0 text-ink" />
                                 {feature}
                               </li>
                             ))}
@@ -221,7 +221,7 @@ export default function PlansPage() {
                                     })
                                   : "/contact"
                               }
-                              className="flex-1 bg-es-yellow font-semibold text-es-fg-on-yellow hover:bg-es-yellow-hover"
+                              className="flex-1 bg-accent font-semibold text-ink hover:bg-accent-hover"
                               radius="sm"
                             >
                               {canCheckout ? "Buy Now" : "Talk to Us"}
@@ -231,7 +231,7 @@ export default function PlansPage() {
                               href={group.key === "create" ? "/websites/website-builder" : "/websites/hosting"}
                               radius="sm"
                               variant="bordered"
-                              className="border-es-border font-semibold text-es-fg-1"
+                              className="border-zinc-200 font-semibold text-ink"
                               isIconOnly
                               aria-label={`View ${group.label} details`}
                             >
