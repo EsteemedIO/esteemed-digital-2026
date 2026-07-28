@@ -96,15 +96,9 @@ function ProductAccordionTitle({ section }) {
   const Icon = section.icon;
 
   return (
-    <div className="flex items-center gap-4">
-      <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-ink">
-        <Icon size={19} />
-      </span>
-      <span>
-        <span className="block text-2xl font-semibold text-ink">{section.title}</span>
-        <span className="block text-sm font-normal text-zinc-500">{section.subtitle}</span>
-      </span>
-    </div>
+    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-100 text-ink">
+      <Icon size={19} />
+    </span>
   );
 }
 
@@ -151,9 +145,9 @@ function ProductRow({ title, detail, action, href, icon: Icon, external = false 
   const props = external ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
 
   return (
-    <div className="grid gap-4 border-t border-zinc-200 py-5 md:grid-cols-[1fr_auto_auto] md:items-center">
+    <div className="grid gap-4 rounded-lg px-2 py-4 transition-colors hover:bg-zinc-50 md:grid-cols-[1fr_auto] md:items-center">
       <div className="flex items-start gap-4">
-        <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-50 text-ink">
+        <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 text-ink">
           <Icon size={18} />
         </span>
         <div>
@@ -490,24 +484,28 @@ function ProductsHomeContent() {
           <h2 className="text-2xl font-semibold text-ink">All Products and Services</h2>
         </div>
         <Accordion
-          variant="splitted"
+          variant="shadow"
           selectionMode="multiple"
           defaultExpandedKeys={["domains", "websites", "wordpress", "partners"]}
+          className="gap-3 px-0"
           itemClasses={{
-            base: "rounded-xl border border-zinc-200 bg-white shadow-none",
-            title: "text-ink",
-            trigger: "px-6 py-6",
-            content: "px-8 pb-6 pt-0",
+            base: "bg-white",
+            title: "text-lg font-semibold text-ink",
+            subtitle: "mt-1 text-sm text-zinc-500",
+            trigger: "px-5 py-5",
+            indicator: "text-zinc-500",
+            content: "px-5 pb-5 pt-0",
           }}
         >
           {productSections.map((section) => (
             <AccordionItem
               key={section.key}
               aria-label={section.title}
-              title={<ProductAccordionTitle section={section} />}
-              indicator={<ArrowRight size={22} />}
+              title={section.title}
+              subtitle={section.subtitle}
+              startContent={<ProductAccordionTitle section={section} />}
             >
-              <div className="mb-4 flex justify-end border-t border-zinc-200 pt-4">
+              <div className="mb-3 flex justify-end border-t border-zinc-100 pt-4">
                 <Button
                   as={Link}
                   href={section.manageHref}
@@ -519,9 +517,11 @@ function ProductsHomeContent() {
                   {section.manageLabel}
                 </Button>
               </div>
-              {(section.rows || defaultRowsForSection(section)).map((row) => (
-                <ProductRow key={`${section.key}-${row.title}`} {...row} />
-              ))}
+              <div className="divide-y divide-zinc-100">
+                {(section.rows || defaultRowsForSection(section)).map((row) => (
+                  <ProductRow key={`${section.key}-${row.title}`} {...row} />
+                ))}
+              </div>
             </AccordionItem>
           ))}
         </Accordion>
