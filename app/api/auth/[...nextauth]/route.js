@@ -1,9 +1,15 @@
 import NextAuth from "next-auth";
 import KeycloakProvider from "next-auth/providers/keycloak";
 
+const THIRTY_DAYS = 30 * 24 * 60 * 60;
+
 const handler = NextAuth({
   pages: {
     signIn: "/login",
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: THIRTY_DAYS,
   },
   providers: [
     KeycloakProvider({

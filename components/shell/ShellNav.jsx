@@ -10,7 +10,6 @@ import {
   Settings,
   HelpCircle,
   Plus,
-  Star,
   ExternalLink,
   Server,
   Headphones,
@@ -63,20 +62,10 @@ export default function ShellNav() {
         }}
       >
         {/* Brand */}
-        <div className="flex items-center gap-2.5 px-5 py-5">
-          <Link href="/dashboard" className="flex items-center gap-2.5">
-            <Star
-              className="flex-shrink-0"
-              size={22}
-              fill="#FEE546"
-              stroke="#FEE546"
-            />
-            <span
-              className="text-[17px] font-semibold tracking-tight"
-              style={{ color: "rgba(0,0,0,0.85)" }}
-            >
-              esteemed
-            </span>
+        <div className="px-5 py-5">
+          <Link href="/dashboard" className="flex items-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/esteemed-logo.svg" alt="Esteemed" className="h-7 w-auto" />
           </Link>
         </div>
 
