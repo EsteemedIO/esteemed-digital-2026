@@ -308,7 +308,7 @@ export default function Navbar() {
             ) : (
               <>
                 <button
-                  onClick={() => signIn("keycloak")}
+                  onClick={() => signIn("keycloak", { callbackUrl: "/dashboard" })}
                   className="hidden md:inline-flex items-center px-4 py-1.5 rounded-full border-2 border-ink bg-white text-ink text-sm font-semibold hover:bg-accent hover:border-accent transition-colors"
                 >
                   Login
@@ -469,7 +469,7 @@ export default function Navbar() {
         {!session && (
           <div className="border-t border-zinc-200 px-5 py-4 flex items-center gap-4">
             <button
-              onClick={() => { closeMobile(); signIn("keycloak"); }}
+              onClick={() => { closeMobile(); signIn("keycloak", { callbackUrl: "/dashboard" }); }}
               className="text-sm font-semibold text-ink hover:underline"
             >
               Login

@@ -8,7 +8,7 @@ import AuthEntryCard from "@/components/AuthEntryCard";
 function LoginContent() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   useEffect(() => {
     if (status === "loading") return;
