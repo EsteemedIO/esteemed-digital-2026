@@ -40,7 +40,6 @@ export default function sitemap() {
     { path: '/hire-experts/talent-management', priority: 0.8, freq: 'monthly' },
 
     // Products
-    { path: '/products', priority: 0.8, freq: 'monthly' },
     { path: '/products/acquire', priority: 0.7, freq: 'monthly' },
     { path: '/products/hire', priority: 0.7, freq: 'monthly' },
     { path: '/products/intelligence', priority: 0.7, freq: 'monthly' },

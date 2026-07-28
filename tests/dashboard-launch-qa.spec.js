@@ -29,11 +29,11 @@ test("dashboard routes do not render placeholder pages", () => {
   }
 });
 
-test("products home uses shared site cards that manage site detail pages", () => {
+test("products home site cards manage site detail pages", () => {
   const productsHome = readFileSync(join(process.cwd(), "app/products/page.jsx"), "utf8");
-  const siteCard = readFileSync(join(process.cwd(), "components/dashboard/SiteCard.jsx"), "utf8");
 
   expect(productsHome).toContain("Accordion");
-  expect(productsHome).toContain("<SiteCard key={site.id} site={site} />");
-  expect(siteCard).toContain("href={`/dashboard/sites/${encodeURIComponent(site.id)}`}");
+  expect(productsHome).toContain("function ProductSiteCard");
+  expect(productsHome).toContain("const href = `/dashboard/sites/${encodeURIComponent(site.id)}`");
+  expect(productsHome).toContain("<Button as={Link} href={href}");
 });

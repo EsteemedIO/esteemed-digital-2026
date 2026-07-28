@@ -295,7 +295,7 @@ export default function Navbar() {
                   Log out
                 </button>
                 <Link
-                  href="/dashboard"
+                  href="/products"
                   className="inline-flex items-center gap-2 px-3 md:px-4 rounded-full border-2 border-accent bg-accent text-ink text-sm font-semibold hover:bg-accent-hover hover:border-accent-hover transition-colors leading-none"
                   style={{ paddingTop: 6, paddingBottom: 6 }}
                 >
@@ -308,7 +308,7 @@ export default function Navbar() {
             ) : (
               <>
                 <button
-                  onClick={() => signIn("keycloak", { callbackUrl: "/dashboard" })}
+                  onClick={() => signIn("keycloak", { callbackUrl: "/products" })}
                   className="hidden md:inline-flex items-center px-4 py-1.5 rounded-full border-2 border-ink bg-white text-ink text-sm font-semibold hover:bg-accent hover:border-accent transition-colors"
                 >
                   Login
@@ -469,7 +469,7 @@ export default function Navbar() {
         {!session && (
           <div className="border-t border-zinc-200 px-5 py-4 flex items-center gap-4">
             <button
-              onClick={() => { closeMobile(); signIn("keycloak", { callbackUrl: "/dashboard" }); }}
+              onClick={() => { closeMobile(); signIn("keycloak", { callbackUrl: "/products" }); }}
               className="text-sm font-semibold text-ink hover:underline"
             >
               Login
@@ -492,11 +492,11 @@ export default function Navbar() {
               Log out
             </button>
             <Link
-              href="/dashboard"
+              href="/products"
               onClick={closeMobile}
               className="flex-1 text-center px-4 py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
             >
-              Dashboard
+              Products
             </Link>
           </div>
         )}

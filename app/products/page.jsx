@@ -9,147 +9,261 @@ import {
   AccordionItem,
   Button,
   Chip,
+  Input,
 } from "@heroui/react";
 import {
   AlertCircle,
   ArrowRight,
   AtSign,
-  BarChart3,
   CalendarDays,
-  CheckCircle2,
   Cloud,
   CreditCard,
   ExternalLink,
   Globe,
   Headphones,
   Megaphone,
-  MessageSquare,
   Package,
   Plus,
   RefreshCw,
   Rocket,
+  Search,
   Server,
   ShoppingBag,
-  Tag,
   Users,
 } from "lucide-react";
-import SiteCard from "@/components/dashboard/SiteCard";
-import { CREATE_BASE } from "@/components/dashboard/site-utils";
+import {
+  CREATE_BASE,
+  siteLiveUrl,
+  sitePrimaryDomain,
+  siteStatusClass,
+  siteStatusLabel,
+} from "@/components/dashboard/site-utils";
 import ShellFrame from "@/components/shell/ShellFrame";
 
 const productAccordions = [
   {
-    key: "website",
-    title: "Website",
-    subtitle: "Create, Studio, publishing, Coming Soon pages, and launch readiness.",
-    icon: Cloud,
-    items: [
-      { label: "Publish Coming Soon", href: "/dashboard/sites", icon: Rocket },
-      { label: "Create a new website", href: CREATE_BASE, icon: Plus, external: true },
-      { label: "View site inventory", href: "/dashboard/sites", icon: Cloud },
-    ],
-  },
-  {
-    key: "domain",
-    title: "Domain",
-    subtitle: "Registration, transfers, renewals, privacy, nameservers, and DNS handoff.",
+    key: "domains",
+    title: "Domains",
+    subtitle: "Registration, DNS, renewals, privacy, and nameservers.",
+    manageHref: "/dashboard/settings#domains",
+    manageLabel: "Manage All",
     icon: Globe,
-    items: [
-      { label: "Manage domains", href: "/dashboard/settings#domains", icon: Globe },
-      { label: "View domain build spec", href: "/dashboard/settings#domains", icon: CheckCircle2 },
-    ],
+    rows: [],
   },
   {
-    key: "email",
-    title: "Email",
-    subtitle: "Professional mailboxes and domain-based business email.",
-    icon: AtSign,
-    items: [
-      { label: "Create email address", href: "/business-tools/business-email", icon: AtSign },
-      { label: "Email setup support", href: "/dashboard/support", icon: Headphones },
-    ],
+    key: "websites",
+    title: "Websites + Marketing",
+    subtitle: "Create, Studio, publishing, Coming Soon pages, and launch readiness.",
+    manageHref: "/dashboard/sites",
+    manageLabel: "Manage All",
+    icon: Cloud,
   },
   {
     key: "commerce",
-    title: "Commerce",
+    title: "Commerce & Payments",
     subtitle: "Storefronts, checkout, payments, subscriptions, and selling tools.",
+    manageHref: "/dashboard/activate/commerce",
+    manageLabel: "Manage All",
     icon: CreditCard,
-    items: [
-      { label: "Add commerce", href: "/dashboard/activate/commerce", icon: ShoppingBag },
-      { label: "View ecommerce plans", href: "/websites/ecommerce", icon: CreditCard },
-    ],
   },
   {
-    key: "appointments",
-    title: "Appointments",
-    subtitle: "Booking flows for calls, consults, field service, and local businesses.",
-    icon: CalendarDays,
-    items: [
-      { label: "Set up booking", href: "/dashboard/activate/appointments", icon: CalendarDays },
-      { label: "Request setup help", href: "/dashboard/support", icon: Headphones },
-    ],
+    key: "wordpress",
+    title: "Managed WordPress",
+    subtitle: "Managed hosting, migrations, security, and updates.",
+    manageHref: "/websites/hosting/wordpress-hosting",
+    manageLabel: "Manage All",
+    icon: Server,
   },
   {
-    key: "marketing",
-    title: "Marketing",
-    subtitle: "Social posts, campaigns, search visibility, and launch promotion.",
-    icon: Megaphone,
-    items: [
-      { label: "Start marketing", href: "/dashboard/activate/marketing", icon: Megaphone },
-      { label: "AI visibility", href: "/hire-experts/ai-visibility", icon: BarChart3 },
-    ],
+    key: "additional",
+    title: "Additional Products",
+    subtitle: "Email, CRM, appointments, conversations, deals, and support add-ons.",
+    manageHref: "/dashboard/plans",
+    manageLabel: "Manage All",
+    icon: Package,
   },
   {
-    key: "customers",
-    title: "Customers, conversations, and deals",
-    subtitle: "CRM, inbound messages, contacts, pipelines, and customer follow-up.",
-    icon: Users,
-    items: [
-      { label: "Activate CRM", href: "/dashboard/activate/acquire", icon: Users },
-      { label: "Conversations", href: "/dashboard/activate/conversations", icon: MessageSquare },
-      { label: "Deals", href: "/dashboard/activate/deals", icon: Tag },
-    ],
-  },
-  {
-    key: "support",
-    title: "Support and marketplace",
-    subtitle: "Support hours, expert help, add-ons, and services for the selected site.",
+    key: "partners",
+    title: "Partner Offers",
+    subtitle: "Business formation, operations, and launch services.",
+    manageHref: "/dashboard/support",
+    manageLabel: "View Offers",
     icon: Headphones,
-    items: [
-      { label: "Request support", href: "/dashboard/support", icon: Headphones },
-      { label: "Plans and features", href: "/dashboard/plans", icon: Package },
-    ],
   },
 ];
-
-const quickActions = [
-  { label: "New website", href: CREATE_BASE, icon: Rocket, external: true },
-  { label: "Add domain", href: "/dashboard/settings#domains", icon: Globe },
-  { label: "Business email", href: "/business-tools/business-email", icon: AtSign },
-  { label: "Support", href: "/dashboard/support", icon: Headphones },
-];
-
-function getGreeting() {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 17) return "Good afternoon";
-  return "Good evening";
-}
 
 function ProductAccordionTitle({ section }) {
   const Icon = section.icon;
 
   return (
-    <div className="flex items-center gap-3">
-      <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent text-ink">
+    <div className="flex items-center gap-4">
+      <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-ink">
         <Icon size={19} />
       </span>
       <span>
-        <span className="block text-base font-semibold text-ink">{section.title}</span>
+        <span className="block text-2xl font-semibold text-ink">{section.title}</span>
         <span className="block text-sm font-normal text-zinc-500">{section.subtitle}</span>
       </span>
     </div>
   );
+}
+
+function ProductSiteCard({ site, index }) {
+  const href = `/dashboard/sites/${encodeURIComponent(site.id)}`;
+  const domain = sitePrimaryDomain(site) || siteLiveUrl(site) || site.id;
+  const services = [domain ? "Domain" : null, "Website"].filter(Boolean).join(", ");
+  const imageClasses = [
+    "bg-[linear-gradient(135deg,#f4f1ff,#ffffff_45%,#fee546)]",
+    "bg-[linear-gradient(135deg,#111111,#374151_52%,#fee546)]",
+    "bg-[linear-gradient(135deg,#e8f8ea,#ffffff_45%,#a7f3d0)]",
+    "bg-[linear-gradient(135deg,#fef3c7,#ffffff_45%,#fcd34d)]",
+    "bg-[linear-gradient(135deg,#dbeafe,#ffffff_45%,#93c5fd)]",
+    "bg-[linear-gradient(135deg,#fce7f3,#ffffff_45%,#f9a8d4)]",
+  ];
+
+  return (
+    <article className="overflow-hidden rounded-xl border border-zinc-200 bg-white">
+      <div className={`h-36 border-b border-zinc-200 ${imageClasses[index % imageClasses.length]}`}>
+        <div className="flex h-full items-start justify-between p-4">
+          <Chip
+            size="sm"
+            variant="flat"
+            classNames={{ base: siteStatusClass(site.status), content: "font-semibold" }}
+          >
+            {siteStatusLabel(site.status)}
+          </Chip>
+          <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-ink">
+            {site.source || "Create"}
+          </span>
+        </div>
+      </div>
+      <div className="p-5">
+        <h3 className="truncate text-xl font-semibold text-ink">{site.name}</h3>
+        <p className="mt-1 truncate text-sm text-zinc-500">{domain}</p>
+        <p className="mt-2 text-sm text-zinc-500">{services}</p>
+        <div className="mt-5 flex flex-wrap gap-2">
+          <Button as={Link} href={href} radius="sm" className="bg-[#111111] font-semibold text-white hover:bg-[#111111]">
+            Manage
+          </Button>
+          <Button as={Link} href={`${href}#domain`} radius="sm" variant="bordered" className="border-zinc-200 font-semibold text-ink">
+            Domain
+          </Button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ProductRow({ title, detail, action, href, icon: Icon, external = false }) {
+  const Tag = external ? "a" : Link;
+  const props = external ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
+
+  return (
+    <div className="grid gap-4 border-t border-zinc-200 py-5 md:grid-cols-[1fr_auto_auto] md:items-center">
+      <div className="flex items-start gap-4">
+        <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-50 text-ink">
+          <Icon size={18} />
+        </span>
+        <div>
+          <p className="font-semibold text-ink">{title}</p>
+          <p className="mt-1 text-sm text-zinc-500">{detail}</p>
+        </div>
+      </div>
+      <Tag {...props} className="inline-flex items-center gap-2 text-sm font-semibold text-ink underline underline-offset-4">
+        {action}
+        {external ? <ExternalLink size={14} /> : <ArrowRight size={14} />}
+      </Tag>
+    </div>
+  );
+}
+
+function defaultRowsForSection(section) {
+  if (section.key === "commerce") {
+    return [
+      {
+        title: "Add commerce tools",
+        detail: "Products, payments, checkout, and selling features for this workspace.",
+        action: "Add Commerce",
+        href: "/dashboard/activate/commerce",
+        icon: ShoppingBag,
+      },
+      {
+        title: "Appointments",
+        detail: "Booking flows for calls, consultations, and service businesses.",
+        action: "Set Up Booking",
+        href: "/dashboard/activate/appointments",
+        icon: CalendarDays,
+      },
+    ];
+  }
+
+  if (section.key === "wordpress") {
+    return [
+      {
+        title: "Managed Hosting for WordPress - Free Trial",
+        detail: "Managed hosting, migration support, backups, and security updates.",
+        action: "Start for Free",
+        href: "/websites/hosting/wordpress-hosting",
+        icon: Server,
+      },
+    ];
+  }
+
+  if (section.key === "additional") {
+    return [
+      {
+        title: "Professional email",
+        detail: "Create branded email addresses for your domain.",
+        action: "Create Email",
+        href: "/business-tools/business-email",
+        icon: AtSign,
+      },
+      {
+        title: "CRM, conversations, and deals",
+        detail: "Manage customers, inbound messages, and sales pipeline activity.",
+        action: "Activate CRM",
+        href: "/dashboard/activate/acquire",
+        icon: Users,
+      },
+      {
+        title: "Marketing",
+        detail: "Create campaigns, social posts, and launch promotion.",
+        action: "Start Marketing",
+        href: "/dashboard/activate/marketing",
+        icon: Megaphone,
+      },
+    ];
+  }
+
+  if (section.key === "partners") {
+    return [
+      {
+        title: "Request launch support",
+        detail: "Get help with DNS, content, QA, launch cleanup, migration, or product setup.",
+        action: "Request Support",
+        href: "/dashboard/support",
+        icon: Headphones,
+      },
+      {
+        title: "Post a job on Colleagues",
+        detail: "Bring in vetted talent for design, development, content, or operations.",
+        action: "Post a Job",
+        href: "https://colleagues.esteemed.io/jobs/new",
+        icon: Users,
+        external: true,
+      },
+    ];
+  }
+
+  return [
+    {
+      title: section.title,
+      detail: section.subtitle,
+      action: section.manageLabel,
+      href: section.manageHref,
+      icon: section.icon,
+    },
+  ];
 }
 
 function ProductsHomeContent() {
@@ -157,6 +271,7 @@ function ProductsHomeContent() {
   const [sites, setSites] = useState([]);
   const [isLoadingSites, setIsLoadingSites] = useState(true);
   const [sitesError, setSitesError] = useState("");
+  const [query, setQuery] = useState("");
   const liveCount = sites.filter((site) => ["published", "deployed", "live"].includes(site.status)).length;
 
   async function loadSites() {
@@ -196,76 +311,130 @@ function ProductsHomeContent() {
     "there";
 
   const primarySite = sites[0];
+  const normalizedQuery = query.trim().toLowerCase();
+  const visibleSites = normalizedQuery
+    ? sites.filter((site) => {
+        const haystack = [
+          site.name,
+          site.id,
+          sitePrimaryDomain(site),
+          siteLiveUrl(site),
+          site.source,
+          site.framework,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        return haystack.includes(normalizedQuery);
+      })
+    : sites;
+  const productSections = (() => {
+    const domains = sites
+      .map((site) => sitePrimaryDomain(site) || siteLiveUrl(site))
+      .filter(Boolean)
+      .slice(0, 5);
+
+    if (!primarySite) return productAccordions;
+
+    return productAccordions.map((section) => {
+      if (section.key === "domains") {
+        return {
+          ...section,
+          rows: domains.length
+            ? domains.map((domain) => ({
+                title: domain.replace(/^https?:\/\//, ""),
+                detail: "DNS and registration controls",
+                action: "Manage",
+                href: "/dashboard/settings#domains",
+                icon: Globe,
+              }))
+            : [
+                {
+                  title: "Register or transfer a domain",
+                  detail: "Start domain setup through Esteemed Domains.",
+                  action: "Manage Domains",
+                  href: "/dashboard/settings#domains",
+                  icon: Globe,
+                },
+              ],
+        };
+      }
+
+      if (section.key !== "websites") return section;
+
+      return {
+        ...section,
+        rows: [
+          {
+            title: primarySite.name || "Primary website",
+            detail: "Website dashboard, Studio, publishing, and Coming Soon page.",
+            action: "Manage",
+            href: `/dashboard/sites/${encodeURIComponent(primarySite.id)}`,
+            icon: Cloud,
+          },
+          {
+            title: "Publish a Coming Soon page",
+            detail: "Put a branded holding page live while the full site is built.",
+            action: "Choose Site",
+            href: `/dashboard/sites/${encodeURIComponent(primarySite.id)}`,
+            icon: Rocket,
+          },
+          {
+            title: "Set up a new website",
+            detail: "Start another site in Esteemed Create.",
+            action: "Start",
+            href: CREATE_BASE,
+            icon: Plus,
+            external: true,
+          },
+        ],
+      };
+    });
+  })();
 
   return (
-    <div className="mx-auto max-w-[1440px]">
-      <section className="mb-6 rounded-xl border border-zinc-200 bg-white p-6">
-        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
-          <div>
-            <p className="mb-2 text-sm font-semibold text-zinc-500">
-              {getGreeting()}, {firstName}
-            </p>
-            <h1 className="max-w-4xl text-3xl font-semibold tracking-tight text-ink">
-              Products
-            </h1>
-            <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-500">
-              {primarySite
-                ? `${sites.length} site${sites.length === 1 ? "" : "s"} in this workspace. ${liveCount} live. Manage websites, domains, email, commerce, marketing, and support from one place.`
-                : "Create a site, publish a Coming Soon page, connect a domain, and add the products needed to launch."}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Button
-              as="a"
-              href={CREATE_BASE}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-accent px-5 font-semibold text-ink hover:bg-accent-hover"
-              radius="sm"
-              endContent={<ExternalLink size={16} />}
-            >
-              New site
-            </Button>
-            <Button
-              as={Link}
-              href="/dashboard/plans"
-              className="bg-[#111111] px-5 font-semibold text-white hover:bg-[#111111]"
-              radius="sm"
-              variant="solid"
-            >
-              Plans
-            </Button>
-          </div>
+    <div className="mx-auto max-w-[1280px]">
+      <section className="mb-8 pt-4">
+        <div className="mx-auto flex max-w-4xl flex-col gap-4 md:flex-row">
+          <Input
+            aria-label="Search products"
+            value={query}
+            onValueChange={setQuery}
+            placeholder="Search using your business name or desired domain name"
+            radius="sm"
+            size="lg"
+            startContent={<Search size={18} className="text-zinc-400" />}
+            classNames={{
+              inputWrapper: "border border-zinc-300 bg-white shadow-none",
+              input: "text-base",
+            }}
+          />
+          <Button
+            as="a"
+            href={CREATE_BASE}
+            target="_blank"
+            rel="noopener noreferrer"
+            radius="sm"
+            size="lg"
+            variant="bordered"
+            className="shrink-0 border-zinc-300 bg-white px-6 font-semibold text-ink"
+            startContent={<Plus size={18} />}
+          >
+            Set up a free website
+          </Button>
         </div>
-      </section>
-
-      <section className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
-        {quickActions.map((action) => {
-          const Icon = action.icon;
-          const className = "flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 text-sm font-semibold text-ink transition-colors hover:bg-zinc-50";
-          if (action.external) {
-            return (
-              <a key={action.label} href={action.href} target="_blank" rel="noopener noreferrer" className={className}>
-                <Icon size={18} />
-                {action.label}
-              </a>
-            );
-          }
-          return (
-            <Link key={action.label} href={action.href} className={className}>
-              <Icon size={18} />
-              {action.label}
-            </Link>
-          );
-        })}
+        <h1 className="mt-10 text-center text-2xl font-semibold text-ink">
+          What do you want to work on today, {firstName}?
+        </h1>
+        {sites.length > 0 && (
+          <p className="mt-3 text-center text-sm text-zinc-500">
+            {sites.length} product{sites.length === 1 ? "" : "s"} in this workspace. {liveCount} live.
+          </p>
+        )}
       </section>
 
       <section className="mb-8">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <div>
-            <h2 className="text-lg font-semibold text-ink">Your sites</h2>
-            <p className="text-sm text-zinc-500">Click a site to manage its detail menu, launch actions, domains, and add-ons.</p>
-          </div>
+        <div className="mb-4 flex justify-end">
           <Button
             onPress={loadSites}
             isLoading={isLoadingSites}
@@ -289,7 +458,7 @@ function ProductsHomeContent() {
         )}
 
         {isLoadingSites ? (
-          <div className="flex min-h-[260px] items-center justify-center rounded-xl border border-zinc-200 bg-white">
+          <div className="flex min-h-[360px] items-center justify-center rounded-xl border border-zinc-200 bg-white">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-zinc-200 border-t-transparent" />
           </div>
         ) : sites.length === 0 ? (
@@ -308,68 +477,58 @@ function ProductsHomeContent() {
               </Button>
             </div>
           </div>
+        ) : visibleSites.length === 0 ? (
+          <div className="rounded-xl border border-dashed border-zinc-200 bg-white p-8 text-center">
+            <Search size={32} className="mx-auto mb-4 text-zinc-400" />
+            <h2 className="text-xl font-semibold text-ink">No products match that search</h2>
+            <p className="mt-2 text-sm text-zinc-500">Try a site name, domain, framework, or product type.</p>
+          </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
-            {sites.map((site) => (
-              <SiteCard key={site.id} site={site} />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {visibleSites.map((site, index) => (
+              <ProductSiteCard key={site.id} site={site} index={index} />
             ))}
           </div>
         )}
       </section>
 
       <section className="mb-8">
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold text-ink">Products and add-ons</h2>
-          <p className="text-sm text-zinc-500">New products can be added here as expandable sections beneath the site grid.</p>
+        <div className="mb-5">
+          <h2 className="text-2xl font-semibold text-ink">All Products and Services</h2>
         </div>
         <Accordion
           variant="splitted"
           selectionMode="multiple"
-          defaultExpandedKeys={["website", "domain"]}
+          defaultExpandedKeys={["domains", "websites", "wordpress", "partners"]}
           itemClasses={{
             base: "rounded-xl border border-zinc-200 bg-white shadow-none",
             title: "text-ink",
-            trigger: "px-5 py-4",
-            content: "px-5 pb-5 pt-0",
+            trigger: "px-6 py-6",
+            content: "px-8 pb-6 pt-0",
           }}
         >
-          {productAccordions.map((section) => (
+          {productSections.map((section) => (
             <AccordionItem
               key={section.key}
               aria-label={section.title}
               title={<ProductAccordionTitle section={section} />}
+              indicator={<ArrowRight size={22} />}
             >
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {section.items.map((item) => {
-                  const Icon = item.icon;
-                  const className = "flex min-h-[84px] items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-left hover:bg-white";
-                  const content = (
-                    <>
-                      <span className="flex items-center gap-3">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white">
-                          <Icon size={17} />
-                        </span>
-                        <span className="text-sm font-semibold text-ink">{item.label}</span>
-                      </span>
-                      {item.external ? <ExternalLink size={15} className="text-zinc-400" /> : <ArrowRight size={15} className="text-zinc-400" />}
-                    </>
-                  );
-
-                  if (item.external) {
-                    return (
-                      <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className={className}>
-                        {content}
-                      </a>
-                    );
-                  }
-
-                  return (
-                    <Link key={item.label} href={item.href} className={className}>
-                      {content}
-                    </Link>
-                  );
-                })}
+              <div className="mb-4 flex justify-end border-t border-zinc-200 pt-4">
+                <Button
+                  as={Link}
+                  href={section.manageHref}
+                  radius="sm"
+                  variant="light"
+                  className="font-semibold text-ink"
+                  endContent={<ArrowRight size={16} />}
+                >
+                  {section.manageLabel}
+                </Button>
               </div>
+              {(section.rows || defaultRowsForSection(section)).map((row) => (
+                <ProductRow key={`${section.key}-${row.title}`} {...row} />
+              ))}
             </AccordionItem>
           ))}
         </Accordion>
