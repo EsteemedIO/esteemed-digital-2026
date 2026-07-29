@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import DomainSearchBar from "@/components/DomainSearchBar";
@@ -8,7 +8,7 @@ import SectionNav from "@/components/SectionNav";
 import { hostingLinks } from "@/lib/hosting-nav-links";
 import { Check, X, Loader2, ShoppingCart } from "lucide-react";
 
-export default function DomainSearchPage() {
+function DomainSearchContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQuery);
@@ -154,5 +154,13 @@ export default function DomainSearchPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function DomainSearchPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}>
+      <DomainSearchContent />
+    </Suspense>
   );
 }

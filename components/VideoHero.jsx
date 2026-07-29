@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Pause, Play } from "lucide-react";
-import HeroContactButton from "@/components/HeroContactButton";
 
 const CLIPS = [
   {
@@ -96,16 +95,6 @@ export default function VideoHero({ children }) {
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-0 text-center">
         {children}
-      </div>
-
-      <div className="absolute bottom-20 right-5 z-30 hidden sm:block">
-        <HeroContactButton context={{ hero: "video_hero", active_clip: CLIPS[active].label }} />
-      </div>
-      <div className="absolute bottom-16 right-4 z-30 sm:hidden">
-        <HeroContactButton
-          context={{ hero: "video_hero", active_clip: CLIPS[active].label }}
-          className="px-4 py-2.5 text-sm"
-        />
       </div>
 
       {/* Pill nav + Pause */}

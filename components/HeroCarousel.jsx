@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Pause, Play } from "lucide-react";
-import HeroContactButton from "@/components/HeroContactButton";
 
 export default function HeroCarousel({ slides, interval = 8000 }) {
   const [current, setCurrent] = useState(0);
@@ -104,16 +103,6 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
             </Link>
           )}
         </div>
-      </div>
-
-      <div className="absolute bottom-20 right-5 z-30 hidden sm:block">
-        <HeroContactButton context={{ hero_slide: slide.label || slide.eyebrow || slide.title }} />
-      </div>
-      <div className="absolute bottom-16 right-4 z-30 sm:hidden">
-        <HeroContactButton
-          context={{ hero_slide: slide.label || slide.eyebrow || slide.title }}
-          className="px-4 py-2.5 text-sm"
-        />
       </div>
 
       {/* Pill nav + pause */}

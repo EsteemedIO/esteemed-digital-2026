@@ -85,17 +85,21 @@ test("domain dashboard uses shared cart storage without top-level nav item", () 
   expect(shellNav).not.toContain("label: \"Domains\"");
 });
 
-test("marketing heroes use mobile dots, padding, and contact modal trigger", () => {
+test("marketing heroes use mobile dots, padding, and sticky contact CTA", () => {
   const heroCarousel = readFileSync(join(process.cwd(), "components/HeroCarousel.jsx"), "utf8");
   const videoHero = readFileSync(join(process.cwd(), "components/VideoHero.jsx"), "utf8");
-  const heroContactButton = readFileSync(join(process.cwd(), "components/HeroContactButton.jsx"), "utf8");
+  const floatingContactButton = readFileSync(join(process.cwd(), "components/FloatingContactButton.jsx"), "utf8");
+  const marketingChrome = readFileSync(join(process.cwd(), "components/MarketingChrome.jsx"), "utf8");
   const globals = readFileSync(join(process.cwd(), "app/globals.css"), "utf8");
 
-  expect(heroCarousel).toContain("HeroContactButton");
-  expect(videoHero).toContain("HeroContactButton");
+  expect(heroCarousel).not.toContain("HeroContactButton");
+  expect(videoHero).not.toContain("HeroContactButton");
   expect(heroCarousel).toContain("h-2.5 w-2.5");
   expect(videoHero).toContain("h-2.5 w-2.5");
-  expect(heroContactButton).toContain("LeadCaptureForm");
-  expect(heroContactButton).toContain("Contact Us");
+  expect(floatingContactButton).toContain("fixed bottom-5 right-5");
+  expect(floatingContactButton).toContain("border-accent");
+  expect(floatingContactButton).toContain("href=\"/contact\"");
+  expect(floatingContactButton).toContain("Contact Us");
+  expect(marketingChrome).toContain("FloatingContactButton");
   expect(globals).toContain("padding: 1.5rem 1.25rem 2rem");
 });

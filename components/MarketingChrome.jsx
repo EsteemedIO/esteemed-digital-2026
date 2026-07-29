@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingContactButton from "@/components/FloatingContactButton";
 
 const SHELL_PREFIXES = ["/dashboard"];
 const SHELL_EXACT_PATHS = ["/products"];
@@ -23,6 +24,7 @@ export default function MarketingChrome({ children }) {
     <>
       <Navbar />
       <main>{children}</main>
+      <FloatingContactButton />
       <Footer />
     </>
   );
