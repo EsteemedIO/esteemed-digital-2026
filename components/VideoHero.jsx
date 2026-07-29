@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Pause, Play } from "lucide-react";
+import HeroContactButton from "@/components/HeroContactButton";
 
 const CLIPS = [
   {
@@ -75,7 +76,7 @@ export default function VideoHero({ children }) {
   }, [active, switchTo]);
 
   return (
-    <section className="relative min-h-[calc(85vh-120px)] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[calc(85vh-120px)] flex items-center justify-center overflow-hidden px-6 py-14 sm:px-8">
       {/* Video */}
       <video
         ref={videoRef}
@@ -93,31 +94,41 @@ export default function VideoHero({ children }) {
       <div className="absolute inset-0 bg-black/55" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-0 text-center">
         {children}
       </div>
 
+      <div className="absolute bottom-20 right-5 z-30 hidden sm:block">
+        <HeroContactButton context={{ hero: "video_hero", active_clip: CLIPS[active].label }} />
+      </div>
+      <div className="absolute bottom-16 right-4 z-30 sm:hidden">
+        <HeroContactButton
+          context={{ hero: "video_hero", active_clip: CLIPS[active].label }}
+          className="px-4 py-2.5 text-sm"
+        />
+      </div>
+
       {/* Pill nav + Pause */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+      <div className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
         {CLIPS.map((clip, i) => (
           <button
             key={i}
             onClick={() => switchTo(i)}
             aria-label={`Play clip: ${clip.label}`}
-            className={`relative h-8 rounded-full px-6 text-sm font-bold transition-all overflow-hidden ${
+            className={`relative h-2.5 w-2.5 overflow-hidden rounded-full p-0 transition-all sm:h-8 sm:w-auto sm:px-6 sm:text-sm sm:font-bold ${
               i === active
                 ? "bg-white text-ink shadow-sm"
-                : "bg-white/30 text-ink hover:bg-white/50"
+                : "bg-white/45 text-ink hover:bg-white/60"
             }`}
           >
             {/* Progress fill for active pill */}
             {i === active && (
               <div
-                className="absolute inset-y-0 left-0 bg-zinc-300 rounded-full transition-[width] duration-200 ease-linear"
+                className="absolute inset-y-0 left-0 hidden bg-zinc-300 rounded-full transition-[width] duration-200 ease-linear sm:block"
                 style={{ width: `${progress * 100}%`, zIndex: 0 }}
               />
             )}
-            <span className="relative z-10">{clip.label}</span>
+            <span className="relative z-10 hidden sm:inline">{clip.label}</span>
           </button>
         ))}
 
@@ -125,7 +136,7 @@ export default function VideoHero({ children }) {
         <button
           onClick={togglePause}
           aria-label={paused ? "Play" : "Pause"}
-          className="flex items-center justify-center w-8 h-8 rounded-full bg-white/30 text-ink hover:bg-white transition-colors"
+          className="flex h-7 w-7 items-center justify-center rounded-full bg-white/45 text-ink transition-colors hover:bg-white sm:h-8 sm:w-8 sm:bg-white/30"
         >
           {paused ? (
             <Play className="w-4 h-4" strokeWidth={2.5} />

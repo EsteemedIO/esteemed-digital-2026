@@ -84,3 +84,18 @@ test("domain dashboard uses shared cart storage without top-level nav item", () 
   expect(cartPage).toContain("/api/domains/checkout");
   expect(shellNav).not.toContain("label: \"Domains\"");
 });
+
+test("marketing heroes use mobile dots, padding, and contact modal trigger", () => {
+  const heroCarousel = readFileSync(join(process.cwd(), "components/HeroCarousel.jsx"), "utf8");
+  const videoHero = readFileSync(join(process.cwd(), "components/VideoHero.jsx"), "utf8");
+  const heroContactButton = readFileSync(join(process.cwd(), "components/HeroContactButton.jsx"), "utf8");
+  const globals = readFileSync(join(process.cwd(), "app/globals.css"), "utf8");
+
+  expect(heroCarousel).toContain("HeroContactButton");
+  expect(videoHero).toContain("HeroContactButton");
+  expect(heroCarousel).toContain("h-2.5 w-2.5");
+  expect(videoHero).toContain("h-2.5 w-2.5");
+  expect(heroContactButton).toContain("LeadCaptureForm");
+  expect(heroContactButton).toContain("Contact Us");
+  expect(globals).toContain("padding: 1.5rem 1.25rem 2rem");
+});

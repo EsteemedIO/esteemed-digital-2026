@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Pause, Play } from "lucide-react";
+import HeroContactButton from "@/components/HeroContactButton";
 
 export default function HeroCarousel({ slides, interval = 8000 }) {
   const [current, setCurrent] = useState(0);
@@ -37,7 +38,7 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
   const slide = slides[current];
 
   return (
-    <section className="relative min-h-[calc(85vh-120px)] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[calc(85vh-120px)] flex items-center justify-center overflow-hidden px-6 py-14 sm:px-8">
       {/* Background — video or image */}
       {slide.video ? (
         <video
@@ -71,7 +72,7 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
       {/* Content */}
       <div
         key={current}
-        className="relative z-10 max-w-4xl mx-auto px-6 text-center animate-[fadeIn_0.4s_ease-in-out]"
+        className="relative z-10 max-w-4xl mx-auto px-0 text-center animate-[fadeIn_0.4s_ease-in-out]"
       >
         {slide.eyebrow && (
           <p className="text-sm font-semibold text-white/60 uppercase tracking-wide mb-4">
@@ -105,32 +106,42 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
         </div>
       </div>
 
+      <div className="absolute bottom-20 right-5 z-30 hidden sm:block">
+        <HeroContactButton context={{ hero_slide: slide.label || slide.eyebrow || slide.title }} />
+      </div>
+      <div className="absolute bottom-16 right-4 z-30 sm:hidden">
+        <HeroContactButton
+          context={{ hero_slide: slide.label || slide.eyebrow || slide.title }}
+          className="px-4 py-2.5 text-sm"
+        />
+      </div>
+
       {/* Pill nav + pause */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+      <div className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
         {slides.map((s, i) => (
           <button
             key={i}
             onClick={() => goTo(i)}
             aria-label={`Go to slide: ${s.label || s.eyebrow}`}
-            className={`relative h-8 rounded-full px-6 text-sm font-bold transition-all overflow-hidden ${
+            className={`relative h-2.5 w-2.5 overflow-hidden rounded-full p-0 transition-all sm:h-8 sm:w-auto sm:px-6 sm:text-sm sm:font-bold ${
               i === current
                 ? "bg-white text-ink shadow-sm"
-                : "bg-white/30 text-ink hover:bg-white/50"
+                : "bg-white/45 text-ink hover:bg-white/60"
             }`}
           >
             {i === current && (
               <div
-                className="absolute inset-y-0 left-0 bg-zinc-300 rounded-full transition-[width] duration-[50ms] ease-linear"
+                className="absolute inset-y-0 left-0 hidden rounded-full bg-zinc-300 transition-[width] duration-[50ms] ease-linear sm:block"
                 style={{ width: `${progress}%`, zIndex: 0 }}
               />
             )}
-            <span className="relative z-10 whitespace-nowrap">{s.label || s.eyebrow}</span>
+            <span className="relative z-10 hidden whitespace-nowrap sm:inline">{s.label || s.eyebrow}</span>
           </button>
         ))}
         <button
           onClick={() => setPaused((p) => !p)}
           aria-label={paused ? "Play" : "Pause"}
-          className="flex items-center justify-center w-8 h-8 rounded-full bg-white/30 text-ink hover:bg-white transition-colors flex-shrink-0"
+          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-white/45 text-ink transition-colors hover:bg-white sm:h-8 sm:w-8 sm:bg-white/30"
         >
           {paused ? (
             <Play className="h-4 w-4" strokeWidth={2.5} />
