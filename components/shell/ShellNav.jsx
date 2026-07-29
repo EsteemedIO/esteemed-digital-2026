@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Home,
   BarChart3,
@@ -32,6 +32,7 @@ import NewItemModal from "@/components/shell/NewItemModal";
 
 const navItems = [
   { label: "Home", href: "/products", icon: Home },
+  { label: "Domains", href: "/dashboard/domains", icon: Globe },
 ];
 
 const siteMenuItems = [
@@ -50,6 +51,7 @@ const siteMenuItems = [
 
 export default function ShellNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
   const siteDetailMatch = pathname.match(/^\/dashboard\/sites\/([^/]+)/);
@@ -106,11 +108,19 @@ export default function ShellNav() {
               onAction={(key) => {
                 if (key === "hire") {
                   window.open("https://colleagues.esteemed.io/jobs/new", "_blank");
+                } else if (key === "domain") {
+                  router.push("/dashboard/domains");
                 } else {
                   openNew(key);
                 }
               }}
             >
+              <DropdownItem
+                key="domain"
+                startContent={<Globe size={16} className="text-zinc-500" />}
+              >
+                Domain
+              </DropdownItem>
               <DropdownItem
                 key="website"
                 startContent={<Globe size={16} className="text-zinc-500" />}

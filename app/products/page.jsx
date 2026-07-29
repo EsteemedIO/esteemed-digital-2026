@@ -515,9 +515,7 @@ function ProductsHomeContent() {
                   as={Link}
                   href={section.manageHref}
                   radius="sm"
-                  variant="light"
-                  className="font-semibold text-ink"
-                  endContent={<ArrowRight size={16} />}
+                  className="bg-accent font-semibold text-ink hover:bg-accent-hover"
                 >
                   {section.manageLabel}
                 </Button>
