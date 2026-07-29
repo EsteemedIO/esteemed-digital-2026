@@ -12,6 +12,7 @@ import DragAndDrop from "@/components/builder-visuals/DragAndDrop";
 import CascadingAgent from "@/components/builder-visuals/CascadingAgent";
 import MultiDevice from "@/components/builder-visuals/MultiDevice";
 import { createTiers } from "@/lib/data";
+import DomainSearchBar from "@/components/DomainSearchBar";
 
 const products = [
   {
@@ -296,6 +297,18 @@ export default function Home() {
       />
 
       <ClientLogoBand />
+
+      {/* Domain Search Bar */}
+      <section className="bg-ink py-10">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <p className="text-sm font-semibold text-white/60 uppercase tracking-wide mb-3">Find Your Domain</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Get the perfect domain for your business</h2>
+          <DomainSearchBar variant="dark" />
+          <p className="mt-4 text-sm text-white/40">
+            .com from $19.99/yr &middot; .io from $49.99/yr &middot; .dev from $16.99/yr
+          </p>
+        </div>
+      </section>
 
       {/* Section 2: Meet Esteemed Create */}
       <section className="py-20 border-t border-zinc-100">

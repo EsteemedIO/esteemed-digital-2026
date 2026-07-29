@@ -9,6 +9,7 @@ import SectionNav from "@/components/SectionNav";
 import { Cloud, Shield, HardDrive, Activity, ArrowRight, Check } from "lucide-react";
 import { cloudPricingPlans, managedHostingPricingPlans } from "@/lib/product-page-pricing";
 import { hostingLinks } from "@/lib/hosting-nav-links";
+import DomainSearchBar from "@/components/DomainSearchBar";
 
 export const metadata = {
   title: "Web Hosting | Esteemed",
@@ -101,6 +102,18 @@ export default function HostingPage() {
           </Link>
         </div>
       </VideoHero>
+
+      {/* Domain Search */}
+      <section className="bg-zinc-50 py-10 border-b border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-3">Find Your Domain</p>
+          <h2 className="text-2xl font-bold text-ink mb-6">Need a domain name?</h2>
+          <DomainSearchBar />
+          <p className="mt-4 text-sm text-zinc-400">
+            .com from $19.99/yr &middot; .io from $49.99/yr &middot; .dev from $16.99/yr
+          </p>
+        </div>
+      </section>
 
       {/* Services carousel */}
       <ServicesCarousel
