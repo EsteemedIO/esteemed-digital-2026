@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getDomainPrice } from "@/lib/opensrs";
+import { getToken } from "next-auth/jwt";
+import { getDomainPrice, getDomainTld, normalizeDomainName } from "@/lib/opensrs";
 
 const STRIPE_API_BASE = "https://api.stripe.com/v1";
 
@@ -21,6 +22,11 @@ function getRequestOrigin(request) {
 }
 
 export async function POST(request) {
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const secretKey =
     process.env.STRIPE_SECRET_KEY || process.env.STRIPE_RESTRICTED_KEY;
 
@@ -40,15 +46,25 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+    if (domains.length > 10) {
+      return NextResponse.json(
+        { error: "Domain checkout is limited to 10 domains at a time." },
+        { status: 400 }
+      );
+    }
 
-    // Validate domains
+    const normalizedDomains = [];
     for (const d of domains) {
-      if (!d.domain || typeof d.domain !== "string") {
+      const domain = normalizeDomainName(d?.domain);
+      const tld = getDomainTld(domain);
+      const price = tld ? getDomainPrice(tld) : null;
+      if (!domain || !tld || price === null) {
         return NextResponse.json(
-          { error: "Each domain must have a valid name." },
+          { error: "Each domain must have a valid supported name." },
           { status: 400 }
         );
       }
+      normalizedDomains.push({ domain, tld, price });
     }
 
     const origin = getRequestOrigin(request);
@@ -57,24 +73,35 @@ export async function POST(request) {
 
     // Build Stripe checkout session with price_data for each domain
     const body = new URLSearchParams();
-    body.set("mode", "payment");
+    body.set("mode", "subscription");
     body.set("success_url", successUrl);
     body.set("cancel_url", cancelUrl);
+    body.set("allow_promotion_codes", "true");
     body.set(
       "metadata[domains]",
-      domains.map((d) => d.domain).join(",")
+      normalizedDomains.map((d) => d.domain).join(",")
     );
     body.set(
       "metadata[type]",
       "domain_registration"
     );
+    body.set("metadata[module]", "domains");
+    body.set("metadata[entitlement]", "module.domains");
+    if (token.sub) body.set("metadata[user_id]", token.sub);
+    if (token.email) body.set("metadata[user_email]", token.email);
+    body.set("subscription_data[metadata][type]", "domain_registration");
+    body.set("subscription_data[metadata][module]", "domains");
+    body.set("subscription_data[metadata][entitlement]", "module.domains");
+    body.set("subscription_data[metadata][domains]", normalizedDomains.map((d) => d.domain).join(","));
+    if (token.sub) body.set("subscription_data[metadata][user_id]", token.sub);
+    if (token.email) body.set("subscription_data[metadata][user_email]", token.email);
 
-    domains.forEach((d, i) => {
-      const tld = "." + d.domain.split(".").slice(1).join(".");
-      const unitAmount = Math.round(getDomainPrice(tld) * 100);
+    normalizedDomains.forEach((d, i) => {
+      const unitAmount = Math.round(d.price * 100);
 
       body.set(`line_items[${i}][price_data][currency]`, "usd");
       body.set(`line_items[${i}][price_data][unit_amount]`, String(unitAmount));
+      body.set(`line_items[${i}][price_data][recurring][interval]`, "year");
       body.set(
         `line_items[${i}][price_data][product_data][name]`,
         `Domain: ${d.domain}`
@@ -83,6 +110,12 @@ export async function POST(request) {
         `line_items[${i}][price_data][product_data][description]`,
         `1-year registration for ${d.domain}`
       );
+      body.set(`line_items[${i}][price_data][product_data][metadata][module]`, "domains");
+      body.set(`line_items[${i}][price_data][product_data][metadata][entitlement]`, "module.domains");
+      body.set(`line_items[${i}][price_data][product_data][metadata][interval]`, "year");
+      body.set(`line_items[${i}][price_data][product_data][metadata][seat_type]`, "licensed_per_seat");
+      body.set(`line_items[${i}][price_data][product_data][metadata][founding]`, "false");
+      body.set(`line_items[${i}][price_data][product_data][metadata][tld]`, d.tld);
       body.set(`line_items[${i}][quantity]`, "1");
     });
 

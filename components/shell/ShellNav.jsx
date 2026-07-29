@@ -32,7 +32,6 @@ import NewItemModal from "@/components/shell/NewItemModal";
 
 const navItems = [
   { label: "Home", href: "/products", icon: Home },
-  { label: "Domains", href: "/dashboard/domains", icon: Globe },
 ];
 
 const siteMenuItems = [

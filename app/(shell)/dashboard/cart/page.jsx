@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Input } from "@heroui/react";
 import { Bell, Search, ShieldCheck, Trash2 } from "lucide-react";
@@ -12,12 +12,17 @@ function normalizeCart(rawValue) {
     const parsed = JSON.parse(rawValue);
     const items = Array.isArray(parsed) ? parsed : parsed.items || [];
     return items
-      .filter((item) => item && item.lookupKey)
+      .filter((item) => item && (item.lookupKey || (item.type === "domain_registration" && item.domain)))
       .map((item) => ({
+        id: item.lookupKey || `domain:${item.domain}`,
+        type: item.type || "catalog",
         name: item.name || item.title || item.lookupKey,
-        lookupKey: item.lookupKey,
+        lookupKey: item.lookupKey || "",
+        domain: item.domain || "",
+        tld: item.tld || "",
         quantity: Math.max(1, Number(item.quantity) || 1),
-        price: item.price || item.priceLabel || "",
+        price: typeof item.price === "number" ? item.price : Number.parseFloat(String(item.price || "").replace(/[^0-9.]/g, "")) || "",
+        priceLabel: item.priceLabel || (item.price ? String(item.price) : ""),
       }));
   } catch {
     return [];
@@ -32,25 +37,50 @@ function writeCart(items) {
 export default function CartPage() {
   const [items, setItems] = useState([]);
   const [domainSearch, setDomainSearch] = useState("");
+  const [checkoutError, setCheckoutError] = useState("");
 
   useEffect(() => {
     setItems(normalizeCart(window.localStorage.getItem("esteemed_cart")));
   }, []);
-
-  const checkoutHref = useMemo(
-    () => checkoutItemsHref(items, { successPath: "/thanks", cancelPath: "/dashboard/cart" }),
-    [items],
-  );
 
   function clearCart() {
     setItems([]);
     writeCart([]);
   }
 
-  function removeItem(lookupKey) {
-    const nextItems = items.filter((item) => item.lookupKey !== lookupKey);
+  function removeItem(id) {
+    const nextItems = items.filter((item) => item.id !== id);
     setItems(nextItems);
     writeCart(nextItems);
+  }
+
+  async function checkoutCart() {
+    setCheckoutError("");
+    const domainItems = items.filter((item) => item.type === "domain_registration");
+    const catalogItems = items.filter((item) => item.type !== "domain_registration");
+
+    if (domainItems.length > 0 && catalogItems.length > 0) {
+      setCheckoutError("Please check out domains separately from other products for this launch.");
+      return;
+    }
+
+    if (domainItems.length > 0) {
+      try {
+        const response = await fetch("/api/domains/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ domains: domainItems.map((item) => ({ domain: item.domain })) }),
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || "Checkout failed.");
+        if (payload.url) window.location.href = payload.url;
+      } catch (error) {
+        setCheckoutError(error.message || "Checkout failed.");
+      }
+      return;
+    }
+
+    window.location.href = checkoutItemsHref(catalogItems, { successPath: "/thanks", cancelPath: "/dashboard/cart" });
   }
 
   return (
@@ -142,22 +172,27 @@ export default function CartPage() {
         </section>
       ) : (
         <section className="rounded-xl border border-zinc-200 bg-white p-5">
+          {checkoutError && (
+            <div className="mb-4 rounded-lg border border-[#F4C7C3] bg-[#FFF4F2] px-4 py-3 text-sm font-medium text-[#8A1F11]">
+              {checkoutError}
+            </div>
+          )}
           <div className="divide-y divide-zinc-200">
             {items.map((item) => (
-              <div key={item.lookupKey} className="grid gap-4 py-4 md:grid-cols-[1fr_auto_auto] md:items-center">
+              <div key={item.id} className="grid gap-4 py-4 md:grid-cols-[1fr_auto_auto] md:items-center">
                 <div>
                   <p className="font-semibold text-ink">{item.name}</p>
                   <p className="mt-1 text-sm text-zinc-500">
-                    {item.lookupKey} · Qty {item.quantity}
+                    {item.type === "domain_registration" ? "Domain registration" : item.lookupKey} · Qty {item.quantity}
                   </p>
                 </div>
-                {item.price && <p className="text-sm font-semibold text-ink">{item.price}</p>}
+                {(item.priceLabel || item.price) && <p className="text-sm font-semibold text-ink">{item.priceLabel || item.price}</p>}
                 <Button
                   isIconOnly
                   radius="sm"
                   variant="light"
                   aria-label={`Remove ${item.name}`}
-                  onPress={() => removeItem(item.lookupKey)}
+                  onPress={() => removeItem(item.id)}
                 >
                   <Trash2 size={17} />
                 </Button>
@@ -169,7 +204,7 @@ export default function CartPage() {
             <Button onPress={clearCart} radius="sm" variant="bordered" className="border-zinc-200 font-semibold text-ink">
               Clear cart
             </Button>
-            <Button as="a" href={checkoutHref} radius="sm" className="bg-[#111111] font-semibold text-white hover:bg-[#111111]">
+            <Button onPress={checkoutCart} radius="sm" className="bg-[#111111] font-semibold text-white hover:bg-[#111111]">
               Checkout
             </Button>
           </div>

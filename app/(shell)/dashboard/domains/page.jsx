@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Search, ShoppingCart, Globe, Loader2, AlertCircle } from "lucide-react";
 
 export default function DomainsPage() {
@@ -10,6 +10,42 @@ export default function DomainsPage() {
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
   const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    try {
+      const parsed = JSON.parse(window.localStorage.getItem("esteemed_cart") || "[]");
+      const items = Array.isArray(parsed) ? parsed : parsed.items || [];
+      setCart(
+        items
+          .filter((item) => item.type === "domain_registration" && item.domain)
+          .map((item) => {
+            const price = typeof item.price === "number"
+              ? item.price
+              : Number.parseFloat(String(item.price || item.priceLabel || "").replace(/[^0-9.]/g, "")) || 0;
+            return {
+              ...item,
+              price,
+              priceLabel: item.priceLabel || (price ? `$${price.toFixed(2)}/yr` : ""),
+            };
+          })
+      );
+    } catch {
+      setCart([]);
+    }
+  }, []);
+
+  function writeCart(nextDomainItems) {
+    let existingItems = [];
+    try {
+      const parsed = JSON.parse(window.localStorage.getItem("esteemed_cart") || "[]");
+      existingItems = Array.isArray(parsed) ? parsed : parsed.items || [];
+    } catch {
+      existingItems = [];
+    }
+    const nonDomainItems = existingItems.filter((item) => item.type !== "domain_registration");
+    window.localStorage.setItem("esteemed_cart", JSON.stringify([...nonDomainItems, ...nextDomainItems]));
+    window.dispatchEvent(new Event("esteemed-cart-updated"));
+  }
 
   const search = useCallback(async (e) => {
     e?.preventDefault();
@@ -35,12 +71,31 @@ export default function DomainsPage() {
 
   function addToCart(domain) {
     if (!cart.some((d) => d.domain === domain.domain)) {
-      setCart((prev) => [...prev, domain]);
+      setCart((prev) => {
+        const nextCart = [
+          ...prev,
+          {
+            type: "domain_registration",
+            name: `Domain: ${domain.domain}`,
+            domain: domain.domain,
+            tld: domain.tld,
+            price: domain.price,
+            priceLabel: `$${domain.price.toFixed(2)}/yr`,
+            quantity: 1,
+          },
+        ];
+        writeCart(nextCart);
+        return nextCart;
+      });
     }
   }
 
   function removeFromCart(domainName) {
-    setCart((prev) => prev.filter((d) => d.domain !== domainName));
+    setCart((prev) => {
+      const nextCart = prev.filter((d) => d.domain !== domainName);
+      writeCart(nextCart);
+      return nextCart;
+    });
   }
 
   function isInCart(domainName) {
@@ -55,7 +110,7 @@ export default function DomainsPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          domains: cart.map((d) => ({ domain: d.domain, tld: d.tld, price: d.price })),
+          domains: cart.map((d) => ({ domain: d.domain })),
         }),
       });
       const data = await res.json();

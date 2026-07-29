@@ -2,6 +2,16 @@ import { NextResponse } from "next/server";
 import { registerDomain } from "@/lib/opensrs";
 
 export async function POST(request) {
+  const internalToken = process.env.DOMAIN_REGISTRATION_INTERNAL_TOKEN;
+  const providedToken = request.headers.get("x-internal-token");
+
+  if (!internalToken || providedToken !== internalToken) {
+    return NextResponse.json(
+      { error: "Domain registration is only available through verified checkout completion." },
+      { status: 403 }
+    );
+  }
+
   try {
     const body = await request.json();
     const { domain, period = 1, contact = {} } = body;

@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
-import { lookupDomain, getDomainPrice } from "@/lib/opensrs";
+import { getToken } from "next-auth/jwt";
+import { lookupDomain, getDomainPrice, normalizeDomainName, SUPPORTED_DOMAIN_TLDS } from "@/lib/opensrs";
 
-const TLDS = [".com", ".io", ".net", ".org", ".co", ".dev", ".app", ".ai", ".us", ".tech", ".online", ".store", ".site"];
+const TLDS = SUPPORTED_DOMAIN_TLDS.filter((tld) => tld !== ".biz" && tld !== ".info" && tld !== ".xyz");
 
 export async function GET(request) {
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q")?.trim();
 
@@ -23,9 +29,17 @@ export async function GET(request) {
     const results = [];
 
     if (query.includes(".")) {
-      const exact = await lookupDomain(query.toLowerCase());
-      const tld = "." + query.split(".").slice(1).join(".");
-      results.push({ ...exact, price: getDomainPrice(tld), tld });
+      const exactDomain = normalizeDomainName(query);
+      if (!exactDomain) {
+        return NextResponse.json({ error: "Invalid domain format." }, { status: 400 });
+      }
+      const exact = await lookupDomain(exactDomain);
+      const tld = "." + exactDomain.split(".").slice(1).join(".");
+      const price = getDomainPrice(tld);
+      if (price === null) {
+        return NextResponse.json({ error: "That TLD is not available for launch checkout yet." }, { status: 400 });
+      }
+      results.push({ ...exact, price, tld });
     }
 
     // Check popular TLDs in parallel
@@ -38,7 +52,7 @@ export async function GET(request) {
       });
 
     const tldResults = await Promise.all(checks);
-    results.push(...tldResults);
+    results.push(...tldResults.filter((result) => result.price !== null));
 
     // Sort: available first, then by price
     results.sort((a, b) => {
