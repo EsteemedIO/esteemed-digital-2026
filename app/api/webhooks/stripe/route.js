@@ -11,6 +11,7 @@
 import { NextResponse } from "next/server";
 import { DEFAULT_PLATFORM_IMAGES, stableProvisioningId, tenantSlugFromEmail } from "@/lib/commerce-provisioning";
 import { verifyWebhookSignature } from "@/lib/stripe-webhook";
+import { registerDomain } from "@/lib/opensrs";
 
 const COMMERCE_LOOKUP_PREFIXES = ["commerce_"];
 const WOO_LOOKUP_PREFIXES = ["woo_"];
@@ -271,6 +272,60 @@ export async function POST(request) {
   if (lookupKeys.length === 0) {
     console.log("[stripe-webhook] No lookup keys in session metadata, skipping");
     return NextResponse.json({ received: true });
+  }
+
+  // Domain registration flow — separate from product provisioning
+  if (session.metadata?.type === "domain_registration") {
+    const domainsRaw = session.metadata?.domains;
+    const customerEmail = session.customer_details?.email || session.customer_email || "";
+    const customerName = session.customer_details?.name || "";
+
+    if (!domainsRaw) {
+      console.error("[stripe-webhook] Domain checkout has no domains metadata");
+      return NextResponse.json({ received: true, error: "No domains in metadata" });
+    }
+
+    let domains;
+    try {
+      domains = JSON.parse(domainsRaw);
+    } catch {
+      console.error("[stripe-webhook] Invalid domains metadata JSON:", domainsRaw);
+      return NextResponse.json({ received: true, error: "Invalid domains metadata" });
+    }
+
+    const nameParts = customerName.split(" ");
+    const contact = {
+      firstName: nameParts[0] || "Domain",
+      lastName: nameParts.slice(1).join(" ") || "Owner",
+      email: customerEmail,
+    };
+
+    const domainResults = [];
+    for (const d of domains) {
+      try {
+        console.log("[domain-register] Registering:", d.domain, "for", customerEmail);
+        const result = await registerDomain(d.domain, 1, contact);
+        domainResults.push({ domain: d.domain, ...result });
+
+        if (result.isSuccess) {
+          console.log("[domain-register] Success:", d.domain);
+        } else {
+          console.error("[domain-register] Failed:", d.domain, result.responseText);
+        }
+      } catch (err) {
+        console.error("[domain-register] Error:", d.domain, err.message);
+        domainResults.push({ domain: d.domain, isSuccess: false, error: err.message });
+      }
+    }
+
+    const failures = domainResults.filter((r) => !r.isSuccess);
+    if (failures.length > 0) {
+      console.error("[domain-register] Some registrations failed:", JSON.stringify(failures));
+      // Return 502 so Stripe retries
+      return NextResponse.json({ received: false, retry: true, results: domainResults }, { status: 502 });
+    }
+
+    return NextResponse.json({ received: true, results: domainResults });
   }
 
   const productTypes = classifyLookupKeys(lookupKeys);
