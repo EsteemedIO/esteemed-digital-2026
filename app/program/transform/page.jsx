@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
+import TransformLeadForm from "./TransformLeadForm";
 
 export const metadata = {
   title: "Transform Program — Esteemed",
@@ -20,6 +22,7 @@ const products = [
     status: "Booking revenue",
     statusColor: "green",
     icon: "/images/apps/colleagues.svg",
+    siteUrl: "https://colleagues.esteemed.io",
   },
   {
     name: "HCMGPT",
@@ -27,6 +30,7 @@ const products = [
     status: "Launching now",
     statusColor: "blue",
     icon: "/images/apps/hcmgpt.svg",
+    siteUrl: "https://hcmgpt.esteemed.io",
   },
   {
     name: "Esteemed Intelligence",
@@ -44,7 +48,7 @@ const trajectory = [
 ];
 
 const calendarUrl = "/contact?interest=transform";
-const audioUrl = "#audio";
+const audioUrl = "https://notebooklm.google.com/notebook/2259c6b1-79e5-4587-b7f2-0305c335e380/artifact/c183e7b3-33fb-4713-8d12-20971ff4a415";
 
 export default function TransformPage() {
   return (
@@ -294,21 +298,34 @@ export default function TransformPage() {
                 <img src={p.icon} alt="" className="mb-5 h-11 w-11 rounded-md" />
                 <div className="mb-2 text-[21px] font-bold">{p.name}</div>
                 <p className="text-[15px] leading-relaxed text-white/70">{p.desc}</p>
-                <div className="mt-auto pt-5">
-                  <span
-                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${
-                      p.statusColor === "green"
-                        ? "bg-emerald-900/40 text-emerald-400"
-                        : "bg-sky-300 text-sky-900"
-                    }`}
-                  >
+                <div className="mt-auto pt-5 space-y-3">
+                  {p.siteUrl && (
+                    <a
+                      href={p.siteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+                    >
+                      Visit Site
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  <div>
                     <span
-                      className={`h-2 w-2 rounded-full ${
-                        p.statusColor === "green" ? "bg-emerald-400" : "bg-sky-700"
+                      className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${
+                        p.statusColor === "green"
+                          ? "bg-emerald-900/40 text-emerald-400"
+                          : "bg-sky-300 text-sky-900"
                       }`}
-                    />
-                    {p.status}
-                  </span>
+                    >
+                      <span
+                        className={`h-2 w-2 rounded-full ${
+                          p.statusColor === "green" ? "bg-emerald-400" : "bg-sky-700"
+                        }`}
+                      />
+                      {p.status}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -445,7 +462,7 @@ export default function TransformPage() {
       </section>
 
       {/* ============ SECTION 6 — THE OFFER (yellow) ============ */}
-      <section className="bg-yellow-400 text-zinc-950">
+      <section className="bg-accent text-zinc-950">
         <div className="mx-auto max-w-[1160px] px-8 py-20">
           <p className="mb-5 text-xs font-bold uppercase tracking-widest text-zinc-900">
             06&mdash;The offer
@@ -497,9 +514,7 @@ export default function TransformPage() {
                 Start a conversation &rarr;
               </Link>
               <a
-                href="/docs/valuation-arbitrage-brief.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#download-brief"
                 className="inline-flex items-center rounded-full border border-white/25 px-6 py-3 text-base font-bold text-white transition hover:border-white/50"
               >
                 Download the full brief&nbsp;&darr;
@@ -516,6 +531,13 @@ export default function TransformPage() {
               360.701.7353
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* ============ DOWNLOAD BRIEF FORM ============ */}
+      <section id="download-brief" className="scroll-mt-20 bg-[#E0E9F2] py-20">
+        <div className="mx-auto max-w-[640px] px-6">
+          <TransformLeadForm />
         </div>
       </section>
 
