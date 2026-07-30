@@ -64,10 +64,12 @@ export default function DomainSearchBar({ variant = "light" }) {
               if (baseName.length >= 2) setShowSuggestions(true);
             }}
             placeholder="Find your perfect domain name"
-            className={`w-full pl-12 pr-4 py-4 rounded-l-xl border text-base font-medium focus:outline-none focus:ring-2 focus:ring-accent ${
-              isDark
-                ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500"
-                : "bg-white border-zinc-200 text-ink placeholder:text-zinc-400"
+            className={`w-full pl-12 pr-4 py-4 rounded-l-xl border text-base font-medium focus:outline-none focus:ring-2 focus:ring-accent transition-colors ${
+              query.trim().length >= 2
+                ? "bg-ink border-accent text-accent placeholder:text-accent/50"
+                : isDark
+                  ? "bg-zinc-800 border-white text-white placeholder:text-zinc-500"
+                  : "bg-white border-white text-ink placeholder:text-zinc-400"
             }`}
           />
         </div>

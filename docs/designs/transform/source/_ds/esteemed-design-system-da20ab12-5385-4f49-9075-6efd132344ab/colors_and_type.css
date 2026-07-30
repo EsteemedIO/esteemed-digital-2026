@@ -1,0 +1,313 @@
+/* ============================================================
+   Esteemed Design System — Colors & Typography
+   ============================================================
+   Brand: Esteemed Inc.  •  AI + Human platform for work
+   Primary mark color: #FEE546 (Esteemed Yellow)
+   ============================================================ */
+
+/* --- Webfonts (Google Fonts CDN) ----------------------------
+   Inter — body & UI (confirmed by brand)
+   Manrope — display / headings (closest match to wordmark; flag to confirm)
+   JetBrains Mono — code & data
+------------------------------------------------------------ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  /* ============================================================
+     COLOR — Brand
+     ============================================================ */
+  --es-yellow-50:  #FFFCE6;
+  --es-yellow-100: #FFF7B8;
+  --es-yellow-200: #FFF18A;
+  --es-yellow-300: #FFEB6C;
+  --es-yellow-400: #FFE656;
+  --es-yellow-500: #FEE546;  /* ← the brand mark color */
+  --es-yellow-600: #E8CE2E;
+  --es-yellow-700: #B89D1F;
+  --es-yellow-800: #7A6814;
+  --es-yellow-900: #3E340A;
+
+  /* Star-on-yellow context */
+  --es-star-fill: #FFFFFF;       /* white star on yellow square */
+  --es-star-gold: #FEE546;       /* gold star icon */
+
+  /* ============================================================
+     COLOR — Sky (secondary accent)
+     Light blue used WITH yellow + black on the marketing site
+     and in slide decks. #BFDBFE is the key accent value (500).
+     ============================================================ */
+  --es-sky-50:  #F2F7FF;
+  --es-sky-100: #E3EEFE;
+  --es-sky-200: #D2E3FE;
+  --es-sky-300: #BFDBFE;  /* ← key accent color */
+  --es-sky-400: #93BEFB;
+  --es-sky-500: #BFDBFE;  /* alias of accent for ergonomic naming */
+  --es-sky-600: #5C97F2;
+  --es-sky-700: #3B73C9;
+  --es-sky-800: #2B538F;
+  --es-sky-900: #1B3357;
+  --es-sky-accent: #BFDBFE; /* canonical name for the accent */
+
+  /* ============================================================
+     COLOR — Ink (deep neutrals)
+     ============================================================ */
+  --es-ink-1000: #0A0A0A;
+  --es-ink-900:  #111111;
+  --es-ink-800:  #1A1A1A;
+  --es-ink-700:  #2A2A2A;
+  --es-ink-600:  #3D3D3D;
+  --es-ink-500:  #5B5B5B;
+
+  /* ============================================================
+     COLOR — Warm Neutrals
+     Slightly warm grays so the yellow doesn't feel cold against them.
+     ============================================================ */
+  --es-warm-50:  #FAFAF7;
+  --es-warm-100: #F4F3EE;
+  --es-warm-200: #E9E7DF;
+  --es-warm-300: #D7D4C8;
+  --es-warm-400: #B6B2A2;
+  --es-warm-500: #8C887A;
+  --es-warm-600: #65615A;
+  --es-warm-700: #45433D;
+  --es-warm-800: #2A2925;
+
+  /* ============================================================
+     COLOR — Semantic
+     ============================================================ */
+  --es-success:    #1F8A5B;
+  --es-success-bg: #E4F4EC;
+  --es-warning:    #D08A1F;
+  --es-warning-bg: #FBF1DD;
+  --es-danger:     #C8341F;
+  --es-danger-bg:  #FBE5E1;
+  --es-info:       #2A6FDB;
+  --es-info-bg:    #E2ECFA;
+
+  /* ============================================================
+     COLOR — Surfaces & Tokens (light theme)
+     ============================================================ */
+  --es-bg:           var(--es-warm-50);    /* page */
+  --es-surface:      #FFFFFF;              /* cards, sheets */
+  --es-surface-alt:  var(--es-warm-100);   /* secondary surface */
+  --es-surface-ink:  var(--es-ink-900);    /* inverted surface */
+
+  --es-fg-1:         var(--es-ink-900);    /* primary text */
+  --es-fg-2:         var(--es-ink-600);    /* secondary text */
+  --es-fg-3:         var(--es-warm-500);   /* tertiary / muted */
+  --es-fg-on-yellow: var(--es-ink-1000);   /* text on yellow */
+  --es-fg-on-ink:    #FFFFFF;              /* text on dark */
+
+  --es-border:       var(--es-warm-200);
+  --es-border-strong:var(--es-warm-300);
+  --es-divider:      var(--es-warm-200);
+
+  --es-focus-ring:   rgba(254, 229, 70, 0.55);
+  --es-overlay:      rgba(10, 10, 10, 0.55);
+
+  /* Action accents */
+  --es-accent:        var(--es-yellow-500);
+  --es-accent-hover:  var(--es-yellow-400);
+  --es-accent-press:  var(--es-yellow-600);
+
+  /* ============================================================
+     SPACING — 4px base
+     ============================================================ */
+  --es-space-1:  4px;
+  --es-space-2:  8px;
+  --es-space-3:  12px;
+  --es-space-4:  16px;
+  --es-space-5:  20px;
+  --es-space-6:  24px;
+  --es-space-8:  32px;
+  --es-space-10: 40px;
+  --es-space-12: 48px;
+  --es-space-16: 64px;
+  --es-space-20: 80px;
+  --es-space-24: 96px;
+
+  /* ============================================================
+     RADII — Esteemed cards favour soft-but-deliberate corners.
+     Generous on cards, very tight on inputs & chips.
+     ============================================================ */
+  --es-radius-sm:  6px;
+  --es-radius-md:  10px;
+  --es-radius-lg:  16px;
+  --es-radius-xl:  24px;
+  --es-radius-2xl: 32px;
+  --es-radius-pill: 999px;
+
+  /* ============================================================
+     SHADOWS — Warm, never blue. Branded yellow shadow uses #FCD72B.
+     ============================================================ */
+  --es-shadow-color-warm: 45, 41, 25;   /* warm-brown rgb for soft shadows */
+  --es-shadow-color-yellow: #FCD72B;    /* branded yellow shadow tone */
+
+  --es-shadow-xs:  0 1px 2px rgba(252, 215, 43, 0.10);
+  --es-shadow-sm:  0 2px 6px rgba(252, 215, 43, 0.14), 0 1px 2px rgba(45, 41, 25, 0.05);
+  --es-shadow-md:  0 8px 24px rgba(252, 215, 43, 0.18), 0 2px 6px rgba(45, 41, 25, 0.06);
+  --es-shadow-lg:  0 24px 48px rgba(252, 215, 43, 0.22), 0 8px 16px rgba(45, 41, 25, 0.08);
+  --es-shadow-yellow: 0 12px 32px rgba(252, 215, 43, 0.55);
+  --es-shadow-inset:  inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(45,41,25,0.04);
+
+  /* ============================================================
+     MOTION
+     ============================================================ */
+  --es-ease-out:   cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --es-ease-in-out:cubic-bezier(0.6, 0.0, 0.2, 1); /* @kind other */
+  --es-dur-fast:   120ms; /* @kind other */
+  --es-dur-base:   200ms; /* @kind other */
+  --es-dur-slow:   360ms; /* @kind other */
+
+  /* ============================================================
+     TYPE — Families
+     ============================================================ */
+  --es-font-sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --es-font-display: "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --es-font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Type scale (px) — clamped pairs for fluid headlines */
+  --es-text-xs:   12px;
+  --es-text-sm:   14px;
+  --es-text-base: 16px;
+  --es-text-md:   18px;
+  --es-text-lg:   20px;
+  --es-text-xl:   24px;
+  --es-text-2xl:  30px;
+  --es-text-3xl:  38px;
+  --es-text-4xl:  48px;
+  --es-text-5xl:  64px;
+  --es-text-6xl:  84px;
+
+  /* Weights */
+  --es-w-regular:  400; /* @kind font */
+  --es-w-medium:   500; /* @kind font */
+  --es-w-semibold: 600; /* @kind font */
+  --es-w-bold:     700; /* @kind font */
+  --es-w-extra:    800; /* @kind font */
+
+  /* Line-heights & tracking */
+  --es-lh-tight:   1.05; /* @kind font */
+  --es-lh-snug:    1.2; /* @kind font */
+  --es-lh-normal:  1.45; /* @kind font */
+  --es-lh-loose:   1.6; /* @kind font */
+
+  --es-track-tight: -0.025em;  /* @kind font */
+  --es-track-snug:  -0.015em;  /* @kind font */
+  --es-track-normal: 0; /* @kind font */
+  --es-track-wide:  0.04em;    /* @kind font */
+  --es-track-caps:  0.12em;    /* @kind font */
+}
+
+/* ============================================================
+   SEMANTIC TYPOGRAPHY — drop in via class or element selector
+   ============================================================ */
+
+/* Display — the look used on hero pages, billboards */
+.es-display,
+.es-h-display {
+  font-family: var(--es-font-display);
+  font-weight: var(--es-w-extra);
+  font-size: clamp(48px, 7vw, 84px);
+  line-height: var(--es-lh-tight);
+  letter-spacing: var(--es-track-tight);
+  color: var(--es-fg-1);
+  text-wrap: balance;
+}
+
+.es-h1, h1.es {
+  font-family: var(--es-font-display);
+  font-weight: var(--es-w-extra);
+  font-size: clamp(38px, 4.5vw, 56px);
+  line-height: var(--es-lh-tight);
+  letter-spacing: var(--es-track-tight);
+  color: var(--es-fg-1);
+  text-wrap: balance;
+}
+
+.es-h2, h2.es {
+  font-family: var(--es-font-display);
+  font-weight: var(--es-w-bold);
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: var(--es-lh-snug);
+  letter-spacing: var(--es-track-snug);
+  color: var(--es-fg-1);
+}
+
+.es-h3, h3.es {
+  font-family: var(--es-font-sans);
+  font-weight: var(--es-w-bold);
+  font-size: 24px;
+  line-height: var(--es-lh-snug);
+  letter-spacing: var(--es-track-snug);
+  color: var(--es-fg-1);
+}
+
+.es-h4, h4.es {
+  font-family: var(--es-font-sans);
+  font-weight: var(--es-w-semibold);
+  font-size: 18px;
+  line-height: 1.3;
+  color: var(--es-fg-1);
+}
+
+.es-body, p.es {
+  font-family: var(--es-font-sans);
+  font-weight: var(--es-w-regular);
+  font-size: var(--es-text-base);
+  line-height: var(--es-lh-normal);
+  color: var(--es-fg-2);
+}
+
+.es-body-lg {
+  font-family: var(--es-font-sans);
+  font-weight: var(--es-w-regular);
+  font-size: 18px;
+  line-height: var(--es-lh-normal);
+  color: var(--es-fg-2);
+}
+
+.es-small {
+  font-family: var(--es-font-sans);
+  font-size: var(--es-text-sm);
+  line-height: var(--es-lh-normal);
+  color: var(--es-fg-2);
+}
+
+.es-caption {
+  font-family: var(--es-font-sans);
+  font-size: var(--es-text-xs);
+  line-height: 1.4;
+  color: var(--es-fg-3);
+}
+
+/* Eyebrow — used above section headings, e.g. "OUR PRODUCTS" */
+.es-eyebrow {
+  font-family: var(--es-font-sans);
+  font-weight: var(--es-w-bold);
+  font-size: 12px;
+  letter-spacing: var(--es-track-caps);
+  text-transform: uppercase;
+  color: var(--es-warm-600);
+}
+
+.es-mono, code.es {
+  font-family: var(--es-font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--es-fg-1);
+  background: var(--es-warm-100);
+  padding: 1px 6px;
+  border-radius: var(--es-radius-sm);
+  border: 1px solid var(--es-border);
+}
+
+/* Link */
+.es-link {
+  color: var(--es-fg-1);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--es-yellow-500);
+  text-underline-offset: 3px;
+}
+.es-link:hover { text-decoration-color: var(--es-ink-900); }

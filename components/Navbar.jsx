@@ -79,6 +79,7 @@ const communityItems = [
 
 const resourceFeatured = [
   { key: "agency-program", name: "Agency Program", href: "/program/agencies" },
+  { key: "founders-program", name: "Founders Program", href: "/program/transform" },
   { key: "partner", name: "Become a Partner", href: "/partners/partner-registration" },
 ];
 
