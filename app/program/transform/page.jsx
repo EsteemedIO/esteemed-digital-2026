@@ -75,16 +75,19 @@ export default function TransformPage() {
               </div>
             </div>
             <div className="flex items-center justify-center">
-              {/* Decorative blocks placeholder — matching the design's animated block grid */}
-              <div className="grid h-[320px] w-[320px] grid-cols-3 grid-rows-3 gap-3 lg:h-[400px] lg:w-[400px]">
-                {[
-                  "bg-yellow-400", "bg-zinc-900", "bg-yellow-400",
-                  "bg-zinc-900", "bg-yellow-400", "bg-zinc-900",
-                  "bg-yellow-400", "bg-zinc-900", "bg-yellow-400",
-                ].map((bg, i) => (
-                  <div key={i} className={`${bg} rounded-2xl`} />
-                ))}
-              </div>
+              {/* Blocks icon from design — L-shape with detached yellow square */}
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-[320px] h-[320px] lg:w-[420px] lg:h-[420px] text-ink"
+              >
+                <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />
+                <path d="M14 3h7v7h-7z" fill="#FEE546" />
+              </svg>
             </div>
           </div>
         </div>
@@ -104,7 +107,7 @@ export default function TransformPage() {
               />
             </div>
             <div>
-              <h2 className="mb-7 text-[clamp(46px,6.5vw,96px)] font-extrabold leading-[.95] tracking-tighter text-yellow-400">
+              <h2 className="mb-7 text-[clamp(46px,6.5vw,96px)] font-extrabold leading-[.95] tracking-tighter text-accent">
                 Transform.
               </h2>
               <p className="mb-5 text-[21px] font-medium leading-relaxed text-white">
@@ -117,7 +120,7 @@ export default function TransformPage() {
                 <span className="text-[28px] font-extrabold tracking-tight">We can help.</span>
                 <Link
                   href={calendarUrl}
-                  className="inline-flex items-center rounded-full bg-yellow-400 px-6 py-3 text-base font-bold text-zinc-900 shadow-lg shadow-yellow-400/25 transition hover:bg-yellow-300"
+                  className="inline-flex items-center rounded-full bg-accent px-6 py-3 text-base font-bold text-zinc-900 shadow-lg shadow-accent/25 transition hover:bg-accent-hover"
                 >
                   Start a conversation &rarr;
                 </Link>
@@ -164,7 +167,7 @@ export default function TransformPage() {
           <div>
             <h2 className="mb-6 text-[clamp(30px,3.4vw,46px)] font-extrabold leading-tight tracking-tight text-balance">
               A staffing agency sells for 4&ndash;8&times; EBITDA. A{" "}
-              <span className="underline decoration-yellow-400 decoration-[0.2em] underline-offset-[3px]">
+              <span className="underline decoration-accent decoration-[0.2em] underline-offset-[3px]">
                 tech-enabled platform
               </span>{" "}
               sells for 7&ndash;19&times; revenue.
@@ -185,7 +188,7 @@ export default function TransformPage() {
               </div>
               <div className="flex h-full flex-1 flex-col items-center justify-end">
                 <div className="mb-2 text-[30px] font-extrabold text-zinc-900">7&ndash;19&times;</div>
-                <div className="w-full rounded-t-lg bg-yellow-400" style={{ height: "100%" }} />
+                <div className="w-full rounded-t-lg bg-accent" style={{ height: "100%" }} />
               </div>
             </div>
             <div className="mt-3 flex gap-8 border-t border-zinc-200 pt-3">
@@ -238,7 +241,7 @@ export default function TransformPage() {
         </p>
 
         {/* Sequoia pull quote */}
-        <blockquote className="mt-11 border-l-[3px] border-yellow-400 pl-7">
+        <blockquote className="mt-11 border-l-[3px] border-accent pl-7">
           <p className="text-[clamp(24px,3vw,34px)] font-bold leading-snug tracking-tight text-balance">
             Sequoia put it plainly this year: the next trillion-dollar company will be a software company masquerading as a services firm.
           </p>
@@ -254,7 +257,7 @@ export default function TransformPage() {
           <div className="grid items-start gap-14 lg:grid-cols-[.9fr_1.1fr]">
             <h2 className="text-[clamp(30px,3.6vw,50px)] font-extrabold leading-[1.05] tracking-tight text-balance">
               You don&rsquo;t get{" "}
-              <span className="underline decoration-yellow-400 decoration-[0.16em] underline-offset-[3px]">
+              <span className="underline decoration-accent decoration-[0.16em] underline-offset-[3px]">
                 the multiple for free.
               </span>
             </h2>
@@ -282,7 +285,7 @@ export default function TransformPage() {
       {/* ============ SECTION 3 — WHAT'S ALREADY BUILT (dark) ============ */}
       <section className="relative overflow-hidden bg-zinc-900 text-white">
         <div className="relative z-10 mx-auto max-w-[1160px] px-8 py-24">
-          <p className="mb-5 text-xs font-bold uppercase tracking-widest text-yellow-400">
+          <p className="mb-5 text-xs font-bold uppercase tracking-widest text-accent">
             03&mdash;What&rsquo;s already built
           </p>
           <h2 className="mb-12 max-w-[820px] text-[clamp(32px,4.4vw,58px)] font-extrabold leading-[1.02] tracking-tight text-balance">
@@ -461,8 +464,8 @@ export default function TransformPage() {
         </div>
       </section>
 
-      {/* ============ SECTION 6 — THE OFFER (yellow) ============ */}
-      <section className="bg-accent text-zinc-950">
+      {/* ============ SECTION 6 — THE OFFER ============ */}
+      <section className="text-zinc-950" style={{ background: "#BFDBFE" }}>
         <div className="mx-auto max-w-[1160px] px-8 py-20">
           <p className="mb-5 text-xs font-bold uppercase tracking-widest text-zinc-900">
             06&mdash;The offer
@@ -509,7 +512,7 @@ export default function TransformPage() {
             <div className="flex flex-wrap items-center gap-3.5">
               <Link
                 href={calendarUrl}
-                className="inline-flex items-center rounded-full bg-yellow-400 px-6 py-3 text-base font-bold text-zinc-900 shadow-lg shadow-yellow-400/25 transition hover:bg-yellow-300"
+                className="inline-flex items-center rounded-full bg-accent px-6 py-3 text-base font-bold text-zinc-900 shadow-lg shadow-accent/25 transition hover:bg-accent-hover"
               >
                 Start a conversation &rarr;
               </Link>
@@ -524,7 +527,7 @@ export default function TransformPage() {
           <div className="mt-12 flex flex-wrap items-baseline gap-x-7 gap-y-1.5 border-t border-white/15 pt-7">
             <div className="text-lg font-bold">Chris McGrath</div>
             <div className="text-sm text-white/60">Founder &amp; CEO</div>
-            <a href="mailto:c.mcgrath@esteemed.io" className="text-sm text-white underline decoration-yellow-400 decoration-2 underline-offset-[3px]">
+            <a href="mailto:c.mcgrath@esteemed.io" className="text-sm text-white underline decoration-accent decoration-2 underline-offset-[3px]">
               c.mcgrath@esteemed.io
             </a>
             <a href="tel:+13607017353" className="text-sm text-white/60">
