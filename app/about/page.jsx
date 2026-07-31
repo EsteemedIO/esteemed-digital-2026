@@ -186,7 +186,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-ink mb-6">Open source community</h2>
           <p className="text-lg text-zinc-600 leading-relaxed">
-            We&apos;ve been active in the Drupal community since 2011. The Drupal Jobs board is still operated by Esteemed as a service to the community — no lead gen, no data extraction, just community goodwill. We believe in giving back to the ecosystem that got us here.
+            We&apos;ve been active in the Drupal community since 2011. More recently we have contributed to the Agentics Foundation by creating their Talent platform. We believe in giving back to the ecosystem that has helped us build our business.
           </p>
         </div>
       </section>
