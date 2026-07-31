@@ -1,14 +1,9 @@
 import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 import { lookupDomain, getDomainPrice, normalizeDomainName, SUPPORTED_DOMAIN_TLDS } from "@/lib/opensrs";
 
 const TLDS = SUPPORTED_DOMAIN_TLDS.filter((tld) => tld !== ".biz" && tld !== ".info" && tld !== ".xyz");
 
 export async function GET(request) {
-  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-  if (!token) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
 
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q")?.trim();

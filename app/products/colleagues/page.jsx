@@ -75,7 +75,7 @@ export default function ColleaguesPage() {
                 ))}
               </ul>
               <Link
-                href="/colleagues/hire-signup"
+                href="https://colleagues.esteemed.io/signup" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
               >
                 Sign up to Hire
@@ -117,7 +117,7 @@ export default function ColleaguesPage() {
                 ))}
               </ul>
               <Link
-                href="/colleagues/jobseeker-signup"
+                href="https://colleagues.esteemed.io/signup" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-ink hover:text-paper transition-colors"
               >
                 Sign up as a Jobseeker
@@ -183,13 +183,13 @@ export default function ColleaguesPage() {
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/colleagues/hire-signup"
+              href="https://colleagues.esteemed.io/signup" target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
             >
               Sign up to Hire
             </Link>
             <Link
-              href="/colleagues/jobseeker-signup"
+              href="https://colleagues.esteemed.io/signup" target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-ink text-ink text-sm font-bold hover:bg-white hover:text-ink transition-colors"
             >
               Sign up as a Jobseeker
