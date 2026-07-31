@@ -131,11 +131,11 @@ const clientLogos = [
 function ClientLogoBand() {
   return (
     <section className="border-y border-zinc-100 bg-white py-14">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto px-6" style={{ maxWidth: 1800 }}>
         <p className="text-center text-xs font-black uppercase tracking-[0.18em] text-zinc-500">
           Join leading organizations that work with us
         </p>
-        <div className="mt-10 grid grid-cols-2 items-center gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-10 grid grid-cols-2 items-center gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
           {clientLogos.map((logo) => (
             <div key={logo.name} className="flex min-h-16 items-center justify-center">
               <span
