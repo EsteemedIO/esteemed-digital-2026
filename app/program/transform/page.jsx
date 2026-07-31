@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import TransformLeadForm from "./TransformLeadForm";
+import TransformBriefButton from "./TransformBriefButton";
 
 export const metadata = {
   title: "Transform Program — Esteemed",
@@ -516,12 +516,7 @@ export default function TransformPage() {
               >
                 Start a conversation &rarr;
               </Link>
-              <a
-                href="#download-brief"
-                className="inline-flex items-center rounded-full border border-white/25 px-6 py-3 text-base font-bold text-white transition hover:border-white/50"
-              >
-                Download the full brief&nbsp;&darr;
-              </a>
+              <TransformBriefButton />
             </div>
           </div>
           <div className="mt-12 flex flex-wrap items-baseline gap-x-7 gap-y-1.5 border-t border-white/15 pt-7">
@@ -537,26 +532,14 @@ export default function TransformPage() {
         </div>
       </section>
 
-      {/* ============ DOWNLOAD BRIEF FORM ============ */}
-      <section id="download-brief" className="scroll-mt-20 bg-[#E0E9F2] py-20">
-        <div className="mx-auto max-w-[640px] px-6">
-          <TransformLeadForm />
-        </div>
-      </section>
-
-      {/* ============ FOOTER DISCLAIMER ============ */}
-      <footer className="border-t border-zinc-200 bg-stone-50">
-        <div className="mx-auto max-w-[1160px] px-8 pt-11 pb-8">
-          <p className="mb-7 max-w-[1000px] text-[12.5px] italic leading-relaxed text-zinc-400">
+      {/* ============ DISCLAIMER ============ */}
+      <section className="border-t border-zinc-200 bg-stone-50">
+        <div className="mx-auto max-w-[1160px] px-8 py-8">
+          <p className="max-w-[1000px] text-[12.5px] italic leading-relaxed text-zinc-400">
             Trajectory and valuation figures are illustrative, built on stated assumptions (approximately three partner firms per year at $10&ndash;40M revenue each; a revenue mix beginning near 70% recurring staffing / 30% software and shifting toward software over time via cross-sell; software revenue valued at conservative software multiples, recurring staffing at a premium to transactional agencies). They are targets and illustrations of the model&mdash;not projections or guarantees. Comparable outcomes (Superside, Remote, Stoke Talent) reflect other companies and are not indicative of results for any specific business. Any combination would be subject to mutual diligence and definitive documentation.
           </p>
-          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-zinc-200 pt-5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/esteemed-logo.svg" alt="Esteemed" className="h-[22px]" />
-            <div className="text-[13px] text-zinc-400">&copy; 2026 Esteemed Inc. &middot; Confidential</div>
-          </div>
         </div>
-      </footer>
+      </section>
     </main>
   );
 }
