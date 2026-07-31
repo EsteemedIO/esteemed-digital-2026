@@ -171,7 +171,7 @@ function PricingPreview() {
   const plans = tab === "self" ? selfPlans : managedPlans;
 
   return (
-    <section className="py-10">
+    <section className="pt-4 pb-10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="heading-2 mb-4">
@@ -181,16 +181,16 @@ function PricingPreview() {
             SSL, backups, CDN, and monitoring included with every plan. No renewal price hikes.
           </p>
 
-          <div className="flex items-center justify-center gap-3">
+          <div className="inline-flex items-center rounded-full border-2 border-ink p-0.5">
             <button
               onClick={() => setTab("self")}
-              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors ${tab === "self" ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
+              className={`px-6 py-2.5 rounded-full text-sm font-bold transition-colors ${tab === "self" ? "bg-ink text-white" : "text-ink hover:bg-zinc-100"}`}
             >
               Self-Managed
             </button>
             <button
               onClick={() => setTab("managed")}
-              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors ${tab === "managed" ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
+              className={`px-6 py-2.5 rounded-full text-sm font-bold transition-colors ${tab === "managed" ? "bg-ink text-white" : "text-ink hover:bg-zinc-100"}`}
             >
               Managed
             </button>
@@ -534,7 +534,7 @@ export default function Home() {
 
       {/* Final CTA */}
       <section className="bg-accent py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="heading-2 !text-ink mb-6">
             Ready to build something Esteemed?
           </h2>

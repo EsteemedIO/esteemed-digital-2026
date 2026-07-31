@@ -78,10 +78,10 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
             {slide.eyebrow}
           </p>
         )}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+        <h1 className="font-bold text-white leading-tight mb-6" style={{ fontSize: "clamp(2.5rem, 7vw, 95px)", letterSpacing: "-0.02em" }}>
           {slide.title}
-        </h2>
-        <p className="text-lg text-white/80 leading-relaxed mb-8 max-w-2xl mx-auto">
+        </h1>
+        <p className="text-white/80 leading-relaxed mb-8 max-w-2xl mx-auto" style={{ fontSize: 25 }}>
           {slide.body}
           {slide.bodyBold && <>{" "}<strong className="text-white">{slide.bodyBold}</strong></>}
         </p>
