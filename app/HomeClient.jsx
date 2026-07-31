@@ -121,6 +121,11 @@ const clientLogos = [
     mark: "astound",
     className: "font-sans tracking-normal lowercase",
   },
+  {
+    name: "IEEE",
+    mark: "IEEE",
+    className: "font-serif tracking-[0.06em]",
+  },
 ];
 
 function ClientLogoBand() {
