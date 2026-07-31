@@ -282,6 +282,8 @@ export default function Home() {
             body: "Quality and skill alignment are our priority. We match you with vetted professionals from our 35,000-strong network — on demand.",
             cta: "Hire an Expert",
             href: "/hire-experts",
+            cta2: "Post a Job",
+            href2: "https://colleagues.esteemed.io/post-job",
             video: "/videos/homepage-colleagues.mp4",
           },
           {
@@ -428,12 +430,14 @@ export default function Home() {
           <div className="text-center mt-12">
             <p className="text-zinc-600">
               Already have your app and need expert support?{" "}
-              <Link
-                href="/products/colleagues"
+              <a
+                href="https://colleagues.esteemed.io/post-job"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-bold text-ink underline underline-offset-4 hover:no-underline"
               >
                 Post a Job ↗
-              </Link>
+              </a>
             </p>
           </div>
         </div>
@@ -503,19 +507,19 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                quote: "Esteemed matched us with a senior React developer in 48 hours. The quality of talent in their network is exceptional.",
-                name: "Engineering Director",
-                company: "IEEE",
+                quote: "Esteemed provided us with a full content team practically overnight to lead a major website transformation. The quality of talent in their network is exceptional.",
+                name: "Digital Marketing Director",
+                company: "Astound Internet",
               },
               {
-                quote: "We migrated from Drupal to Esteemed Create and cut our content update time from days to minutes. The AI understands our brand voice.",
-                name: "Digital Marketing Lead",
+                quote: "Our Esteemed Drupal support team is second to none. Plus we can expand as needed with access to thousands of top tier pros that match our requirements and start quickly.",
+                name: "VP, Delivery",
                 company: "Alvernia University",
               },
               {
-                quote: "Having access to 35,000 vetted professionals means we never wait for talent. Esteemed is our first call for every technical hire.",
-                name: "CTO",
-                company: "Cambridge Redevelopment Authority",
+                quote: "Esteemed matched us with a senior React developer in 48 hours. They never fail to provide quality talent that exceeds all expectations.",
+                name: "VP, Operations",
+                company: "New York Life",
               },
             ].map((t) => (
               <div key={t.company} className="rounded-2xl border border-zinc-200 p-8">
