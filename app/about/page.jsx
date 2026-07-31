@@ -46,8 +46,8 @@ export default function AboutPage() {
             <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Team collaboration"
+                src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/our_team_01.jpg.webp?itok=b0kOyjos"
+                alt="The Esteemed team"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
@@ -86,8 +86,8 @@ export default function AboutPage() {
             <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Career professionals collaborating"
+                src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/man-on-phone-bg.jpg.webp?itok=NoN8Z2Lw"
+                alt="Professional on a call"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
@@ -159,14 +159,24 @@ export default function AboutPage() {
       {/* Heritage Timeline */}
       <section className="py-20 border-t border-zinc-100 bg-zinc-50">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-ink mb-12">Heritage</h2>
-          <div className="space-y-8">
-            {heritage.map((item) => (
-              <div key={item.year} className="flex gap-8">
-                <span className="text-xl font-bold text-ink w-20 flex-shrink-0">{item.year}</span>
-                <p className="text-zinc-600 leading-relaxed">{item.event}</p>
-              </div>
-            ))}
+          <h2 className="text-3xl font-bold text-ink mb-14">Heritage</h2>
+          <div className="relative">
+            {/* Vertical line */}
+            <div className="absolute left-[39px] top-2 bottom-2 w-px bg-zinc-300 hidden sm:block" />
+            <div className="space-y-10">
+              {heritage.map((item, i) => (
+                <div key={item.year} className="flex gap-6 sm:gap-10 items-start">
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <div className={`relative z-10 flex items-center justify-center w-20 h-10 rounded-full text-sm font-extrabold ${i === heritage.length - 1 ? "bg-accent text-ink" : "bg-ink text-white"}`}>
+                      {item.year}
+                    </div>
+                  </div>
+                  <div className="pt-1.5">
+                    <p className="text-base text-zinc-700 leading-relaxed">{item.event}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
