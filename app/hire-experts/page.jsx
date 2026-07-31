@@ -37,7 +37,7 @@ export default function HireExpertsPage() {
           </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: "#FEE546" }}>
-              Powered by Colleagues
+              Hire an Expert
             </p>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
               On-demand help from builders, designers, and operators.
@@ -72,7 +72,7 @@ export default function HireExpertsPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">Esteemed Colleagues</p>
+              <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">Powered by Colleagues</p>
               <h2 className="text-3xl md:text-4xl font-bold text-ink mb-6 leading-tight">
                 In-depth candidate profiles beyond the resume.
               </h2>
