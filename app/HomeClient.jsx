@@ -11,7 +11,6 @@ import PromptToSite from "@/components/builder-visuals/PromptToSite";
 import DragAndDrop from "@/components/builder-visuals/DragAndDrop";
 import CascadingAgent from "@/components/builder-visuals/CascadingAgent";
 import MultiDevice from "@/components/builder-visuals/MultiDevice";
-import { createTiers } from "@/lib/data";
 import DomainSearchBar from "@/components/DomainSearchBar";
 
 const products = [
@@ -95,7 +94,6 @@ const steps = [
   },
 ];
 
-const previewTiers = createTiers.filter((t) => t.key !== "enterprise");
 
 const clientLogos = [
   {
@@ -150,94 +148,94 @@ function ClientLogoBand() {
 }
 
 function PricingPreview() {
-  const [annual, setAnnual] = useState(true);
+  const [tab, setTab] = useState("self");
+
+  const selfPlans = [
+    { name: "Basic", price: "$9.99", desc: "1 site, 25 GB, SSL, CDN", features: ["Custom domain + SSL", "Daily backups", "Global CDN"] },
+    { name: "Plus", price: "$14.99", desc: "1 site, 50 GB, staging", features: ["Everything in Basic", "Staging site", "Security monitoring"], rec: true },
+    { name: "Pro", price: "$19.99", desc: "1 site, 100 GB, priority", features: ["Everything in Plus", "Priority support", "App monitoring"] },
+    { name: "Multi", price: "$39.99", desc: "Up to 5 sites, 200 GB", features: ["Everything in Pro", "Up to 5 websites", "Custom domains"] },
+  ];
+
+  const managedPlans = [
+    { name: "Essential", price: "$149", desc: "5-page rebuild, 3 hrs/mo", features: ["Done-for-you hosting", "Free 5-page rebuild", "3 support hrs/mo", "SSL + monitoring"] },
+    { name: "Growth", price: "$249", desc: "12-page rebuild, 6 hrs/mo", features: ["Everything in Essential", "Free 12-page rebuild", "6 support hrs/mo"], rec: true },
+    { name: "Business", price: "$499", desc: "Full site, 10 hrs/mo", features: ["Everything in Growth", "Full standard site", "10 support hrs/mo", "Enterprise quote available"] },
+  ];
+
+  const plans = tab === "self" ? selfPlans : managedPlans;
 
   return (
     <section className="py-10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="heading-2 mb-4">
-            Start free. Scale as you grow.
+            Hosting that grows with you.
           </h2>
           <p className="subtitle max-w-2xl mx-auto mb-8">
-            Every plan includes AI-powered building, Studio IDE, and hosting at publish.
+            SSL, backups, CDN, and monitoring included with every plan. No renewal price hikes.
           </p>
 
           <div className="flex items-center justify-center gap-3">
             <button
-              onClick={() => setAnnual(true)}
-              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors flex items-center gap-2 ${annual ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
+              onClick={() => setTab("self")}
+              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors ${tab === "self" ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
             >
-              Yearly
-              <span className="text-xs bg-accent text-ink px-2 py-0.5 rounded-full font-bold">Save</span>
+              Self-Managed
             </button>
             <button
-              onClick={() => setAnnual(false)}
-              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors ${!annual ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
+              onClick={() => setTab("managed")}
+              className={`text-sm font-medium px-4 py-2 rounded-full transition-colors ${tab === "managed" ? "bg-ink text-paper" : "text-zinc-500 hover:text-ink"}`}
             >
-              Monthly
+              Managed
             </button>
           </div>
         </div>
 
         <div
-          key={annual ? "annual" : "monthly"}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-[fadeIn_0.3s_ease-in-out]"
+          key={tab}
+          className={`grid grid-cols-1 sm:grid-cols-2 gap-6 animate-[fadeIn_0.3s_ease-in-out] ${plans.length > 3 ? "lg:grid-cols-4" : "lg:grid-cols-3 max-w-5xl mx-auto"}`}
         >
-          {previewTiers.map((tier) => {
-            const price = annual ? tier.annual : tier.monthly;
-            const isRec = tier.recommended;
-            return (
-              <div
-                key={tier.key}
-                className={`rounded-2xl p-8 flex flex-col relative transition-shadow hover:shadow-lg ${
-                  isRec ? "bg-ink text-white" : "bg-accent text-ink"
-                }`}
-              >
-                {isRec && (
-                  <span className="absolute -top-3 left-6 bg-accent text-ink text-xs font-bold px-3 py-1 rounded-full">
-                    Most popular
-                  </span>
-                )}
-                <h3 className={`text-sm font-medium ${isRec ? "text-zinc-400" : "text-ink/60"}`}>{tier.name}</h3>
-                <div className="mt-1 mb-1">
-                  {price === 0 ? (
-                    <span className="text-4xl font-bold">Free</span>
-                  ) : (
-                    <>
-                      {annual && tier.monthly > 0 && (
-                        <span className={`text-sm line-through mr-2 ${isRec ? "text-zinc-500" : "text-ink/40"}`}>${tier.monthly}</span>
-                      )}
-                      <span className="text-4xl font-bold">${price}</span>
-                      <span className={`text-sm ${isRec ? "text-zinc-400" : "text-ink/60"}`}>/mo</span>
-                    </>
-                  )}
-                </div>
-                <p className={`text-sm mt-1 ${isRec ? "text-zinc-400" : "text-ink/70"}`}>{tier.credits}</p>
-                <p className={`text-sm mb-4 mt-2 ${isRec ? "text-zinc-300" : "text-ink/80"}`}>{tier.description}</p>
-                <ul className="space-y-2 mb-6">
-                  {tier.features.map((f) => (
-                    <li key={f} className={`flex items-start gap-2 text-sm ${isRec ? "text-zinc-300" : "text-ink/80"}`}>
-                      <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${isRec ? "text-accent" : "text-ink"}`} strokeWidth={2} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto">
-                  <Link
-                    href="/pricing"
-                    className={`block text-center py-3 rounded-full text-sm font-bold transition-colors ${
-                      isRec
-                        ? "bg-accent text-ink hover:bg-accent-hover"
-                        : "bg-ink text-white hover:bg-ink/90"
-                    }`}
-                  >
-                    {tier.cta}
-                  </Link>
-                </div>
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`rounded-2xl p-8 flex flex-col relative transition-shadow hover:shadow-lg ${
+                plan.rec ? "bg-ink text-white" : "bg-accent text-ink"
+              }`}
+            >
+              {plan.rec && (
+                <span className="absolute -top-3 left-6 bg-accent text-ink text-xs font-bold px-3 py-1 rounded-full">
+                  Most popular
+                </span>
+              )}
+              <h3 className={`text-sm font-medium ${plan.rec ? "text-zinc-400" : "text-ink/60"}`}>{plan.name}</h3>
+              <div className="mt-1 mb-1">
+                <span className="text-4xl font-bold">{plan.price}</span>
+                <span className={`text-sm ${plan.rec ? "text-zinc-400" : "text-ink/60"}`}>/mo</span>
               </div>
-            );
-          })}
+              <p className={`text-sm mb-4 mt-2 ${plan.rec ? "text-zinc-300" : "text-ink/80"}`}>{plan.desc}</p>
+              <ul className="space-y-2 mb-6">
+                {plan.features.map((f) => (
+                  <li key={f} className={`flex items-start gap-2 text-sm ${plan.rec ? "text-zinc-300" : "text-ink/80"}`}>
+                    <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${plan.rec ? "text-accent" : "text-ink"}`} strokeWidth={2} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-auto">
+                <Link
+                  href="/hosting#plans"
+                  className={`block text-center py-3 rounded-full text-sm font-bold transition-colors ${
+                    plan.rec
+                      ? "bg-accent text-ink hover:bg-accent-hover"
+                      : "bg-ink text-white hover:bg-ink/90"
+                  }`}
+                >
+                  See Plans
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="text-center mt-10">
@@ -245,7 +243,7 @@ function PricingPreview() {
             href="/pricing"
             className="text-sm font-bold text-ink underline underline-offset-4 hover:no-underline"
           >
-            See all pricing &rarr;
+            See all products and plans &rarr;
           </Link>
         </div>
       </div>
@@ -276,9 +274,9 @@ export default function Home() {
             label: "Hire Experts",
             eyebrow: "Esteemed Colleagues",
             title: "AI builds it. Experts grow it.",
-            body: "Need design polish, custom code, or strategy? We match you with vetted professionals from our 35,000-strong network — on demand.",
+            body: "Quality and skill alignment are our priority. We match you with vetted professionals from our 35,000-strong network — on demand.",
             cta: "Hire an Expert",
-            href: "/products/colleagues",
+            href: "/hire-experts",
             video: "/videos/homepage-colleagues.mp4",
           },
           {
@@ -535,12 +533,12 @@ export default function Home() {
           <h2 className="heading-2 !text-ink mb-6">
             Ready to build something Esteemed?
           </h2>
-          <button
-            onClick={scrollToTop}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-[20px] font-bold hover:bg-accent-hover transition-colors"
+          <Link
+            href="/signup"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-[20px] font-bold hover:bg-zinc-800 transition-colors"
           >
             Start &rarr;
-          </button>
+          </Link>
         </div>
       </section>
     </>
