@@ -86,8 +86,8 @@ export default function AboutPage() {
             <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/man-on-phone-bg.jpg.webp?itok=NoN8Z2Lw"
-                alt="Professional on a call"
+                src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/our_team_5.jpg.webp?itok=SwqzAzt3"
+                alt="Esteemed team members"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
@@ -114,13 +114,20 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="bg-zinc-50 py-20">
-        <div className="max-w-4xl mx-auto px-6">
-          <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">Our Story</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-8 leading-tight">
+      <section className="relative py-24 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://esteemed.io/sites/default/files/styles/global_webp/public/2025-01/man-on-phone-bg.jpg.webp?itok=NoN8Z2Lw"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-ink/80" />
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wide mb-4" style={{ color: "#FEE546" }}>Our Story</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 leading-tight">
             Founded in 2019. Built on a decade of talent infrastructure.
           </h2>
-          <div className="space-y-5 text-lg text-zinc-600 leading-relaxed">
+          <div className="space-y-5 text-lg text-white/80 leading-relaxed">
             <p>
               Esteemed was founded in 2019 after building and scaling a niche IT talent marketplace platform launched in 2011. Recognizing the growing demand for flexible workforce solutions, Esteemed evolved into a comprehensive talent and workforce management platform.
             </p>
