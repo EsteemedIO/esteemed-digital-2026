@@ -86,6 +86,9 @@ export default function TransformBriefButton() {
             annualRevenue: revenueLabel,
             website: form.website,
             notes: form.notes,
+            leadSource: "web",
+            utmSource: "esteemed.io",
+            utmCampaign: "transform-program",
           },
         }),
       });
@@ -115,9 +118,11 @@ export default function TransformBriefButton() {
         size="2xl"
         scrollBehavior="inside"
         classNames={{
-          base: "rounded-2xl",
+          base: "rounded-2xl bg-white",
+          backdrop: "bg-black/50",
           header: "border-b border-zinc-100 pb-4",
           body: "py-5",
+          closeButton: "top-4 right-4 text-zinc-400 hover:text-ink",
         }}
       >
         <ModalContent>

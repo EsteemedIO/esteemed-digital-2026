@@ -47,7 +47,7 @@ const trajectory = [
   { label: "Larger", size: "~$40M each", revenue: "~$700M", value: "~$3.9B", highlight: true },
 ];
 
-const calendarUrl = "/contact?interest=transform";
+const calendarUrl = "/contact?interest=transform&intent=consult";
 const audioUrl = "https://notebooklm.google.com/notebook/2259c6b1-79e5-4587-b7f2-0305c335e380/artifact/c183e7b3-33fb-4713-8d12-20971ff4a415";
 
 export default function TransformPage() {
@@ -116,14 +116,15 @@ export default function TransformPage() {
               <p className="mb-9 text-lg leading-relaxed text-white/70">
                 That&rsquo;s a metamorphosis. And it changes how your business is valued.
               </p>
-              <div className="flex flex-wrap items-center gap-5 lg:gap-7">
-                <span className="text-[28px] font-extrabold tracking-tight">We can help.</span>
+              <div className="mb-5 text-[28px] font-extrabold tracking-tight">We can help.</div>
+              <div className="flex flex-wrap items-center gap-3">
                 <Link
                   href={calendarUrl}
                   className="inline-flex items-center rounded-full bg-accent px-6 py-3 text-base font-bold text-zinc-900 shadow-lg shadow-accent/25 transition hover:bg-accent-hover"
                 >
                   Start a conversation &rarr;
                 </Link>
+                <TransformBriefButton />
               </div>
               <p className="mt-5 text-sm italic text-white/55">
                 Mutual discovery. You&rsquo;re evaluating us as much as we&rsquo;re evaluating you.
@@ -430,7 +431,7 @@ export default function TransformPage() {
                 <text x="300" y="205" fontFamily="Inter,sans-serif" fontSize="12" fontWeight="600" fill="#65615A">Traditional sale</text>
                 <path d="M52 244 C 210 238, 330 210, 418 44" fill="none" stroke="#2563eb" strokeWidth="3.5" strokeLinecap="round" />
                 <text x="150" y="150" fontFamily="Inter,sans-serif" fontSize="12" fontWeight="700" fill="#2563eb">The strategic merger</text>
-                <path d="M418 20l6.16 12.48L438 34.29l-9.9 9.65L430.32 58 418 51.36 405.68 58l2.22-14.06L398 34.29l13.84-1.81L418 20z" fill="#facc15" stroke="#111" strokeWidth="1.2" strokeLinejoin="round" />
+                <path d="M418 20l6.16 12.48L438 34.29l-9.9 9.65L430.32 58 418 51.36 405.68 58l2.22-14.06L398 34.29l13.84-1.81L418 20z" fill="#FEE546" stroke="#111" strokeWidth="1.2" strokeLinejoin="round" />
               </svg>
             </div>
           </div>
@@ -446,7 +447,7 @@ export default function TransformPage() {
               <div
                 key={t.label}
                 className={`grid grid-cols-[1.5fr_1fr_1fr] items-center text-[17px] ${
-                  t.highlight ? "bg-yellow-50" : ""
+                  t.highlight ? "bg-accent/10" : ""
                 } ${i < trajectory.length - 1 ? "border-b border-zinc-200" : ""}`}
               >
                 <div className="px-5 py-5 font-semibold">
