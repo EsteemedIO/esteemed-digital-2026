@@ -138,7 +138,7 @@ export default function TransformBriefButton() {
                   <a
                     href="/downloads/esteemed-transform-brief.pdf"
                     download
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-ink text-white text-sm font-bold hover:bg-zinc-800 transition-colors"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
                   >
                     <Download className="w-4 h-4" />
                     Download the Full Brief (PDF)
@@ -225,17 +225,13 @@ export default function TransformBriefButton() {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button variant="light" onPress={() => setOpen(false)} className="font-semibold text-zinc-500">
-                  Cancel
-                </Button>
-                <Button
+                <button
                   type="submit"
-                  isLoading={submitting}
-                  className="bg-ink text-white font-bold px-6"
-                  radius="lg"
+                  disabled={submitting}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-4 text-sm font-bold text-ink transition-colors hover:bg-accent-hover disabled:opacity-50"
                 >
-                  Get the Brief
-                </Button>
+                  {submitting ? "Submitting..." : "Get the Brief"}
+                </button>
               </ModalFooter>
             </form>
           )}
