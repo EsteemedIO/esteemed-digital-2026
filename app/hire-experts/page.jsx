@@ -71,7 +71,7 @@ export default function HireExpertsPage() {
       <section className="py-20 border-b border-zinc-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="md:order-2">
               <p className="text-sm font-semibold text-zinc-500 uppercase tracking-wide mb-4">Powered by Colleagues</p>
               <h2 className="text-3xl md:text-4xl font-bold text-ink mb-6 leading-tight">
                 In-depth candidate profiles beyond the resume.
@@ -102,7 +102,7 @@ export default function HireExpertsPage() {
                 <ExternalLink className="w-4 h-4" />
               </a>
             </div>
-            <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
+            <div className="md:order-1 relative rounded-2xl overflow-hidden aspect-[4/3]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://esteemed.io/sites/default/files/styles/global_webp/public/2024-12/woman-on-colleagues-mobile_0.png.webp?itok=Xg46bP99"
@@ -119,7 +119,7 @@ export default function HireExpertsPage() {
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             { value: "35,000+", label: "Vetted Professionals" },
-            { value: "48hrs", label: "Avg. Time to Match" },
+            { value: "8hrs", label: "Avg. Time to Match" },
             { value: "15+", label: "Years Operating" },
             { value: "100+", label: "Data Points Per Profile" },
           ].map((s) => (
