@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Sparkles, Cloud, Bot, Brain, Users, Headphones, ClipboardCheck, Target, MessageSquare, Check } from "lucide-react";
+import { Sparkles, Cloud, Bot, Brain, Users, Headphones, ClipboardCheck, Target, MessageSquare, Check, ArrowRight } from "lucide-react";
 import ChatHero from "@/components/ChatHero";
 import HeroCarousel from "@/components/HeroCarousel";
 import CascadingCards from "@/components/CascadingCards";
@@ -12,64 +12,6 @@ import DragAndDrop from "@/components/builder-visuals/DragAndDrop";
 import CascadingAgent from "@/components/builder-visuals/CascadingAgent";
 import MultiDevice from "@/components/builder-visuals/MultiDevice";
 import DomainSearchBar from "@/components/DomainSearchBar";
-
-const products = [
-  {
-    name: "Esteemed Create",
-    description: "Build websites and apps by talking to AI. Edit by conversation, publish in one click.",
-    href: "/websites/website-builder",
-    icon: Sparkles,
-  },
-  {
-    name: "Esteemed Cloud",
-    description: "Hosting that scales with you. Built for what you build.",
-    href: "/websites/hosting",
-    icon: Cloud,
-  },
-  {
-    name: "Esteemed Agents",
-    description: "AI agents that handle the work. Featuring Star.",
-    href: "/products/agents",
-    icon: Bot,
-  },
-  {
-    name: "Esteemed Intelligence",
-    description: "The intelligence layer that powers it all.",
-    href: "/products/intelligence",
-    icon: Brain,
-  },
-  {
-    name: "Esteemed Colleagues",
-    description: "Talent and opportunity marketplace. Post opportunities and hire contract or direct employees.",
-    href: "/products/colleagues",
-    icon: Users,
-  },
-  {
-    name: "Esteemed Support",
-    description: "Get expert human help with what you build or existing apps.",
-    href: "/hire-experts/web-support",
-    icon: Headphones,
-  },
-  {
-    name: "Esteemed Hire",
-    description: "Applicant tracking that integrates with Colleagues and Intelligence.",
-    href: "/products/hire",
-    icon: ClipboardCheck,
-  },
-  {
-    name: "Esteemed Acquire",
-    description: "CRM for client and talent acquisition, powered by Intelligence.",
-    href: "/products/acquire",
-    icon: Target,
-  },
-  {
-    name: "HCMGPT",
-    description: "The preeminent domain-specific AI for human capital management.",
-    href: "https://hcmgpt.com",
-    icon: MessageSquare,
-    external: true,
-  },
-];
 
 const steps = [
   {
@@ -443,54 +385,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 4: Other products & services */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="heading-2 mb-4">
-              Products &amp; Services
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((p) => {
-              const Tag = p.external ? "a" : Link;
-              const extraProps = p.external ? { target: "_blank", rel: "noopener noreferrer" } : {};
-              return (
-                <Tag
-                  key={p.name}
-                  href={p.href}
-                  {...extraProps}
-                  className="p-8 hover:shadow-lg transition-shadow block"
-                  style={{ backgroundColor: "#F5F5F5" }}
-                >
-                  <div className="flex items-start gap-4">
-                    <p.icon className="w-6 h-6 text-ink flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                    <div>
-                      <h3 className="text-lg font-bold text-ink mb-2">
-                        {p.name}
-                        {p.external && <span className="ml-1 text-ink/40 text-sm">↗</span>}
-                      </h3>
-                      <p className="text-sm text-zinc-600">{p.description}</p>
-                    </div>
-                  </div>
-                </Tag>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Parallax: Pairing you with the best */}
-      <section className="py-20">
+      {/* Parallax: Quality + Hire an Expert CTA */}
+      <section className="py-14">
         <div className="mx-auto px-6 text-center" style={{ maxWidth: 1260 }}>
           <h3 className="heading-3 mb-12 text-center">Quality and skill alignment are our priority.</h3>
-          <ParallaxFrost
-            src="/images/colleague1.jpg"
-            alt="Quality and skill alignment"
-            height={715}
-            maxFrost={0.3}
-          />
+          <div className="relative">
+            <ParallaxFrost
+              src="/images/colleague1.jpg"
+              alt="Quality and skill alignment"
+              height={715}
+              maxFrost={0.3}
+            />
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+              <Link
+                href="/hire-experts"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold shadow-lg hover:bg-accent-hover transition-colors"
+              >
+                Hire an Expert
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -544,9 +459,9 @@ export default function Home() {
           </h2>
           <Link
             href="/signup"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-[20px] font-bold hover:bg-zinc-800 transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-ink text-[20px] font-bold border-2 border-ink hover:bg-ink hover:text-white transition-colors"
           >
-            Start &rarr;
+            Start <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </section>
