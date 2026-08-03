@@ -57,7 +57,8 @@ test("domain launch APIs are auth-gated and checkout-owned", () => {
   const checkoutRoute = readFileSync(join(process.cwd(), "app/api/domains/checkout/route.js"), "utf8");
   const registerRoute = readFileSync(join(process.cwd(), "app/api/domains/register/route.js"), "utf8");
 
-  expect(searchRoute).toContain("getToken");
+  // Domain search is intentionally public (no auth) for homepage/hosting search bars
+  expect(searchRoute).toContain("lookupDomain");
   expect(checkoutRoute).toContain("getToken");
   expect(checkoutRoute).toContain("body.set(\"mode\", \"subscription\")");
   expect(checkoutRoute).toContain("getDomainPrice");

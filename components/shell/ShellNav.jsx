@@ -104,6 +104,7 @@ export default function ShellNav() {
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Create new"
+              classNames={{ base: "bg-white rounded-xl border border-zinc-200 shadow-xl" }}
               onAction={(key) => {
                 if (key === "hire") {
                   window.open("https://colleagues.esteemed.io/jobs/new", "_blank");

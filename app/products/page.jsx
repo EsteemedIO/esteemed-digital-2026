@@ -385,31 +385,46 @@ function ProductsHomeContent() {
     <div className="mx-auto max-w-[1280px]">
       <section className="mb-8 pt-4">
         <div className="mx-auto flex max-w-4xl flex-col gap-4 md:flex-row">
-          <Input
-            aria-label="Search products"
-            value={query}
-            onValueChange={setQuery}
-            placeholder="Search using your business name or desired domain name"
-            radius="sm"
-            size="lg"
-            startContent={<Search size={18} className="text-zinc-400" />}
-            classNames={{
-              inputWrapper: "border border-zinc-300 bg-white shadow-none",
-              input: "text-base",
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (query.trim().length >= 2) {
+                window.location.href = `/hosting/domains?q=${encodeURIComponent(query.trim())}`;
+              }
             }}
-          />
+            className="flex flex-1 gap-0"
+          >
+            <Input
+              aria-label="Search for a domain"
+              value={query}
+              onValueChange={setQuery}
+              placeholder="Find your perfect domain name"
+              radius="none"
+              size="lg"
+              startContent={<Search size={18} className="text-zinc-400" />}
+              classNames={{
+                inputWrapper: "border border-zinc-300 bg-white shadow-none rounded-l-xl",
+                input: "text-base",
+              }}
+            />
+            <Button
+              type="submit"
+              radius="none"
+              size="lg"
+              className="shrink-0 rounded-r-xl border border-l-0 border-zinc-300 bg-white px-6 font-semibold text-ink"
+            >
+              Search Domains
+            </Button>
+          </form>
           <Button
-            as="a"
-            href={CREATE_BASE}
-            target="_blank"
-            rel="noopener noreferrer"
+            as={Link}
+            href="/websites/website-builder/start"
             radius="sm"
             size="lg"
-            variant="bordered"
-            className="shrink-0 border-zinc-300 bg-white px-6 font-semibold text-ink"
+            className="shrink-0 bg-accent px-6 font-semibold text-ink hover:bg-accent-hover"
             startContent={<Plus size={18} />}
           >
-            Set up a free website
+            Build a Website
           </Button>
         </div>
         <h1 className="mt-10 text-center text-2xl font-semibold text-ink">
@@ -458,7 +473,7 @@ function ProductsHomeContent() {
               Create a site, import one from GitHub, or start with a Coming Soon page while your launch plan comes together.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Button as="a" href={CREATE_BASE} target="_blank" rel="noopener noreferrer" radius="sm" className="bg-accent font-semibold text-ink hover:bg-accent-hover">
+              <Button as="a" href="/websites/website-builder/start" target="_blank" rel="noopener noreferrer" radius="sm" className="bg-accent font-semibold text-ink hover:bg-accent-hover">
                 Create site
               </Button>
               <Button as={Link} href="/dashboard/sites" radius="sm" variant="bordered" className="border-zinc-200 font-semibold text-ink">

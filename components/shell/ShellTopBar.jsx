@@ -78,7 +78,7 @@ export default function ShellTopBar() {
             <Search size={18} style={{ color: "#565449" }} />
           </button>
         </DropdownTrigger>
-        <DropdownMenu aria-label="Search">
+        <DropdownMenu aria-label="Search" classNames={{ base: "bg-white rounded-xl border border-zinc-200 shadow-xl" }}>
           <DropdownItem key="search" textValue="Search coming soon" className="h-14">
             <p className="text-sm font-semibold" style={{ color: "rgba(0,0,0,0.85)" }}>
               Search is coming soon
@@ -100,7 +100,7 @@ export default function ShellTopBar() {
             <Bell size={18} style={{ color: "#565449" }} />
           </button>
         </DropdownTrigger>
-        <DropdownMenu aria-label="Notifications">
+        <DropdownMenu aria-label="Notifications" classNames={{ base: "bg-white rounded-xl border border-zinc-200 shadow-xl" }}>
           <DropdownItem key="empty" textValue="No notifications" className="h-14">
             <p className="text-sm font-semibold" style={{ color: "rgba(0,0,0,0.85)" }}>
               No notifications yet
@@ -145,7 +145,7 @@ export default function ShellTopBar() {
             />
           </button>
         </DropdownTrigger>
-        <DropdownMenu aria-label="User actions">
+        <DropdownMenu aria-label="User actions" classNames={{ base: "bg-white rounded-xl border border-zinc-200 shadow-xl" }}>
           <DropdownItem key="profile" className="h-14 gap-2" textValue={displayName}>
             <p className="font-semibold text-sm" style={{ color: "rgba(0,0,0,0.85)" }}>
               {displayName}
