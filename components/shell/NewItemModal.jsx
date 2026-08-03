@@ -86,9 +86,11 @@ export default function NewItemModal({ isOpen, type, onClose }) {
       onClose={() => { setLoading(false); onClose(); }}
       size="lg"
       classNames={{
-        base: "rounded-2xl",
+        base: "rounded-2xl bg-white",
+        backdrop: "bg-black/50",
         header: "border-b border-zinc-100 pb-4",
         body: "py-5",
+        closeButton: "top-4 right-4 text-zinc-400 hover:text-ink",
       }}
     >
       <ModalContent>

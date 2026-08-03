@@ -34,7 +34,6 @@ import {
   Users,
 } from "lucide-react";
 import {
-  CREATE_BASE,
   siteLiveUrl,
   sitePrimaryDomain,
   siteStatusClass,
@@ -369,12 +368,11 @@ function ProductsHomeContent() {
             icon: Rocket,
           },
           {
-            title: "Set up a new website",
-            detail: "Start another site in Esteemed Create.",
-            action: "Start",
-            href: CREATE_BASE,
-            icon: Plus,
-            external: true,
+            title: "Search for a domain",
+            detail: "Find and register your perfect domain name.",
+            action: "Search",
+            href: "/hosting/domains",
+            icon: Globe,
           },
         ],
       };
@@ -416,16 +414,6 @@ function ProductsHomeContent() {
               Search Domains
             </Button>
           </form>
-          <Button
-            as={Link}
-            href="/websites/website-builder/start"
-            radius="sm"
-            size="lg"
-            className="shrink-0 bg-accent px-6 font-semibold text-ink hover:bg-accent-hover"
-            startContent={<Plus size={18} />}
-          >
-            Build a Website
-          </Button>
         </div>
         <h1 className="mt-10 text-center text-2xl font-semibold text-ink">
           What do you want to work on today, {firstName}?
@@ -473,11 +461,11 @@ function ProductsHomeContent() {
               Create a site, import one from GitHub, or start with a Coming Soon page while your launch plan comes together.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Button as="a" href="/websites/website-builder/start" target="_blank" rel="noopener noreferrer" radius="sm" className="bg-accent font-semibold text-ink hover:bg-accent-hover">
-                Create site
+              <Button as={Link} href="/hosting#plans" radius="sm" className="bg-accent font-semibold text-ink hover:bg-accent-hover">
+                See Hosting Plans
               </Button>
-              <Button as={Link} href="/dashboard/sites" radius="sm" variant="bordered" className="border-zinc-200 font-semibold text-ink">
-                Import site
+              <Button as={Link} href="/hosting/domains" radius="sm" variant="bordered" className="border-zinc-200 font-semibold text-ink">
+                Search Domains
               </Button>
             </div>
           </div>
