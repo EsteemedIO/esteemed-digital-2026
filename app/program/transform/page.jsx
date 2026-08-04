@@ -3,10 +3,34 @@ import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import TransformBriefButton from "./TransformBriefButton";
 
+const description =
+  "Esteemed Transform offers hosting providers, IT MSPs, and professional staffing companies an exit path by merging with a technology platform that increases enterprise value and gives owners a stake in our future growth.";
+const socialImage = "https://www.esteemed.io/images/transform/transform-og.jpg";
+
 export const metadata = {
   title: "Transform Program — Esteemed",
-  description:
-    "Esteemed Transform offers hosting providers, IT MSPs, and professional staffing companies an exit path by merging with a technology platform that increases enterprise value and gives owners a stake in our future growth.",
+  description,
+  openGraph: {
+    title: "Transform Program — Esteemed",
+    description,
+    url: "https://www.esteemed.io/program/transform",
+    siteName: "Esteemed",
+    type: "website",
+    images: [
+      {
+        url: socialImage,
+        width: 1200,
+        height: 630,
+        alt: "Esteemed Transform program for hosting providers, IT MSPs, and professional staffing companies",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Transform Program — Esteemed",
+    description,
+    images: [socialImage],
+  },
 };
 
 const comps = [
