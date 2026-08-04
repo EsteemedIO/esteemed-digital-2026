@@ -40,6 +40,7 @@ import {
   siteStatusLabel,
 } from "@/components/dashboard/site-utils";
 import ShellFrame from "@/components/shell/ShellFrame";
+import DomainSearchBar from "@/components/DomainSearchBar";
 
 const productAccordions = [
   {
@@ -383,37 +384,9 @@ function ProductsHomeContent() {
     <div className="mx-auto max-w-[1280px]">
       <section className="mb-8 pt-4">
         <div className="mx-auto flex max-w-4xl flex-col gap-4 md:flex-row">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (query.trim().length >= 2) {
-                window.location.href = `/hosting/domains?q=${encodeURIComponent(query.trim())}`;
-              }
-            }}
-            className="flex flex-1 gap-0"
-          >
-            <Input
-              aria-label="Search for a domain"
-              value={query}
-              onValueChange={setQuery}
-              placeholder="Find your perfect domain name"
-              radius="none"
-              size="lg"
-              startContent={<Search size={18} className="text-zinc-400" />}
-              classNames={{
-                inputWrapper: "border border-zinc-300 bg-white shadow-none rounded-l-xl",
-                input: "text-base",
-              }}
-            />
-            <Button
-              type="submit"
-              radius="none"
-              size="lg"
-              className="shrink-0 rounded-r-xl border border-l-0 border-zinc-300 bg-white px-6 font-semibold text-ink"
-            >
-              Search Domains
-            </Button>
-          </form>
+          <div className="flex-1">
+            <DomainSearchBar />
+          </div>
         </div>
         <h1 className="mt-10 text-center text-2xl font-semibold text-ink">
           What do you want to work on today, {firstName}?

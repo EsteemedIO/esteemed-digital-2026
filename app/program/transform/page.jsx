@@ -6,7 +6,7 @@ import TransformBriefButton from "./TransformBriefButton";
 export const metadata = {
   title: "Transform Program — Esteemed",
   description:
-    "Merge your staffing or IT services business with a technology platform. Transform transactional revenue into recurring software revenue and earn a higher multiple.",
+    "Esteemed Transform offers hosting providers, IT MSPs, and professional staffing companies an exit path by merging with a technology platform that increases enterprise value and gives owners a stake in our future growth.",
 };
 
 const comps = [
