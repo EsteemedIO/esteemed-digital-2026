@@ -20,6 +20,7 @@ const nextConfig = {
       { source: '/deployment', destination: '/', permanent: true },
       { source: '/developers', destination: '/', permanent: true },
       { source: '/research', destination: '/', permanent: true },
+      { source: '/transform', destination: '/program/transform', permanent: true },
       { source: '/careers', destination: '/', permanent: true },
       { source: '/partners', destination: '/', permanent: true },
       { source: '/solutions', destination: '/products', permanent: true },
