@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Select, SelectItem } from "@heroui/react";
-import { Download, Loader2 } from "lucide-react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectItem, Textarea } from "@heroui/react";
+import { Download } from "lucide-react";
 
 const TITLES = [
   { key: "ceo", label: "CEO" },
@@ -25,12 +25,23 @@ const REVENUE_RANGES = [
   { key: "20m+", label: "$20M+" },
 ];
 
-const inputClass = "w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm font-medium text-ink placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-accent";
+const fieldClassNames = {
+  inputWrapper: "min-h-12 rounded-xl border border-zinc-200 bg-white shadow-none data-[hover=true]:border-zinc-400 group-data-[focus=true]:border-zinc-500",
+  input: "text-sm font-medium text-ink placeholder:text-zinc-400",
+};
 
 const selectClassNames = {
-  trigger: "min-h-12 rounded-xl border border-zinc-200 bg-white px-4 shadow-none data-[hover=true]:border-zinc-400",
+  trigger: "relative min-h-12 rounded-xl border border-zinc-200 bg-white px-4 shadow-none data-[hover=true]:border-zinc-400 data-[focus=true]:border-zinc-500",
+  innerWrapper: "pr-8",
   value: "text-sm font-medium text-ink",
+  selectorIcon: "left-auto right-4 text-zinc-500",
   popoverContent: "z-[100] rounded-xl border border-zinc-200 bg-white shadow-xl",
+};
+
+const textareaClassNames = {
+  ...fieldClassNames,
+  inputWrapper: "min-h-24 rounded-xl border border-zinc-200 bg-white shadow-none data-[hover=true]:border-zinc-400 group-data-[focus=true]:border-zinc-500",
+  input: "min-h-16 text-sm font-medium leading-6 text-ink placeholder:text-zinc-400",
 };
 
 export default function TransformBriefButton() {
@@ -90,6 +101,7 @@ export default function TransformBriefButton() {
             utmSource: "esteemed.io",
             utmCampaign: "transform-program",
           },
+          bestEffort: true,
         }),
       });
 
@@ -169,12 +181,12 @@ export default function TransformBriefButton() {
                 )}
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <input required type="text" placeholder="First name" value={form.firstName} onChange={(e) => update("firstName", e.target.value)} className={inputClass} />
-                  <input required type="text" placeholder="Last name" value={form.lastName} onChange={(e) => update("lastName", e.target.value)} className={inputClass} />
+                  <Input required type="text" placeholder="First name" value={form.firstName} onValueChange={(value) => update("firstName", value)} variant="bordered" classNames={fieldClassNames} />
+                  <Input required type="text" placeholder="Last name" value={form.lastName} onValueChange={(value) => update("lastName", value)} variant="bordered" classNames={fieldClassNames} />
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 mt-4">
-                  <input required type="email" placeholder="Business email" value={form.email} onChange={(e) => update("email", e.target.value)} className={inputClass} />
+                  <Input required type="email" placeholder="Business email" value={form.email} onValueChange={(value) => update("email", value)} variant="bordered" classNames={fieldClassNames} />
                   <Select
                     aria-label="Title"
                     placeholder="Title"
@@ -188,12 +200,12 @@ export default function TransformBriefButton() {
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 mt-4">
-                  <input type="text" placeholder="Company name" value={form.company} onChange={(e) => update("company", e.target.value)} className={inputClass} />
-                  <input type="url" placeholder="Website" value={form.website} onChange={(e) => update("website", e.target.value)} className={inputClass} />
+                  <Input type="text" placeholder="Company name" value={form.company} onValueChange={(value) => update("company", value)} variant="bordered" classNames={fieldClassNames} />
+                  <Input type="url" placeholder="Website" value={form.website} onValueChange={(value) => update("website", value)} variant="bordered" classNames={fieldClassNames} />
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-3 mt-4">
-                  <input type="tel" placeholder="Phone" value={form.phone} onChange={(e) => update("phone", e.target.value)} className={inputClass} />
+                  <Input type="tel" placeholder="Phone" value={form.phone} onValueChange={(value) => update("phone", value)} variant="bordered" classNames={fieldClassNames} />
                   <Select
                     aria-label="Type of company"
                     placeholder="Type of company"
@@ -216,22 +228,25 @@ export default function TransformBriefButton() {
                   </Select>
                 </div>
 
-                <textarea
+                <Textarea
                   placeholder="Anything else that you would like us to know."
                   value={form.notes}
-                  onChange={(e) => update("notes", e.target.value)}
-                  rows={3}
-                  className={`${inputClass} mt-4 resize-none`}
+                  onValueChange={(value) => update("notes", value)}
+                  minRows={3}
+                  variant="bordered"
+                  className="mt-4"
+                  classNames={textareaClassNames}
                 />
               </ModalBody>
               <ModalFooter>
-                <button
+                <Button
                   type="submit"
-                  disabled={submitting}
+                  isLoading={submitting}
+                  radius="full"
                   className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-4 text-sm font-bold text-ink transition-colors hover:bg-accent-hover disabled:opacity-50"
                 >
-                  {submitting ? "Submitting..." : "Get the Brief"}
-                </button>
+                  Get the Brief
+                </Button>
               </ModalFooter>
             </form>
           )}

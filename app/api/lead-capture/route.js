@@ -17,8 +17,19 @@ function splitName(value = "") {
   };
 }
 
+async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 export async function POST(request) {
-  const { email, name, company, phone, websiteUrl, interests = [], message, prompt, source, formId, details = {} } = await request.json();
+  const { email, name, company, phone, websiteUrl, interests = [], message, prompt, source, formId, details = {}, bestEffort = false } = await request.json();
 
   if (!email) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -28,7 +39,7 @@ export async function POST(request) {
   const errors = [];
   const selectedInterests = Array.isArray(interests) ? interests : [];
   const promptText = prompt || message || "";
-  const bridgedForms = new Set(["contact", "partner_application", "local_consult"]);
+  const bridgedForms = new Set(["contact", "partner_application", "local_consult", "transform_brief"]);
   const shouldUseFormsBridge =
     bridgedForms.has(formId) || source === "contact-form" || source === "partner-application" || source === "local-consult";
   const safeName = escapeHtml(name);
@@ -52,7 +63,7 @@ export async function POST(request) {
 
     if (inboundUrl && inboundKey) {
       const { firstName, lastName } = splitName(name);
-      const inboundRes = await fetch(`${inboundUrl.replace(/\/$/, "")}/contacts`, {
+      const inboundRes = await fetchWithTimeout(`${inboundUrl.replace(/\/$/, "")}/contacts`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${inboundKey}` },
         body: JSON.stringify({
@@ -93,7 +104,7 @@ export async function POST(request) {
       "https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-40cb0fd1-016f-4383-8b38-97bdc816fd0f/forms/submit";
 
     if (shouldUseFormsBridge && formsApi && !results.crm) {
-      const formsRes = await fetch(formsApi, {
+      const formsRes = await fetchWithTimeout(formsApi, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -132,7 +143,7 @@ export async function POST(request) {
     const crmKey = process.env.OCEANIC_CRM_API_KEY;
 
     if (crmBase && crmKey) {
-      const contactRes = await fetch(`${crmBase}/contacts`, {
+      const contactRes = await fetchWithTimeout(`${crmBase}/contacts`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${crmKey}` },
         body: JSON.stringify({ email, name: name || "", phone: phone || "", websiteUrl: websiteUrl || "" }),
@@ -140,7 +151,7 @@ export async function POST(request) {
       const contact = await contactRes.json();
 
       if (contact?.id) {
-        await fetch(`${crmBase}/contacts/${contact.id}/activities`, {
+        await fetchWithTimeout(`${crmBase}/contacts/${contact.id}/activities`, {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${crmKey}` },
           body: JSON.stringify({
@@ -169,7 +180,7 @@ export async function POST(request) {
     const resendKey = process.env.RESEND_API_KEY;
 
     if (resendKey) {
-      await fetch("https://api.resend.com/emails", {
+      await fetchWithTimeout("https://api.resend.com/emails", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendKey}` },
         body: JSON.stringify({
@@ -194,7 +205,7 @@ export async function POST(request) {
     const notifyEmail = process.env.INTERNAL_NOTIFICATION_EMAIL;
 
     if (resendKey && notifyEmail) {
-      await fetch("https://api.resend.com/emails", {
+      await fetchWithTimeout("https://api.resend.com/emails", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendKey}` },
         body: JSON.stringify({
@@ -221,7 +232,7 @@ ${safeDetails.length ? `<p><strong>Details:</strong></p><ul>${safeDetails.map(([
     errors.push(`Internal email: ${err.message}`);
   }
 
-  if (shouldUseFormsBridge && !results.forms && !results.crm) {
+  if (!bestEffort && shouldUseFormsBridge && !results.forms && !results.crm) {
     return NextResponse.json({ error: "Lead capture failed", results, errors }, { status: 502 });
   }
 
