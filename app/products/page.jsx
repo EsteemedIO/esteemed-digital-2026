@@ -383,10 +383,20 @@ function ProductsHomeContent() {
   return (
     <div className="mx-auto max-w-[1280px]">
       <section className="mb-8 pt-4">
-        <div className="mx-auto flex max-w-4xl flex-col gap-4 md:flex-row">
+        <div className="mx-auto flex max-w-4xl flex-col gap-4 md:flex-row md:items-center">
           <div className="flex-1">
             <DomainSearchBar />
           </div>
+          <Button
+            as="a"
+            href="https://create.esteemed.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            radius="sm"
+            className="bg-accent font-semibold text-ink hover:bg-accent-hover whitespace-nowrap"
+          >
+            Create a Website with AI
+          </Button>
         </div>
         <h1 className="mt-10 text-center text-2xl font-semibold text-ink">
           What do you want to work on today, {firstName}?
