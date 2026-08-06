@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sign in to Esteemed</title>
-  <link rel="icon" href="${url.resourcesPath}/img/esteemed-logo.svg">
-  <link rel="stylesheet" href="${url.resourcesPath}/css/auth.css?v=20260701b">
+  <title>Sign in to HCMGPT</title>
+  <link rel="icon" href="${url.resourcesPath}/img/hcmgpt-icon.svg">
+  <link rel="stylesheet" href="${url.resourcesPath}/css/hcmgpt-auth.css?v=20260806b">
 </head>
 <body>
   <main class="auth-page">
     <section class="auth-card" aria-labelledby="auth-title">
       <div class="brand-panel">
         <div class="logo-box">
-          <img src="${url.resourcesPath}/img/esteemed-logo.svg" alt="Esteemed">
+          <img src="${url.resourcesPath}/img/hcmgpt-icon.svg" alt="HCMGPT">
         </div>
       </div>
 
       <h1 id="auth-title">Welcome</h1>
-      <p class="auth-subtitle">Sign in to your account</p>
+      <p class="auth-subtitle">Sign in to HCMGPT</p>
 
       <div class="product-note">
-        <strong>Esteemed</strong> &mdash; One account for your websites, cloud, apps, and expert support.
+        <strong>HCMGPT</strong> &mdash; Your people, policies, documents, and workforce intelligence in one workspace.
       </div>
 
       <div class="auth-tabs" aria-label="Authentication options">
