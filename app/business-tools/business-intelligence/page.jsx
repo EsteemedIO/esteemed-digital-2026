@@ -310,7 +310,7 @@ export default function IntelligencePage() {
       <section className="bg-accent py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-ink mb-2 leading-tight">
-            Connect Any AI System. <span className="text-accent">Share One Intelligence.</span>
+            Connect Any AI System. Share One Intelligence.
           </h2>
           <p className="text-ink/60 mt-6 mb-10 max-w-2xl mx-auto leading-relaxed">
             REST API or MCP. Give every system shared memory, reasoning, and coherence. Start with a 14-day free trial — no credit card required.
