@@ -4,7 +4,7 @@ import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
 import HireExpertFAQ from "@/components/HireExpertFAQ";
 import { intelligencePricingPlans } from "@/lib/product-page-pricing";
-import { Brain, Database, GitBranch, Shield, Code, Building2, ArrowRight } from "lucide-react";
+import { Brain, Database, GitBranch, Shield, Code, Building2, ArrowRight, Zap, Layers, Cpu, BarChart3, Workflow, GraduationCap } from "lucide-react";
 
 const IntelligenceGlobe = dynamic(() => import("@/components/intelligence/IntelligenceGlobe"), {
   ssr: false,
@@ -12,9 +12,9 @@ const IntelligenceGlobe = dynamic(() => import("@/components/intelligence/Intell
 });
 
 export const metadata = {
-  title: "Intelligence",
+  title: "Business Intelligence — Esteemed",
   description:
-    "Esteemed Intelligence — the layer that powers everything. Memory, reasoning, and coherence.",
+    "Esteemed Intelligence — the layer that powers everything. Memory, reasoning, coherence, and domain-specific AI training. Powered by NVIDIA Inception.",
 };
 
 const prongs = [
@@ -56,14 +56,43 @@ const prongs = [
   },
 ];
 
+const domainTrainingSteps = [
+  {
+    step: "01",
+    title: "Connect your knowledge",
+    description: "Point Intelligence at your existing content — websites, documents, SOPs, product catalogs, support tickets, CRM data. Ingestion is automatic. No data engineering required.",
+    icon: Layers,
+  },
+  {
+    step: "02",
+    title: "Train your domain",
+    description: "Intelligence builds a structured knowledge graph from your data. It learns your terminology, your processes, your brand voice, and the relationships between concepts unique to your business.",
+    icon: GraduationCap,
+  },
+  {
+    step: "03",
+    title: "Deploy and learn continuously",
+    description: "Every customer interaction, every team decision, every content update feeds back into the system. Your Intelligence layer doesn't just launch — it compounds. The longer it runs, the sharper it gets.",
+    icon: Workflow,
+  },
+];
+
 const faqs = [
   {
     q: "How is Esteemed Intelligence different from just using an LLM?",
     a: "LLMs generate text. Intelligence remembers, reasons, and verifies. It gives your AI systems persistent memory across sessions, cross-system reasoning so agents share context, and structural coherence proofs — not just probability scores. Your AI doesn't just sound right, it proves it's right.",
   },
   {
+    q: "How quickly can we train Intelligence on our business domain?",
+    a: "Initial domain training typically takes hours, not weeks. Connect your data sources — website content, documents, product catalogs, support history — and Intelligence builds a structured knowledge graph automatically. Ongoing learning is continuous: every interaction refines the model without manual retraining.",
+  },
+  {
     q: "Do my agents automatically share what they learn?",
     a: "Yes. Your Voice Agent knows what your Blog Agent wrote. Your Social Agent knows what customers asked. Intelligence is the shared layer — no manual syncing, no data silos between agents.",
+  },
+  {
+    q: "What is a Domain-Specific Language Model (DSLM)?",
+    a: "A DSLM is a language model trained specifically on your business domain — your terminology, your processes, your data. Unlike generic LLMs that know a little about everything, a DSLM knows your business deeply. Esteemed builds enterprise-grade DSLMs using NVIDIA Megatron for organizations that need dedicated, private AI infrastructure.",
   },
   {
     q: "Will my website give more accurate answers?",
@@ -76,6 +105,10 @@ const faqs = [
   {
     q: "What happens if an agent starts giving wrong answers?",
     a: "Drift analysis detects when agent responses diverge from your brand voice or factual content — before customers notice. You get alerted, and coherence gates can block bad outputs automatically.",
+  },
+  {
+    q: "What does the NVIDIA partnership mean for my business?",
+    a: "As an NVIDIA Inception partner, Esteemed leverages NeMo for model benchmarking, Megatron for training domain-specific models, and NVIDIA edge computing for low-latency inference. This means your Intelligence layer runs on enterprise-grade infrastructure — the same technology powering the world's most advanced AI systems.",
   },
   {
     q: "Can I connect my own systems via API?",
@@ -104,10 +137,10 @@ export default function IntelligencePage() {
               Business Intelligence
             </p>
             <h1 className="hero-title text-white">
-              The intelligence layer that powers everything.
+              Turn your business into a Thinking Machine.
             </h1>
             <p className="hero-body text-white/70">
-              Memory. Reasoning. Coherence. A shared intelligence layer that gives your website and agents persistent memory, cross-system reasoning, and continuous learning.
+              Memory. Reasoning. Coherence. A shared intelligence layer that gives your business persistent memory, cross-system reasoning, and continuous learning — so every system, every agent, and every interaction gets smarter over time.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
@@ -140,7 +173,7 @@ export default function IntelligencePage() {
               Meet Esteemed Intelligence
             </h2>
             <p className="text-lg text-zinc-600 mx-auto leading-relaxed" style={{ maxWidth: 780 }}>
-              A shared intelligence layer that gives your AI systems persistent memory, cross-system reasoning, and structural coherence — not just probability. Your AI proves it&apos;s right.
+              Most AI tools bolt on a chatbot and call it intelligence. Esteemed Intelligence is different — it&apos;s a foundational layer that gives your entire operation persistent memory, real reasoning, and structural proof that answers are correct. Not probably right. Provably right.
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -176,18 +209,135 @@ export default function IntelligencePage() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <div id="plans">
-        <ProductPricingBlock
-          eyebrow="Pricing"
-          title="Start Free, Scale Infinitely"
-          description="Every plan includes all 40 MCP tools and full REST API access. Scale memory, intelligence, and coherence as you grow."
-          productKey="intelligence"
-          plans={pricingPlans}
-          ctaLabel="Get Started"
-          defaultBilling="monthly"
-        />
-      </div>
+      {/* Thinking Machine — domain training */}
+      <section className="py-20 bg-zinc-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
+              Your business already knows a lot. Teach your AI.
+            </h2>
+            <p className="text-lg text-zinc-600 mx-auto leading-relaxed" style={{ maxWidth: 780 }}>
+              Every business has years of accumulated knowledge — in documents, in processes, in the heads of your team. Esteemed Intelligence captures all of it, structures it, and makes it available to every system you run. New domains can be trained in hours, not months. And it never stops learning.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {domainTrainingSteps.map((step) => (
+              <div key={step.step} className="relative">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white text-sm font-bold">
+                    {step.step}
+                  </span>
+                  <step.icon className="w-6 h-6 text-zinc-400" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-xl font-bold text-ink mb-3">{step.title}</h3>
+                <p className="text-sm text-zinc-600 leading-relaxed">{step.description}</p>
+              </div>
+            ))}
+          </div>
+          <div className="max-w-4xl mx-auto mt-16 rounded-2xl border border-zinc-200 bg-white p-8 md:p-10">
+            <div className="flex flex-col md:flex-row md:items-start gap-6">
+              <Brain className="w-10 h-10 text-ink flex-shrink-0" strokeWidth={1.5} />
+              <div>
+                <h3 className="text-2xl font-bold text-ink mb-3">The Thinking Machine</h3>
+                <p className="text-zinc-600 leading-relaxed mb-4">
+                  When Intelligence is fully trained on your domain, your business becomes a Thinking Machine — an organization where AI doesn&apos;t just answer questions, it understands context, remembers history, reasons across systems, and improves autonomously. Your sales team gets answers grounded in actual product data. Your support agents resolve issues using institutional knowledge. Your marketing writes content that&apos;s factually consistent with everything you&apos;ve ever published.
+                </p>
+                <p className="text-zinc-600 leading-relaxed">
+                  This isn&apos;t a chatbot. It&apos;s the operating intelligence of your business — and it gets smarter every single day.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* NVIDIA Partnership */}
+      <section className="py-20 border-t border-zinc-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <p className="text-sm font-bold text-zinc-400 uppercase tracking-wide mb-4">
+              Technology Partner
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
+              Powered by NVIDIA Inception
+            </h2>
+            <p className="text-lg text-zinc-600 mx-auto leading-relaxed" style={{ maxWidth: 780 }}>
+              Esteemed is a member of the NVIDIA Inception Program, integrating enterprise-grade AI infrastructure into the Intelligence backbone. This partnership gives our customers access to the same technology stack powering the world&apos;s most advanced AI systems.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="rounded-2xl border border-zinc-200 p-8">
+              <BarChart3 className="w-8 h-8 text-ink mb-4" strokeWidth={1.5} />
+              <h3 className="text-xl font-bold text-ink mb-3">NeMo Benchmarking</h3>
+              <p className="text-sm text-zinc-600 leading-relaxed">
+                Rigorous model evaluation using NVIDIA NeMo ensures your Intelligence layer meets enterprise performance standards. We benchmark accuracy, latency, and coherence across your specific domain — not generic benchmarks that don&apos;t reflect your real-world workload.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-zinc-200 p-8">
+              <Cpu className="w-8 h-8 text-ink mb-4" strokeWidth={1.5} />
+              <h3 className="text-xl font-bold text-ink mb-3">Megatron Model Training</h3>
+              <p className="text-sm text-zinc-600 leading-relaxed">
+                For enterprises that need dedicated AI, we train Domain-Specific Language Models (DSLMs) using NVIDIA Megatron. Your DSLM knows your business deeply — your terminology, your processes, your compliance requirements — and runs on infrastructure you control.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-zinc-200 p-8">
+              <Zap className="w-8 h-8 text-ink mb-4" strokeWidth={1.5} />
+              <h3 className="text-xl font-bold text-ink mb-3">Edge Computing</h3>
+              <p className="text-sm text-zinc-600 leading-relaxed">
+                NVIDIA edge computing in the Esteemed Intelligence backbone means low-latency inference at the point of need. Whether it&apos;s a customer-facing agent, an internal tool, or a real-time decision system — responses are fast, local, and secure.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enterprise DSLM */}
+      <section className="py-20 bg-ink">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Enterprise-Grade DSLMs
+            </h2>
+            <p className="text-lg text-white/70 mx-auto leading-relaxed" style={{ maxWidth: 780 }}>
+              For organizations that need more than a shared intelligence layer — a language model built exclusively for your operations.
+            </p>
+          </div>
+          <div className="space-y-6">
+            {[
+              {
+                title: "Trained on your data, owned by you",
+                detail: "Your DSLM is trained exclusively on your proprietary data. It lives on your infrastructure or a dedicated VPC. Your data never touches shared systems or trains other models.",
+              },
+              {
+                title: "Purpose-built for your operations",
+                detail: "Unlike general-purpose LLMs, a DSLM is optimized for your specific workflows — whether that's underwriting, clinical documentation, legal review, supply chain management, or customer operations.",
+              },
+              {
+                title: "Continuous fine-tuning and improvement",
+                detail: "As your business evolves, your DSLM evolves with it. Ongoing fine-tuning ensures the model stays current with new products, policy changes, market shifts, and operational learnings.",
+              },
+              {
+                title: "Full compliance and audit trail",
+                detail: "Enterprise DSLMs include witness chain auditing, coherence verification, and complete lineage tracking — critical for regulated industries where you need to prove how and why an AI reached a conclusion.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border border-white/10 p-6 md:p-8">
+                <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                <p className="text-sm text-white/60 leading-relaxed">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
+            >
+              Talk to us about a custom DSLM
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* The difference */}
       <section className="py-20 border-t border-zinc-100">
@@ -228,7 +378,20 @@ export default function IntelligencePage() {
         </div>
       </section>
 
-      {/* FAQ — converted from use cases */}
+      {/* Pricing */}
+      <div id="plans">
+        <ProductPricingBlock
+          eyebrow="Pricing"
+          title="Start Free, Scale Infinitely"
+          description="Every plan includes all 40 MCP tools and full REST API access. Scale memory, intelligence, and coherence as you grow."
+          productKey="intelligence"
+          plans={pricingPlans}
+          ctaLabel="Get Started"
+          defaultBilling="monthly"
+        />
+      </div>
+
+      {/* FAQ */}
       <HireExpertFAQ items={faqs} />
 
       {/* API / MCP access */}
