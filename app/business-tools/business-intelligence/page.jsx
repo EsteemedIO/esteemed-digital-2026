@@ -4,7 +4,7 @@ import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
 import HireExpertFAQ from "@/components/HireExpertFAQ";
 import { intelligencePricingPlans } from "@/lib/product-page-pricing";
-import { Brain, Database, GitBranch, Shield, Code, Building2, ArrowRight, Zap, Layers, Cpu, BarChart3, Workflow, GraduationCap } from "lucide-react";
+import { Brain, Database, GitBranch, Shield, Code, Building2, ArrowRight, Zap, Cpu, BarChart3 } from "lucide-react";
 
 const IntelligenceGlobe = dynamic(() => import("@/components/intelligence/IntelligenceGlobe"), {
   ssr: false,
@@ -61,19 +61,16 @@ const domainTrainingSteps = [
     step: "01",
     title: "Connect your knowledge",
     description: "Point Intelligence at your existing content — websites, documents, SOPs, product catalogs, support tickets, CRM data. Ingestion is automatic. No data engineering required.",
-    icon: Layers,
   },
   {
     step: "02",
     title: "Train your domain",
     description: "Intelligence builds a structured knowledge graph from your data. It learns your terminology, your processes, your brand voice, and the relationships between concepts unique to your business.",
-    icon: GraduationCap,
   },
   {
     step: "03",
     title: "Deploy and learn continuously",
     description: "Every customer interaction, every team decision, every content update feeds back into the system. Your Intelligence layer doesn't just launch — it compounds. The longer it runs, the sharper it gets.",
-    icon: Workflow,
   },
 ];
 
@@ -223,11 +220,10 @@ export default function IntelligencePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {domainTrainingSteps.map((step) => (
               <div key={step.step} className="relative">
-                <div className="flex items-center gap-4 mb-4">
+                <div className="mb-4">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white text-sm font-bold">
                     {step.step}
                   </span>
-                  <step.icon className="w-6 h-6 text-zinc-400" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-xl font-bold text-ink mb-3">{step.title}</h3>
                 <p className="text-sm text-zinc-600 leading-relaxed">{step.description}</p>
@@ -481,7 +477,7 @@ export default function IntelligencePage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="#plans"
-              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-accent-hover transition-colors"
+              className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-sm font-bold hover:bg-ink/80 transition-colors"
             >
               Start 14-Day Trial
               <ArrowRight className="w-4 h-4" />
