@@ -7,7 +7,8 @@ import TickRounded from "@/components/TickRounded";
 import { Loader2 } from "lucide-react";
 
 const CREATE_URL = "https://create.esteemed.io";
-const CREATE_LOGIN_URL = `${CREATE_URL}/api/auth/oidc/login`;
+const CREATE_OIDC_LOGIN_URL = `${CREATE_URL}/api/auth/oidc/login`;
+const CREATE_LOCAL_LOGIN_URL = `${CREATE_URL}/login`;
 const CREATE_SIGNUP_URL = `${CREATE_URL}/signup`;
 
 function GoogleMark() {
@@ -26,15 +27,17 @@ function StartPageContent() {
   const searchParams = useSearchParams();
   const prompt = searchParams.get("prompt") || "";
   const returnTo = prompt ? `/?prompt=${prompt}` : "/";
-  const loginUrl = new URL(CREATE_LOGIN_URL);
+  const oidcLoginUrl = new URL(CREATE_OIDC_LOGIN_URL);
+  const localLoginUrl = new URL(CREATE_LOCAL_LOGIN_URL);
   const signupUrl = new URL(CREATE_SIGNUP_URL);
 
   if (returnTo !== "/") {
-    loginUrl.searchParams.set("returnTo", returnTo);
+    oidcLoginUrl.searchParams.set("returnTo", returnTo);
+    localLoginUrl.searchParams.set("returnTo", returnTo);
     signupUrl.searchParams.set("returnTo", returnTo);
   }
 
-  const googleLoginUrl = new URL(loginUrl);
+  const googleLoginUrl = new URL(oidcLoginUrl);
   googleLoginUrl.searchParams.set("kc_idp_hint", "google");
 
   if (status === "loading") {
@@ -46,7 +49,7 @@ function StartPageContent() {
   }
 
   if (session) {
-    if (typeof window !== "undefined") window.location.href = loginUrl.toString();
+    if (typeof window !== "undefined") window.location.href = oidcLoginUrl.toString();
     return (
       <div className="flex min-h-[calc(100vh-64px)] items-center justify-center">
         <p className="text-zinc-500">Launching Esteemed Create...</p>
@@ -126,7 +129,7 @@ function StartPageContent() {
 
             <p className="mt-6 text-center text-sm text-zinc-500">
               Already have an account?{" "}
-              <a href={loginUrl.toString()} className="font-bold text-ink underline underline-offset-4">
+              <a href={localLoginUrl.toString()} className="font-bold text-ink underline underline-offset-4">
                 Sign in
               </a>
             </p>

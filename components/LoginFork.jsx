@@ -28,7 +28,7 @@ export default function LoginFork({ isOpen, onClose }) {
             </p>
             <button
               onClick={() => {
-                window.location.href = "https://create.esteemed.io/api/auth/oidc/login";
+                window.location.href = "https://create.esteemed.io/login";
               }}
               className="w-full py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
             >
