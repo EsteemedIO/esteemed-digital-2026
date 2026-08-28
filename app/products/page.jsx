@@ -389,7 +389,7 @@ function ProductsHomeContent() {
           </div>
           <Button
             as="a"
-            href="https://cauthprod.esteemed.io/realms/esteemed-colleagues/protocol/openid-connect/auth?client_id=esteemed-create&redirect_uri=https%3A%2F%2Fcreate.esteemed.io%2F&response_type=code&scope=openid"
+            href="/websites/website-builder/start"
             radius="sm"
             className="bg-accent font-semibold text-ink hover:bg-accent-hover whitespace-nowrap"
           >

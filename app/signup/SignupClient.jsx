@@ -8,11 +8,12 @@ import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import AuthEntryCard from "@/components/AuthEntryCard";
 
 const CREATE_URL = "https://create.esteemed.io";
+const CREATE_LOGIN_URL = `${CREATE_URL}/api/auth/oidc/login`;
 const COLLEAGUES_URL = "https://colleagues.esteemed.io";
 const PLATFORM_URL = process.env.NEXT_PUBLIC_ESTEEMED_PLATFORM_URL || "https://platform.esteemed.io";
 
 const REDIRECT_URLS = {
-  create: CREATE_URL,
+  create: CREATE_LOGIN_URL,
   colleagues: COLLEAGUES_URL,
 };
 
@@ -238,8 +239,15 @@ function SignupContent() {
     return <CurateSignup />;
   }
 
-  const callbackBase = (redirectParam && REDIRECT_URLS[redirectParam]) || CREATE_URL;
-  const callbackUrl = promptParam ? `${callbackBase}?prompt=${encodeURIComponent(promptParam)}` : callbackBase;
+  const callbackBase = (redirectParam && REDIRECT_URLS[redirectParam]) || CREATE_LOGIN_URL;
+  let callbackUrl = callbackBase;
+  if (promptParam && callbackBase === CREATE_LOGIN_URL) {
+    const createLoginUrl = new URL(CREATE_LOGIN_URL);
+    createLoginUrl.searchParams.set("returnTo", `/?prompt=${promptParam}`);
+    callbackUrl = createLoginUrl.toString();
+  } else if (promptParam) {
+    callbackUrl = `${callbackBase}?prompt=${encodeURIComponent(promptParam)}`;
+  }
   return <AccountSignup callbackUrl={callbackUrl} />;
 }
 

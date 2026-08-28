@@ -1,10 +1,14 @@
 "use client";
 
-import { useSession, signIn } from "next-auth/react";
+import { Suspense } from "react";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import TickRounded from "@/components/TickRounded";
 import { Loader2 } from "lucide-react";
 
 const CREATE_URL = "https://create.esteemed.io";
+const CREATE_LOGIN_URL = `${CREATE_URL}/api/auth/oidc/login`;
+const CREATE_SIGNUP_URL = `${CREATE_URL}/signup`;
 
 function GoogleMark() {
   return (
@@ -17,8 +21,21 @@ function GoogleMark() {
   );
 }
 
-export default function StartPage() {
+function StartPageContent() {
   const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
+  const prompt = searchParams.get("prompt") || "";
+  const returnTo = prompt ? `/?prompt=${prompt}` : "/";
+  const loginUrl = new URL(CREATE_LOGIN_URL);
+  const signupUrl = new URL(CREATE_SIGNUP_URL);
+
+  if (returnTo !== "/") {
+    loginUrl.searchParams.set("returnTo", returnTo);
+    signupUrl.searchParams.set("returnTo", returnTo);
+  }
+
+  const googleLoginUrl = new URL(loginUrl);
+  googleLoginUrl.searchParams.set("kc_idp_hint", "google");
 
   if (status === "loading") {
     return (
@@ -29,7 +46,7 @@ export default function StartPage() {
   }
 
   if (session) {
-    if (typeof window !== "undefined") window.location.href = CREATE_URL;
+    if (typeof window !== "undefined") window.location.href = loginUrl.toString();
     return (
       <div className="flex min-h-[calc(100vh-64px)] items-center justify-center">
         <p className="text-zinc-500">Launching Esteemed Create...</p>
@@ -49,7 +66,7 @@ export default function StartPage() {
             Build your website for free today.
           </h1>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-zinc-600">
-            Sign in to get started with your website. No credit card required.
+            Create your account and start building. No credit card required.
           </p>
           <ul className="mt-8 space-y-4">
             {[
@@ -76,20 +93,19 @@ export default function StartPage() {
             </div>
 
             <h2 className="mb-2 text-center text-2xl font-bold text-ink">
-              Sign in to start building
+              Create your account
             </h2>
             <p className="mb-8 text-center text-sm text-zinc-500">
-              One account for websites, apps, and cloud.
+              Start free. No credit card required.
             </p>
 
             <div className="space-y-3">
-              <button
-                type="button"
-                onClick={() => signIn("keycloak", { callbackUrl: CREATE_URL })}
+              <a
+                href={signupUrl.toString()}
                 className="flex min-h-12 w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.015] hover:bg-zinc-800"
               >
-                Continue with email
-              </button>
+                Sign up with email
+              </a>
 
               <div className="flex items-center gap-3 py-2">
                 <div className="h-px flex-1 bg-zinc-200" />
@@ -99,15 +115,21 @@ export default function StartPage() {
                 <div className="h-px flex-1 bg-zinc-200" />
               </div>
 
-              <button
-                type="button"
-                onClick={() => signIn("keycloak", { callbackUrl: CREATE_URL }, { kc_idp_hint: "google" })}
+              <a
+                href={googleLoginUrl.toString()}
                 className="flex min-h-12 w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white px-5 py-3 text-sm font-bold text-ink transition-colors hover:border-ink hover:bg-zinc-50"
               >
                 <GoogleMark />
-                Continue with Google
-              </button>
+                Sign up with Google
+              </a>
             </div>
+
+            <p className="mt-6 text-center text-sm text-zinc-500">
+              Already have an account?{" "}
+              <a href={loginUrl.toString()} className="font-bold text-ink underline underline-offset-4">
+                Sign in
+              </a>
+            </p>
 
             <p className="mt-8 text-center text-xs leading-5 text-zinc-400">
               By continuing, you agree to the Esteemed Terms and Privacy Policy.
@@ -116,5 +138,19 @@ export default function StartPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function StartPage() {
+  return (
+    <Suspense
+      fallback={(
+        <div className="flex min-h-[calc(100vh-64px)] items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-zinc-400" />
+        </div>
+      )}
+    >
+      <StartPageContent />
+    </Suspense>
   );
 }

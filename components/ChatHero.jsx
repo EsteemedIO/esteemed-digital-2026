@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useSession, signIn } from "next-auth/react";
 import { PlusIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Smartphone, Globe, AppWindow, BarChart3, Presentation } from "lucide-react";
 
@@ -21,11 +19,13 @@ const examplePrompts = [
   "A site for my law practice...",
 ];
 
-const CREATE_URL = "https://create.esteemed.io";
+function createStartUrl(prompt) {
+  const url = new URL("/websites/website-builder/start", window.location.origin);
+  if (prompt) url.searchParams.set("prompt", prompt);
+  return `${url.pathname}${url.search}`;
+}
 
 export default function ChatHero() {
-  const router = useRouter();
-  const { data: session } = useSession();
   const [inputValue, setInputValue] = useState("");
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [displayedPlaceholder, setDisplayedPlaceholder] = useState("");
@@ -56,23 +56,10 @@ export default function ChatHero() {
   }, [placeholderIndex, inputValue]);
 
   const handleSubmit = () => {
-    if (session) {
-      // Authenticated — go straight to Create
-      const url = inputValue
-        ? `${CREATE_URL}?prompt=${encodeURIComponent(inputValue)}`
-        : CREATE_URL;
-      window.location.href = url;
-    } else {
-      // Not authenticated — store prompt, trigger Keycloak login
-      if (inputValue) {
-        sessionStorage.setItem("esteemed_prompt", inputValue);
-      }
-      signIn("keycloak", {
-        callbackUrl: inputValue
-          ? `${CREATE_URL}?prompt=${encodeURIComponent(inputValue)}`
-          : CREATE_URL,
-      });
+    if (inputValue) {
+      sessionStorage.setItem("esteemed_prompt", inputValue);
     }
+    window.location.href = createStartUrl(inputValue);
   };
 
   return (
