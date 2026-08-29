@@ -44,6 +44,7 @@ const columns = [
       { name: "Privacy", href: "/privacy" },
       { name: "Terms", href: "/terms" },
       { name: "Code of Conduct", href: "/code-of-conduct" },
+      { name: "Sitemap", href: "/sitemap.xml" },
     ],
   },
 ];
