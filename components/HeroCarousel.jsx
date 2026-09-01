@@ -37,7 +37,7 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
   const slide = slides[current];
 
   return (
-    <section className="relative min-h-[calc(85vh-120px)] flex items-center justify-center overflow-hidden px-6 py-14 sm:px-8">
+    <section className="relative min-h-[calc(85vh-120px)] flex flex-col items-center justify-center overflow-hidden px-6 py-14 sm:px-8">
       {/* Background — video or image */}
       {slide.video ? (
         <video
@@ -106,7 +106,7 @@ export default function HeroCarousel({ slides, interval = 8000 }) {
       </div>
 
       {/* Pill nav + pause */}
-      <div className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+      <div className="relative z-20 mt-10 flex items-center gap-2">
         {slides.map((s, i) => (
           <button
             key={i}
