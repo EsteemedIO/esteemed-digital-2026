@@ -224,7 +224,7 @@ export default function HostingPage() {
                 <strong>Esteemed Create</strong> builds your website in minutes from a prompt using React and Node JS. Then you can deploy to our scalable cloud. You can also choose to use WordPress, Drupal, or Esteemed Curate CMS.
               </p>
               <Link
-                href="/websites/website-builder"
+                href="/websites/website-builder/start"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-ink text-sm font-bold hover:bg-accent-hover transition-colors"
               >
                 Try Create free
