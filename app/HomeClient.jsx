@@ -243,6 +243,8 @@ export default function Home() {
         ]}
       />
 
+      <ChatHero />
+
       <ClientLogoBand />
 
       {/* Domain Search Bar */}
@@ -336,7 +338,7 @@ export default function Home() {
               heading: "Describe.",
               description: "Tell Create what you need. Using AI it drafts a real, brand-aware site in seconds — copy, layout, photography and all.",
               cta: "Try a prompt →",
-              ctaHref: "/websites/website-builder",
+              ctaHref: "#create-prompt",
               visual: <PromptToSite />,
               bgColor: "ink",
             },

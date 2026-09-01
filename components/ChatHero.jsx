@@ -55,42 +55,42 @@ export default function ChatHero() {
     return () => clearInterval(typeInterval);
   }, [placeholderIndex, inputValue]);
 
-  const handleSubmit = () => {
-    if (inputValue) {
-      sessionStorage.setItem("esteemed_prompt", inputValue);
-    }
-    window.location.href = createStartUrl(inputValue);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const prompt = inputValue.trim();
+    if (!prompt) return;
+
+    sessionStorage.setItem("esteemed_prompt", prompt);
+    window.location.href = createStartUrl(prompt);
   };
 
   return (
     <section
-      id="chat-hero"
-      className="flex flex-col items-center justify-center px-6 bg-accent"
-      style={{ minHeight: "85vh", paddingTop: "5%", paddingBottom: "5%" }}
+      id="create-prompt"
+      className="scroll-mt-20 bg-accent px-6 py-20"
     >
       <div className="w-full max-w-[1080px] mx-auto text-center">
         <div className="mb-6">
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-ink text-white text-sm font-semibold tracking-wide">
-            The AI + Human gold standard
+            Try Esteemed Create
           </span>
         </div>
 
-        <h1 className="heading-1 mb-4">
-          Build, Hire, and Ship smarter.
-        </h1>
+        <h2 className="heading-2 mb-4">What do you want to build?</h2>
 
         <p className="subtitle mb-10 max-w-2xl mx-auto">
-          AI to start. Hire experts to grow.
+          Describe your idea in plain English. We will carry it into Create for you to review before anything is built.
         </p>
 
-        <div className="relative w-full max-w-[720px] mx-auto text-left">
+        <form onSubmit={handleSubmit} className="relative w-full max-w-[720px] mx-auto text-left">
           <div className="relative rounded-2xl border-2 border-zinc-300 bg-paper transition-shadow focus-within:shadow-lg focus-within:border-zinc-400">
             <div className="relative min-h-[120px] p-6 pb-16">
               <textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 rows={3}
-                autoFocus
+                maxLength={2000}
+                aria-label="Describe the app you want to build"
                 className="w-full bg-transparent text-ink text-base resize-none outline-none"
               />
               {!inputValue && (
@@ -105,6 +105,7 @@ export default function ChatHero() {
 
             <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-3">
               <button
+                type="button"
                 className="flex items-center justify-center w-9 h-9 rounded-xl border border-zinc-200 text-zinc-400 hover:bg-zinc-100 hover:text-ink transition-colors"
                 aria-label="Attach or sign in"
               >
@@ -112,11 +113,12 @@ export default function ChatHero() {
               </button>
 
               <button
-                onClick={handleSubmit}
+                type="submit"
+                disabled={!inputValue.trim()}
                 className={`inline-flex items-center gap-2 px-8 py-3 rounded-full text-sm font-bold transition-colors ${
-                  inputValue
+                  inputValue.trim()
                     ? "bg-ink text-white hover:bg-ink/90"
-                    : "bg-zinc-200 text-zinc-400 cursor-default"
+                    : "bg-zinc-200 text-zinc-400 cursor-not-allowed"
                 }`}
               >
                 Build it
@@ -124,12 +126,13 @@ export default function ChatHero() {
               </button>
             </div>
           </div>
-        </div>
+        </form>
 
         {/* App type selector */}
         <div className="mt-6 flex md:flex-wrap md:justify-center gap-2 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:overflow-visible scrollbar-hide">
           {appTypes.map((type) => (
             <button
+              type="button"
               key={type.label}
               onClick={() => setInputValue(type.label + " — ")}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-ink text-sm font-medium hover:bg-accent-hover transition-colors whitespace-nowrap flex-shrink-0"
