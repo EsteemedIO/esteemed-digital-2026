@@ -173,7 +173,7 @@ function EcommerceStartContent() {
               <button
                 type="button"
                 onClick={() => signIn("keycloak", { callbackUrl: "/websites/ecommerce/start" })}
-                className="flex min-h-12 w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.015] hover:bg-zinc-800"
+                className="flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.015] hover:bg-zinc-800"
               >
                 Continue with email
               </button>
@@ -185,7 +185,7 @@ function EcommerceStartContent() {
               <button
                 type="button"
                 onClick={() => signIn("keycloak", { callbackUrl: "/websites/ecommerce/start" }, { kc_idp_hint: "google" })}
-                className="flex min-h-12 w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white px-5 py-3 text-sm font-bold text-ink transition-colors hover:border-ink hover:bg-zinc-50"
+                className="flex min-h-12 w-full items-center justify-center gap-3 rounded-full border border-zinc-300 bg-white px-5 py-3 text-sm font-bold text-ink transition-colors hover:border-ink hover:bg-zinc-50"
               >
                 <GoogleMark />
                 Continue with Google

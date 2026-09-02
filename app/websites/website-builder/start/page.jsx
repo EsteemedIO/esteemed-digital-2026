@@ -105,7 +105,7 @@ function StartPageContent() {
             <div className="space-y-3">
               <a
                 href={signupUrl.toString()}
-                className="flex min-h-12 w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.015] hover:bg-zinc-800"
+                className="flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.015] hover:bg-zinc-800"
               >
                 Sign up with email
               </a>
@@ -120,7 +120,7 @@ function StartPageContent() {
 
               <a
                 href={googleLoginUrl.toString()}
-                className="flex min-h-12 w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white px-5 py-3 text-sm font-bold text-ink transition-colors hover:border-ink hover:bg-zinc-50"
+                className="flex min-h-12 w-full items-center justify-center gap-3 rounded-full border border-zinc-300 bg-white px-5 py-3 text-sm font-bold text-ink transition-colors hover:border-ink hover:bg-zinc-50"
               >
                 <GoogleMark />
                 Sign up with Google

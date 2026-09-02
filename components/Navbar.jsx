@@ -471,7 +471,7 @@ export default function Navbar() {
           <div className="border-t border-zinc-200 px-5 py-4 flex items-center gap-4">
             <button
               onClick={() => { closeMobile(); signIn("keycloak", { callbackUrl: "/products" }); }}
-              className="text-sm font-semibold text-ink hover:underline"
+              className="rounded-full border-2 border-ink px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-accent hover:bg-accent"
             >
               Login
             </button>
@@ -488,7 +488,7 @@ export default function Navbar() {
           <div className="border-t border-zinc-200 px-5 py-4 flex items-center gap-4">
             <button
               onClick={() => { closeMobile(); signOut({ callbackUrl: "/" }); }}
-              className="text-sm font-semibold text-ink hover:underline"
+              className="rounded-full border-2 border-ink px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-accent hover:bg-accent"
             >
               Log out
             </button>

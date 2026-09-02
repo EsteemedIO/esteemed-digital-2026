@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { exchangeCreateAccessToken } from "@/lib/create-api-auth";
 
 const CREATE_API_BASE = process.env.CREATE_AGENT_RUNNER_URL || "https://create.esteemed.io";
 
@@ -38,12 +39,11 @@ export async function GET(request) {
   if (status) upstream.searchParams.set("status", status);
 
   try {
+    const createAccessToken = await exchangeCreateAccessToken(token.accessToken, CREATE_API_BASE);
     const response = await fetch(upstream, {
       headers: {
         Accept: "application/json",
-        ...(token.accessToken ? { Authorization: `Bearer ${token.accessToken}` } : {}),
-        ...(token.sub ? { "X-User-Id": token.sub } : {}),
-        ...(token.email ? { "X-User-Email": token.email } : {}),
+        Authorization: `Bearer ${createAccessToken}`,
       },
       cache: "no-store",
     });
@@ -88,6 +88,9 @@ export async function GET(request) {
     });
   } catch (error) {
     console.error("[cloud-sites]", error);
-    return NextResponse.json({ error: "Create app inventory is unavailable." }, { status: 502 });
+    return NextResponse.json(
+      { error: error.message || "Create app inventory is unavailable." },
+      { status: error.status || 502 },
+    );
   }
 }

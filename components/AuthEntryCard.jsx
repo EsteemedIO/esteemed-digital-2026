@@ -61,7 +61,7 @@ export default function AuthEntryCard({ mode = "login", callbackUrl = "/" }) {
           <button
             type="button"
             onClick={continueWithEmail}
-            className="flex min-h-12 w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-black text-white transition-transform hover:scale-[1.015] hover:bg-zinc-800"
+            className="flex min-h-12 w-full items-center justify-center rounded-full bg-ink px-5 py-3 text-sm font-black text-white transition-transform hover:scale-[1.015] hover:bg-zinc-800"
           >
             {isSignup ? "Continue with email" : "Sign in with email"}
           </button>
@@ -75,7 +75,7 @@ export default function AuthEntryCard({ mode = "login", callbackUrl = "/" }) {
           <button
             type="button"
             onClick={continueWithGoogle}
-            className="flex min-h-12 w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white px-5 py-3 text-sm font-black text-ink transition-colors hover:border-ink hover:bg-zinc-50"
+            className="flex min-h-12 w-full items-center justify-center gap-3 rounded-full border border-zinc-300 bg-white px-5 py-3 text-sm font-black text-ink transition-colors hover:border-ink hover:bg-zinc-50"
           >
             <GoogleMark />
             Google

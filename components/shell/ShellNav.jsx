@@ -20,6 +20,7 @@ import {
   Tag,
   Users,
   Cloud,
+  ArrowLeft,
 } from "lucide-react";
 import {
   Dropdown,
@@ -200,6 +201,16 @@ export default function ShellNav() {
             </div>
           )}
         </nav>
+
+        <div className="border-t border-zinc-300 px-3 py-4">
+          <Link
+            href="/"
+            className="flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-ink hover:bg-accent"
+          >
+            <ArrowLeft size={16} />
+            Back to esteemed.io
+          </Link>
+        </div>
       </aside>
 
       <NewItemModal

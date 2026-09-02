@@ -106,37 +106,21 @@ test.describe('Auth Integration — Keycloak OIDC', () => {
     expect(body.keycloak.type).toBe('oauth');
   });
 
-  test('ChatHero prompt field is visible and interactive', async ({ page }) => {
+  test('deprecated homepage chat block is absent', async ({ page }) => {
     await page.goto(BASE);
-    const textarea = page.locator('#chat-hero textarea');
-    await expect(textarea).toBeVisible();
-
-    // Type a prompt
-    await textarea.fill('A booking site for my yoga studio');
-    await expect(textarea).toHaveValue('A booking site for my yoga studio');
-
-    // Build it button should be active
-    const buildBtn = page.locator('button:has-text("Build it")');
-    await expect(buildBtn).toBeVisible();
+    await expect(page.locator('#chat-hero')).toHaveCount(0);
+    await expect(page.getByText('What do you want to build?', { exact: true })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Try Create free', exact: true }).first())
+      .toHaveAttribute('href', '/websites/website-builder/start');
   });
 
-  test('ChatHero "Build it" triggers auth flow when unauthenticated', async ({ page }) => {
-    await page.goto(BASE);
-    const textarea = page.locator('#chat-hero textarea');
-    await textarea.fill('A portfolio site');
-
-    const buildBtn = page.locator('button:has-text("Build it")');
-
-    // Click and expect redirect toward Keycloak
-    await Promise.all([
-      page.waitForURL(/auth\.esteemed\.io|api\/auth/, { timeout: 15000 }),
-      buildBtn.click(),
-    ]);
-
-    const url = page.url();
-    expect(
-      url.includes('auth.esteemed.io') || url.includes('/api/auth')
-    ).toBeTruthy();
+  test('website-builder auth actions use full pill buttons', async ({ page }) => {
+    await page.goto(`${BASE}/websites/website-builder/start`);
+    for (const name of ['Sign up with email', 'Sign up with Google']) {
+      const button = page.getByRole('link', { name, exact: true });
+      await expect(button).toHaveClass(/rounded-full/);
+      await expect(button).toHaveCSS('border-radius', '9999px');
+    }
   });
 
 });

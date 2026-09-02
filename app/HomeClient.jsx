@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Sparkles, Cloud, Bot, Brain, Users, Headphones, ClipboardCheck, Target, MessageSquare, Check, ArrowRight } from "lucide-react";
-import ChatHero from "@/components/ChatHero";
 import HeroCarousel from "@/components/HeroCarousel";
 import CascadingCards from "@/components/CascadingCards";
 import ParallaxFrost from "@/components/ParallaxFrost";
@@ -243,8 +242,6 @@ export default function Home() {
         ]}
       />
 
-      <ChatHero />
-
       <ClientLogoBand />
 
       {/* Domain Search Bar */}
@@ -337,8 +334,8 @@ export default function Home() {
               label: "CREATE",
               heading: "Describe.",
               description: "Tell Create what you need. Using AI it drafts a real, brand-aware site in seconds — copy, layout, photography and all.",
-              cta: "Try a prompt →",
-              ctaHref: "#create-prompt",
+              cta: "Try Create free →",
+              ctaHref: "/websites/website-builder/start",
               visual: <PromptToSite />,
               bgColor: "ink",
             },
