@@ -80,7 +80,7 @@ export default function ShellNav() {
       >
         {/* Brand */}
         <div className="px-5 py-5">
-          <Link href="/products" className="flex items-center">
+          <Link href="/" className="flex items-center" aria-label="Back to esteemed.io homepage">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/esteemed-logo.svg" alt="Esteemed" className="h-7 w-auto" />
           </Link>
