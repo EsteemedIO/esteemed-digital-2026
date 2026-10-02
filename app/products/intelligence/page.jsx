@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
 import { intelligencePricingPlans } from "@/lib/product-page-pricing";
-import { Brain, Database, GitBranch, Shield, Code, Building2 } from "lucide-react";
+import { Brain, Database, GitBranch, Shield, Code, Building2, Rocket } from "lucide-react";
 
 export const metadata = {
   title: "Intelligence",
@@ -102,6 +102,37 @@ export default function IntelligencePage() {
             >
               Talk to us
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Who is it for */}
+      <section className="py-16 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-ink mb-3">
+            Built for developers, platform teams, and AI-forward businesses
+          </h2>
+          <p className="text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            If you are building AI agents, integrating knowledge systems, or
+            need persistent memory and reasoning across your products —
+            Intelligence is the substrate that makes it work.
+          </p>
+        </div>
+      </section>
+
+      {/* Status */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Rocket className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Live — 40 MCP tools, REST API, and SDK access
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Esteemed Intelligence is live with a 14-day free trial. Builder,
+              Pro, Scale, and Enterprise tiers available. Powers every product
+              on the Esteemed platform.
+            </p>
           </div>
         </div>
       </section>

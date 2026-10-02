@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
 import { agentPricingPlans } from "@/lib/product-page-pricing";
-import { Check, MessageCircle, Mail } from "lucide-react";
+import { Check, MessageCircle, Mail, Brain, Rocket } from "lucide-react";
 import { agents } from "@/lib/data";
 
 export const metadata = {
@@ -30,6 +30,54 @@ export default function AgentsPage() {
             AI agents that handle real work — trained on your business, backed
             by real people.
           </p>
+        </div>
+      </section>
+
+      {/* Who is it for */}
+      <section className="py-16 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-ink mb-3">
+            Built for businesses automating content, recruiting, marketing, and support
+          </h2>
+          <p className="text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            Deploy AI agents that actually know your business — trained on your
+            content, backed by your data, and supported by real people when
+            they need help.
+          </p>
+        </div>
+      </section>
+
+      {/* Powered by EI */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Brain className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Powered by Esteemed Intelligence
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Every agent runs on the Intelligence substrate. Memory persists
+              across sessions, agents share context automatically, and
+              responses are verified against your approved content.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Status */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Rocket className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Live — Star and 5 content agents available
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Star is live for deployment as a chat widget, internal tool, or
+              API endpoint. Social, Blogger, Marketer, Recruiter, and Publicist
+              agents available individually or as a fleet bundle.
+            </p>
+          </div>
         </div>
       </section>
 

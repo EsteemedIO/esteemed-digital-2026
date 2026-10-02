@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProductPricingBlock from "@/components/ProductPricingBlock";
 import ProductIcon from "@/components/ProductIcon";
 import { curatePricingPlans } from "@/lib/product-page-pricing";
-import { ArrowRight, Database, FileText, Image, ShieldCheck } from "lucide-react";
+import { ArrowRight, Database, FileText, Image, ShieldCheck, Brain, Rocket } from "lucide-react";
 
 export const metadata = {
   title: "Curate",
@@ -75,6 +75,54 @@ export default function CuratePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who is it for */}
+      <section className="py-16 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-ink mb-3">
+            Built for marketing teams, content publishers, and brand managers
+          </h2>
+          <p className="text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            If your team publishes content, manages brand assets, or needs
+            AI-ready knowledge management — Curate gives you a managed CMS with
+            RAG built in, not bolted on.
+          </p>
+        </div>
+      </section>
+
+      {/* Powered by EI */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Brain className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Powered by Esteemed Intelligence
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Curate is RAG-native. Your approved content powers conversational
+              AI across your website, agents, and internal tools through the
+              Intelligence substrate. Content agents, semantic search, and
+              knowledge retrieval are built in.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Status */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Rocket className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Live on esteemed.io
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Curate is live and powering content for esteemed.io itself.
+              Managed workspaces available with Starter and Pro plans.
+            </p>
           </div>
         </div>
       </section>

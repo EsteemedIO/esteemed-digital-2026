@@ -351,7 +351,7 @@ export default function Navbar() {
                 </div>
                 <div className="space-y-3 mt-8">
                   <FeaturedCard href="/hire-experts" onClick={closeMenu}>Hire an Expert</FeaturedCard>
-                  <FeaturedCard href="/products" onClick={closeMenu}>Products by Name</FeaturedCard>
+                  <FeaturedCard href="/platform" onClick={closeMenu}>Products by Name</FeaturedCard>
                   <FeaturedCard href="/hire-experts/web-support" onClick={closeMenu}>Get Support</FeaturedCard>
                 </div>
               </div>

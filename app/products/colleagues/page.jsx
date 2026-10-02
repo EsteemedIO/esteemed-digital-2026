@@ -8,6 +8,8 @@ import {
   Receipt,
   UserPlus,
   ArrowRight,
+  Brain,
+  Rocket,
 } from "lucide-react";
 
 export const metadata = {
@@ -34,6 +36,54 @@ export default function ColleaguesPage() {
             looking for your next role, Colleagues connects the right people
             to the right projects.
           </p>
+        </div>
+      </section>
+
+      {/* Who is it for */}
+      <section className="py-16 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-ink mb-3">
+            Built for employers hiring contract or direct talent, and jobseekers
+          </h2>
+          <p className="text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            Whether you are building a team or looking for your next role,
+            Colleagues connects the right people to the right projects — with
+            project management and invoicing built in.
+          </p>
+        </div>
+      </section>
+
+      {/* Powered by EI */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Brain className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Powered by Esteemed Intelligence
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Talent matching, skills enrichment, and engagement scoring are
+              powered by the Intelligence substrate. Colleagues profiles sync
+              into Acquire and Hire automatically.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Status */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Rocket className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Live — 35,000+ vetted professionals
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Colleagues is live at colleagues.esteemed.io with 35,000+ vetted
+              professionals across development, design, marketing, strategy,
+              and more.
+            </p>
+          </div>
         </div>
       </section>
 

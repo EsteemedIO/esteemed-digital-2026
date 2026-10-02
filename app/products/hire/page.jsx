@@ -10,6 +10,7 @@ import {
   Filter,
   BarChart3,
   ArrowRight,
+  Rocket,
 } from "lucide-react";
 
 export const metadata = {
@@ -85,6 +86,55 @@ export default function HirePage() {
             >
               See Colleagues
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Who is it for */}
+      <section className="py-16 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-ink mb-3">
+            Built for hiring managers and talent acquisition teams
+          </h2>
+          <p className="text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            Whether you are an in-house recruiter, an agency filling roles, or a
+            hiring manager running your own pipeline — Hire gives you applicant
+            tracking that integrates with sourcing and AI scoring out of the box.
+          </p>
+        </div>
+      </section>
+
+      {/* Powered by EI */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Brain className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Powered by Esteemed Intelligence
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Candidate ranking, screening summaries, skills matching, and
+              hiring analytics are driven by the Intelligence substrate.
+              Intelligence scores every applicant and surfaces the strongest
+              matches automatically.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Status */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Rocket className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Live on esteemed.io
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Hire is live and available for signup. Free tier included with
+              every Esteemed account. Starter, Pro, Enterprise, and Suite
+              bundle plans available.
+            </p>
           </div>
         </div>
       </section>

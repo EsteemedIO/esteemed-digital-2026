@@ -11,6 +11,7 @@ import {
   LineChart,
   Mail,
   ArrowRight,
+  Rocket,
 } from "lucide-react";
 
 export const metadata = {
@@ -86,6 +87,55 @@ export default function AcquirePage() {
             >
               See Intelligence
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Who is it for */}
+      <section className="py-16 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-ink mb-3">
+            Built for staffing firms, agencies, and services companies
+          </h2>
+          <p className="text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            If your business wins clients and sources talent, you need a CRM
+            that handles both. Acquire is purpose-built for the dual reality of
+            services businesses — no duct-taping two tools together.
+          </p>
+        </div>
+      </section>
+
+      {/* Powered by EI */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Brain className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Powered by Esteemed Intelligence
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Lead scoring, talent matching, outreach suggestions, and pipeline
+              analytics are all driven by the Intelligence substrate. Every
+              contact is enriched with skills data, engagement history, and
+              predictive scoring.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Status */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Rocket className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Live on esteemed.io
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Acquire is live and available for signup. Free tier included with
+              every Esteemed account. Starter, Pro, and Enterprise plans
+              available.
+            </p>
           </div>
         </div>
       </section>

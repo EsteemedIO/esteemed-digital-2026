@@ -99,6 +99,54 @@ export default function ConnectPage() {
         </div>
       </section>
 
+      {/* Who is it for */}
+      <section className="py-16 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-ink mb-3">
+            Built for teams with knowledge scattered across tools
+          </h2>
+          <p className="text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            If your team uses Google Drive, Slack, Confluence, GitHub, and a
+            dozen other tools — Connect indexes them all so AI can search across
+            everything in one place.
+          </p>
+        </div>
+      </section>
+
+      {/* Powered by EI */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <Brain className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Powered by Esteemed Intelligence
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Connect is the retrieval layer for Intelligence. Indexed content
+              feeds into semantic search, agent context, and RAG pipelines
+              across every Esteemed product.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Status */}
+      <section className="py-12 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto px-6 flex items-start gap-4">
+          <RefreshCw className="w-8 h-8 text-ink flex-shrink-0" strokeWidth={1.5} />
+          <div>
+            <p className="text-sm font-bold text-ink uppercase tracking-wide mb-1">
+              Live — included with managed Curate
+            </p>
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Connect is live and available with managed Curate workspaces.
+              12+ connectors for Google Drive, Slack, Confluence, GitHub,
+              Notion, Jira, Salesforce, and more.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <div id="plans">
         <ProductPricingBlock
           eyebrow="Connect pricing"
