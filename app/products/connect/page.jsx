@@ -26,6 +26,8 @@ import {
   HardDrive,
   RefreshCw,
   Sparkles,
+  Brain,
+  Rocket,
 } from "lucide-react";
 import TickRounded from "@/components/TickRounded";
 
