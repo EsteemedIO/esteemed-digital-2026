@@ -2,11 +2,17 @@
 <#assign productIcon = "esteemed-logo.svg">
 <#assign productStylesheet = "auth.css">
 <#assign returnUrl = "https://www.esteemed.io/">
+<#assign retrySession = false>
+<#assign chooseEnvironment = false>
 <#if client?? && client.clientId == "hcmgpt">
   <#assign productName = "HCMGPT">
   <#assign productIcon = "hcmgpt-icon.svg">
   <#assign productStylesheet = "hcmgpt-auth.css">
-  <#assign returnUrl = "https://app.hcmgpt.com/api/auth/logout?returnTo=/auth">
+  <#-- Restart the same server-owned auth session: it retains the originating
+       client callback and PKCE request, including Dev vs Production. -->
+  <#assign returnUrl = url.loginRestartFlowUrl>
+  <#assign retrySession = returnUrl?contains("tab_id=")>
+  <#assign chooseEnvironment = !retrySession>
 </#if>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,11 +45,17 @@
         </div>
       </#if>
 
-      <a class="social-button" href="${returnUrl}">
-        <span></span>
-        <span>Return to ${productName}</span>
-        <span></span>
-      </a>
+      <#if chooseEnvironment>
+        <p class="auth-subtitle">This sign-in session has ended. Choose the workspace where you started.</p>
+        <a class="social-button" href="https://dev.hcmgpt.com/api/auth/keycloak/login"><span></span><span>Sign in to HCMGPT Dev</span><span></span></a>
+        <a class="social-button" href="https://app.hcmgpt.com/api/auth/keycloak/login"><span></span><span>Sign in to HCMGPT Production</span><span></span></a>
+      <#else>
+        <a class="social-button" href="${returnUrl}">
+          <span></span>
+          <span><#if retrySession>Try sign-in again<#else>Return to ${productName}</#if></span>
+          <span></span>
+        </a>
+      </#if>
     </section>
   </main>
 </body>
