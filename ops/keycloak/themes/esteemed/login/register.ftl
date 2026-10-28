@@ -16,6 +16,10 @@
   <title>Sign up for ${productName}</title>
   <link rel="icon" href="${url.resourcesPath}/img/${productIcon}">
   <link rel="stylesheet" href="${url.resourcesPath}/css/${productStylesheet}?v=20260901a">
+  <#if client?? && client.clientId == "hcmgpt">
+    <link rel="stylesheet" href="${url.resourcesPath}/css/password-controls.css?v=20261028">
+    <script src="${url.resourcesPath}/js/password-controls.js?v=20261028" defer></script>
+  </#if>
 </head>
 <body>
   <main class="auth-page">
